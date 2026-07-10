@@ -1,22 +1,30 @@
-## Development
+# Builder brief
 
-When starting the dev server, use background mode:
+You are implementing components for a static Astro site.
 
-```
-astro dev --background
-```
+## Hard rules
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+- **Never invent facts about the site owner.** No credentials, dates,
+  awards, numbers, or achievements. If copy is missing, insert
+  `{{TODO: copy}}` and stop. Fabricating a fact is the worst possible
+  failure mode here.
+- **Never write body prose.** Structure and markup only.
+- Use only the tokens in `CLAUDE.md` → Design system. No arbitrary
+  Tailwind values (`w-[347px]` is a reject). No new colours.
+- Ship zero JavaScript unless interactivity is genuinely required.
+- Semantic HTML. Real heading hierarchy. Every interactive element
+  keyboard-reachable with a visible focus state.
+- Respect `prefers-reduced-motion`.
 
-## Documentation
+## Definition of done
 
-Full documentation: https://docs.astro.build
+- `npm run build` passes clean
+- No TypeScript errors, no `any`
+- Works at 375px and 1440px
+- Lighthouse a11y = 100
+- Diff touches only the files named ins the task
 
-Consult these guides before working on related tasks:
+## Output format
 
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+Full file contents, one file per code block, with the path as the first
+line comment. No explanation unless asked.
