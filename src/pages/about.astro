@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Prose from '../components/Prose.astro';
+import portrait from '../assets/maitreya.jpg';
+---
+
+<BaseLayout
+  title="About — Maitreya Sapariya"
+  description="{{TODO: copy — one-sentence description of who Maitreya is}}"
+>
+  <article>
+    <h1 class="text-3xl">About</h1>
+    <Image
+      src={portrait}
+      alt="Maitreya Sapariya standing outdoors in a black blazer and glasses, smiling"
+      width={384}
+      densities={[1, 2]}
+      loading="eager"
+      class="mt-8 w-48 rounded-lg border border-line"
+    />
+    <Prose class="mt-8">
+      <p>{'{{TODO: copy — about, paragraph 1}}'}</p>
+      <p>{'{{TODO: copy — about, paragraph 2}}'}</p>
+      <p>{'{{TODO: copy — about, paragraph 3}}'}</p>
+    </Prose>
+  </article>
+</BaseLayout>
