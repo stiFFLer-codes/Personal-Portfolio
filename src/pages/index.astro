@@ -1,17 +1,25 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Maitreya Sapariya"
+  description="{{TODO: copy — one-sentence site description for search results}}"
+>
+  <section>
+    <h1 class="text-3xl">Maitreya Sapariya</h1>
+    <p class="mt-6 max-w-prose text-lg leading-relaxed">
+      {'{{TODO: copy — one-sentence thesis line, authored by Maitreya}}'}
+    </p>
+    <p class="mt-4 max-w-prose text-base text-muted">
+      {'{{TODO: copy — one honest current-status line}}'}
+    </p>
+    <p class="mt-12 text-sm">
+      <a href="/about/" class="text-accent underline underline-offset-4 hover:decoration-2">
+        More about me
+      </a>
+    </p>
+  </section>
+
+  {/* Selected work section lands in Phase C, once the work collection exists. */}
+</BaseLayout>
