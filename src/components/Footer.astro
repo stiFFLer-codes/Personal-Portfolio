@@ -1,0 +1,22 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line">
+  <div
+    class="mx-auto flex max-w-2xl flex-wrap items-baseline justify-between gap-4 px-6 py-8 text-sm text-muted"
+  >
+    <p>© {year} Maitreya Sapariya</p>
+    <ul class="flex gap-6">
+      <li>
+        <a
+          href="mailto:maitreyasapariya@gmail.com"
+          class="underline decoration-line underline-offset-4 hover:text-ink hover:decoration-muted"
+        >
+          Email
+        </a>
+      </li>
+      {/* TODO(Maitreya): add GitHub and LinkedIn links — real URLs only */}
+    </ul>
+  </div>
+</footer>

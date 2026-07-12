@@ -17,6 +17,9 @@
 
   --font-heading: "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* Readability is the product: prose never exceeds 65ch. */
+  --container-prose: 65ch;
 }
 
 @layer base {
