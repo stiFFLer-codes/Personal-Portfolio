@@ -1,25 +1,84 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import StatusDot from '../components/StatusDot.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const changelog = (await getCollection('changelog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const recentLog = changelog.slice(0, 3);
+const lastLogDate = changelog[0]?.data.date;
+
+const dateFmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 ---
 
-<BaseLayout
-  title="Maitreya Sapariya"
-  description="{{TODO: copy — one-sentence site description for search results}}"
->
-  <section>
-    <h1 class="text-3xl">Maitreya Sapariya</h1>
-    <p class="mt-6 max-w-prose text-lg leading-relaxed">
-      {'{{TODO: copy — one-sentence thesis line, authored by Maitreya}}'}
-    </p>
-    <p class="mt-4 max-w-prose text-base text-muted">
-      {'{{TODO: copy — one honest current-status line}}'}
-    </p>
-    <p class="mt-12 text-sm">
-      <a href="/about/" class="text-accent underline underline-offset-4 hover:decoration-2">
-        More about me
-      </a>
-    </p>
-  </section>
+<Base lastLogDate={lastLogDate}>
+  <div class="container">
+    <section class="hero">
+      <p class="kicker reveal">software engineer · rural-health ML · finland alum</p>
+      <h1 class="reveal">
+        I build software systems that turn messy, real-world data into decisions people can act on.
+      </h1>
+      <p class="lede reveal">
+        Right now that means a production maternal-health risk system in rural India,
+        a full-time engineering role, and a running case for the EDISS Erasmus Mundus
+        programme, built one shipped thing at a time.
+      </p>
+      <div class="cta-row reveal">
+        <a class="cta primary" href="/projects">see what I'm building →</a>
+        <a class="cta" href="/log">read the log →</a>
+      </div>
+    </section>
 
-  {/* Selected work section lands in Phase C, once the work collection exists. */}
-</BaseLayout>
+    <section class="section">
+      <div class="section-head">
+        <h2>Currently shipping</h2>
+        <a class="see-all" href="/projects">all projects →</a>
+      </div>
+      <div class="row-list">
+        {projects.map((p) => (
+          <a class="row" href={`/projects/${p.id}`}>
+            <span class="row-meta">{p.data.status.replace('-', ' ')}</span>
+            <div>
+              <p class="row-title">
+                <StatusDot status={p.data.status} />
+                {p.data.title}
+              </p>
+              <p class="row-body">{p.data.summary}</p>
+              <div class="row-tags">
+                {p.data.stack.map((s: string) => (
+                  <span class="tag">{s}</span>
+                ))}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Recent log</h2>
+        <a class="see-all" href="/log">full log →</a>
+      </div>
+      <div class="row-list">
+        {recentLog.map((entry) => (
+          <div class="row">
+            <span class="row-meta">{dateFmt(entry.data.date)}</span>
+            <div>
+              <p class="row-title">
+                <StatusDot status={entry.data.tag} />
+                {entry.data.title}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>

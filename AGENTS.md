@@ -9,8 +9,13 @@ You are implementing components for a static Astro site.
   `{{TODO: copy}}` and stop. Fabricating a fact is the worst possible
   failure mode here.
 - **Never write body prose.** Structure and markup only.
-- Use only the tokens in `CLAUDE.md` → Design system. No arbitrary
-  Tailwind values (`w-[347px]` is a reject). No new colours.
+- Use only the custom properties in `src/styles/global.css`, which are
+  the tokens listed in `CLAUDE.md` → Design system. A literal hex value
+  in a component is a reject. No new colours.
+- **No new dependencies, and no third-party network requests.** The site
+  has zero runtime dependencies and ships no external calls. Fonts are
+  self-hosted. Adding either needs justification in the PR body.
+- Site-wide facts come from `src/site.config.ts`. Never hardcode them.
 - Ship zero JavaScript unless interactivity is genuinely required.
 - Semantic HTML. Real heading hierarchy. Every interactive element
   keyboard-reachable with a visible focus state.
@@ -22,7 +27,7 @@ You are implementing components for a static Astro site.
 - No TypeScript errors, no `any`
 - Works at 375px and 1440px
 - Lighthouse a11y = 100
-- Diff touches only the files named ins the task
+- Diff touches only the files named in the task
 
 ## Output format
 

@@ -1,28 +1,69 @@
 ---
 import { Image } from 'astro:assets';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Prose from '../components/Prose.astro';
+import Base from '../layouts/Base.astro';
 import portrait from '../assets/maitreya.jpg';
 ---
 
-<BaseLayout
-  title="About — Maitreya Sapariya"
-  description="{{TODO: copy — one-sentence description of who Maitreya is}}"
->
-  <article>
-    <h1 class="text-3xl">About</h1>
-    <Image
-      src={portrait}
-      alt="Maitreya Sapariya standing outdoors in a black blazer and glasses, smiling"
-      width={384}
-      densities={[1, 2]}
-      loading="eager"
-      class="mt-8 w-48 rounded-lg border border-line"
-    />
-    <Prose class="mt-8">
-      <p>{'{{TODO: copy — about, paragraph 1}}'}</p>
-      <p>{'{{TODO: copy — about, paragraph 2}}'}</p>
-      <p>{'{{TODO: copy — about, paragraph 3}}'}</p>
-    </Prose>
-  </article>
-</BaseLayout>
+<Base title="About — Maitreya Sapariya" description="Background, current role, and what I'm working toward.">
+  <div class="container">
+    <section class="hero about-head">
+      <div class="about-head-text">
+        <p class="kicker reveal">about</p>
+        <h1 class="reveal">Engineer first, still figuring the rest out in public.</h1>
+      </div>
+      <Image
+        class="portrait reveal"
+        src={portrait}
+        alt="Maitreya Sapariya standing outdoors in a black blazer and glasses, smiling"
+        width={352}
+        densities={[1, 2]}
+        loading="eager"
+      />
+    </section>
+
+    <section class="section prose">
+      <p>
+        I finished a B.E. in Artificial Intelligence and Data Science at A. D. Patel
+        Institute of Technology, CVM University, in Anand, Gujarat, in 2026. I'm now
+        a Software Engineer at Crest Infosystems, having converted from intern to
+        full-time after a six-month internship.
+      </p>
+
+      <p>
+        The work I care most about sits where machine learning meets production
+        software: not a notebook that proves a model can work, but a system that
+        keeps working once real people depend on it. <a href="/projects">Maatritwa
+        AI</a>, a maternal-health risk system for rural India, is where I've put
+        that belief into practice so far.
+      </p>
+
+      <h2>Finland, briefly</h2>
+      <p>
+        In August 2025 I attended the 34th Jyväskylä Summer School in Finland, on
+        machine learning and stochastic control, and used the trip to solo-travel
+        through Finland, Sweden, Norway, Latvia, and Estonia. It's the trip that
+        made the idea of an Erasmus Mundus programme feel concrete instead of
+        aspirational. In 2026 I followed up with JYU's COG1 course, attended
+        virtually around a full-time work schedule, and submitted the written
+        project report that came with it.
+      </p>
+
+      <h2>Where I'm headed</h2>
+      <p>
+        I'm building toward the EDISS Erasmus Mundus Joint Master's programme,
+        Engineering of Data-Intensive Intelligent Software Systems, for a
+        September 2027 start. Not because a scholarship page told me to want it,
+        but because the programme's own framing, bridging data science and
+        software engineering rather than treating them as separate disciplines,
+        matches how I already think about the work. The <a href="/log">log</a> is
+        the honest version of how that's going.
+      </p>
+
+      <h2>Certifications</h2>
+      <ul>
+        <li>AWS Certified AI Practitioner</li>
+        <li>AWS Certified Machine Learning Engineer – Associate</li>
+      </ul>
+    </section>
+  </div>
+</Base>

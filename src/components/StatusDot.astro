@@ -1,0 +1,25 @@
+---
+// A small colored dot. `status` accepts either the project vocabulary
+// (shipped / in-progress / planned) or the log vocabulary (ship / progress / note) —
+// both map to the same three colors on purpose, so the whole site reads as
+// one consistent status language.
+interface Props {
+  status: 'shipped' | 'in-progress' | 'planned' | 'ship' | 'progress' | 'note';
+  label?: string;
+}
+const { status, label } = Astro.props;
+---
+
+<span class={`dot dot-${status}`} title={label ?? status} aria-hidden="true"></span>
+{label && <span class="sr-only">{label}</span>}
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+</style>

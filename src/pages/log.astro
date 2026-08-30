@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import StatusDot from '../components/StatusDot.astro';
+
+const entries = (await getCollection('changelog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const lastLogDate = entries[0]?.data.date;
+
+const dateFmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+
+<Base
+  title="Log — Maitreya Sapariya"
+  description="A running record of what's shipped, what's in progress, and what's just a note."
+  lastLogDate={lastLogDate}
+>
+  <div class="container">
+    <section class="hero">
+      <p class="kicker reveal">log</p>
+      <h1 class="reveal">Everything, roughly as it happened.</h1>
+      <p class="lede reveal">
+        Green entries shipped. Amber entries are in motion. Slate entries are just
+        notes worth keeping. No entry gets rewritten after the fact to look better.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="row-list">
+        {entries.map((entry) => (
+          <div class="row">
+            <span class="row-meta">{dateFmt(entry.data.date)}</span>
+            <div>
+              <p class="row-title">
+                <StatusDot status={entry.data.tag} />
+                {entry.data.title}
+              </p>
+              {entry.body && <p class="row-body">{entry.body.trim()}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>

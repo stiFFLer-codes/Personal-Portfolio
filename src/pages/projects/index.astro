@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import StatusDot from '../../components/StatusDot.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base title="Projects — Maitreya Sapariya" description="What I'm building, and what state it's actually in.">
+  <div class="container">
+    <section class="hero">
+      <p class="kicker reveal">projects</p>
+      <h1 class="reveal">What I'm building, and what state it's actually in.</h1>
+      <p class="lede reveal">
+        The status dot is not decoration. Green means it runs, amber means it's in
+        motion, slate means it's queued. This page gets one new entry when a new
+        project earns one, not before.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="row-list">
+        {projects.map((p) => (
+          <a class="row" href={`/projects/${p.id}`}>
+            <span class="row-meta">{p.data.status.replace('-', ' ')}</span>
+            <div>
+              <p class="row-title">
+                <StatusDot status={p.data.status} />
+                {p.data.title}
+              </p>
+              <p class="row-body">{p.data.summary}</p>
+              <div class="row-tags">
+                {p.data.stack.map((s: string) => (
+                  <span class="tag">{s}</span>
+                ))}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>

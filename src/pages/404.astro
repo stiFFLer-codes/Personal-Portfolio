@@ -1,11 +1,17 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Base from '../layouts/Base.astro';
 ---
 
-<BaseLayout title="Page not found — Maitreya Sapariya" description="This page does not exist.">
-  <h1 class="text-3xl">Page not found</h1>
-  <p class="mt-4 max-w-prose text-muted">
-    This page doesn't exist.
-    <a href="/" class="text-accent underline underline-offset-4">Go to the home page</a>.
-  </p>
-</BaseLayout>
+<Base title="Page not found — Maitreya Sapariya" description="That page does not exist.">
+  <div class="container">
+    <section class="hero">
+      <p class="kicker">404</p>
+      <h1>That page doesn't exist.</h1>
+      <p class="lede">It may have moved, or it may never have been here.</p>
+      <div class="cta-row">
+        <a class="cta primary" href="/">go home →</a>
+        <a class="cta" href="/projects">see the projects →</a>
+      </div>
+    </section>
+  </div>
+</Base>

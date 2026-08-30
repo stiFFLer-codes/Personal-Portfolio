@@ -1,156 +1,412 @@
-@import "tailwindcss";
-@import "@fontsource-variable/inter";
-@import "@fontsource-variable/space-grotesk";
+/* ============================================================
+   Design tokens
+   Concept: the site is a small, maintained system, not a brochure.
+   Paper-light body, one bold dark "terminal" strip (the status
+   ledger) as the single high-contrast signature element.
+   ============================================================ */
 
-@theme {
-  /*
-   * Design system — CLAUDE.md is law.
-   * Default Tailwind palette is erased: only these six colors exist.
-   */
-  --color-*: initial;
-  --color-background: #fafafa;
-  --color-surface: #ffffff;
-  --color-ink: #111827;
-  --color-muted: #64748b;
-  --color-accent: #2563eb;
-  --color-line: #e5e7eb;
+:root {
+  /* color */
+  --paper: #f3f4f0;
+  --paper-raised: #ebece6;
+  --ink: #16191c;
+  --ink-soft: #545b60;
+  --ink-faint: #8a9096;
+  --hairline: rgba(22, 25, 28, 0.14);
 
-  --font-heading: "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --terminal-bg: #12151a;
+  --terminal-text: #e7e9e4;
+  --terminal-text-soft: #a4aba8;
 
-  /* Readability is the product: prose never exceeds 65ch. */
-  --container-prose: 65ch;
+  --signal-green: #2e7d5b;
+  --signal-green-bg: rgba(46, 125, 91, 0.12);
+  --signal-amber: #b8791a;
+  --signal-amber-bg: rgba(184, 121, 26, 0.13);
+  --signal-slate: #5b6b79;
+  --signal-slate-bg: rgba(91, 107, 121, 0.12);
+
+  /* type */
+  --font-display: 'Bricolage Grotesque', 'Arial Narrow', sans-serif;
+  --font-body: 'Newsreader', 'Georgia', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* layout */
+  --measure: 42rem;
+  --measure-wide: 54rem;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
 }
 
-@layer base {
-  html {
-    background-color: var(--color-background);
-    color: var(--color-ink);
-    font-family: var(--font-body);
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    font-family: var(--font-heading);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    text-wrap: balance;
-  }
-
-  ::selection {
-    background-color: var(--color-accent);
-    color: var(--color-surface);
-  }
-
-  :focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
+* {
+  box-sizing: border-box;
 }
 
-@layer components {
-  /* Typographic container for human-authored prose (About, case studies). */
-  .prose {
-    max-width: 65ch;
-    line-height: 1.75;
-  }
-
-  .prose p,
-  .prose ul,
-  .prose ol {
-    margin-block: 1rem;
-  }
-
-  .prose h2 {
-    font-size: var(--text-2xl);
-    line-height: var(--text-2xl--line-height);
-    margin-top: 3rem;
-    margin-bottom: 1rem;
-  }
-
-  .prose h3 {
-    font-size: var(--text-lg);
-    line-height: var(--text-lg--line-height);
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .prose a {
-    color: var(--color-accent);
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    text-decoration-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
-  }
-
-  .prose a:hover {
-    text-decoration-color: var(--color-accent);
-  }
-
-  .prose ul {
-    list-style: disc;
-    padding-left: 1.5rem;
-  }
-
-  .prose ol {
-    list-style: decimal;
-    padding-left: 1.5rem;
-  }
-
-  .prose li {
-    margin-block: 0.5rem;
-  }
-
-  .prose strong {
-    font-weight: 500;
-  }
-
-  .prose blockquote {
-    border-left: 2px solid var(--color-line);
-    padding-left: 1rem;
-    color: var(--color-muted);
-  }
-
-  .prose code {
-    font-size: var(--text-sm);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-sm);
-    padding: 0.125rem 0.25rem;
-  }
-
-  .prose pre {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-lg);
-    padding: 1rem;
-    overflow-x: auto;
-    margin-block: 1rem;
-  }
-
-  .prose pre code {
-    background: none;
-    border: none;
-    padding: 0;
-  }
+html {
+  background: var(--paper);
+  color-scheme: light;
 }
 
-/* The site's single motion: fade in with a 6px rise. Nothing else moves. */
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    translate: 0 6px;
-  }
-  to {
-    opacity: 1;
-    translate: 0 0;
-  }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* subtle engineering-notebook texture: a faint dot grid */
+body {
+  background-image: radial-gradient(var(--hairline) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5em;
+  color: var(--ink);
+}
+
+h1 { font-size: clamp(2.1rem, 5vw, 3.25rem); font-weight: 500; }
+h2 { font-size: clamp(1.4rem, 3vw, 1.8rem); }
+h3 { font-size: 1.15rem; }
+
+p { margin: 0 0 1.1em; }
+
+a {
+  color: var(--ink);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover { color: var(--signal-green); }
+
+:focus-visible {
+  outline: 2px solid var(--signal-green);
+  outline-offset: 3px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+}
+
+.container {
+  max-width: var(--measure-wide);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.prose {
+  max-width: var(--measure);
+}
+
+.prose h2 { margin-top: 2.2em; }
+.prose blockquote {
+  margin: 1.5em 0;
+  padding-left: 1.1em;
+  border-left: 2px solid var(--signal-green);
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--paper-raised);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+.prose ul, .prose ol { padding-left: 1.3em; }
+
+/* ---------- Nav ---------- */
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem var(--gutter);
+  max-width: var(--measure-wide);
+  margin: 0 auto;
+}
+
+.site-nav .wordmark {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.site-nav .wordmark:hover { color: var(--ink); }
+
+.site-nav .links {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  text-transform: lowercase;
+}
+
+.site-nav .links a {
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.site-nav .links a:hover,
+.site-nav .links a[aria-current='page'] {
+  color: var(--signal-green);
+}
+
+/* ---------- Status ledger: the signature element ---------- */
+.ledger {
+  background: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.ledger-inner {
+  max-width: var(--measure-wide);
+  margin: 0 auto;
+  padding: 0.6rem var(--gutter);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.6rem;
+  align-items: center;
+}
+
+.ledger-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  white-space: nowrap;
+}
+
+.ledger-label {
+  color: var(--terminal-text-soft);
+}
+
+.dot {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  flex: none;
+}
+
+.dot-shipped, .dot-ship { background: var(--signal-green); }
+.dot-in-progress, .dot-progress { background: var(--signal-amber); }
+.dot-planned, .dot-note { background: var(--signal-slate); }
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: clamp(2.5rem, 8vw, 5rem) 0 clamp(2rem, 6vw, 3.5rem);
+}
+
+.hero .kicker {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  max-width: 20ch;
+}
+
+.hero .lede {
+  max-width: 38rem;
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+}
+
+.cta-row {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-top: 1.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.65em 1.1em;
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.cta.primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.cta.primary:hover { background: var(--signal-green); border-color: var(--signal-green); color: var(--paper); }
+.cta:not(.primary):hover { background: var(--paper-raised); color: var(--ink); }
+
+/* ---------- Section rhythm ---------- */
+.section {
+  padding: clamp(2rem, 5vw, 3rem) 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-head .see-all {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* ---------- Rows (projects / log entries share this shape) ---------- */
+.row-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--hairline);
+  text-decoration: none;
+  color: inherit;
+}
+
+.row:first-child { border-top: none; }
+
+.row-meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  padding-top: 0.15rem;
+}
+
+.row-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  margin: 0 0 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+}
+
+.row-body {
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+  margin: 0;
+}
+
+.row-tags {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: var(--paper-raised);
+  padding: 0.2em 0.55em;
+  border-radius: 3px;
+}
+
+/* status pill used on project detail pages */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.35em 0.8em;
+  border-radius: 999px;
+}
+
+.status-pill.shipped { background: var(--signal-green-bg); color: var(--signal-green); }
+.status-pill.in-progress { background: var(--signal-amber-bg); color: var(--signal-amber); }
+.status-pill.planned { background: var(--signal-slate-bg); color: var(--signal-slate); }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--hairline);
+  margin-top: 2rem;
+}
+
+.footer-inner {
+  max-width: var(--measure-wide);
+  margin: 0 auto;
+  padding: 1.75rem var(--gutter) 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.footer-links a { color: var(--ink-soft); text-decoration: none; }
+.footer-links a:hover { color: var(--signal-green); }
+
+@media (max-width: 640px) {
+  .row { grid-template-columns: 4.5rem 1fr; }
+  .row-meta { font-size: 0.7rem; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .fade-up {
-    animation: fade-up 200ms ease-out both;
+  .reveal {
+    animation: rise 0.5s ease both;
   }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ---------- About portrait ---------- */
+.about-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.about-head-text {
+  flex: 1 1 22rem;
+}
+
+.portrait {
+  flex: none;
+  width: 11rem;
+  height: auto;
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+}
+
+@media (max-width: 640px) {
+  .portrait { width: 8.5rem; }
 }

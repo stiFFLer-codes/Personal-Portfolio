@@ -1,0 +1,17 @@
+---
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const links = [
+  { href: '/about', label: 'about' },
+  { href: '/projects', label: 'projects' },
+  { href: '/log', label: 'log' },
+];
+---
+
+<nav class="site-nav" aria-label="Primary">
+  <a class="wordmark" href="/">~/maitreya</a>
+  <div class="links">
+    {links.map((l) => (
+      <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
+    ))}
+  </div>
+</nav>
