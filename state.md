@@ -1,6 +1,8 @@
 # state.md
 
 Working state for **maitreyasapariya.me**. Written 2026-08-31 as a session handoff.
+Updated 2026-08-31 (session 2): consolidation merged to main and pushed, phase 4
+closed out, Vercel deploy confirmed live. See "Session 2" below.
 Not site content. Not committed by default — delete it once it stops being useful.
 
 Authoritative documents remain **CLAUDE.md** (the law) and **AGENTS.md** (builder brief).
@@ -11,18 +13,26 @@ This file only records where things stand.
 ## Where the repo is right now
 
 ```
-origin/main               f3b3afc  test: verify personal ssh setup
-main                      3b6bb22  chore: remove agent tool artifacts, replace stock README
-refactor/consolidate-v2   3a6ba49  refactor: consolidate the two scaffolds into one site   <- HEAD
+origin/main   4f51f2d  Merge refactor/consolidate-v2: consolidated site + phase 4 close-out
+main          4f51f2d  (in sync with origin/main)
 ```
 
-**Nothing has been pushed.** `main` is 1 commit ahead of `origin/main`; the
-consolidation branch is 1 further ahead of that. Both commits are local only.
+**main is merged, pushed, and live.** `refactor/consolidate-v2` was merged into
+`main` with `--no-ff` and pushed to `origin`. The consolidation, the filled
+`site.config.ts`, the real AWS cert date, and the status-ledger JS carve-out are
+all on `origin/main`. `refactor/consolidate-v2` still exists locally at `49ae471`
+and can be deleted whenever.
 
-Untracked: `.claude/` (contains `settings.local.json`), and this file.
+Untracked (intentionally on hold, do not touch): `Certificates/`, `images/`.
 
 Remote: `git@github-personal:stiFFLer-codes/Personal-Portfolio.git`
 (SSH host alias `github-personal` — not the default `github.com` key.)
+
+Deploy: **Vercel git integration is connected and working.** The push to
+`origin/main` triggered an automatic redeploy. Live at
+`https://www.maitreyasapariya.me/` (apex `maitreyasapariya.me` 308-redirects to
+`www`). Verified 2026-08-31: deployed HTML carries the new title, the
+`github.com/stiFFLer-codes` footer link, and the corrected AWS date on `/log`.
 
 ---
 
@@ -83,13 +93,48 @@ site's own design.
 
 ---
 
+## Session 2 (2026-08-31) — phase 4 close-out, merge, deploy
+
+Done this session:
+
+- **`src/site.config.ts`**: `github` set to `https://github.com/stiFFLer-codes`
+  (confirmed by Maitreya), `linkedin` set to
+  `https://www.linkedin.com/in/maitreya-sapariya/`. The `TODO_YOUR_*`
+  placeholders are gone; footer links on every page now resolve.
+- **AWS changelog entry**: file renamed
+  `2026-04-aws-ai-practitioner.md` -> `2026-04-14-aws-ai-practitioner.md`
+  (YYYY-MM-DD convention). Body rewritten to
+  "Passed the AWS Certified AI Practitioner exam on 14 April 2026." — the
+  "(Date above is a placeholder…)" line that was shipping to the public `/log`
+  page is removed. Date confirmed by Maitreya.
+- **CLAUDE.md**: the review-checklist item "No client-side JS shipped for a
+  static section" now names the `StatusLedger.astro` countdown script as a
+  reviewed, permanent, sanctioned exception. This is final — do not re-flag it
+  in future reviews, do not remove the script without an explicit instruction
+  from Maitreya. Any *other* client-side JS on a static section is still a REJECT.
+- Two commits on the branch (`a27750e` fix, `4385bd3` docs), then
+  `refactor/consolidate-v2` merged into `main` with `--no-ff` (`4f51f2d`),
+  clean merge, no conflicts. `main` pushed to `origin` (`3b6bb22..4f51f2d`).
+- Build re-run on `main` after merge: passes, 6 routes, zero `TODO_` in `dist/`.
+- Vercel picked the push up automatically and redeployed; live site verified
+  (see "Where the repo is right now" -> Deploy).
+
+Also confirmed this session: another AWS cert date is now known —
+**AWS Certified Machine Learning – Associate, passed 3 June 2026.** The About
+page lists this cert but there is **no changelog entry for it yet.** Not created —
+outside the scope of the instructions given. Add one if wanted.
+
+Still **not** done: `astro check` (strict typecheck) has never run; `anti-ai`
+pass over prose; deciding on `@astrojs/check` + `typescript` dev deps.
+
+---
+
 ## Build verification (last run, passing)
 
 ```
 6 routes:  /  /about  /log  /projects  /projects/maatritwa-ai  /404
 0 npm vulnerabilities
-0 .js files shipped
-658K dist
+0 .js asset files emitted (the ledger script is inlined per-page — see CLAUDE.md carve-out)
 portrait 1934kB -> 12kB / 31kB webp
 14 self-hosted woff2
 no third-party network requests remaining (verified by grepping built HTML/CSS for https:// hosts)
@@ -103,62 +148,52 @@ unasked. That decision is still open.
 
 ## Open items, roughly in priority order
 
-### 1. Broken links are live in the built HTML
+### 1. ~~Broken links live in the built HTML~~ — DONE (session 2)
 
-`src/site.config.ts` still ships literal TODOs that render as real hrefs in the
-footer of **every page**:
+`site.config.ts` `github`/`linkedin` filled with confirmed real URLs. No `TODO_`
+in `dist/`. Footer links resolve on every page.
 
-```ts
-github:   'https://github.com/TODO_YOUR_USERNAME',
-linkedin: 'https://www.linkedin.com/in/TODO_YOUR_SLUG',
-```
+### 2. ~~The countdown clock — judgment call~~ — RESOLVED (session 2)
 
-One-line fix once the real URLs are known. This is CLAUDE.md phase 4.
+Decision is final: the `StatusLedger` inline script stays. CLAUDE.md now records
+it as a sanctioned permanent exception to the "no client-side JS on a static
+section" rule. Do not re-open this. (The separate "reads anxious" reader-test
+objection was set aside with it — if Maitreya later wants the countdown copy
+softened or the `T-minus` framing changed, that's a content edit, not a rule
+violation.)
 
-### 2. The countdown clock — a judgment call, not a bug
+### 3. Project name spellings — mostly settled, minor cleanup left
 
-`StatusLedger` ships ~500 bytes of inline JS rendering
-**"T-minus Nd to EDISS target"** in the dark strip at the top of every page,
-counting down to `2026-12-17T18:30:00.000Z`.
+- `Maatritwa AI` — the deployed system, and the URL slug. Canonical.
+- `MAMTA` — the research paper. Deliberately distinct from the system; used in
+  `2026-08-30-mamta-methodology.md` and that entry's title.
+- `Matritva` — stale, only in `docs/superpowers/specs/2026-07-15-academic-portfolio-design.md`.
 
-Two objections were raised and are **not yet resolved**:
+The system/paper split is intentional and consistent in the live content. Only
+loose end: the old spec still says `Matritva`. Low priority.
 
-- Reader test: a professor at 11 PM sees an applicant publicly counting down to
-  their own application deadline. That reads anxious, not credible.
-- It is the only thing on the site that trips the checklist item
-  *"No client-side JS shipped for a static section."*
+### 4. Thesis sentence
 
-Recommendation on record: cut the countdown, keep the `now:` line. Not actioned —
-this is Maitreya's call.
+The site `<h1>` and CLAUDE.md now both carry
+"I build software systems that turn messy, real-world data into decisions people
+can act on." verbatim, with no TODO/confirm marker in CLAUDE.md. Treat as
+settled unless Maitreya says otherwise. No agent rewrites it (content rule 5).
 
-### 3. Project name has three spellings
+### 5. ~~Decide what to do with the unpushed work~~ — DONE (session 2)
 
-- `Matritva`      — old CLAUDE.md
-- `Maatritwa AI`  — current v2 content and the URL slug
-- `mamta`         — changelog filename `2026-08-30-mamta-methodology.md`
-
-Pick one and make it consistent across content, slug, and filenames. Also
-CLAUDE.md phase 4.
-
-### 4. Thesis sentence needs confirming
-
-CLAUDE.md carries a working thesis with an explicit HTML comment handing the
-wording back to Maitreya. Direction is settled; the exact sentence is not.
-No agent may rewrite it (content rule 5).
-
-### 5. Decide what to do with the unpushed work
-
-Merge `refactor/consolidate-v2` into `main` and push, or keep iterating on the
-branch. Standing rule: **never force-push main.**
-
-Advice on record: run `npm run dev` and look at the site first. The design
-changed completely during the merge and it has not been viewed rendered.
+Merged `refactor/consolidate-v2` into `main` (`--no-ff`, clean), pushed to
+`origin`, Vercel redeployed automatically. Live and verified. The local
+`refactor/consolidate-v2` branch can be deleted.
 
 ### 6. Smaller, still open
 
-- Add `.claude/settings.local.json` to `.gitignore`.
+- Add `.claude/settings.local.json` to `.gitignore` — still open (not currently
+  showing as untracked; likely covered by a global exclude, but not in-repo).
 - Run the `anti-ai` skill over site prose once the copy is settled.
 - Decide on `@astrojs/check` + `typescript` as dev deps.
+- Optional: add a changelog entry for **AWS Certified Machine Learning –
+  Associate (passed 3 June 2026)**. Cert is already listed on `/about`; no `/log`
+  entry exists.
 
 ---
 
@@ -218,8 +253,9 @@ history. Mild noise, and rewriting it would mean force-pushing main.
 1. ~~Domain, Vercel, Astro~~
 2. ~~Home + About + /log + /projects scaffolding~~
 3. ~~Consolidate the two scaffolds into one repo~~
-4. **Fill `site.config.ts` TODOs; settle the project's spelling  <- current**
-5. Case study: the maternal-health system (the one that carries the thesis)
+4. ~~Fill `site.config.ts` TODOs; settle the project's spelling~~ (spec still
+   says `Matritva` — see open item 3 — but that's a stale doc, not a blocker)
+5. **Case study: the maternal-health system (the one that carries the thesis)  <- current**
 6. Research (in-progress, honest) + Experience
 7. Case studies: Romanian Fiscal AI, DataSaarthi
 8. Writing
