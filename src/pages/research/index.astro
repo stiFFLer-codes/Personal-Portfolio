@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import StatusDot from '../../components/StatusDot.astro';
+
+const research = (await getCollection('research')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base title="Research — Maitreya Sapariya" description="In-progress and published research.">
+  <div class="container">
+    <section class="hero">
+      <p class="kicker reveal">research</p>
+      <h1 class="reveal">In-progress and published research.</h1>
+      <p class="lede reveal">
+        Green means published here or on arXiv. Amber means the manuscript is in revision. The work stays honest about its actual status—no placeholder language.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="row-list">
+        {research.map((r) => (
+          <a class="row" href={`/research/${r.id}`}>
+            <span class="row-meta">{r.data.status.replace('-', ' ')}</span>
+            <div>
+              <p class="row-title">
+                <StatusDot status={r.data.status} />
+                {r.data.title}
+              </p>
+              <p class="row-body">{r.data.summary}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>

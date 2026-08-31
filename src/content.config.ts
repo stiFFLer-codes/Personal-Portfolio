@@ -37,4 +37,23 @@ const changelog = defineCollection({
   }),
 });
 
-export const collections = { projects, changelog };
+const research = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/research' }),
+  schema: z.object({
+    title: z.string(),
+    status: z.enum(['shipped', 'in-progress', 'planned']),
+    statusLabel: z.string(),
+    summary: z.string(),
+    venue: z.string().optional(),
+    order: z.number().default(99),
+    links: z
+      .object({
+        arxiv: z.string().url().optional(),
+        code: z.string().url().optional(),
+        doi: z.string().url().optional(),
+      })
+      .default({}),
+  }),
+});
+
+export const collections = { projects, changelog, research };

@@ -7,6 +7,10 @@ const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
+const research = (await getCollection('research')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
 const changelog = (await getCollection('changelog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
@@ -56,6 +60,27 @@ const dateFmt = (d: Date) =>
                   <span class="tag">{s}</span>
                 ))}
               </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Research</h2>
+        <a class="see-all" href="/research">all research →</a>
+      </div>
+      <div class="row-list">
+        {research.map((r) => (
+          <a class="row" href={`/research/${r.id}`}>
+            <span class="row-meta">{r.data.status.replace('-', ' ')}</span>
+            <div>
+              <p class="row-title">
+                <StatusDot status={r.data.status} />
+                {r.data.title}
+              </p>
+              <p class="row-body">{r.data.summary}</p>
             </div>
           </a>
         ))}
