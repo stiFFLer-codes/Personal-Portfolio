@@ -151,7 +151,14 @@ Any other gradient is a REJECT.
 - [ ] Keyboard navigable; visible focus states
 - [ ] Renders correctly at 375px
 - [ ] No client-side JS shipped for a static section (Astro islands only
-      where interactivity is real)
+      where interactivity is real). **One sanctioned exception:** the
+      ~500-byte inline script in `StatusLedger.astro` that renders the
+      EDISS countdown and the "log:" date in the terminal strip. This was
+      reviewed and accepted as a permanent, intentional carve-out — the
+      values must be computed at view time, not build time. It is not an
+      open violation. Do not re-flag it, and do not remove it without an
+      explicit instruction from Maitreya. Any *other* client-side JS on a
+      static section is still a REJECT.
 - [ ] Semantic HTML — `<article>`, `<time>`, `<nav>`, real heading order
 - [ ] Alt text is descriptive, not decorative filler
 - [ ] No third-party network request added
