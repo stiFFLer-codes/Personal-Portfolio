@@ -107,9 +107,42 @@ a:hover { color: var(--signal-green); }
 }
 
 .prose h2 {
-  margin-top: 2.2em;
-  padding-bottom: 1.25em;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  padding: 1.5em 1.875em;
+  margin-top: 2.5em;
+  margin-bottom: 0;
+  margin-left: -1.875em;
+  margin-right: -1.875em;
+}
+
+/* Content following H2 extends the box */
+.prose h2 + p,
+.prose h2 + ul,
+.prose h2 + ol,
+.prose h2 + blockquote {
+  border-left: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline);
+  margin-top: 0;
+  margin-left: -1.875em;
+  margin-right: -1.875em;
+  padding-left: 1.875em;
+  padding-right: 1.875em;
+}
+
+/* Close the box on the last element before next H2 */
+.prose h2 + p:last-of-type,
+.prose h2 + ul:last-of-type,
+.prose h2 + ol:last-of-type,
+.prose h2 + blockquote:last-of-type,
+.prose h2 + p + p:last-of-type,
+.prose h2 + p + ul:last-of-type,
+.prose h2 + p + ol:last-of-type,
+.prose h2 + p + p + p:last-of-type,
+.prose h2 + p + p + ul:last-of-type,
+.prose h2 + p + p + ol:last-of-type {
   border-bottom: 1px solid var(--hairline);
+  padding-bottom: 1.25em;
 }
 .prose blockquote {
   margin: 1.5em 0;
