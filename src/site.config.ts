@@ -8,9 +8,8 @@ export const SITE = {
     'Software engineer building production ML systems and working toward the EDISS Erasmus Mundus programme. Notes, projects, and a running log.',
   email: 'maitreyasapariya@gmail.com',
 
-  // TODO: confirm these before deploying — do not guess.
-  github: 'https://github.com/TODO_YOUR_USERNAME',
-  linkedin: 'https://www.linkedin.com/in/TODO_YOUR_SLUG',
+  github: 'https://github.com/stiFFLer-codes',
+  linkedin: 'https://www.linkedin.com/in/maitreya-sapariya/',
 
   // Shown in the status ledger as "now:"
   now: 'Software Engineer @ Crest Infosystems',
