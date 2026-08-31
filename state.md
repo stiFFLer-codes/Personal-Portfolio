@@ -259,4 +259,4 @@ history. Mild noise, and rewriting it would mean force-pushing main.
 6. Research (in-progress, honest) + Experience
 7. Case studies: Romanian Fiscal AI, DataSaarthi
 8. Writing
-9. Nordic map — optional, only after everything above is live
+9. travel map — optional, only after everything above is live

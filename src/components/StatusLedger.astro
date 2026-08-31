@@ -39,10 +39,10 @@ const lastLogISO = lastLogDate ? lastLogDate.toISOString() : null;
     var days = daysBetween(deadline, new Date());
     countdownText.textContent =
       days > 0
-        ? 'T-minus ' + days + 'd to EDISS target'
+        ? 'T-minus ' + days + 'd to target'
         : days === 0
-        ? 'EDISS target is today'
-        : Math.abs(days) + 'd past EDISS target';
+        ? 'target is today'
+        : Math.abs(days) + 'd past target';
   }
 
   var lastLogEl = document.getElementById('ledger-lastlog');

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Create a public academic research profile for `maitreyasapariya.me` that helps an Erasmus Mundus EDISS reviewer understand the applicant's work quickly and verify the evidence behind it. The site is a research notebook, not a conventional portfolio or marketing landing page.
+Create a public academic research profile for `maitreyasapariya.me` that helps a reviewer for a research-oriented graduate programme in Europe understand the applicant's work quickly and verify the evidence behind it. The site is a research notebook, not a conventional portfolio or marketing landing page. (The specific programme and what its evaluators weight: see `PRIVATE_NOTES.md`, gitignored.)
 
 The existing site thesis remains the editorial filter: **“I build AI systems, and I study who they exclude.”**
 
@@ -95,7 +95,7 @@ This direction is intentionally revised away from generic glass UI: the distinct
 3. Add Research and Experience with precise current-status language.
 4. Add Romanian Fiscal AI and DataSaarthi only when their case-study records are ready.
 5. Add Writing when there is at least one finished item.
-6. Consider the Nordic map only after the preceding phases are live and it improves comprehension.
+6. Consider the travel map only after the preceding phases are live and it improves comprehension.
 
 ## Acceptance criteria
 

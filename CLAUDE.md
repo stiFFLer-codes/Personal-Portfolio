@@ -1,6 +1,8 @@
 # maitreyasapariya.me
 
-A digital research profile supporting an EDISS Erasmus Mundus application.
+A digital research profile supporting an application to a research-oriented
+graduate programme in Europe. (The specific programme, the rationale, and what
+its evaluators weight live in `PRIVATE_NOTES.md` — gitignored, never committed.)
 Not a portfolio. Not a landing page. A lab notebook that happens to be public.
 
 ## Thesis
@@ -153,7 +155,7 @@ Any other gradient is a REJECT.
 - [ ] No client-side JS shipped for a static section (Astro islands only
       where interactivity is real). **One sanctioned exception:** the
       ~500-byte inline script in `StatusLedger.astro` that renders the
-      EDISS countdown and the "log:" date in the terminal strip. This was
+      countdown and the "log:" date in the terminal strip. This was
       reviewed and accepted as a permanent, intentional carve-out — the
       values must be computed at view time, not build time. It is not an
       open violation. Do not re-flag it, and do not remove it without an
@@ -181,7 +183,7 @@ the page.
 6. Research (in-progress, honest) + Experience
 7. Case studies: Romanian Fiscal AI, DataSaarthi
 8. Writing
-9. Nordic map — optional, only after everything above is live
+9. travel map — optional, only after everything above is live
 
 ## Git
 
