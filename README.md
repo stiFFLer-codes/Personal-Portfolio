@@ -1,7 +1,6 @@
 # maitreyasapariya.me
 
-Source for my personal site. Static, built with [Astro](https://astro.build),
-deployed on Vercel.
+A personal research profile site. Static, built with [Astro](https://astro.build), deployed on Vercel.
 
 ## Running it
 
@@ -14,18 +13,14 @@ npm run build    # production build to dist/
 npm run preview  # serve the production build locally
 ```
 
-## Working in this repo
+## Content model
 
-Two files carry the rules, and they are not decorative:
+Projects, research, and changelog entries are each single-file content collections. To add work to the site, add one file. Schema lives in `src/content.config.ts`.
 
+## Governance
+
+Two files hold the rules:
 - `CLAUDE.md` — design system, content rules, phase order, review checklist
-- `AGENTS.md` — brief for anything generating components
+- `AGENTS.md` — context for fresh sessions; what to build next
 
-The short version: every factual claim on the site has to survive someone
-checking it, all body prose is written by me, and accessibility is not
-negotiable.
-
-## License
-
-Code is free to read and learn from. The writing and images are not — please
-don't reuse them.
+All factual claims on the site must survive verification. All body prose is human-authored. Accessibility is not optional.

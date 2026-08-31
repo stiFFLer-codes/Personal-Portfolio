@@ -1,35 +1,60 @@
-# Builder brief
+# Context for fresh sessions
 
-You are implementing components for a static Astro site.
+This site is a maintained system, not a brochure. Every claim is true; every status honest.
 
-## Hard rules
+## What this site is
 
-- **Never invent facts about the site owner.** No credentials, dates,
-  awards, numbers, or achievements. If copy is missing, insert
-  `{{TODO: copy}}` and stop. Fabricating a fact is the worst possible
-  failure mode here.
-- **Never write body prose.** Structure and markup only.
-- Use only the custom properties in `src/styles/global.css`, which are
-  the tokens listed in `CLAUDE.md` → Design system. A literal hex value
-  in a component is a reject. No new colours.
-- **No new dependencies, and no third-party network requests.** The site
-  has zero runtime dependencies and ships no external calls. Fonts are
-  self-hosted. Adding either needs justification in the PR body.
-- Site-wide facts come from `src/site.config.ts`. Never hardcode them.
-- Ship zero JavaScript unless interactivity is genuinely required.
-- Semantic HTML. Real heading hierarchy. Every interactive element
-  keyboard-reachable with a visible focus state.
-- Respect `prefers-reduced-motion`.
+A research profile supporting an application to a research-oriented graduate programme in Europe. See `PRIVATE_NOTES.md` (gitignored) for the specific programme and reasoning. The public site refers only to "a research-oriented graduate programme in Europe."
 
-## Definition of done
+The thesis: **"I build software systems that turn messy, real-world data into decisions people can act on."** Every section serves that sentence or it doesn't ship.
 
-- `npm run build` passes clean
-- No TypeScript errors, no `any`
-- Works at 375px and 1440px
-- Lighthouse a11y = 100
-- Diff touches only the files named in the task
+The reader: a professor at 11 PM who has already read ~200 applications. Optimize for scannable, credible, specific.
 
-## Output format
+## Site map (current + planned)
 
-Full file contents, one file per code block, with the path as the first
-line comment. No explanation unless asked.
+| Route | Status | Purpose |
+| --- | --- | --- |
+| `/` | Live | Hero, current work, research, recent log |
+| `/about` | Live | Biography, education, research interests |
+| `/projects` | Live | List of all projects with status |
+| `/projects/[slug]` | Live | Project detail (Maatritwa AI: bordered-section styling) |
+| `/research` | Shipped, live status unconfirmed | List of research (ADS-Cascade, CARTA) |
+| `/research/[slug]` | Shipped, live status unconfirmed | Research detail page |
+| `/log` | Live | Timestamped changelog |
+| `/writing/[slug]` | Planned (phase 8) | Human-authored writing |
+| `/travel-map` | Optional (phase 9) | Only after all above are live and proven useful |
+
+The phase order in `CLAUDE.md` is the source of truth. Follow it; don't skip ahead.
+
+## Content workflow
+
+### Adding a project
+
+Create `src/content/projects/[slug].md` with: `title`, `summary`, `status` (shipped / in-progress / planned), `order` (integer), `stack` (array). Write body in Markdown. H2 headers auto-apply bordered-section styling.
+
+### Adding research
+
+Create `src/content/research/[slug].md` with: `title`, `summary`, `status`, `statusLabel`, `order`, optional: `venue`, `links` (arxiv, code, doi).
+
+### Adding a log entry
+
+Create `src/content/changelog/[YYYY-MM-DD]-slug.md` with: `title`, `tag` (shipped / progress / planned / note), `date`. Body optional.
+
+`npm run build` must pass. No TypeScript errors. Test at 375px and 1440px. Lighthouse a11y = 100.
+
+## Rules and tokens
+
+**For content rules, design tokens, design system law, and review checklist: read `CLAUDE.md`.** Don't duplicate them here; it's the single source of truth.
+
+Key non-negotiable rule: **Never name the programme, consortium, or partner institutions in any committed file.** Use generic language only. The reasoning lives in `PRIVATE_NOTES.md`.
+
+## One principle
+
+**Simplicity over complexity.** When there's a simpler way to build or word something, take it. Don't add sections, dependencies, or process overhead the site doesn't need yet.
+
+## Session startup
+
+1. Read this file.
+2. Check `state.md` to see where work left off.
+3. Check `CLAUDE.md` for design system and full review checklist before shipping anything.
+4. If you're unsure whether something is in scope, it probably isn't—ask the user.
