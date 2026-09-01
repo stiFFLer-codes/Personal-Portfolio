@@ -11,48 +11,44 @@ const lastLogISO = lastLogDate ? lastLogDate.toISOString() : null;
 
 <div class="ledger">
   <div class="ledger-inner">
-    <span class="ledger-item">
-      <span class="dot dot-ship" aria-hidden="true"></span>
-      <span class="ledger-label">now:</span> {SITE.now}
-    </span>
-    <span class="ledger-item" id="ledger-countdown" data-deadline={deadlineISO}>
-      <span class="ledger-label">⧗</span> <span id="countdown-text">—</span>
+    <span><span class="ledger-label">now:</span> {SITE.now}</span>
+    <span id="ledger-countdown" data-deadline={deadlineISO}>
+      <span class="ledger-label">target:</span> <span id="countdown-text">—</span>
     </span>
     {lastLogISO && (
-      <span class="ledger-item" id="ledger-lastlog" data-last-log={lastLogISO}>
-        <span class="ledger-label">↻ log:</span> <span id="lastlog-text"></span>
+      <span id="ledger-lastlog" data-last-log={lastLogISO}>
+        <span class="ledger-label">log:</span> <span id="lastlog-text">—</span>
       </span>
     )}
   </div>
 </div>
 
 <script>
+  // The sanctioned client-side script (see CLAUDE.md). Both values must be
+  // computed when the page is viewed, not when it is built — a countdown
+  // baked in at build time is wrong the next day.
   function daysBetween(a, b) {
-    var ms = 1000 * 60 * 60 * 24;
-    return Math.ceil((a.getTime() - b.getTime()) / ms);
+    return Math.ceil((a.getTime() - b.getTime()) / 86400000);
   }
 
   var countdownEl = document.getElementById('ledger-countdown');
   var countdownText = document.getElementById('countdown-text');
   if (countdownEl && countdownText) {
-    var deadline = new Date(countdownEl.dataset.deadline);
-    var days = daysBetween(deadline, new Date());
+    var days = daysBetween(new Date(countdownEl.dataset.deadline), new Date());
     countdownText.textContent =
       days > 0
-        ? 'T-minus ' + days + 'd to target'
+        ? days + 'd remaining'
         : days === 0
-        ? 'target is today'
-        : Math.abs(days) + 'd past target';
+        ? 'today'
+        : Math.abs(days) + 'd past';
   }
 
   var lastLogEl = document.getElementById('ledger-lastlog');
   var lastLogText = document.getElementById('lastlog-text');
   if (lastLogEl && lastLogText) {
-    var d = new Date(lastLogEl.dataset.lastLog);
-    lastLogText.textContent = d.toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    });
+    lastLogText.textContent = new Date(lastLogEl.dataset.lastLog).toLocaleDateString(
+      'en-GB',
+      { day: 'numeric', month: 'short', year: 'numeric' }
+    );
   }
 </script>

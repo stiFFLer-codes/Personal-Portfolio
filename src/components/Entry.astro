@@ -1,0 +1,61 @@
+---
+// One row on the status rail. Projects, research, and log entries are
+// all the same shape: a status dot on the spine, a title, a meta value
+// on the right, and optional body and tags.
+//
+// This is the only place list rows are described. Change the shape of a
+// listing here and every page that lists anything follows.
+import StatusDot from './StatusDot.astro';
+
+interface Props {
+  title: string;
+  /** shipped / in-progress / planned, or ship / progress / note for log entries. */
+  status: 'shipped' | 'in-progress' | 'planned' | 'ship' | 'progress' | 'note';
+  /** Right-hand column: a date for log entries, a status word for work. */
+  meta: string;
+  /** Set when `meta` is a date, so the date is machine-readable. */
+  datetime?: Date;
+  /** Omit for entries with no page of their own — log entries. */
+  href?: string;
+  summary?: string;
+  tags?: string[];
+  /** h2 under a page title, h3 under a section heading. */
+  as?: 'h2' | 'h3';
+}
+
+const {
+  title,
+  status,
+  meta,
+  datetime,
+  href,
+  summary,
+  tags = [],
+  as: Heading = 'h3',
+} = Astro.props;
+
+---
+
+<article class="entry">
+  <StatusDot status={status} />
+  <div class="entry-head">
+    {/* Only the title is the link. Wrapping the whole card in an <a> would
+        make the link's accessible name the title, the status, the summary
+        and every tag read out as one string. CSS stretches the hit area
+        back over the card. */}
+    <Heading class="entry-title">
+      {href ? <a href={href}>{title}</a> : title}
+    </Heading>
+    {datetime ? (
+      <time class="entry-meta" datetime={datetime.toISOString().slice(0, 10)}>{meta}</time>
+    ) : (
+      <span class="entry-meta">{meta}</span>
+    )}
+  </div>
+  {summary && <p class="entry-body">{summary}</p>}
+  {tags.length > 0 && (
+    <ul class="entry-tags">
+      {tags.map((t) => <li>{t}</li>)}
+    </ul>
+  )}
+</article>

@@ -1,48 +1,106 @@
 /* ============================================================
-   Design tokens
-   Concept: the site is a small, maintained system, not a brochure.
-   Paper-light body, one bold dark "terminal" strip (the status
-   ledger) as the single high-contrast signature element.
+   maitreyasapariya.me — design tokens
+
+   Concept: a fieldbook. One hue family (a deep pine green) tinted
+   all the way from paper to ink, so the page reads as one material
+   rather than a neutral sheet with accents dropped on it. Two
+   typefaces: Newsreader carries display and body, JetBrains Mono
+   carries everything mechanical — status, dates, labels, nav.
+
+   Signature element: the status rail. A hairline spine down every
+   list, with each entry's status dot sitting on the line.
+
+   Everything below is a token. Component files use the token,
+   never a literal value.
    ============================================================ */
 
 :root {
-  /* color */
-  --paper: #f3f4f0;
-  --paper-raised: #ebece6;
-  --ink: #16191c;
-  --ink-soft: #545b60;
-  --ink-faint: #8a9096;
-  --hairline: rgba(22, 25, 28, 0.14);
+  /* ---- color ------------------------------------------------
+     Contrast against --paper, verified:
+       ink 15.6 · ink-soft 7.1 · ink-faint 4.6
+       green 5.7 · amber 5.3 · slate 6.2
+     Every text color clears WCAG AA (4.5) at body size.
+     -------------------------------------------------------- */
+  --paper: #f2f4ef;
+  --paper-raised: #e6eae1;
+  --ink: #171c1a;
+  --ink-soft: #4c5450;
+  --ink-faint: #646e69;
+  --hairline: rgba(23, 28, 26, 0.13);
+  --hairline-strong: rgba(23, 28, 26, 0.24);
 
-  --terminal-bg: #12151a;
-  --terminal-text: #e7e9e4;
-  --terminal-text-soft: #a4aba8;
+  --terminal-bg: #141a18;
+  --terminal-text: #e4e8e1;
+  --terminal-soft: #9aa49e;
 
-  --signal-green: #2e7d5b;
-  --signal-green-bg: rgba(46, 125, 91, 0.12);
-  --signal-amber: #b8791a;
-  --signal-amber-bg: rgba(184, 121, 26, 0.13);
-  --signal-slate: #5b6b79;
-  --signal-slate-bg: rgba(91, 107, 121, 0.12);
+  --signal-green: #2b6b4f;
+  --signal-amber: #8a5a17;
+  --signal-slate: #4a5d6b;
 
-  /* type */
-  --font-display: 'Bricolage Grotesque', 'Arial Narrow', sans-serif;
-  --font-body: 'Newsreader', 'Georgia', serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+  /* ---- type ---- */
+  --font-body: 'Newsreader Variable', Newsreader, Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
 
-  /* layout */
-  --measure: 42rem;
-  --measure-wide: 54rem;
-  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  /* Set once, here. Do not introduce a new size in a component
+     file — add it to this block with a reason instead. */
+  --t-2xs: 0.6875rem;
+  --t-xs: 0.75rem;
+  --t-sm: 0.8125rem;
+  --t-base: 1.125rem;
+  --t-md: 1.1875rem;
+  --t-lg: clamp(1.3rem, 2.4vw, 1.6rem);
+  --t-xl: clamp(1.9rem, 4.6vw, 2.9rem);
+
+  --lh-tight: 1.16;
+  --lh-body: 1.65;
+  --track-tight: -0.018em;
+  --track-mono: 0.02em;
+
+  /* ---- space ------------------------------------------------
+     A 0.25rem step. Use a token, never a magic pixel. The two
+     rhythm values at the end are the only fluid ones.
+     -------------------------------------------------------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+
+  --gutter: clamp(1.25rem, 5vw, 2.5rem);
+  --section-y: clamp(2.5rem, 6vw, 4rem);
+  --hero-y: clamp(3rem, 9vw, 6rem);
+
+  /* ---- layout ---- */
+  --measure: 38rem;      /* prose. ~68 characters. never wider */
+  --measure-wide: 54rem; /* page container */
+  --rail: var(--s-5);    /* distance from the status rail to content */
+
+  /* Drop from an entry's top padding to the optical center of its title's
+     first line. Derived from the title's size and line-height, so nudge it
+     if either changes. */
+  --dot-offset: 0.72rem;
+
+  --radius: 3px;
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
-* {
+/* ============================================================
+   Base
+   ============================================================ */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   background: var(--paper);
   color-scheme: light;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -50,51 +108,107 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  font-size: var(--t-base);
+  line-height: var(--lh-body);
+  font-synthesis-weight: none;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-}
 
-/* subtle engineering-notebook texture: a faint dot grid */
-body {
+  /* The one sanctioned gradient: a faint dot grid, the notebook
+     texture. Any other gradient on this site is a mistake. */
   background-image: radial-gradient(var(--hairline) 1px, transparent 1px);
-  background-size: 22px 22px;
+  background-size: 24px 24px;
 }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  margin: 0 0 0.5em;
+h1,
+h2,
+h3 {
+  font-family: var(--font-body);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-tight);
   color: var(--ink);
+  margin: 0 0 var(--s-4);
+  text-wrap: balance;
 }
 
-h1 { font-size: clamp(2.1rem, 5vw, 3.25rem); font-weight: 500; }
-h2 { font-size: clamp(1.4rem, 3vw, 1.8rem); }
-h3 { font-size: 1.15rem; }
+/* Newsreader is a text face doing display duty. It holds up at
+   size when it is set light and tight — heavy weights at 2.9rem
+   read as a magazine headline, which is not what this is. */
+h1 {
+  font-size: var(--t-xl);
+  font-weight: 380;
+}
 
-p { margin: 0 0 1.1em; }
+h2 {
+  font-size: var(--t-lg);
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+p {
+  margin: 0 0 var(--s-4);
+}
 
 a {
   color: var(--ink);
   text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--hairline-strong);
+  transition: color 0.16s var(--ease), text-decoration-color 0.16s var(--ease);
 }
 
-a:hover { color: var(--signal-green); }
+a:hover {
+  color: var(--signal-green);
+  text-decoration-color: currentColor;
+}
 
 :focus-visible {
   outline: 2px solid var(--signal-green);
   outline-offset: 3px;
+  border-radius: 1px;
 }
 
-.mono {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  letter-spacing: 0.01em;
+img {
+  max-width: 100%;
+  height: auto;
 }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.sr-only-focusable {
+  position: absolute;
+  top: 0;
+  left: -9999px;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--radius);
+}
+
+.sr-only-focusable:focus {
+  top: var(--s-3);
+  left: var(--s-3);
+}
+
+/* ============================================================
+   Layout primitives
+   ============================================================ */
 
 .container {
   max-width: var(--measure-wide);
@@ -102,196 +216,217 @@ a:hover { color: var(--signal-green); }
   padding: 0 var(--gutter);
 }
 
-.prose {
-  max-width: var(--measure);
-}
-
-.prose h2 {
-  border: 1px solid var(--hairline);
-  background: var(--paper);
-  padding: 1.5em 1.875em;
-  margin-top: 2.5em;
-  margin-bottom: 0;
-  margin-left: -1.875em;
-  margin-right: -1.875em;
-}
-
-/* Content following H2 extends the box */
-.prose h2 + p,
-.prose h2 + ul,
-.prose h2 + ol,
-.prose h2 + blockquote {
-  border-left: 1px solid var(--hairline);
-  border-right: 1px solid var(--hairline);
-  margin-top: 0;
-  margin-left: -1.875em;
-  margin-right: -1.875em;
-  padding-left: 1.875em;
-  padding-right: 1.875em;
-}
-
-/* Close the box on the last element before next H2 */
-.prose h2 + p:last-of-type,
-.prose h2 + ul:last-of-type,
-.prose h2 + ol:last-of-type,
-.prose h2 + blockquote:last-of-type,
-.prose h2 + p + p:last-of-type,
-.prose h2 + p + ul:last-of-type,
-.prose h2 + p + ol:last-of-type,
-.prose h2 + p + p + p:last-of-type,
-.prose h2 + p + p + ul:last-of-type,
-.prose h2 + p + p + ol:last-of-type {
-  border-bottom: 1px solid var(--hairline);
-  padding-bottom: 1.25em;
-}
-.prose blockquote {
-  margin: 1.5em 0;
-  padding-left: 1.1em;
-  border-left: 2px solid var(--signal-green);
-  color: var(--ink-soft);
-  font-style: italic;
-}
-.prose code {
+.mono {
   font-family: var(--font-mono);
-  font-size: 0.85em;
-  background: var(--paper-raised);
-  padding: 0.1em 0.35em;
-  border-radius: 3px;
+  font-size: var(--t-sm);
+  font-weight: 450;
+  letter-spacing: var(--track-mono);
+  font-variant-ligatures: none;
 }
-.prose ul, .prose ol { padding-left: 1.3em; }
 
-/* ---------- Nav ---------- */
+/* ============================================================
+   Nav
+   ============================================================ */
+
 .site-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem var(--gutter);
+  gap: var(--s-4);
+  flex-wrap: wrap;
   max-width: var(--measure-wide);
   margin: 0 auto;
+  padding: var(--s-4) var(--gutter);
 }
 
 .site-nav .wordmark {
   font-family: var(--font-mono);
+  font-size: var(--t-sm);
   font-weight: 500;
-  font-size: 0.95rem;
+  letter-spacing: var(--track-mono);
   color: var(--ink);
-}
-
-.site-nav .wordmark:hover { color: var(--ink); }
-
-.site-nav .links {
-  display: flex;
-  gap: 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  text-transform: lowercase;
-}
-
-.site-nav .links a {
-  color: var(--ink-soft);
   text-decoration: none;
 }
 
-.site-nav .links a:hover,
-.site-nav .links a[aria-current='page'] {
+.site-nav .wordmark:hover {
   color: var(--signal-green);
 }
 
-/* ---------- Status ledger: the signature element ---------- */
+.site-nav .links {
+  display: flex;
+  gap: var(--s-5);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+}
+
+.site-nav .links a {
+  color: var(--ink-faint);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+
+.site-nav .links a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--hairline-strong);
+}
+
+/* The current page keeps the dot vocabulary used everywhere else. */
+.site-nav .links a[aria-current='page'] {
+  color: var(--ink);
+  border-bottom-color: var(--signal-green);
+}
+
+/* ============================================================
+   Status ledger — the dark strip. The site's one high-contrast
+   surface, and the only place that inverts.
+   ============================================================ */
+
 .ledger {
   background: var(--terminal-bg);
   color: var(--terminal-text);
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
 }
 
 .ledger-inner {
   max-width: var(--measure-wide);
   margin: 0 auto;
-  padding: 0.6rem var(--gutter);
+  padding: var(--s-2) var(--gutter);
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 1.6rem;
-  align-items: center;
-}
-
-.ledger-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45em;
-  white-space: nowrap;
+  gap: var(--s-1) var(--s-6);
+  align-items: baseline;
 }
 
 .ledger-label {
-  color: var(--terminal-text-soft);
+  color: var(--terminal-soft);
 }
+
+/* ============================================================
+   Status dots — one vocabulary, sitewide.
+   Never the sole carrier of meaning; a text label always sits
+   alongside. The paper-colored ring lets a dot sit on the rail
+   without the rail running through it.
+   ============================================================ */
 
 .dot {
   display: inline-block;
-  width: 0.5em;
-  height: 0.5em;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
+  border: 3px solid var(--paper);
+  box-sizing: content-box;
   flex: none;
 }
 
-.dot-shipped, .dot-ship { background: var(--signal-green); }
-.dot-in-progress, .dot-progress { background: var(--signal-amber); }
-.dot-planned, .dot-note { background: var(--signal-slate); }
-
-/* ---------- Hero ---------- */
-.hero {
-  padding: clamp(2.5rem, 8vw, 5rem) 0 clamp(2rem, 6vw, 3.5rem);
+.dot-shipped,
+.dot-ship {
+  background: var(--signal-green);
 }
 
-.hero .kicker {
+.dot-in-progress,
+.dot-progress {
+  background: var(--signal-amber);
+}
+
+.dot-planned,
+.dot-note {
+  background: var(--signal-slate);
+}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+
+.hero {
+  padding: var(--hero-y) 0 var(--section-y);
+}
+
+.kicker {
   font-family: var(--font-mono);
-  font-size: 0.82rem;
-  color: var(--ink-soft);
-  margin-bottom: 1rem;
+  font-size: var(--t-sm);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--ink-faint);
+  margin-bottom: var(--s-5);
+}
+
+.kicker a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.kicker a:hover {
+  color: var(--signal-green);
 }
 
 .hero h1 {
-  max-width: 20ch;
+  max-width: 21ch;
+  margin-bottom: var(--s-5);
 }
 
-.hero .lede {
-  max-width: 38rem;
-  font-size: 1.15rem;
+.lede {
+  max-width: var(--measure);
+  font-size: var(--t-md);
   color: var(--ink-soft);
+  margin-bottom: 0;
 }
+
+/* ============================================================
+   Buttons — the filled one echoes the ledger strip: dark means
+   "the system". Two per view, at most.
+   ============================================================ */
 
 .cta-row {
   display: flex;
-  gap: 0.85rem;
+  gap: var(--s-3);
   flex-wrap: wrap;
-  margin-top: 1.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
+  margin-top: var(--s-6);
 }
 
 .cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
-  padding: 0.65em 1.1em;
-  border: 1px solid var(--ink);
-  border-radius: 3px;
+  gap: var(--s-2);
+  padding: 0.7em 1.2em;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
   text-decoration: none;
   color: var(--ink);
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.16s var(--ease), color 0.16s var(--ease),
+    border-color 0.16s var(--ease);
+}
+
+.cta:hover {
+  background: var(--paper-raised);
+  border-color: var(--ink-faint);
+  color: var(--ink);
 }
 
 .cta.primary {
   background: var(--ink);
+  border-color: var(--ink);
   color: var(--paper);
 }
 
-.cta.primary:hover { background: var(--signal-green); border-color: var(--signal-green); color: var(--paper); }
-.cta:not(.primary):hover { background: var(--paper-raised); color: var(--ink); }
+.cta.primary:hover {
+  background: var(--signal-green);
+  border-color: var(--signal-green);
+  color: var(--paper);
+}
 
-/* ---------- Section rhythm ---------- */
+/* ============================================================
+   Sections
+   ============================================================ */
+
 .section {
-  padding: clamp(2rem, 5vw, 3rem) 0;
+  padding: var(--section-y) 0;
   border-top: 1px solid var(--hairline);
 }
 
@@ -299,151 +434,379 @@ a:hover { color: var(--signal-green); }
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: var(--s-4);
+  margin-bottom: var(--s-5);
 }
 
-.section-head .see-all {
+.section-head h2 {
+  margin: 0;
+}
+
+.see-all {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--ink-soft);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
   white-space: nowrap;
+  text-decoration: none;
 }
 
-/* ---------- Rows (projects / log entries share this shape) ---------- */
-.row-list {
+.see-all:hover {
+  color: var(--signal-green);
+}
+
+/* ============================================================
+   The status rail — signature element.
+
+   Each entry owns one segment of a shared hairline spine, so the
+   segments join into a continuous line down the list and a single
+   segment can light up on hover. The dot straddles the line.
+   ============================================================ */
+
+.rail {
   display: flex;
   flex-direction: column;
 }
 
-.row {
-  display: grid;
-  grid-template-columns: 6.5rem 1fr;
-  gap: 1rem;
-  padding: 1.1rem 0;
-  border-top: 1px solid var(--hairline);
-  text-decoration: none;
-  color: inherit;
+.entry {
+  position: relative;
+  display: block;
+  padding: var(--s-4) 0 var(--s-5) var(--rail);
+  border-left: 1px solid var(--hairline);
+  transition: border-color 0.18s var(--ease);
 }
 
-.row:first-child { border-top: none; }
-
-.row-meta {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--ink-faint);
-  padding-top: 0.15rem;
+.entry:last-child {
+  padding-bottom: var(--s-4);
 }
 
-.row-title {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 1.05rem;
-  margin: 0 0 0.25rem;
+/* Only entries that link anywhere respond to hover. Log entries have no
+   page of their own and must not look clickable. */
+.entry:has(.entry-title a):hover {
+  border-left-color: var(--signal-green);
+}
+
+.entry .dot {
+  position: absolute;
+  left: -0.5px;
+  top: calc(var(--s-4) + var(--dot-offset));
+  transform: translate(-50%, -50%);
+}
+
+.entry-head {
   display: flex;
-  align-items: center;
-  gap: 0.55em;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
 }
 
-.row-body {
-  color: var(--ink-soft);
-  font-size: 0.96rem;
+.entry-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.35;
   margin: 0;
 }
 
-.row-tags {
-  margin-top: 0.5rem;
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+.entry-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.16s var(--ease);
 }
 
-.tag {
+/* Stretch the title link back over the whole card, so the entry is one
+   comfortable click target while the link still announces only its title. */
+.entry-title a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.entry:hover .entry-title a {
+  color: var(--signal-green);
+}
+
+/* The right-hand meta column. Dates and statuses align down the
+   page, so the reader can scan state without reading titles. */
+.entry-meta {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+  white-space: nowrap;
+  text-align: right;
+  flex: none;
+}
+
+.entry-body {
   color: var(--ink-soft);
-  background: var(--paper-raised);
-  padding: 0.2em 0.55em;
-  border-radius: 3px;
+  font-size: 1rem;
+  max-width: var(--measure);
+  margin: var(--s-2) 0 0;
 }
 
-/* status pill used on project detail pages */
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
+/* Stack as a plain run of mono words rather than chips. Chips add a third
+   surface color to a page that only needs two. */
+.entry-tags {
+  list-style: none;
+  margin: var(--s-3) 0 0;
+  padding: 0;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  padding: 0.35em 0.8em;
-  border-radius: 999px;
+  font-size: var(--t-2xs);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
 }
 
-.status-pill.shipped { background: var(--signal-green-bg); color: var(--signal-green); }
-.status-pill.in-progress { background: var(--signal-amber-bg); color: var(--signal-amber); }
-.status-pill.planned { background: var(--signal-slate-bg); color: var(--signal-slate); }
+.entry-tags li {
+  display: inline;
+}
 
-/* ---------- Footer ---------- */
+.entry-tags li + li::before {
+  content: ' · ';
+  color: var(--hairline-strong);
+}
+
+@media (max-width: 34rem) {
+  .entry-head {
+    flex-direction: column;
+    gap: var(--s-1);
+  }
+
+  .entry-meta {
+    text-align: left;
+    order: -1;
+  }
+}
+
+/* ============================================================
+   Status line on detail pages — a dot and a sentence, not a
+   colored pill. The label says the status in words, so color is
+   never load-bearing.
+   ============================================================ */
+
+.status-line {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-soft);
+}
+
+.status-line .dot {
+  border-width: 0;
+}
+
+/* ============================================================
+   Prose
+   ============================================================ */
+
+.prose {
+  max-width: var(--measure);
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+/* A rule above each section, not a box around it. The old
+   bordered-box treatment needed a selector per possible run of
+   sibling elements and broke on any section longer than one
+   paragraph; a rule cannot break. */
+.prose h2 {
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--hairline);
+}
+
+/* The section wrapper already draws a rule above the article; a second one
+   immediately under it reads as a mistake. */
+.prose > h2:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.prose h3 {
+  margin-top: var(--s-6);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.2em;
+  margin: 0 0 var(--s-4);
+}
+
+.prose li {
+  margin-bottom: var(--s-2);
+}
+
+.prose li::marker {
+  color: var(--ink-faint);
+}
+
+.prose blockquote {
+  margin: var(--s-5) 0;
+  padding-left: var(--s-4);
+  border-left: 2px solid var(--signal-green);
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--paper-raised);
+  padding: 0.12em 0.36em;
+  border-radius: var(--radius);
+}
+
+.prose strong {
+  font-weight: 650;
+}
+
+.prose a {
+  text-decoration-color: var(--signal-green);
+}
+
+/* ============================================================
+   Source links — the checkable artifacts. On a site whose whole
+   argument is "verify this", these are not an afterthought.
+   ============================================================ */
+
+.sources {
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--hairline);
+  max-width: var(--measure);
+}
+
+.sources h2 {
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: var(--track-mono);
+  text-transform: lowercase;
+  color: var(--ink-faint);
+  margin: 0 0 var(--s-3);
+  border: 0;
+  padding: 0;
+}
+
+.sources ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+}
+
+.sources a {
+  color: var(--ink);
+  text-decoration-color: var(--hairline-strong);
+}
+
+/* ============================================================
+   About portrait
+   ============================================================ */
+
+.about-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s-6);
+}
+
+.about-head-text {
+  flex: 1 1 20rem;
+}
+
+.portrait {
+  flex: none;
+  width: 10.5rem;
+  height: auto;
+  border-radius: var(--radius);
+  filter: saturate(0.92);
+}
+
+@media (max-width: 34rem) {
+  .portrait {
+    width: 8rem;
+  }
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+
 .site-footer {
   border-top: 1px solid var(--hairline);
-  margin-top: 2rem;
+  margin-top: var(--s-8);
 }
 
 .footer-inner {
   max-width: var(--measure-wide);
   margin: 0 auto;
-  padding: 1.75rem var(--gutter) 2.5rem;
+  padding: var(--s-5) var(--gutter) var(--s-7);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--s-3) var(--s-5);
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--ink-soft);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
 }
 
 .footer-links {
   display: flex;
-  gap: 1.25rem;
+  gap: var(--s-5);
 }
 
-.footer-links a { color: var(--ink-soft); text-decoration: none; }
-.footer-links a:hover { color: var(--signal-green); }
-
-@media (max-width: 640px) {
-  .row { grid-template-columns: 4.5rem 1fr; }
-  .row-meta { font-size: 0.7rem; }
+.footer-links a {
+  color: var(--ink-faint);
+  text-decoration: none;
 }
+
+.footer-links a:hover {
+  color: var(--signal-green);
+}
+
+/* ============================================================
+   Motion — one gesture, used once, on page load.
+   Everything here is opt-in via prefers-reduced-motion.
+   ============================================================ */
 
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
-    animation: rise 0.5s ease both;
+    animation: rise 0.5s var(--ease) both;
   }
+
+  .reveal:nth-child(2) {
+    animation-delay: 0.05s;
+  }
+
+  .reveal:nth-child(3) {
+    animation-delay: 0.1s;
+  }
+
+  .reveal:nth-child(4) {
+    animation-delay: 0.15s;
+  }
+
   @keyframes rise {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
-}
-
-/* ---------- About portrait ---------- */
-.about-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 2rem;
-}
-
-.about-head-text {
-  flex: 1 1 22rem;
-}
-
-.portrait {
-  flex: none;
-  width: 11rem;
-  height: auto;
-  border: 1px solid var(--hairline);
-  border-radius: 4px;
-}
-
-@media (max-width: 640px) {
-  .portrait { width: 8.5rem; }
 }

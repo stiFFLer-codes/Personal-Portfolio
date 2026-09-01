@@ -5,9 +5,17 @@ import Footer from '../components/Footer.astro';
 import { SITE } from '../site.config';
 
 // Self-hosted so no render-blocking request leaves for a third-party CDN.
-import '@fontsource-variable/bricolage-grotesque';
+//
+// Two families only. Newsreader does display and body; the mono does
+// everything mechanical. Both are the weight-axis-only builds — the
+// multi-axis files carry an optical-size axis this site does not use and
+// cost roughly twice the bytes.
+//
+// The italic import is separate and deliberate: Newsreader's normal build
+// ships no italic faces at all, and `.prose blockquote` is italic. Do not
+// tidy it away.
 import '@fontsource-variable/newsreader';
-import '@fontsource-variable/newsreader/standard-italic.css';
+import '@fontsource-variable/newsreader/wght-italic.css';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 
@@ -53,19 +61,3 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <Footer />
   </body>
 </html>
-
-<style is:global>
-  .sr-only-focusable {
-    position: absolute;
-    left: -9999px;
-    top: 0;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 0.6rem 1rem;
-    z-index: 100;
-  }
-  .sr-only-focusable:focus {
-    left: 1rem;
-    top: 1rem;
-  }
-</style>

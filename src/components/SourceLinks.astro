@@ -1,0 +1,38 @@
+---
+// The checkable artifacts for a project or a paper. Renders nothing when
+// there is nothing to link, so an entry with no public code does not show
+// an empty heading.
+const LABELS: Record<string, string> = {
+  repo: 'repository',
+  live: 'live site',
+  preprint: 'preprint',
+  arxiv: 'arXiv',
+  code: 'code',
+  doi: 'doi',
+};
+
+interface Props {
+  links: Record<string, string | undefined>;
+}
+const { links } = Astro.props;
+
+const entries = Object.entries(links).filter(([, url]) => Boolean(url)) as [
+  string,
+  string,
+][];
+---
+
+{entries.length > 0 && (
+  <section class="sources">
+    <h2>sources</h2>
+    <ul>
+      {entries.map(([key, url]) => (
+        <li>
+          <a href={url} target="_blank" rel="noopener">
+            {LABELS[key] ?? key} ↗
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

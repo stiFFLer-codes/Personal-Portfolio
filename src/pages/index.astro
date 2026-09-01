@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import StatusDot from '../components/StatusDot.astro';
+import Entry from '../components/Entry.astro';
 
 const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
@@ -45,23 +45,16 @@ const dateFmt = (d: Date) =>
         <h2>Currently shipping</h2>
         <a class="see-all" href="/projects">all projects →</a>
       </div>
-      <div class="row-list">
+      <div class="rail">
         {projects.map((p) => (
-          <a class="row" href={`/projects/${p.id}`}>
-            <span class="row-meta">{p.data.status.replace('-', ' ')}</span>
-            <div>
-              <p class="row-title">
-                <StatusDot status={p.data.status} />
-                {p.data.title}
-              </p>
-              <p class="row-body">{p.data.summary}</p>
-              <div class="row-tags">
-                {p.data.stack.map((s: string) => (
-                  <span class="tag">{s}</span>
-                ))}
-              </div>
-            </div>
-          </a>
+          <Entry
+            href={`/projects/${p.id}`}
+            title={p.data.title}
+            status={p.data.status}
+            meta={p.data.status.replace('-', ' ')}
+            summary={p.data.summary}
+            tags={p.data.stack}
+          />
         ))}
       </div>
     </section>
@@ -71,18 +64,15 @@ const dateFmt = (d: Date) =>
         <h2>Research</h2>
         <a class="see-all" href="/research">all research →</a>
       </div>
-      <div class="row-list">
+      <div class="rail">
         {research.map((r) => (
-          <a class="row" href={`/research/${r.id}`}>
-            <span class="row-meta">{r.data.status.replace('-', ' ')}</span>
-            <div>
-              <p class="row-title">
-                <StatusDot status={r.data.status} />
-                {r.data.title}
-              </p>
-              <p class="row-body">{r.data.summary}</p>
-            </div>
-          </a>
+          <Entry
+            href={`/research/${r.id}`}
+            title={r.data.title}
+            status={r.data.status}
+            meta={r.data.status.replace('-', ' ')}
+            summary={r.data.summary}
+          />
         ))}
       </div>
     </section>
@@ -92,17 +82,14 @@ const dateFmt = (d: Date) =>
         <h2>Recent log</h2>
         <a class="see-all" href="/log">full log →</a>
       </div>
-      <div class="row-list">
-        {recentLog.map((entry) => (
-          <div class="row">
-            <span class="row-meta">{dateFmt(entry.data.date)}</span>
-            <div>
-              <p class="row-title">
-                <StatusDot status={entry.data.tag} />
-                {entry.data.title}
-              </p>
-            </div>
-          </div>
+      <div class="rail">
+        {recentLog.map((e) => (
+          <Entry
+            title={e.data.title}
+            status={e.data.tag}
+            meta={dateFmt(e.data.date)}
+            datetime={e.data.date}
+          />
         ))}
       </div>
     </section>

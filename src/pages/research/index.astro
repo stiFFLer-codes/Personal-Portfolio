@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import StatusDot from '../../components/StatusDot.astro';
+import Entry from '../../components/Entry.astro';
 
 const research = (await getCollection('research')).sort(
   (a, b) => a.data.order - b.data.order
@@ -19,18 +19,16 @@ const research = (await getCollection('research')).sort(
     </section>
 
     <section class="section">
-      <div class="row-list">
+      <div class="rail">
         {research.map((r) => (
-          <a class="row" href={`/research/${r.id}`}>
-            <span class="row-meta">{r.data.status.replace('-', ' ')}</span>
-            <div>
-              <p class="row-title">
-                <StatusDot status={r.data.status} />
-                {r.data.title}
-              </p>
-              <p class="row-body">{r.data.summary}</p>
-            </div>
-          </a>
+          <Entry
+            as="h2"
+            href={`/research/${r.id}`}
+            title={r.data.title}
+            status={r.data.status}
+            meta={r.data.status.replace('-', ' ')}
+            summary={r.data.summary}
+          />
         ))}
       </div>
     </section>

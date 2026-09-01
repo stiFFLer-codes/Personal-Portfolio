@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import StatusDot from '../components/StatusDot.astro';
+import Entry from '../components/Entry.astro';
 
 const entries = (await getCollection('changelog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -28,18 +28,16 @@ const dateFmt = (d: Date) =>
     </section>
 
     <section class="section">
-      <div class="row-list">
-        {entries.map((entry) => (
-          <div class="row">
-            <span class="row-meta">{dateFmt(entry.data.date)}</span>
-            <div>
-              <p class="row-title">
-                <StatusDot status={entry.data.tag} />
-                {entry.data.title}
-              </p>
-              {entry.body && <p class="row-body">{entry.body.trim()}</p>}
-            </div>
-          </div>
+      <div class="rail">
+        {entries.map((e) => (
+          <Entry
+            as="h2"
+            title={e.data.title}
+            status={e.data.tag}
+            meta={dateFmt(e.data.date)}
+            datetime={e.data.date}
+            summary={e.body?.trim() || undefined}
+          />
         ))}
       </div>
     </section>

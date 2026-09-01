@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import StatusDot from '../../components/StatusDot.astro';
+import Entry from '../../components/Entry.astro';
 
 const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
@@ -21,23 +21,17 @@ const projects = (await getCollection('projects')).sort(
     </section>
 
     <section class="section">
-      <div class="row-list">
+      <div class="rail">
         {projects.map((p) => (
-          <a class="row" href={`/projects/${p.id}`}>
-            <span class="row-meta">{p.data.status.replace('-', ' ')}</span>
-            <div>
-              <p class="row-title">
-                <StatusDot status={p.data.status} />
-                {p.data.title}
-              </p>
-              <p class="row-body">{p.data.summary}</p>
-              <div class="row-tags">
-                {p.data.stack.map((s: string) => (
-                  <span class="tag">{s}</span>
-                ))}
-              </div>
-            </div>
-          </a>
+          <Entry
+            as="h2"
+            href={`/projects/${p.id}`}
+            title={p.data.title}
+            status={p.data.status}
+            meta={p.data.status.replace('-', ' ')}
+            summary={p.data.summary}
+            tags={p.data.stack}
+          />
         ))}
       </div>
     </section>

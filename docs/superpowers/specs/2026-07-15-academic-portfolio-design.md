@@ -1,5 +1,11 @@
 # Academic Portfolio Design
 
+> **Superseded — historical record only.**
+> This spec predates the consolidation. Its thesis sentence, its route
+> names, and the `Matritva` spelling are all stale. `CLAUDE.md` is the
+> current law; `AGENTS.md` is the current brief. Read this for the
+> reasoning, never for the rules.
+
 ## Purpose
 
 Create a public academic research profile for `maitreyasapariya.me` that helps a reviewer for a research-oriented graduate programme in Europe understand the applicant's work quickly and verify the evidence behind it. The site is a research notebook, not a conventional portfolio or marketing landing page. (The specific programme and what its evaluators weight: see `PRIVATE_NOTES.md`, gitignored.)

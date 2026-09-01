@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import StatusDot from '../../components/StatusDot.astro';
+import SourceLinks from '../../components/SourceLinks.astro';
 
 export async function getStaticPaths() {
   const research = await getCollection('research');
@@ -23,13 +25,18 @@ const { Content } = await render(research);
       <p class="kicker reveal"><a href="/research">← research</a></p>
       <h1 class="reveal">{research.data.title}</h1>
       <p class="lede reveal">{research.data.summary}</p>
-      <span class={`status-pill ${research.data.status} reveal`}>
+      <p class="status-line reveal">
+        <StatusDot status={research.data.status} />
         {research.data.statusLabel}
-      </span>
+        {research.data.venue && <span>· {research.data.venue}</span>}
+      </p>
     </section>
 
-    <section class="section prose">
-      <Content />
+    <section class="section">
+      <article class="prose">
+        <Content />
+      </article>
+      <SourceLinks links={research.data.links} />
     </section>
   </div>
 </Base>
