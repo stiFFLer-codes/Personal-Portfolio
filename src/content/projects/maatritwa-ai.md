@@ -5,6 +5,8 @@ statusLabel: 'Methodology locked, model training not started'
 summary: 'A preeclampsia risk system for rural India, built around a three-tier explainability layer for clinicians, ASHA workers, and mothers-to-be.'
 stack: ['React 19', 'FastAPI', 'Supabase', 'SHAP']
 order: 1
+links:
+  repo: 'https://github.com/stiFFLer-codes/Maatritwa-AI'
 ---
 
 ## The problem
