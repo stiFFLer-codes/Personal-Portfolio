@@ -81,51 +81,70 @@ Violating rule 1 or 5 is grounds for immediate REJECT.
 - Content Collections (`src/content.config.ts`) for projects and changelog
 - Fonts self-hosted via `@fontsource-variable/*`. No third-party font CDN,
   ever — an EU reviewer should not hit a US ad-tech domain to read this page.
+  **Two families only** (Newsreader, JetBrains Mono), weight-axis builds.
+  Adding a third face needs the same justification as adding a dependency.
 - Site-wide facts live in `src/site.config.ts`, nowhere else
 - Vercel, Hobby plan (non-commercial — never add analytics that monetize)
 - TypeScript, strict
 
 ## Design system — law, not suggestion
 
-Concept: a small, maintained system, not a brochure. Paper-light body, one
-bold dark "terminal" strip (the status ledger) as the single high-contrast
-signature element.
+Concept: **a fieldbook.** One hue family — a deep pine green — tinted the
+whole way from paper to ink, so the page reads as a single material rather
+than a neutral sheet with accents dropped on it. Two typefaces. One dark
+"terminal" strip (the status ledger) as the single high-contrast surface.
 
 ```
-Paper           #F3F4F0   page background
-Paper raised    #EBECE6   tag / code chips
-Ink             #16191C   primary text
-Ink soft        #545B60   secondary text
-Ink faint       #8A9096   meta text
-Hairline        rgba(22,25,28,0.14)
+Paper           #F2F4EF   page background — pale limestone, green cast
+Paper raised    #E6EAE1   inline code
+Ink             #171C1A   primary text — green-black, not neutral black
+Ink soft        #4C5450   secondary text
+Ink faint       #646E69   meta text
+Hairline        rgba(23,28,26,0.13)
+Hairline strong rgba(23,28,26,0.24)   borders, underlines
 
-Terminal bg     #12151A   the ledger strip only
-Terminal text   #E7E9E4
-Terminal soft   #A4ABA8
+Terminal bg     #141A18   the ledger strip only
+Terminal text   #E4E8E1
+Terminal soft   #9AA49E
 
-Signal green    #2E7D5B   shipped, links on hover, focus ring
-Signal amber    #B8791A   in progress
-Signal slate    #5B6B79   planned / note
+Signal green    #2B6B4F   shipped, links on hover, focus ring, live rail
+Signal amber    #8A5A17   in progress
+Signal slate    #4A5D6B   planned / note
 ```
 
 Every one of these is a CSS custom property in `global.css`. Use the
 variable, never the literal hex. A stray hex in a diff is a REJECT.
 
+**Every text color above clears WCAG AA (4.5:1) on `--paper` at body size.**
+If you introduce a color, compute the ratio before you ship it. Signal
+colors are never the sole carrier of meaning — a text label saying the same
+thing sits beside every status dot on the site.
+
 Type
 
 ```
-Display   Bricolage Grotesque   400–600
-Body      Newsreader (serif)    400 / 500
-Mono      JetBrains Mono        400 / 500   — meta, labels, nav, ledger
-Measure         42rem   (--measure)       prose, never wider
+Display + body  Newsreader (serif)   380 for h1, 500 h2, 600 h3, 400 body
+Mono            JetBrains Mono       meta, labels, nav, ledger, status
+Measure         38rem   (--measure)       prose, ~68 chars, never wider
 Measure wide    54rem   (--measure-wide)  page container
 ```
 
-Scale is fluid, set once in `global.css` with `clamp()`. Do not introduce
-new font sizes in component files — if a size is missing, add it to the
-base layer with a reason.
+One serif doing display and body is deliberate. Hierarchy comes from size,
+weight and the mono, not from a second family. A grotesque display face is
+what made this read as a portfolio rather than a notebook.
 
-Spacing: `rem` on a 0.25 step, or the `--gutter` clamp. No magic pixels.
+Scale is fluid, set once in `global.css` (`--t-2xs` … `--t-xl`) with
+`clamp()`. Do not introduce a new font size in a component file — if one is
+missing, add it to the token block with a reason.
+
+Spacing: the `--s-1` … `--s-8` scale (0.25rem step), `--gutter`,
+`--section-y`, `--hero-y`. No magic pixels, no bare `rem` in a component.
+
+Signature element: **the status rail.** Every list is a hairline spine with
+each entry's status dot straddling the line; hovering a linked entry lights
+that segment green. It exists because it encodes something true — this site
+is a ledger of state — not because a list needed decorating. All list
+markup lives in `Entry.astro`; change the shape there, not per page.
 
 Motion
 
@@ -136,7 +155,10 @@ Motion
   Motion that animates for a user who asked for none is a REJECT.
 
 Banned CSS patterns: box-shadow of any kind, border-radius above 14px
-(the favicon) or 4px (everything else), any emoji in UI chrome.
+(the favicon) or 4px (everything else — circles excepted, the status dots
+are `50%`), any emoji in UI chrome. Symbol glyphs in chrome are a hazard
+too: `⧗` and `↻` were removed from the ledger because neither is in
+JetBrains Mono and both fell back to a different font. Use words.
 
 **One sanctioned gradient:** the faint `radial-gradient` dot grid on
 `body`. It is the notebook texture and the only gradient on the site.
@@ -149,6 +171,8 @@ Any other gradient is a REJECT.
 - [ ] Serves the thesis sentence
 - [ ] Zero content-rule violations
 - [ ] Uses only design-system custom properties (grep for stray hex)
+- [ ] Any new text color computed against `--paper` and ≥ 4.5:1
+- [ ] Status is carried by a word, not only by a color
 - [ ] Lighthouse: performance ≥ 95, a11y = 100
 - [ ] Keyboard navigable; visible focus states
 - [ ] Renders correctly at 375px
