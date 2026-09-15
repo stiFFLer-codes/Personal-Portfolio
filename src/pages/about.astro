@@ -1,7 +1,13 @@
 ---
+import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import Entry from '../components/Entry.astro';
 import portrait from '../assets/maitreya.jpg';
+
+const experience = (await getCollection('experience')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <Base title="About — Maitreya Sapariya" description="Background, current role, and what I'm working toward.">
@@ -36,6 +42,19 @@ import portrait from '../assets/maitreya.jpg';
         AI</a>, a maternal-health risk system for rural India, is where I've put
         that belief into practice so far.
       </p>
+
+      <h2>Experience</h2>
+      <div class="rail">
+        {experience.map((e) => (
+          <Entry
+            as="h3"
+            title={`${e.data.role}, ${e.data.company}`}
+            status={e.data.status}
+            meta={e.data.status.replace('-', ' ')}
+            summary={`${e.data.statusLabel}. ${e.data.summary}`}
+          />
+        ))}
+      </div>
 
       <h2>Finland, briefly</h2>
       <p>
