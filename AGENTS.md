@@ -23,7 +23,7 @@ The reader: a professor at 11 PM who has already read ~200 applications. Optimiz
 | `/log` | Live | Timestamped changelog |
 | `/writing` | Live | List of writing |
 | `/writing/[slug]` | Live | Human-authored writing, 4 posts |
-| Experience | **Not started** | No page, no content collection yet — current focus |
+| Experience (section on `/about`) | Live | Employer entries via the status rail, no detail pages |
 | `/travel-map` | Optional (phase 9) | Only after all above are live and proven useful |
 
 The phase order in `CLAUDE.md` is the source of truth. Follow it; don't skip ahead.
@@ -48,6 +48,14 @@ Create `src/content/research/[slug].md`.
 
 Required: `title`, `status`, `statusLabel`, `summary`.
 Optional: `venue`, `order`, `links` (`arxiv`, `code`, `doi` — full URLs).
+
+### Adding experience
+
+Create `src/content/experience/[slug].md`. Renders as a section on `/about` — no
+detail page, since a job isn't a case study.
+
+Required: `company`, `role`, `status`, `statusLabel`, `summary`.
+Optional: `order` (integer, default 99).
 
 ### Adding a log entry
 
