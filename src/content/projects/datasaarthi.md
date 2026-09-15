@@ -9,13 +9,6 @@ links:
   repo: 'https://github.com/stiFFLer-codes/DataSaarthi'
 ---
 
-## What it does
-
-An AI-assisted data analysis platform designed to make exploratory data analysis
-accessible through a simple, interactive interface. Users can upload CSV datasets,
-automatically identify patterns and anomalies, generate visual insights, compare
-datasets, and interact with their data through an AI-powered chat interface.
-
 ## Stack and history
 
 Built with React, TypeScript, and Vite on the frontend and FastAPI + Python on the

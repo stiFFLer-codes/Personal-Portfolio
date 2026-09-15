@@ -10,13 +10,6 @@ links:
   live: 'https://stiffler-codes.github.io/Maatritwa-AI/'
 ---
 
-## What it does
-
-A three-sided referral system for rural antenatal care in India, built for a national
-innovation demo. ASHA community health workers log a mother's vitals and get a risk
-score; doctors see the same case as a referral with full history and lab data; the
-mother gets a simplified, Hindi-language view of her own risk.
-
 ## The design problem
 
 The interesting design problem — and the one that turned into a research paper — was

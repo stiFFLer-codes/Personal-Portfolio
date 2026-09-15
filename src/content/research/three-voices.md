@@ -9,12 +9,8 @@ links:
   doi: 'https://doi.org/10.5281/zenodo.22252076'
 ---
 
-Three Voices takes one prediction from a random forest model trained on the UCI
-Maternal Health Risk dataset and renders it three different ways depending on who's
-reading it: the full SHAP decomposition for a clinician, a ranked-factor card for a
-community health worker, and a three-lamp visual with a spoken Hindi sentence for the
-mother. When the model's top two risk classes are separated by less than a fixed margin,
-the highest-severity signal is derated from red to amber rather than shown as a false
+When the model's top two risk classes are separated by less than a fixed margin, the
+highest-severity signal is derated from red to amber rather than shown as a false
 all-clear, and every string is filled from a deterministic template with no language
 model at inference, so any rendering can be audited line by line.
 
