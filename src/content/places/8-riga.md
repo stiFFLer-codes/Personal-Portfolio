@@ -1,13 +1,12 @@
 ---
 name: Riga
 country: Latvia
-dateLabel: Aug 2025
+dateLabel: "August '25"
 order: 8
 x: 80.5
 y: 81.9
 anchor: false
-# TODO(maitreya): replace this placeholder with one honest, human-authored line.
-blurb: Across to the Baltics — the old town of Riga.
+blurb: "First Baltic state on the route, and it didn't feel like a stop between other stops. Riga's Old Town is genuinely beautiful, worth slowing down for."
 photos:
   - src: ./img/riga-old-town.jpg
     alt: "Maitreya standing among lavender beds in a Riga old-town square, medieval gabled houses and a church spire behind him."

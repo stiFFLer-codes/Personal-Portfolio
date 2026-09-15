@@ -1,13 +1,12 @@
 ---
 name: Baltic Sea
 country: Helsinki → Stockholm
-dateLabel: Aug 2025
+dateLabel: "August '25"
 order: 3
 x: 60
 y: 49
 anchor: false
-# TODO(maitreya): replace this placeholder with one honest, human-authored line.
-blurb: An overnight cruise across the Baltic, Helsinki to Stockholm.
+blurb: "My first overnight cruise. Falling asleep in one country and waking up in another is still an odd feeling."
 photos:
   - src: ./img/baltic-sea-deck.jpg
     alt: "Maitreya standing on the open deck of a ferry with the Baltic Sea and evening sky behind him."

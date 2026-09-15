@@ -1,13 +1,12 @@
 ---
 name: Tallinn
 country: Estonia
-dateLabel: Aug 2025
+dateLabel: "August '25"
 order: 9
 x: 83.75
 y: 50.75
 anchor: false
-# TODO(maitreya): replace this placeholder with one honest, human-authored line.
-blurb: The last stop — medieval Tallinn, back on the Gulf of Finland.
+blurb: "The last stop, and one I'd wanted to see for years before I ever had a reason to book the flight. A good way to close the loop."
 photos:
   - src: ./img/tallinn-viru-gate.jpg
     alt: "Maitreya standing at the medieval twin towers of the Viru Gate at the entrance to Tallinn's old town."

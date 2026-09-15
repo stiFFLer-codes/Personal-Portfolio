@@ -1,13 +1,12 @@
 ---
 name: Jyväskylä
 country: Finland
-dateLabel: 4–8 Aug 2025
+dateLabel: "August '25"
 order: 2
 x: 88.75
 y: 15.75
 anchor: true
-# TODO(maitreya): replace this placeholder with one honest, human-authored line.
-blurb: The 34th Jyväskylä Summer School — machine learning and stochastic control. The anchor of the trip.
+blurb: "Two weeks at the Jyväskylä Summer School, studying machine learning and stochastic control. I was nervous about coming. By the end it felt like home. Jyväskylä has my heart."
 photos:
   - src: ./img/jyvaskyla-jyu-flags.jpg
     alt: "Blue and orange University of Jyväskylä flags flying against a clear sky outside a campus building."

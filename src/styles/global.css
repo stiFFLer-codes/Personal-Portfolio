@@ -1114,8 +1114,14 @@ img {
   font-size: var(--t-2xs);
 }
 
+/* The field log shows the full blurb; in the small map hover-card a long one
+   is clamped so the card stays compact. */
 .specimen-card-blurb {
-  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   color: var(--ink-soft);
   font-size: var(--t-sm);
   line-height: 1.5;

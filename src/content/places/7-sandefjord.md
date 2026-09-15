@@ -1,13 +1,12 @@
 ---
 name: Sandefjord
 country: Norway
-dateLabel: Aug 2025
+dateLabel: "August '25"
 order: 7
 x: 13.5
 y: 55
 anchor: false
-# TODO(maitreya): replace this placeholder with one honest, human-authored line.
-blurb: South of Oslo, on the fjord.
+blurb: "A quiet coastal town that kept me up all night anyway, and I don't regret a minute of it. Still think about those views."
 photos:
   - src: ./img/sandefjord-dawn.jpg
     alt: "A pink and blue dawn sky over an empty roadside and fields near Sandefjord."

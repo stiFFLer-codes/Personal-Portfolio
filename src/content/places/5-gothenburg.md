@@ -1,13 +1,12 @@
 ---
 name: Gothenburg
 country: Sweden
-dateLabel: Aug 2025
+dateLabel: "August '25"
 order: 5
 x: 19.85
 y: 72.4
 anchor: false
-# TODO(maitreya): replace this placeholder with one honest, human-authored line.
-blurb: The west coast, and the World of Volvo.
+blurb: "West coast, and a childhood dream finally checked off: the World of Volvo museum. Worth the detour for anyone who grew up caring about how things are built."
 photos:
   - src: ./img/gothenburg-vintage-volvo.jpg
     alt: "Maitreya beside a vintage Volvo car on display in the wood-lined World of Volvo museum in Gothenburg."
