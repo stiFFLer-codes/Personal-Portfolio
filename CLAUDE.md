@@ -202,11 +202,16 @@ the page.
 1. ~~Domain, Vercel, Astro~~ DONE
 2. ~~Home + About + /log + /projects scaffolding~~ DONE
 3. ~~Consolidate the two scaffolds into one repo~~ DONE
-4. Fill `site.config.ts` TODOs; settle the project's spelling ← current
-5. Case study: the maternal-health system (the one that carries the thesis)
-6. Research (in-progress, honest) + Experience
-7. Case studies: Romanian Fiscal AI, DataSaarthi
-8. Writing
+4. ~~Fill `site.config.ts` TODOs; settle the project's spelling~~ DONE
+5. ~~Case study: the maternal-health system~~ DONE — `maatritwa-ai.md`, honest
+   about what's trained vs. not
+6. Research (in-progress, honest) + Experience — research half DONE
+   (`/research`, 2 entries); **Experience does not exist yet — no page, no
+   section ← current**
+7. Case studies: Romanian Fiscal AI, DataSaarthi — not started
+8. ~~Writing~~ DONE — shipped ahead of 6/7. Deviation from "do not skip
+   ahead," left as-is rather than unwound; noted here so it reads as a
+   decision, not drift.
 9. travel map — optional, only after everything above is live
 
 ## Git
