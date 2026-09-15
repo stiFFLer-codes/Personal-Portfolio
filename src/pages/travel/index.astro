@@ -62,11 +62,7 @@ const places = (await getCollection('places')).sort(
             <p class="field-blurb">{p.data.blurb}</p>
             <div class="specimen-row">
               {(p.data.photos.length ? p.data.photos : [null]).map((ph, i) => (
-                <Specimen
-                  photo={ph}
-                  index={i}
-                  caption={i === 0 ? `${p.data.name} · ${p.data.dateLabel}` : undefined}
-                />
+                <Specimen photo={ph} index={i} />
               ))}
             </div>
           </li>

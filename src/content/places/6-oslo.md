@@ -8,5 +8,9 @@ y: 45
 anchor: false
 # TODO(maitreya): replace this placeholder with one honest, human-authored line.
 blurb: Into Norway — the fjord city.
-photos: []
+photos:
+  - src: ./img/oslo-opera-house.jpg
+    alt: "Maitreya on the Oslo waterfront in front of the sloping white marble Oslo Opera House."
+  - src: ./img/oslo-munch-museum.jpg
+    alt: "Maitreya on a bridge in front of the tall dark tower of the Munch museum in Oslo."
 ---

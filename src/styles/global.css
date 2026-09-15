@@ -1210,10 +1210,12 @@ img {
 
 /* ---- one mounted photo ---- */
 
+/* Every mounted photo shares one height and takes its width from its own
+   aspect ratio — so a portrait and a landscape sit on the same baseline
+   like prints laid in a row, rather than one towering over the other. */
 .specimen {
-  width: 15rem;
-  max-width: 42vw;
   margin: 0;
+  max-width: 100%;
 }
 
 .specimen.tilt-a {
@@ -1225,6 +1227,7 @@ img {
 }
 
 .specimen-mat {
+  display: inline-block;
   padding: var(--s-2);
   background: var(--paper-raised);
   border: 1px solid var(--hairline);
@@ -1233,8 +1236,9 @@ img {
 
 .specimen-photo {
   display: block;
-  width: 100%;
-  height: auto;
+  height: clamp(7.5rem, 17vw, 10.5rem);
+  width: auto;
+  max-width: 100%;
   border-radius: 1px;
 }
 
@@ -1242,7 +1246,9 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 4 / 3;
+  width: 15rem;
+  max-width: 100%;
+  height: clamp(7.5rem, 17vw, 10.5rem);
   border: 1px dashed var(--hairline-strong);
   border-radius: 1px;
   color: var(--ink-faint);
