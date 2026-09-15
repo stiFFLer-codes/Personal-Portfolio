@@ -85,6 +85,10 @@
 
   --radius: 3px;
   --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+
+  /* Travel plate: the taped-in tilt on a mounted photo. Small on purpose —
+     a fieldbook is precise, so this is a wink, not a mess. */
+  --specimen-tilt: 1.5deg;
 }
 
 /* ============================================================
@@ -252,11 +256,11 @@ img {
   color: var(--signal-green);
 }
 
-/* Wraps because the row grew to five items. Five mono words plus four
-   1.5rem gaps is ~346px of text against ~335px of usable width at 375px,
-   so without this the last link runs off the edge. The tightened gap below
-   pulls it back onto one line at phone widths; the wrap is the guard for
-   anything narrower. */
+/* Wraps because the row grew to six items (travel joined the set). Six mono
+   words plus their gaps overrun ~335px of usable width at 375px, so the row
+   wraps to a second line on a phone rather than running off the edge. The
+   tightened gap below keeps it compact; the wrap is the guard for the
+   narrowest screens. */
 .site-nav .links {
   display: flex;
   flex-wrap: wrap;
@@ -817,6 +821,498 @@ img {
     to {
       opacity: 1;
       transform: none;
+    }
+  }
+}
+
+/* ============================================================
+   Travel plate — the hand-drawn survey map (/travel).
+
+   A framed figure holding an inline-SVG map with one linked marker
+   per stop on top of it. The route draw and the pointer-parallax
+   are a documented carve-out (see CLAUDE.md); the animated parts
+   all live in the reduced-motion guard at the very end.
+   ============================================================ */
+
+.plate {
+  position: relative;
+  margin: 0;
+  padding: var(--s-3);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius);
+  background: var(--paper);
+  /* Clip the parallax drift at the frame. Hover cards flip inward, so they
+     stay inside the frame rather than needing to spill past it. */
+  overflow: hidden;
+}
+
+/* Sits just inside the frame (the frame clips its own overflow, so a tag
+   straddling the border would be cut). */
+.plate-tag {
+  position: absolute;
+  top: var(--s-3);
+  left: var(--s-4);
+  z-index: 3;
+  display: inline-flex;
+  gap: var(--s-1);
+  padding: var(--s-1) var(--s-2);
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  color: var(--ink-faint);
+  font-size: var(--t-2xs);
+  text-transform: lowercase;
+}
+
+.plate-inner {
+  position: relative;
+  transition: transform 0.3s var(--ease);
+  will-change: transform;
+}
+
+.plate-map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---- the drawn map ---- */
+
+.map-land {
+  fill: var(--paper-raised);
+  stroke: var(--ink-faint);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.map-land-faint {
+  opacity: 0.55;
+}
+
+.map-border {
+  fill: none;
+  stroke: var(--hairline-strong);
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+}
+
+.map-water,
+.map-country,
+.map-note,
+.doodle-n {
+  font-family: var(--font-mono);
+  fill: var(--ink-faint);
+}
+
+.map-water {
+  font-size: 16px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.map-water-sm {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  opacity: 0.5;
+}
+
+.map-country {
+  font-size: 19px;
+  letter-spacing: 2px;
+  fill: var(--ink-soft);
+  opacity: 0.75;
+}
+
+.map-country-sm {
+  font-size: 14px;
+}
+
+.map-note {
+  font-size: 13px;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+.doodle {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.5;
+}
+
+.doodle-thin {
+  stroke-width: 1;
+}
+
+.doodle-fill {
+  fill: var(--ink-faint);
+  stroke: none;
+}
+
+.doodle-n {
+  font-size: 14px;
+  text-anchor: middle;
+  opacity: 0.75;
+}
+
+/* ---- the route ---- */
+
+.route-leg {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.5;
+}
+
+.route-leg.anchor-leg {
+  stroke: var(--signal-green);
+  stroke-width: 2.2;
+  opacity: 1;
+}
+
+.route-leg.is-lit {
+  stroke: var(--signal-green);
+  opacity: 1;
+}
+
+/* ---- markers ---- */
+
+.plate-stops {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plate-stops li {
+  margin: 0;
+}
+
+/* A zero-origin anchor: the 24px box is the tap target, centered on the
+   point; the dot, name, and card are positioned out from its center. */
+.stop {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.stop-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid var(--paper);
+  background: var(--signal-slate);
+  box-sizing: content-box;
+  transition: background 0.16s var(--ease);
+}
+
+.stop.is-anchor .stop-dot {
+  width: 14px;
+  height: 14px;
+  background: var(--signal-green);
+}
+
+/* The anchor gets a second ring — a border, never a shadow. */
+.stop.is-anchor .stop-dot::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 1px solid var(--signal-green);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.stop:hover .stop-dot,
+.stop:focus-visible .stop-dot {
+  background: var(--signal-green);
+}
+
+.stop-name {
+  position: absolute;
+  left: calc(50% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  padding: 0 var(--s-1);
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: var(--t-2xs);
+  line-height: 1.35;
+}
+
+.stop.to-left .stop-name {
+  left: auto;
+  right: calc(50% + 12px);
+  text-align: right;
+}
+
+.stop-tag {
+  display: block;
+  color: var(--signal-green);
+  font-size: var(--t-2xs);
+}
+
+.specimen-card {
+  position: absolute;
+  left: calc(50% + 16px);
+  top: calc(50% + 16px);
+  z-index: 5;
+  width: 12.5rem;
+  padding: var(--s-3);
+  background: var(--paper);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease),
+    visibility 0.2s;
+  pointer-events: none;
+}
+
+.stop.to-left .specimen-card {
+  left: auto;
+  right: calc(50% + 16px);
+}
+
+.stop.to-up .specimen-card {
+  top: auto;
+  bottom: calc(50% + 16px);
+}
+
+.stop:hover .specimen-card,
+.stop:focus .specimen-card {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.specimen-card-name {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.specimen-card-meta {
+  display: block;
+  margin: var(--s-1) 0 var(--s-2);
+  color: var(--ink-faint);
+  font-size: var(--t-2xs);
+}
+
+.specimen-card-blurb {
+  display: block;
+  color: var(--ink-soft);
+  font-size: var(--t-sm);
+  line-height: 1.5;
+}
+
+.travel-hint {
+  margin: var(--s-4) 0 0;
+  color: var(--ink-faint);
+  font-size: var(--t-xs);
+}
+
+/* ============================================================
+   Field log — the same stops as text and photos, below the map.
+   The no-JS, mobile, and screen-reader path to everything the
+   map shows. Built on the rail's spine-and-dot vocabulary.
+   ============================================================ */
+
+.field-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.field-entry {
+  position: relative;
+  padding: var(--s-5) 0 var(--s-6) var(--rail);
+  border-left: 1px solid var(--hairline);
+  scroll-margin-top: var(--s-6);
+  transition: border-color 0.18s var(--ease);
+}
+
+.field-entry:last-child {
+  padding-bottom: var(--s-4);
+}
+
+.field-entry > .dot {
+  position: absolute;
+  left: -0.5px;
+  top: calc(var(--s-5) + var(--dot-offset));
+  transform: translate(-50%, -50%);
+}
+
+/* Jumping to a stop from the map lights its entry, the same green the
+   rail uses on hover. */
+.field-entry:target {
+  border-left-color: var(--signal-green);
+}
+
+.field-entry:target .field-name {
+  color: var(--signal-green);
+}
+
+.field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+
+.field-name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  margin: 0;
+}
+
+.field-order {
+  color: var(--ink-faint);
+  font-size: var(--t-xs);
+}
+
+.field-meta {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: var(--t-xs);
+  white-space: nowrap;
+}
+
+.field-blurb {
+  max-width: var(--measure);
+  margin: var(--s-3) 0 var(--s-4);
+  color: var(--ink-soft);
+}
+
+.specimen-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-5) var(--s-4);
+  align-items: flex-start;
+}
+
+/* ---- one mounted photo ---- */
+
+.specimen {
+  width: 15rem;
+  max-width: 42vw;
+  margin: 0;
+}
+
+.specimen.tilt-a {
+  transform: rotate(calc(-1 * var(--specimen-tilt)));
+}
+
+.specimen.tilt-b {
+  transform: rotate(var(--specimen-tilt));
+}
+
+.specimen-mat {
+  padding: var(--s-2);
+  background: var(--paper-raised);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+}
+
+.specimen-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1px;
+}
+
+.specimen-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  border: 1px dashed var(--hairline-strong);
+  border-radius: 1px;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+.specimen-empty .mono {
+  font-size: var(--t-2xs);
+}
+
+.specimen-caption {
+  margin-top: var(--s-2);
+  color: var(--ink-faint);
+  font-size: var(--t-2xs);
+  text-align: center;
+}
+
+@media (max-width: 34rem) {
+  /* Names would collide at 9 stops on a phone-width map; the dots stay
+     tappable and the field log carries the labels. */
+  .stop-name {
+    display: none;
+  }
+
+  .map-water-sm,
+  .map-note {
+    display: none;
+  }
+
+  .field-head {
+    gap: var(--s-1);
+  }
+
+  .field-meta {
+    white-space: normal;
+  }
+}
+
+/* ============================================================
+   Travel plate motion — the documented carve-out. All opt-in via
+   prefers-reduced-motion: the route draws once, pins fade in in
+   travel order. Without motion (or without JS) the route is solid
+   and the pins are simply present.
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .route-leg {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: route-draw 0.55s var(--ease) forwards;
+    animation-delay: calc(var(--leg-i, 0) * 0.1s + 0.2s);
+  }
+
+  @keyframes route-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .stop {
+    animation: stop-in 0.5s var(--ease) both;
+    animation-delay: calc(var(--i, 1) * 0.09s + 0.25s);
+  }
+
+  @keyframes stop-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 }
