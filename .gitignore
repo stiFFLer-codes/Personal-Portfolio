@@ -25,3 +25,14 @@ pnpm-debug.log*
 
 # private working notes — never committed, never pushed
 PRIVATE_NOTES.md
+
+# personal documents and photos kept beside the repo, never published
+/Certificates/
+/images/
+/Experience Letters/
+/papers/
+/blogs/
+/photos/
+
+# machine-local Claude Code settings
+.claude/settings.local.json
