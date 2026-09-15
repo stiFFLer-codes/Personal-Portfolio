@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Entry from '../../components/Entry.astro';
+
+// Sorted by `order`, not by date. The dates sit close together and the
+// reading order is an editorial call — strongest first.
+const posts = (await getCollection('writing')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const dateFmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+
+{/* TODO(maitreya): the h1 and the lede are yours to write. I left the h1 flat
+    and dropped the lede rather than invent a voice for this page. */}
+<Base title="Writing — Maitreya Sapariya" description="Posts.">
+  <div class="container">
+    <section class="hero">
+      <p class="kicker reveal">writing</p>
+      <h1 class="reveal">Writing.</h1>
+    </section>
+
+    <section class="section">
+      <div class="rail">
+        {posts.map((p) => (
+          <Entry
+            as="h2"
+            href={`/writing/${p.id}`}
+            title={p.data.title}
+            status="ship"
+            meta={dateFmt(p.data.date)}
+            datetime={p.data.date}
+            summary={p.data.summary}
+            tags={p.data.tags}
+          />
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>

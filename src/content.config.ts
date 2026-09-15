@@ -56,4 +56,18 @@ const research = defineCollection({
   }),
 });
 
-export const collections = { projects, changelog, research };
+// Each post is one markdown file. Prose is human-authored; agents fix typos
+// only. `order` drives the reading order on /writing — the dates are all
+// close together, so listing order is an editorial call, not a sort by time.
+const writing = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/writing' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    summary: z.string(),
+    tags: z.array(z.string()).default([]),
+    order: z.number().default(99),
+  }),
+});
+
+export const collections = { projects, changelog, research, writing };
