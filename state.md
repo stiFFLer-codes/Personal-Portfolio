@@ -1,8 +1,8 @@
 # state.md
 
-Working state for **maitreyasapariya.me**. Rewritten 2026-09-15 — the previous
-version (written 2026-08-31, "session 2") had gone stale: 25 commits landed
-after it without an update, so it described a repo that no longer existed.
+Working state for **maitreyasapariya.me**. Rewritten 2026-09-15, same session as
+the 08-31 rewrite — phases 5–7 closed out within this session, so this is a
+same-day refresh rather than a new stale-doc correction.
 Not site content. Not committed by default — delete it once it stops being useful.
 
 Authoritative documents remain **CLAUDE.md** (the law) and **AGENTS.md** (builder brief).
@@ -12,13 +12,9 @@ This file only records where things stand.
 
 ## Where the repo is right now
 
-```
-HEAD == main == origin/main   2930725
-```
-
-Working tree clean. No divergence, no unmerged branches, nothing pending.
-`node_modules` is **not installed** in this environment — the site has not
-been build-verified this session.
+Working tree clean after this session's commits, all pushed to
+`origin/claude/upbeat-carson-kieo3s`. `npm install && npm run build` both run
+clean this session — 16 routes, no errors. Not deployed/merged to `main` yet.
 
 ---
 
@@ -27,69 +23,64 @@ been build-verified this session.
 | Phase | State |
 |---|---|
 | 1–4 | Done |
-| 5 — maternal-health case study | Done. `src/content/projects/maatritwa-ai.md` — honest about what's trained (nothing yet) vs. designed (methodology locked) |
-| 6 — Research | Half done. `/research` live with 2 entries (`ads-cascade`, `carta-when-chats-split-apart`) |
-| 6 — Experience | **Not started.** No page, no content collection, nothing. Current focus. |
-| 7 — Romanian Fiscal AI case study | Not started |
-| 7 — DataSaarthi case study | Not started |
-| 8 — Writing | Done, shipped ahead of 6/7. `/writing`, 4 posts. Intentional deviation, not an oversight — see CLAUDE.md phase-order note. |
+| 5 — maternal-health case study | Done. `maatritwa-ai.md` rewritten to describe the actual prototype (national innovation demo, ASHA + doctor views wired, mother view a documented mock) instead of stale "model not trained yet" copy |
+| 6 — Research + Experience | Done. `/research` has 3 entries (`ads-cascade`, `carta-when-chats-split-apart`, `three-voices`); Experience is a section on `/about` (new `experience` content collection, 2 entries) |
+| 7 — Case studies | Done. DataSaarthi added to `/projects`. "Romanian Fiscal AI" turned out to be confidential Crest production work, not publishable in detail — it's a one-line Experience mention; the research question it raised is the ADS-Cascade paper |
+| 8 — Writing | Done, shipped ahead of 6/7 (recorded as an intentional deviation in CLAUDE.md) |
 | 9 — travel map | Optional, untouched |
 
-Also landed since the 08-31 snapshot: a design-system rework
-(`feat(design): single-serif type system, status-rail component, sources
-block pattern`) and a repo link added to the Maatritwa AI project entry.
+All nine phases are now done or explicitly resolved-as-not-applicable.
 
 ---
 
-## Content collections (`src/content.config.ts`)
+## What changed this session, in order
 
-Four collections: `projects`, `changelog`, `research`, `writing`. Each is
-markdown-per-entry, schema-validated with Zod. Adding an entry to any of
-them means dropping a file with frontmatter matching that collection's
-schema — no other code changes needed. See the file itself for the exact
-schema of each (status enums, required fields, link shapes).
-
----
-
-## Open items, priority order
-
-### 1. Experience section — current focus
-
-Does not exist. Needs: a decision on shape (own content collection like
-`research`/`writing`, or a static block on `/about`), then the actual
-facts from Maitreya (role, dates, scope at Crest Infosystems) — prose is
-his to write per content rule 5, not an agent's.
-
-### 2. Case studies: Romanian Fiscal AI, DataSaarthi
-
-Same shape as `maatritwa-ai.md`. Need source material from Maitreya before
-any file gets created — do not draft placeholder prose.
-
-### 3. Build never verified this session
-
-`node_modules` absent. Before trusting any of the above, run
-`npm install && npm run build`, and re-run the review checklist
-(Lighthouse, a11y, 375px render) once there's new content to check.
-
-### 4. Smaller, still open (carried over, unresolved)
-
-- `astro check` (strict typecheck) has never been run — needs
-  `@astrojs/check` + `typescript` as dev deps, which CLAUDE.md gates behind
-  justification. Decision still open.
-- `anti-ai` pass over site prose, once copy for the new sections is settled.
-- Add `.claude/settings.local.json` to `.gitignore` if it's not already
-  covered by a global exclude.
-- Optional: changelog entry for AWS Certified Machine Learning – Associate
-  (passed 3 June 2026) — cert is listed on `/about`, no `/log` entry yet.
-- GitHub account cleanup (username `stiFFLer-codes` → real name, repo
-  rename, profile audit) — web-UI work, `gh` CLI not available here. Full
-  list from the 08-31 session is still valid; not re-checked this pass.
+1. **Bookkeeping pass**: `state.md`, `CLAUDE.md`'s phase order, and `AGENTS.md`'s
+   site map were all stale relative to the actual repo (25 commits had landed
+   without updating them). Corrected all three.
+2. **Experience section**: new `experience` content collection
+   (`company`/`role`/`status`/`statusLabel`/`summary`), rendered via the
+   existing `Entry.astro` status rail on `/about` — no detail pages, since a
+   job isn't a case study. Two entries: Crest Infosystems (current) and
+   InnoByte Services (a completed June–July 2025 internship).
+3. **Research entries fixed**: CARTA was mis-expanded on the site as
+   "Communication Account Reconstruction Triage and Attribution" — the actual
+   paper defines it as "Chat Archive Reconstruction & Temporal Access".
+   Both `ads-cascade.md` and `carta-when-chats-split-apart.md` had stale
+   submission statuses (ADS-Cascade is already submitted to arXiv; CARTA's
+   manuscript is complete and archived on Zenodo, not "in revision"). Added
+   Zenodo DOI links to both.
+4. **Maatritwa AI vs. Three Voices**: the site's `maatritwa-ai.md` said the
+   model hadn't been trained yet, and described it as preeclampsia-specific.
+   Both were stale/inaccurate — Maitreya confirmed Maatritwa AI is the
+   prototype (three-role referral demo) and Three Voices is the separate,
+   completed research paper (public UCI dataset, generic risk, not
+   preeclampsia-specific) that extracted the prototype's hardest design
+   question. Rewrote `maatritwa-ai.md` from Maitreya's own description,
+   added a `three-voices.md` research entry, cross-linked both.
+5. **DataSaarthi** added to `/projects` — completed, not deployed, repo
+   linked. One of Maitreya's three draft versions used "transform" (a CLAUDE.md
+   rule-4 banned word) — skipped that draft, used the other two instead.
+6. Build verified clean after every content change (`npm run build`, grep for
+   stray hex/banned words, cross-link check between the two new entries).
 
 ---
 
-## Environment notes for whoever picks this up
+## Open items, roughly in priority order
 
-- This session: Linux container, Bash tool available, `gh` CLI not
-  installed — GitHub work goes through the GitHub MCP tools instead.
-- Use absolute paths in Bash calls; working directory persists between
-  calls in this harness.
+1. Not merged to `main` / not deployed. Someone needs to open a PR or merge
+   the branch when ready.
+2. `astro check` (strict typecheck) still never run — needs `@astrojs/check` +
+   `typescript` as dev deps, which CLAUDE.md gates behind justification.
+   Decision still open, unchanged from prior sessions.
+3. `anti-ai` pass over the new/edited prose (Experience entries, Maatritwa AI,
+   Three Voices, DataSaarthi) hasn't been run. Maitreya invoked `/anti-ai` and
+   `/anthropic-skills:frontend-design` earlier in this session but the
+   conversation moved to fact-correction before either ran against the new
+   copy — worth doing before this branch ships.
+4. No Lighthouse/real-browser a11y pass this session — verified structurally
+   (heading order, semantic markup, no stray JS) but not with a live audit.
+5. Optional: changelog entry for AWS Certified Machine Learning – Associate
+   (passed 3 June 2026) — still not created.
+6. GitHub account cleanup (username `stiFFLer-codes` → real name, repo
+   rename, profile audit) — web-UI work, unchanged from the 08-31 list.
