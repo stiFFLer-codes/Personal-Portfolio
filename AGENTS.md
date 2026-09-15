@@ -18,10 +18,12 @@ The reader: a professor at 11 PM who has already read ~200 applications. Optimiz
 | `/about` | Live | Biography, education, research interests |
 | `/projects` | Live | List of all projects with status |
 | `/projects/[slug]` | Live | Project detail + sources block |
-| `/research` | Shipped, live status unconfirmed | List of research (ADS-Cascade, CARTA) |
-| `/research/[slug]` | Shipped, live status unconfirmed | Research detail + sources block |
+| `/research` | Live | List of research (ADS-Cascade, CARTA) |
+| `/research/[slug]` | Live | Research detail + sources block |
 | `/log` | Live | Timestamped changelog |
-| `/writing/[slug]` | Planned (phase 8) | Human-authored writing |
+| `/writing` | Live | List of writing |
+| `/writing/[slug]` | Live | Human-authored writing, 4 posts |
+| Experience | **Not started** | No page, no content collection yet — current focus |
 | `/travel-map` | Optional (phase 9) | Only after all above are live and proven useful |
 
 The phase order in `CLAUDE.md` is the source of truth. Follow it; don't skip ahead.
