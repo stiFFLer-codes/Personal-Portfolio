@@ -70,4 +70,20 @@ const writing = defineCollection({
   }),
 });
 
-export const collections = { projects, changelog, research, writing };
+// One entry per employer. Listed on /about via Entry.astro — no detail
+// pages, since a role isn't a case study. Reuses the same status enum as
+// projects/research: in-progress for a current role, shipped for one that's
+// finished.
+const experience = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/experience' }),
+  schema: z.object({
+    company: z.string(),
+    role: z.string(),
+    status: z.enum(['shipped', 'in-progress', 'planned']),
+    statusLabel: z.string(),
+    summary: z.string(),
+    order: z.number().default(99),
+  }),
+});
+
+export const collections = { projects, changelog, research, writing, experience };

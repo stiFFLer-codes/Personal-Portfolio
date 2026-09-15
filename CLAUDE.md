@@ -202,11 +202,22 @@ the page.
 1. ~~Domain, Vercel, Astro~~ DONE
 2. ~~Home + About + /log + /projects scaffolding~~ DONE
 3. ~~Consolidate the two scaffolds into one repo~~ DONE
-4. Fill `site.config.ts` TODOs; settle the project's spelling ← current
-5. Case study: the maternal-health system (the one that carries the thesis)
-6. Research (in-progress, honest) + Experience
-7. Case studies: Romanian Fiscal AI, DataSaarthi
-8. Writing
+4. ~~Fill `site.config.ts` TODOs; settle the project's spelling~~ DONE
+5. ~~Case study: the maternal-health system~~ DONE — resolved per Maitreya:
+   Maatritwa AI (the prototype, national innovation demo, ASHA/doctor views
+   wired, mother view a documented mock) and Three Voices (the research
+   paper, public UCI dataset, distinct from the prototype) are related but
+   separate. `maatritwa-ai.md` corrected accordingly; Three Voices added
+   to `/research`.
+6. ~~Research (in-progress, honest) + Experience~~ DONE — `/research` (3
+   entries) and an Experience section on `/about` (2 employers)
+7. ~~Case study: DataSaarthi~~ DONE. "Romanian Fiscal AI" is confidential
+   Crest production work, not a public case study — it lives as a one-line
+   mention in the Experience entry, and the research question it raised
+   ships as the ADS-Cascade paper instead.
+8. ~~Writing~~ DONE — shipped ahead of 6/7. Deviation from "do not skip
+   ahead," left as-is rather than unwound; noted here so it reads as a
+   decision, not drift.
 9. travel map — optional, only after everything above is live
 
 ## Git

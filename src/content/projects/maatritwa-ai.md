@@ -1,40 +1,33 @@
 ---
 title: 'Maatritwa AI'
 status: 'in-progress'
-statusLabel: 'Methodology locked, model training not started'
-summary: 'A preeclampsia risk system for rural India, built around a three-tier explainability layer for clinicians, ASHA workers, and mothers-to-be.'
-stack: ['React 19', 'FastAPI', 'Supabase', 'SHAP']
+statusLabel: 'ASHA and doctor views fully wired; mother view is a documented UI mock'
+summary: "A three-sided referral system for rural antenatal care in India, built for a national innovation demo: ASHA community health workers log a mother's vitals and get a risk score, doctors see the case as a referral with full history and lab data, and the mother gets a simplified, Hindi-language view of her own risk."
+stack: ['React', 'Vite', 'FastAPI', 'Supabase']
 order: 1
 links:
   repo: 'https://github.com/stiFFLer-codes/Maatritwa-AI'
+  live: 'https://stiffler-codes.github.io/Maatritwa-AI/'
 ---
 
-## The problem
+## The design problem
 
-Hypertensive disorders like preeclampsia are among the leading causes of maternal death, and they are detectable early if someone is actually watching for the signs. In rural India, the person most likely to be watching is an ASHA worker, a community health worker who is often already managing dozens of households through a mix of paper registers and overlapping mobile apps. A tool built for this setting has to work inside that reality, not around it.
-
-## What it does
-
-Maatritwa AI takes a small set of signals an ASHA worker can collect in the field, with no lab dependency, and produces an early preeclampsia risk read. The modeling approach compares Logistic Regression, Random Forest, and XGBoost, using SHAP for attribution, so a prediction comes with a reason attached rather than a bare number.
-
-The part I care about most is the explainability layer. A single risk output means something different to a clinician, to an ASHA worker, and to the pregnant woman herself, so the system explains itself three ways:
-
-- **Clinician** — a full SHAP-based triage dashboard
-- **ASHA worker** — a simplified, actionable recommendation
-- **Mother-to-be** — a spoken explanation, in Hindi, that does not require reading
-
-## Stack
-
-React 19 on the frontend, FastAPI on the backend, Supabase for data, SHAP for the explainability layer.
+The interesting design problem — and the one that turned into a research paper — was
+what to do when the model's prediction sits right on the boundary between risk levels: a
+doctor can read a 0.487 vs 0.499 split and shrug, but a mother handed a red alert can't.
+The system solves this by making uncertainty part of the UI itself — derating an
+ambiguous "red" down to "amber" specifically on the mother's screen, never hiding real
+risk, just refusing to overstate a coin flip as certainty.
 
 ## Where it actually stands
 
-I would rather be precise than impressive here. The evaluation methodology is locked: stratified k-fold cross-validation, SMOTE applied only within training folds, binary risk as the primary target with three-class severity as a secondary, more exploratory target. But the model has not been trained yet, so there are no accuracy or recall numbers to report. The explainability evaluation for each of the three tiers is designed but not yet run.
+Built with React/Vite on the frontend and FastAPI + Supabase on the backend, with a
+rule-based fallback so the whole thing runs standalone with no ML artifacts required.
+Two of three interfaces — ASHA and doctor — are fully wired end-to-end; the
+mother-facing view remains a UI mock, documented as such. That's a deliberate, honest
+scope cut, not a hidden gap.
 
-The research side of this work is being written up separately as a paper (working title: MAMTA). That is a distinct piece of work from the deployed system, with its own open items: ethics approval, a co-author, and a target journal. This page gets updated as those move, not before.
-
-## What's next
-
-- Train and evaluate the three models against the locked methodology
-- Run the clinician-tier and ASHA-tier explainability evaluation
-- Get the MAMTA paper to at least an arXiv or medRxiv preprint
+The hardest design question this prototype raised — how to communicate model
+uncertainty to a non-clinical audience without either alarming or misleading them —
+became a separate research paper, [Three Voices](/research/three-voices), built as its
+own rigorous exercise on a public dataset rather than this system's real data.
