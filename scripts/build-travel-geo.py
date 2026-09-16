@@ -17,6 +17,17 @@ If no local file is given it fetches from raw.githubusercontent.com.
 import json, math, sys, os, urllib.request, ssl
 sys.setrecursionlimit(20000)
 
+
+def make_ssl_context():
+    # Use the proxy CA bundle when this environment provides one (CURL_CA_BUNDLE,
+    # or the known agent-proxy path); otherwise fall back to the system trust
+    # store, so the generator also runs on an ordinary checkout without that file.
+    cafile = os.environ.get("CURL_CA_BUNDLE")
+    if not cafile:
+        fallback = "/root/.ccr/ca-bundle.crt"
+        cafile = fallback if os.path.exists(fallback) else None
+    return ssl.create_default_context(cafile=cafile)
+
 NE_URL = ("https://raw.githubusercontent.com/nvkelso/natural-earth-vector/"
           "master/geojson/ne_50m_admin_0_countries.geojson")
 NE_LAKES_URL = ("https://raw.githubusercontent.com/nvkelso/natural-earth-vector/"
@@ -142,7 +153,7 @@ src = sys.argv[1] if len(sys.argv) > 1 else None
 if src and os.path.exists(src):
     data = json.load(open(src))
 else:
-    ctx = ssl.create_default_context(cafile=os.environ.get("CURL_CA_BUNDLE", "/root/.ccr/ca-bundle.crt"))
+    ctx = make_ssl_context()
     req = urllib.request.Request(NE_URL, headers={"User-Agent": "travel-geo"})
     data = json.load(urllib.request.urlopen(req, context=ctx, timeout=120))
 
@@ -171,7 +182,7 @@ def load_geojson(local_arg_index, url):
     p = sys.argv[local_arg_index] if len(sys.argv) > local_arg_index else None
     if p and os.path.exists(p):
         return json.load(open(p))
-    ctx = ssl.create_default_context(cafile=os.environ.get("CURL_CA_BUNDLE", "/root/.ccr/ca-bundle.crt"))
+    ctx = make_ssl_context()
     req = urllib.request.Request(url, headers={"User-Agent": "travel-geo"})
     return json.load(urllib.request.urlopen(req, context=ctx, timeout=120))
 
