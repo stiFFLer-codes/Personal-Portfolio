@@ -1207,6 +1207,19 @@ img {
   color: var(--ink-soft);
 }
 
+/* A checkable artifact for a stop (currently the Jyväskylä certificate),
+   in the same mono, quiet-until-hover key as .see-all and .sources. */
+.field-source {
+  display: inline-block;
+  margin: calc(-1 * var(--s-2)) 0 var(--s-4);
+  color: var(--ink-faint);
+  text-decoration: none;
+}
+
+.field-source:hover {
+  color: var(--signal-green);
+}
+
 .specimen-row {
   display: flex;
   flex-wrap: wrap;

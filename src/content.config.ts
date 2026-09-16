@@ -115,6 +115,10 @@ const places = defineCollection({
       photos: z
         .array(z.object({ src: image(), alt: z.string() }))
         .default([]),
+      // Optional checkable artifact for a stop (e.g. the Jyväskylä summer-school
+      // certificate). `href` is a path under public/. Same "verify this" idea
+      // as SourceLinks on the project/research pages.
+      source: z.object({ label: z.string(), href: z.string() }).optional(),
     }),
 });
 

@@ -58,6 +58,16 @@ const places = (await getCollection('places')).sort(
               </p>
             </div>
             <p class="field-blurb">{p.data.blurb}</p>
+            {p.data.source && (
+              <a
+                class="field-source mono"
+                href={p.data.source.href}
+                target="_blank"
+                rel="noopener"
+              >
+                {p.data.source.label} ↗
+              </a>
+            )}
             <div class="specimen-row">
               {(p.data.photos.length ? p.data.photos : [null]).map((ph, i) => (
                 <Specimen photo={ph} index={i} />
