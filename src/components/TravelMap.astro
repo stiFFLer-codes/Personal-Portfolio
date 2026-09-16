@@ -3,16 +3,23 @@
 // traced across it. Coastlines are accurate Natural Earth (public-domain)
 // boundaries, projected (Lambert conformal conic) and baked into travel-geo.ts
 // at build time — no map library, no runtime request. Each country is its own
-// path, so real borders read (Norway|Sweden, Estonia|Latvia). Route legs and
-// markers are generated from the `places` collection, projected through the
-// same transform so every pin lands in the right country.
+// path, so real borders read (Norway|Sweden, Estonia|Latvia). Markers and route
+// are generated from the `places` collection, projected through the same
+// transform so every pin lands in the right country.
 //
-// The one small inline script below is a documented carve-out (see CLAUDE.md):
-// bounded pointer-parallax + route-leg glow. Pure enhancement — with no JS the
-// map still renders, the route still draws, hovering still shows each card, and
-// every marker still links to its field-log entry.
+// The inline script (documented carve-out, see CLAUDE.md) adds multi-layer
+// pointer-parallax and route-leg glow. Pure enhancement — the map renders, the
+// route draws, hovers show, and every marker links to its field-log entry
+// without it.
 import type { CollectionEntry } from 'astro:content';
-import { VIEW, KM_PER_PX, COUNTRIES, COUNTRY_LABELS } from './travel-geo';
+import {
+  VIEW,
+  KM_PER_PX,
+  COUNTRIES,
+  COUNTRY_LABELS,
+  GRATICULE,
+  CITY_COORDS,
+} from './travel-geo';
 
 interface Props {
   places: CollectionEntry<'places'>[];
@@ -21,6 +28,7 @@ const { places } = Astro.props;
 
 const VW = VIEW.w;
 const VH = VIEW.h;
+const coordFor = (id: string) => CITY_COORDS[id.replace(/^\d+-/, '')] ?? '';
 
 const stops = [...places]
   .sort((a, b) => a.data.order - b.data.order)
@@ -32,6 +40,7 @@ const stops = [...places]
     dateLabel: p.data.dateLabel,
     blurb: p.data.blurb,
     anchor: p.data.anchor,
+    coord: coordFor(p.id),
     x: p.data.x,
     y: p.data.y,
     px: (p.data.x / 100) * VW,
@@ -45,8 +54,10 @@ const legs = stops.slice(1).map((to, i) => {
   return { i, to, anchor: to.anchor, d: `M ${from.px} ${from.py} L ${to.px} ${to.py}` };
 });
 
-// Country label positions (centroids are unreliable for concave shapes like
-// Norway, so these are placed by hand over each landmass).
+// One continuous path for the traveling route token.
+const routePathD =
+  'M ' + stops.map((s) => `${s.px.toFixed(1)} ${s.py.toFixed(1)}`).join(' L ');
+
 const countryLabels = [
   { name: 'NORWAY', x: 180, y: 250 },
   { name: 'SWEDEN', x: 455, y: 250 },
@@ -65,15 +76,15 @@ const scalePx = scaleKm / KM_PER_PX;
 ---
 
 <figure class="plate" data-plate>
-  <figcaption class="plate-tag mono">
-    <span>the north</span>
-    <span aria-hidden="true">·</span>
-    <span>august '25</span>
+  <figcaption class="cartouche mono">
+    <span class="cartouche-title">THE NORTH</span>
+    <span class="cartouche-sub">a field survey · august '25</span>
   </figcaption>
 
-  <div class="plate-inner" data-plate-inner>
+  <div class="plate-inner">
     <svg
       class="plate-map"
+      data-depth="3"
       viewBox={`0 0 ${VW} ${VH}`}
       role="img"
       aria-labelledby="plate-title plate-desc"
@@ -85,19 +96,37 @@ const scalePx = scaleKm / KM_PER_PX;
         The same stops are listed as text below the map.
       </desc>
 
-      <!-- Engraved water-lines: coastline echoed twice behind the land -->
+      <defs>
+        <pattern
+          id="land-hatch"
+          width="7"
+          height="7"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(45)"
+        >
+          <line class="hatch-line" x1="0" y1="0" x2="0" y2="7" />
+        </pattern>
+      </defs>
+
+      <!-- Graticule (behind land, so it reads only across the sea) -->
+      <g class="graticule" aria-hidden="true">
+        {GRATICULE.map((d) => <path d={d} />)}
+      </g>
+
+      <!-- Engraved water-lines behind the coasts -->
       <g aria-hidden="true">
         {COUNTRIES.map((c) => <path class="map-halo" d={c.d} />)}
         {COUNTRIES.map((c) => <path class="map-halo2" d={c.d} />)}
       </g>
 
-      <!-- Land: each country its own shape, so borders read -->
+      <!-- Land: base fill + a fine engraved hatch, each country its own shape -->
       <g aria-hidden="true">
         {COUNTRIES.map((c) => <path class="map-land" d={c.d} />)}
+        {COUNTRIES.map((c) => <path class="map-hatch" d={c.d} />)}
       </g>
 
       <!-- Labels -->
-      <g aria-hidden="true">
+      <g class="map-labels" aria-hidden="true">
         {countryLabels.map((l) => (
           <text class="map-country" x={l.x} y={l.y}>{l.name}</text>
         ))}
@@ -111,7 +140,7 @@ const scalePx = scaleKm / KM_PER_PX;
         ))}
       </g>
 
-      <!-- Compass rose, top-left ocean -->
+      <!-- Compass rose -->
       <g class="doodle" transform="translate(112 120)" aria-hidden="true">
         <circle r="30" />
         <circle r="22" class="doodle-thin" />
@@ -123,8 +152,8 @@ const scalePx = scaleKm / KM_PER_PX;
         <text class="doodle-n" x="0" y="-45">N</text>
       </g>
 
-      <!-- Scale bar, bottom-left -->
-      <g class="scalebar" transform="translate(44 648)" aria-hidden="true">
+      <!-- Scale bar -->
+      <g class="scalebar" transform="translate(44 636)" aria-hidden="true">
         <path class="doodle-thin" d={`M 0 0 H ${scalePx.toFixed(1)}`} />
         <path class="doodle-thin" d="M 0 -4 V 4" />
         <path class="doodle-thin" d={`M ${scalePx.toFixed(1)} -4 V 4`} />
@@ -132,7 +161,7 @@ const scalePx = scaleKm / KM_PER_PX;
         <text class="scalebar-text" x={(scalePx / 2).toFixed(1)} y="16">{scaleKm} km</text>
       </g>
 
-      <!-- Doodle: a whale in the open Baltic -->
+      <!-- Whale in the open Baltic -->
       <g class="doodle" transform="translate(545 560)" aria-hidden="true">
         <path d="M 0 4 C 18 -12 60 -12 84 0 C 100 8 112 4 122 -4 C 116 12 100 18 82 14 C 58 26 18 24 0 10 C -6 8 -6 6 0 4 Z" />
         <path class="doodle-thin" d="M 24 -4 C 26 -14 32 -18 38 -20" />
@@ -140,6 +169,18 @@ const scalePx = scaleKm / KM_PER_PX;
       </g>
       <path class="doodle doodle-thin" d="M 470 600 C 490 592 510 608 530 600" aria-hidden="true" />
       <path class="doodle doodle-thin" d="M 470 616 C 490 608 510 624 530 616" aria-hidden="true" />
+
+      <!-- Legend -->
+      <g class="legend" transform={`translate(${VW - 196} ${VH - 96})`} aria-hidden="true">
+        <rect class="legend-box" x="0" y="0" width="176" height="78" rx="2" />
+        <rect class="legend-box legend-box2" x="3" y="3" width="170" height="72" rx="1" />
+        <circle class="dot-anchor" cx="18" cy="22" r="4.5" />
+        <text class="legend-text" x="32" y="26">anchor — summer school</text>
+        <circle class="dot-stop" cx="18" cy="42" r="3.5" />
+        <text class="legend-text" x="32" y="46">stop</text>
+        <path class="legend-route" d="M 12 61 L 26 61" />
+        <text class="legend-text" x="32" y="65">the route</text>
+      </g>
 
       <!-- Route legs, drawn between stops in travel order -->
       <g class="route" aria-hidden="true">
@@ -152,11 +193,12 @@ const scalePx = scaleKm / KM_PER_PX;
             style={`--leg-i:${leg.i}`}
           />
         ))}
+        <circle class="route-token" r="3.4" cx="0" cy="0" style={`offset-path: path('${routePathD}')`}></circle>
       </g>
     </svg>
 
     <!-- Markers: real links on top of the map, one per stop -->
-    <ul class="plate-stops">
+    <ul class="plate-stops" data-depth="7">
       {stops.map((s) => (
         <li>
           <a
@@ -177,6 +219,7 @@ const scalePx = scaleKm / KM_PER_PX;
             <span class="specimen-card" aria-hidden="true">
               <span class="specimen-card-name">{s.name}</span>
               <span class="specimen-card-meta mono">{s.country} · {s.dateLabel}</span>
+              {s.coord && <span class="specimen-card-coord mono">{s.coord}</span>}
               <span class="specimen-card-blurb">{s.blurb}</span>
             </span>
           </a>
@@ -187,24 +230,27 @@ const scalePx = scaleKm / KM_PER_PX;
 </figure>
 
 <script>
-  // Documented carve-out (see CLAUDE.md): pointer-parallax + route-leg glow.
-  // Pure enhancement — everything works without it.
+  // Documented carve-out (see CLAUDE.md): multi-layer pointer-parallax + route
+  // leg glow. Pure enhancement — everything works without it.
   var plate = document.querySelector('[data-plate]');
   if (plate && window.matchMedia) {
-    var inner = plate.querySelector('[data-plate-inner]');
+    var layers = plate.querySelectorAll('[data-depth]');
     var fine = matchMedia('(hover: hover) and (pointer: fine)');
     var motionOK = matchMedia('(prefers-reduced-motion: no-preference)');
 
-    if (inner && fine.matches && motionOK.matches) {
+    if (layers.length && fine.matches && motionOK.matches) {
       plate.addEventListener('pointermove', function (e) {
         var r = plate.getBoundingClientRect();
         var dx = (e.clientX - r.left) / r.width - 0.5;
         var dy = (e.clientY - r.top) / r.height - 0.5;
-        inner.style.transform =
-          'translate(' + (dx * -6).toFixed(2) + 'px,' + (dy * -6).toFixed(2) + 'px)';
+        layers.forEach(function (el) {
+          var f = parseFloat(el.getAttribute('data-depth')) || 0;
+          el.style.transform =
+            'translate(' + (dx * -f).toFixed(2) + 'px,' + (dy * -f).toFixed(2) + 'px)';
+        });
       });
       plate.addEventListener('pointerleave', function () {
-        inner.style.transform = '';
+        layers.forEach(function (el) { el.style.transform = ''; });
       });
     }
 

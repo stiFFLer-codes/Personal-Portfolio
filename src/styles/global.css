@@ -841,32 +841,52 @@ img {
   border: 1px solid var(--hairline-strong);
   border-radius: var(--radius);
   background: var(--paper);
+  /* A tasteful lift, so the plate reads as a page mounted on the desk. The one
+     sanctioned box-shadow on the site — reviewed with Maitreya (CLAUDE.md). */
+  box-shadow: 0 1px 1px rgba(23, 28, 26, 0.05), 0 10px 26px -14px rgba(23, 28, 26, 0.22);
   /* Clip the parallax drift at the frame. Hover cards flip inward, so they
      stay inside the frame rather than needing to spill past it. */
   overflow: hidden;
 }
 
-/* Sits just inside the frame (the frame clips its own overflow, so a tag
-   straddling the border would be cut). */
-.plate-tag {
+/* A cartouche title block, top-left, double-ruled like a survey plate. */
+.cartouche {
   position: absolute;
-  top: var(--s-3);
+  top: var(--s-4);
   left: var(--s-4);
   z-index: 3;
-  display: inline-flex;
-  gap: var(--s-1);
-  padding: var(--s-1) var(--s-2);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: var(--s-2) var(--s-3);
   background: var(--paper);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius);
-  color: var(--ink-faint);
+  border: 1px solid var(--hairline-strong);
+  outline: 1px solid var(--hairline);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+.cartouche-title {
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+}
+
+.cartouche-sub {
   font-size: var(--t-2xs);
+  color: var(--ink-faint);
   text-transform: lowercase;
 }
 
 .plate-inner {
   position: relative;
-  transition: transform 0.3s var(--ease);
+}
+
+/* Two parallax planes: the map drifts less (further), the pins more (nearer). */
+.plate-map,
+.plate-stops {
+  transition: transform 0.4s var(--ease);
   will-change: transform;
 }
 
@@ -874,6 +894,68 @@ img {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* ---- graticule + engraved land hatch ---- */
+
+.graticule path {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 0.6;
+  opacity: 0.7;
+}
+
+.hatch-line {
+  stroke: var(--ink-faint);
+  stroke-width: 0.4;
+}
+
+.map-hatch {
+  fill: url(#land-hatch);
+  stroke: none;
+  opacity: 0.14;
+}
+
+/* ---- legend ---- */
+
+.legend-box {
+  fill: var(--paper);
+  stroke: var(--hairline-strong);
+  stroke-width: 1;
+}
+
+.legend-box2 {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 1;
+}
+
+.legend-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--ink-soft);
+}
+
+.legend .dot-anchor {
+  fill: var(--signal-green);
+}
+
+.legend .dot-stop {
+  fill: var(--signal-slate);
+}
+
+.legend-route {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 1.6;
+}
+
+/* ---- the traveling route token ---- */
+
+.route-token {
+  fill: var(--signal-green);
+  opacity: 0;
+  offset-rotate: 0deg;
 }
 
 /* ---- the drawn map ---- */
@@ -1139,6 +1221,17 @@ img {
   font-size: var(--t-2xs);
 }
 
+/* A coordinate readout — the field-note detail, in the live-rail green. */
+.specimen-card-coord {
+  display: block;
+  margin: 0 0 var(--s-2);
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--hairline);
+  color: var(--signal-green);
+  font-size: var(--t-2xs);
+  letter-spacing: var(--track-mono);
+}
+
 /* The field log shows the full blurb; in the small map hover-card a long one
    is clamped so the card stays compact. */
 .specimen-card-blurb {
@@ -1339,30 +1432,53 @@ img {
    ============================================================ */
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Staged load: the plate settles, the grid and labels fade in, the route
+     inks across, a token travels it, and the pins drop in travel order. */
+  .cartouche,
+  .graticule,
+  .map-labels,
+  .legend {
+    animation: fade-in 0.6s var(--ease) both;
+  }
+  .cartouche { animation-delay: 0.1s; }
+  .graticule { animation-delay: 0.15s; }
+  .map-labels { animation-delay: 0.45s; }
+  .legend { animation-delay: 0.6s; }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
   .route-leg {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
     animation: route-draw 0.55s var(--ease) forwards;
-    animation-delay: calc(var(--leg-i, 0) * 0.1s + 0.2s);
+    animation-delay: calc(var(--leg-i, 0) * 0.12s + 0.5s);
   }
 
   @keyframes route-draw {
-    to {
-      stroke-dashoffset: 0;
-    }
+    to { stroke-dashoffset: 0; }
+  }
+
+  .route-token {
+    animation: token 3.3s var(--ease) 0.7s both;
+  }
+
+  @keyframes token {
+    0% { offset-distance: 0%; opacity: 0; }
+    8% { opacity: 0.9; }
+    92% { opacity: 0.9; }
+    100% { offset-distance: 100%; opacity: 0; }
   }
 
   .stop {
     animation: stop-in 0.5s var(--ease) both;
-    animation-delay: calc(var(--i, 1) * 0.09s + 0.25s);
+    animation-delay: calc(var(--i, 1) * 0.14s + 0.8s);
   }
 
   @keyframes stop-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
