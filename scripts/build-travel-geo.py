@@ -19,6 +19,9 @@ sys.setrecursionlimit(20000)
 
 NE_URL = ("https://raw.githubusercontent.com/nvkelso/natural-earth-vector/"
           "master/geojson/ne_50m_admin_0_countries.geojson")
+NE_LAKES_URL = ("https://raw.githubusercontent.com/nvkelso/natural-earth-vector/"
+                "master/geojson/ne_50m_lakes.geojson")
+LAKE_MIN_AREA = 40.0  # viewBox px^2 — keep sizeable lakes, drop specks
 
 # viewBox width; height derived from the projected frame aspect.
 W = 1000.0
@@ -157,6 +160,39 @@ for name in COUNTRIES:
 
 cities_xy = {k: project(lat, lon) for k, (lat, lon) in CITIES.items()}
 
+# --- lakes ---
+def poly_area(proj):
+    a = 0.0
+    for i in range(len(proj) - 1):
+        a += proj[i][0] * proj[i + 1][1] - proj[i + 1][0] * proj[i][1]
+    return abs(a) / 2
+
+def load_geojson(local_arg_index, url):
+    p = sys.argv[local_arg_index] if len(sys.argv) > local_arg_index else None
+    if p and os.path.exists(p):
+        return json.load(open(p))
+    ctx = ssl.create_default_context(cafile=os.environ.get("CURL_CA_BUNDLE", "/root/.ccr/ca-bundle.crt"))
+    req = urllib.request.Request(url, headers={"User-Agent": "travel-geo"})
+    return json.load(urllib.request.urlopen(req, context=ctx, timeout=120))
+
+lakes_data = load_geojson(2, NE_LAKES_URL)
+lake_paths = []
+for f in lakes_data["features"]:
+    g = f["geometry"]
+    polys = [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"]
+    for poly in polys:
+        ring = poly[0]
+        proj = [project(lat, lon) for lon, lat in ring]
+        if all(x < -40 or x > W + 40 or y < -40 or y > H + 40 for x, y in proj):
+            continue
+        if poly_area(proj) < LAKE_MIN_AREA:
+            continue
+        sp = simplify_ring(proj, 0.5)
+        if len(sp) < 3:
+            continue
+        coords = [f"{x:.1f} {y:.1f}" for x, y in sp]
+        lake_paths.append("M" + coords[0] + "L" + "L".join(coords[1:]) + "Z")
+
 # Graticule: meridians every 5deg lon, parallels every 2deg lat, projected.
 grat = []
 for lon in range(5, 31, 5):
@@ -187,6 +223,10 @@ lines.append("];")
 lines.append("export const COUNTRY_LABELS: { name: string; x: number; y: number }[] = [")
 for name, x, y in out_labels:
     lines.append(f"  {{ name: {json.dumps(name)}, x: {x}, y: {y} }},")
+lines.append("];")
+lines.append("export const LAKES: string[] = [")
+for d in lake_paths:
+    lines.append(f"  {json.dumps(d)},")
 lines.append("];")
 lines.append("export const GRATICULE: string[] = [")
 for g in grat:

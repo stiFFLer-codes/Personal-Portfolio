@@ -11,7 +11,7 @@ const places = (await getCollection('places')).sort(
 
 <Base
   title="Travel — Maitreya Sapariya"
-  description="A hand-drawn map of the August 2025 Nordic and Baltic trip, built around the 34th Jyväskylä Summer School."
+  description="A map of the August 2025 Nordic and Baltic trip, built around the 34th Jyväskylä Summer School."
 >
   <div class="container">
     <section class="hero">
@@ -23,15 +23,54 @@ const places = (await getCollection('places')).sort(
         control. I came back certain about where I want to do the rest.
       </p>
     </section>
+  </div>
 
-    <section class="section">
+  <!-- The map breaks out of the text column into a wide atlas plate, with the
+       cartographic furniture set as marginalia in the reclaimed side space. -->
+  <div class="travel-atlas reveal">
+    <div class="atlas-map">
       <TravelMap places={places} />
-      <p class="travel-hint mono reveal">
-        Hover or focus a stop to read its note. Select one to jump to its
+    </div>
+
+    <aside class="atlas-margin">
+      <div class="atlas-title">
+        <span class="atlas-title-main mono">THE NORTH</span>
+        <span class="atlas-title-sub mono">a field survey · august '25</span>
+      </div>
+
+      <p class="atlas-summary mono">solo · {places.length} stops · 5 countries</p>
+
+      <ul class="atlas-legend mono">
+        <li><span class="dot dot-shipped" aria-hidden="true"></span> anchor — summer school</li>
+        <li><span class="dot dot-note" aria-hidden="true"></span> stop</li>
+        <li><span class="atlas-legend-line" aria-hidden="true"></span> the route, in travel order</li>
+      </ul>
+
+      <nav class="atlas-index mono" aria-label="Stops">
+        <ol>
+          {places.map((p) => (
+            <li>
+              <a href={`#stop-${p.id}`}>
+                <span class="atlas-index-num">{String(p.data.order).padStart(2, '0')}</span>
+                <span class="atlas-index-name">{p.data.name}</span>
+                <span
+                  class:list={['dot', p.data.anchor ? 'dot-shipped' : 'dot-note']}
+                  aria-hidden="true"
+                ></span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+
+      <p class="atlas-hint mono">
+        Hover or focus a stop to read its note; select one to jump to its
         photos below.
       </p>
-    </section>
+    </aside>
+  </div>
 
+  <div class="container">
     <section class="section">
       <div class="section-head">
         <h2>Field log</h2>

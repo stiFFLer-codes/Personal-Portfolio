@@ -834,49 +834,18 @@ img {
    all live in the reduced-motion guard at the very end.
    ============================================================ */
 
+/* The plate is a paper mat; the SVG neat-line inside is the map's frame. A
+   subtle lift — the one sanctioned box-shadow on the site (CLAUDE.md). */
 .plate {
   position: relative;
   margin: 0;
-  padding: var(--s-3);
-  border: 1px solid var(--hairline-strong);
+  padding: var(--s-4);
   border-radius: var(--radius);
   background: var(--paper);
-  /* A tasteful lift, so the plate reads as a page mounted on the desk. The one
-     sanctioned box-shadow on the site — reviewed with Maitreya (CLAUDE.md). */
-  box-shadow: 0 1px 1px rgba(23, 28, 26, 0.05), 0 10px 26px -14px rgba(23, 28, 26, 0.22);
+  box-shadow: 0 1px 1px rgba(23, 28, 26, 0.05), 0 12px 30px -16px rgba(23, 28, 26, 0.22);
   /* Clip the parallax drift at the frame. Hover cards flip inward, so they
      stay inside the frame rather than needing to spill past it. */
   overflow: hidden;
-}
-
-/* A cartouche title block, top-left, double-ruled like a survey plate. */
-.cartouche {
-  position: absolute;
-  top: var(--s-4);
-  left: var(--s-4);
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  padding: var(--s-2) var(--s-3);
-  background: var(--paper);
-  border: 1px solid var(--hairline-strong);
-  outline: 1px solid var(--hairline);
-  outline-offset: 2px;
-  border-radius: 1px;
-}
-
-.cartouche-title {
-  font-size: var(--t-sm);
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  color: var(--ink);
-}
-
-.cartouche-sub {
-  font-size: var(--t-2xs);
-  color: var(--ink-faint);
-  text-transform: lowercase;
 }
 
 .plate-inner {
@@ -896,6 +865,164 @@ img {
   height: auto;
 }
 
+/* ============================================================
+   Travel atlas — the map breaks out of the text column into a
+   wide plate, with the cartographic furniture set as marginalia
+   in the reclaimed side space (title, legend, stop index).
+   ============================================================ */
+
+.travel-atlas {
+  max-width: min(96vw, 82rem);
+  margin: var(--section-y) auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17rem;
+  gap: var(--s-7);
+  align-items: start;
+}
+
+.atlas-margin {
+  position: sticky;
+  top: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  color: var(--ink-soft);
+}
+
+.atlas-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--hairline-strong);
+}
+
+.atlas-title-main {
+  font-size: var(--t-md);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--ink);
+}
+
+.atlas-title-sub {
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}
+
+.atlas-summary {
+  margin: 0;
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+}
+
+.atlas-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  font-size: var(--t-2xs);
+  color: var(--ink-soft);
+}
+
+.atlas-legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.atlas-legend .dot {
+  border-width: 2px;
+}
+
+.atlas-legend-line {
+  display: inline-block;
+  width: 16px;
+  height: 0;
+  border-top: 1.5px solid var(--ink-faint);
+  flex: none;
+}
+
+.atlas-index ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.atlas-index li {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.atlas-index a {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-2) 0;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.16s var(--ease);
+}
+
+.atlas-index a:hover {
+  color: var(--signal-green);
+}
+
+.atlas-index-num {
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+}
+
+.atlas-index-name {
+  flex: 1;
+  font-size: var(--t-sm);
+}
+
+.atlas-index a:hover .atlas-index-name {
+  color: var(--signal-green);
+}
+
+.atlas-index .dot {
+  border-width: 2px;
+}
+
+.atlas-hint {
+  margin: 0;
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+  line-height: 1.5;
+}
+
+/* Stack on narrower screens: map first, marginalia below. */
+@media (max-width: 52rem) {
+  .travel-atlas {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-5);
+  }
+
+  .atlas-margin {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-4) var(--s-6);
+    align-items: start;
+  }
+
+  .atlas-index {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 30rem) {
+  .atlas-margin {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---- graticule + engraved land hatch ---- */
 
 .graticule path {
@@ -913,41 +1040,28 @@ img {
 .map-hatch {
   fill: url(#land-hatch);
   stroke: none;
-  opacity: 0.14;
+  opacity: 0.12;
 }
 
-/* ---- legend ---- */
-
-.legend-box {
+/* Lakes — water cut back into the land (Finland reads as lake country). */
+.map-lake {
   fill: var(--paper);
+  stroke: var(--ink-faint);
+  stroke-width: 0.7;
+  stroke-linejoin: round;
+}
+
+/* Neat-line — an inner ruled border with corner ticks, the map's frame. */
+.neatline rect {
+  fill: none;
   stroke: var(--hairline-strong);
   stroke-width: 1;
 }
 
-.legend-box2 {
-  fill: none;
-  stroke: var(--hairline);
-  stroke-width: 1;
-}
-
-.legend-text {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  fill: var(--ink-soft);
-}
-
-.legend .dot-anchor {
-  fill: var(--signal-green);
-}
-
-.legend .dot-stop {
-  fill: var(--signal-slate);
-}
-
-.legend-route {
+.neatline-ticks {
   fill: none;
   stroke: var(--ink-faint);
-  stroke-width: 1.6;
+  stroke-width: 1.2;
 }
 
 /* ---- the traveling route token ---- */
@@ -985,12 +1099,17 @@ img {
   opacity: 0.5;
 }
 
+/* Labels carry a paper knockout halo (paint-order: stroke) so they read
+   clearly over the terrain instead of camouflaging into it. */
 .map-water,
 .map-country,
-.map-note,
 .doodle-n {
   font-family: var(--font-mono);
   fill: var(--ink-faint);
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 3.5;
+  stroke-linejoin: round;
 }
 
 .map-water {
@@ -998,13 +1117,12 @@ img {
   letter-spacing: 3px;
   text-transform: uppercase;
   text-anchor: middle;
-  opacity: 0.6;
 }
 
 .map-water-sm {
   font-size: 12px;
   letter-spacing: 1.5px;
-  opacity: 0.5;
+  stroke-width: 3;
 }
 
 .map-country {
@@ -1012,7 +1130,6 @@ img {
   letter-spacing: 2px;
   fill: var(--ink-soft);
   text-anchor: middle;
-  opacity: 0.75;
 }
 
 .map-country-sm {

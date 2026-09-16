@@ -1,22 +1,24 @@
 ---
 // The travel plate: a survey map of northern Europe with the Aug 2025 trip
-// traced across it. Coastlines are accurate Natural Earth (public-domain)
-// boundaries, projected (Lambert conformal conic) and baked into travel-geo.ts
-// at build time — no map library, no runtime request. Each country is its own
-// path, so real borders read (Norway|Sweden, Estonia|Latvia). Markers and route
-// are generated from the `places` collection, projected through the same
-// transform so every pin lands in the right country.
+// traced across it. Coastlines and lakes are accurate Natural Earth
+// (public-domain) geometry, projected (Lambert conformal conic) and baked into
+// travel-geo.ts at build time — no map library, no runtime request. Each
+// country is its own path, so real borders read. Markers and route are
+// generated from the `places` collection, projected through the same transform
+// so every pin lands in the right country.
+//
+// The map furniture (title, legend, stop index) lives OUTSIDE the plate as
+// marginalia in the page — the plate itself carries only what belongs on a map.
 //
 // The inline script (documented carve-out, see CLAUDE.md) adds multi-layer
-// pointer-parallax and route-leg glow. Pure enhancement — the map renders, the
-// route draws, hovers show, and every marker links to its field-log entry
-// without it.
+// pointer-parallax and route-leg glow. Pure enhancement.
 import type { CollectionEntry } from 'astro:content';
 import {
   VIEW,
   KM_PER_PX,
   COUNTRIES,
   COUNTRY_LABELS,
+  LAKES,
   GRATICULE,
   CITY_COORDS,
 } from './travel-geo';
@@ -54,21 +56,20 @@ const legs = stops.slice(1).map((to, i) => {
   return { i, to, anchor: to.anchor, d: `M ${from.px} ${from.py} L ${to.px} ${to.py}` };
 });
 
-// One continuous path for the traveling route token.
 const routePathD =
   'M ' + stops.map((s) => `${s.px.toFixed(1)} ${s.py.toFixed(1)}`).join(' L ');
 
 const countryLabels = [
-  { name: 'NORWAY', x: 180, y: 250 },
+  { name: 'NORWAY', x: 175, y: 250 },
   { name: 'SWEDEN', x: 455, y: 250 },
-  { name: 'FINLAND', x: 775, y: 120 },
+  { name: 'FINLAND', x: 790, y: 118 },
   { name: 'DENMARK', x: 205, y: 505 },
-  { name: 'ESTONIA', x: 818, y: 352 },
-  { name: 'LATVIA', x: 820, y: 505 },
+  { name: 'ESTONIA', x: 820, y: 352 },
+  { name: 'LATVIA', x: 822, y: 505 },
 ];
 const waterLabels = [
-  { t: 'NORTH SEA', x: 120, y: 470, cls: 'map-water-sm' },
-  { t: 'BALTIC SEA', x: 545, y: 505, cls: 'map-water' },
+  { t: 'NORTH SEA', x: 118, y: 470, cls: 'map-water-sm' },
+  { t: 'BALTIC SEA', x: 545, y: 520, cls: 'map-water' },
 ];
 
 const scaleKm = 200;
@@ -76,11 +77,6 @@ const scalePx = scaleKm / KM_PER_PX;
 ---
 
 <figure class="plate" data-plate>
-  <figcaption class="cartouche mono">
-    <span class="cartouche-title">THE NORTH</span>
-    <span class="cartouche-sub">a field survey · august '25</span>
-  </figcaption>
-
   <div class="plate-inner">
     <svg
       class="plate-map"
@@ -92,8 +88,8 @@ const scalePx = scaleKm / KM_PER_PX;
       <title id="plate-title">Map of northern Europe</title>
       <desc id="plate-desc">
         Norway, Sweden, Finland, Denmark, Estonia and Latvia around the Baltic
-        Sea, with the route of the August 2025 trip traced between its stops.
-        The same stops are listed as text below the map.
+        Sea, with lakes, and the route of the August 2025 trip traced between
+        its stops. The same stops are listed as text below the map.
       </desc>
 
       <defs>
@@ -106,10 +102,14 @@ const scalePx = scaleKm / KM_PER_PX;
         >
           <line class="hatch-line" x1="0" y1="0" x2="0" y2="7" />
         </pattern>
+        <mask id="sea-mask">
+          <rect x="0" y="0" width={VW} height={VH} fill="white" />
+          {COUNTRIES.map((c) => <path d={c.d} fill="black" />)}
+        </mask>
       </defs>
 
-      <!-- Graticule (behind land, so it reads only across the sea) -->
-      <g class="graticule" aria-hidden="true">
+      <!-- Graticule, masked to the sea only -->
+      <g class="graticule" mask="url(#sea-mask)" aria-hidden="true">
         {GRATICULE.map((d) => <path d={d} />)}
       </g>
 
@@ -119,13 +119,14 @@ const scalePx = scaleKm / KM_PER_PX;
         {COUNTRIES.map((c) => <path class="map-halo2" d={c.d} />)}
       </g>
 
-      <!-- Land: base fill + a fine engraved hatch, each country its own shape -->
+      <!-- Land: base fill, engraved hatch, then lakes cut back to water -->
       <g aria-hidden="true">
         {COUNTRIES.map((c) => <path class="map-land" d={c.d} />)}
         {COUNTRIES.map((c) => <path class="map-hatch" d={c.d} />)}
+        {LAKES.map((d) => <path class="map-lake" d={d} />)}
       </g>
 
-      <!-- Labels -->
+      <!-- Labels, with a paper knockout halo so they read over the terrain -->
       <g class="map-labels" aria-hidden="true">
         {countryLabels.map((l) => (
           <text class="map-country" x={l.x} y={l.y}>{l.name}</text>
@@ -141,45 +142,24 @@ const scalePx = scaleKm / KM_PER_PX;
       </g>
 
       <!-- Compass rose -->
-      <g class="doodle" transform="translate(112 120)" aria-hidden="true">
-        <circle r="30" />
-        <circle r="22" class="doodle-thin" />
+      <g class="doodle" transform="translate(108 116)" aria-hidden="true">
+        <circle r="28" />
+        <circle r="20" class="doodle-thin" />
         <circle r="3" class="doodle-fill" />
-        <path d="M 0 -40 L 7 -5 L 0 -26 L -7 -5 Z" class="doodle-fill" />
-        <path d="M 0 40 L 7 5 L 0 26 L -7 5 Z" />
-        <path d="M -40 0 L -5 -7 L -26 0 L -5 7 Z" />
-        <path d="M 40 0 L 5 -7 L 26 0 L 5 7 Z" />
-        <text class="doodle-n" x="0" y="-45">N</text>
+        <path d="M 0 -38 L 6 -5 L 0 -24 L -6 -5 Z" class="doodle-fill" />
+        <path d="M 0 38 L 6 5 L 0 24 L -6 5 Z" />
+        <path d="M -38 0 L -5 -6 L -24 0 L -5 6 Z" />
+        <path d="M 38 0 L 5 -6 L 24 0 L 5 6 Z" />
+        <text class="doodle-n" x="0" y="-43">N</text>
       </g>
 
       <!-- Scale bar -->
-      <g class="scalebar" transform="translate(44 636)" aria-hidden="true">
+      <g class="scalebar" transform="translate(44 640)" aria-hidden="true">
         <path class="doodle-thin" d={`M 0 0 H ${scalePx.toFixed(1)}`} />
         <path class="doodle-thin" d="M 0 -4 V 4" />
         <path class="doodle-thin" d={`M ${scalePx.toFixed(1)} -4 V 4`} />
         <path class="doodle-thin" d={`M ${(scalePx / 2).toFixed(1)} -3 V 3`} />
         <text class="scalebar-text" x={(scalePx / 2).toFixed(1)} y="16">{scaleKm} km</text>
-      </g>
-
-      <!-- Whale in the open Baltic -->
-      <g class="doodle" transform="translate(545 560)" aria-hidden="true">
-        <path d="M 0 4 C 18 -12 60 -12 84 0 C 100 8 112 4 122 -4 C 116 12 100 18 82 14 C 58 26 18 24 0 10 C -6 8 -6 6 0 4 Z" />
-        <path class="doodle-thin" d="M 24 -4 C 26 -14 32 -18 38 -20" />
-        <circle cx="16" cy="4" r="1.6" class="doodle-fill" />
-      </g>
-      <path class="doodle doodle-thin" d="M 470 600 C 490 592 510 608 530 600" aria-hidden="true" />
-      <path class="doodle doodle-thin" d="M 470 616 C 490 608 510 624 530 616" aria-hidden="true" />
-
-      <!-- Legend -->
-      <g class="legend" transform={`translate(${VW - 196} ${VH - 96})`} aria-hidden="true">
-        <rect class="legend-box" x="0" y="0" width="176" height="78" rx="2" />
-        <rect class="legend-box legend-box2" x="3" y="3" width="170" height="72" rx="1" />
-        <circle class="dot-anchor" cx="18" cy="22" r="4.5" />
-        <text class="legend-text" x="32" y="26">anchor — summer school</text>
-        <circle class="dot-stop" cx="18" cy="42" r="3.5" />
-        <text class="legend-text" x="32" y="46">stop</text>
-        <path class="legend-route" d="M 12 61 L 26 61" />
-        <text class="legend-text" x="32" y="65">the route</text>
       </g>
 
       <!-- Route legs, drawn between stops in travel order -->
@@ -194,6 +174,12 @@ const scalePx = scaleKm / KM_PER_PX;
           />
         ))}
         <circle class="route-token" r="3.4" cx="0" cy="0" style={`offset-path: path('${routePathD}')`}></circle>
+      </g>
+
+      <!-- Neat-line: an inner ruled border with corner ticks -->
+      <g class="neatline" aria-hidden="true">
+        <rect x="7" y="7" width={VW - 14} height={VH - 14} />
+        <path d={`M 7 26 V 7 H 26 M ${VW - 26} 7 H ${VW - 7} V 26 M 7 ${VH - 26} V ${VH - 7} H 26 M ${VW - 26} ${VH - 7} H ${VW - 7} V ${VH - 26}`} class="neatline-ticks" />
       </g>
     </svg>
 
