@@ -431,6 +431,26 @@ img {
   color: var(--paper);
 }
 
+/* Directional affordance: forward links (cta, see-all) carry a → and back-nav
+   kickers carry a ←, rendered as pseudo-elements so they stay out of the
+   accessible name. They are static here; the hover glide lives in the motion
+   block, reduced-motion gated, so a no-motion reader still sees the arrow. */
+.cta::after,
+a.see-all::after {
+  content: '\2192'; /* → */
+  display: inline-block;
+}
+
+a.see-all::after {
+  margin-left: 0.4em;
+}
+
+.kicker a.back::before {
+  content: '\2190'; /* ← */
+  display: inline-block;
+  margin-right: 0.4em;
+}
+
 /* ============================================================
    Sections
    ============================================================ */
@@ -822,6 +842,45 @@ img {
       opacity: 1;
       transform: none;
     }
+  }
+
+  /* Directional link glide — the arrow slides a few px in its own direction on
+     hover/focus. Within the motion law (≤8px, ease-out). */
+  .cta::after,
+  a.see-all::after,
+  .kicker a.back::before {
+    transition: transform 0.18s var(--ease);
+  }
+
+  .cta:hover::after,
+  .cta:focus-visible::after,
+  a.see-all:hover::after,
+  a.see-all:focus-visible::after {
+    transform: translateX(3px);
+  }
+
+  .kicker a.back:hover::before,
+  .kicker a.back:focus-visible::before {
+    transform: translateX(-3px);
+  }
+
+  /* Composed hero entrance: the landing sequences kicker → h1 → lede → cta
+     instead of popping as one block, so the thesis line reads as a deliberate
+     arrival. Hero-scoped; every other section keeps the plain rise. */
+  .hero .reveal {
+    animation-duration: 0.6s;
+  }
+
+  .hero h1.reveal {
+    animation-delay: 0.09s;
+  }
+
+  .hero .lede.reveal {
+    animation-delay: 0.19s;
+  }
+
+  .hero .cta-row.reveal {
+    animation-delay: 0.29s;
   }
 }
 
