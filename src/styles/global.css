@@ -431,6 +431,26 @@ img {
   color: var(--paper);
 }
 
+/* Directional affordance: forward links (cta, see-all) carry a → and back-nav
+   kickers carry a ←, rendered as pseudo-elements so they stay out of the
+   accessible name. They are static here; the hover glide lives in the motion
+   block, reduced-motion gated, so a no-motion reader still sees the arrow. */
+.cta::after,
+a.see-all::after {
+  content: '\2192'; /* → */
+  display: inline-block;
+}
+
+a.see-all::after {
+  margin-left: 0.4em;
+}
+
+.kicker a.back::before {
+  content: '\2190'; /* ← */
+  display: inline-block;
+  margin-right: 0.4em;
+}
+
 /* ============================================================
    Sections
    ============================================================ */
@@ -792,7 +812,9 @@ img {
 }
 
 /* ============================================================
-   Motion — one gesture, used once, on page load.
+   Motion — the load reveal (one gesture, once, on page load) plus one
+   sanctioned hover micro-interaction: the directional arrow glide on
+   forward/back links (≤8px translate, ease-out — within the design law).
    Everything here is opt-in via prefers-reduced-motion.
    ============================================================ */
 
@@ -823,6 +845,45 @@ img {
       transform: none;
     }
   }
+
+  /* Directional link glide — the arrow slides a few px in its own direction on
+     hover/focus. Within the motion law (≤8px, ease-out). */
+  .cta::after,
+  a.see-all::after,
+  .kicker a.back::before {
+    transition: transform 0.2s var(--ease);
+  }
+
+  .cta:hover::after,
+  .cta:focus-visible::after,
+  a.see-all:hover::after,
+  a.see-all:focus-visible::after {
+    transform: translateX(3px);
+  }
+
+  .kicker a.back:hover::before,
+  .kicker a.back:focus-visible::before {
+    transform: translateX(-3px);
+  }
+
+  /* Composed hero entrance: the landing sequences kicker → h1 → lede → cta
+     instead of popping as one block, so the thesis line reads as a deliberate
+     arrival. Hero-scoped; every other section keeps the plain rise. */
+  .hero .reveal {
+    animation-duration: 0.6s;
+  }
+
+  .hero h1.reveal {
+    animation-delay: 0.09s;
+  }
+
+  .hero .lede.reveal {
+    animation-delay: 0.19s;
+  }
+
+  .hero .cta-row.reveal {
+    animation-delay: 0.29s;
+  }
 }
 
 /* ============================================================
@@ -834,39 +895,28 @@ img {
    all live in the reduced-motion guard at the very end.
    ============================================================ */
 
+/* The plate is a paper mat; the SVG neat-line inside is the map's frame. A
+   subtle lift — the one sanctioned box-shadow on the site (CLAUDE.md). */
 .plate {
   position: relative;
   margin: 0;
-  padding: var(--s-3);
-  border: 1px solid var(--hairline-strong);
+  padding: var(--s-4);
   border-radius: var(--radius);
   background: var(--paper);
+  box-shadow: 0 1px 1px rgba(23, 28, 26, 0.05), 0 12px 30px -16px rgba(23, 28, 26, 0.22);
   /* Clip the parallax drift at the frame. Hover cards flip inward, so they
      stay inside the frame rather than needing to spill past it. */
   overflow: hidden;
 }
 
-/* Sits just inside the frame (the frame clips its own overflow, so a tag
-   straddling the border would be cut). */
-.plate-tag {
-  position: absolute;
-  top: var(--s-3);
-  left: var(--s-4);
-  z-index: 3;
-  display: inline-flex;
-  gap: var(--s-1);
-  padding: var(--s-1) var(--s-2);
-  background: var(--paper);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius);
-  color: var(--ink-faint);
-  font-size: var(--t-2xs);
-  text-transform: lowercase;
-}
-
 .plate-inner {
   position: relative;
-  transition: transform 0.3s var(--ease);
+}
+
+/* Two parallax planes: the map drifts less (further), the pins more (nearer). */
+.plate-map,
+.plate-stops {
+  transition: transform 0.4s var(--ease);
   will-change: transform;
 }
 
@@ -874,6 +924,213 @@ img {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* ============================================================
+   Travel atlas — the map breaks out of the text column into a
+   wide plate, with the cartographic furniture set as marginalia
+   in the reclaimed side space (title, legend, stop index).
+   ============================================================ */
+
+.travel-atlas {
+  max-width: min(96vw, 82rem);
+  margin: var(--section-y) auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17rem;
+  gap: var(--s-7);
+  align-items: start;
+}
+
+.atlas-margin {
+  position: sticky;
+  top: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  color: var(--ink-soft);
+}
+
+.atlas-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--hairline-strong);
+}
+
+.atlas-title-main {
+  font-size: var(--t-md);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--ink);
+}
+
+.atlas-title-sub {
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}
+
+.atlas-summary {
+  margin: 0;
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+}
+
+.atlas-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  font-size: var(--t-2xs);
+  color: var(--ink-soft);
+}
+
+.atlas-legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.atlas-legend .dot {
+  border-width: 2px;
+}
+
+.atlas-legend-line {
+  display: inline-block;
+  width: 16px;
+  height: 0;
+  border-top: 1.5px solid var(--ink-faint);
+  flex: none;
+}
+
+.atlas-index ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.atlas-index li {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.atlas-index a {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-2) 0;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.16s var(--ease);
+}
+
+.atlas-index a:hover {
+  color: var(--signal-green);
+}
+
+.atlas-index-num {
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+}
+
+.atlas-index-name {
+  flex: 1;
+  font-size: var(--t-sm);
+}
+
+.atlas-index a:hover .atlas-index-name {
+  color: var(--signal-green);
+}
+
+.atlas-index .dot {
+  border-width: 2px;
+}
+
+.atlas-hint {
+  margin: 0;
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+  line-height: 1.5;
+}
+
+/* Stack on narrower screens: map first, marginalia below. */
+@media (max-width: 52rem) {
+  .travel-atlas {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-5);
+  }
+
+  .atlas-margin {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-4) var(--s-6);
+    align-items: start;
+  }
+
+  .atlas-index {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 30rem) {
+  .atlas-margin {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- graticule + engraved land hatch ---- */
+
+.graticule path {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 0.6;
+  opacity: 0.7;
+}
+
+.hatch-line {
+  stroke: var(--ink-faint);
+  stroke-width: 0.4;
+}
+
+.map-hatch {
+  fill: url(#land-hatch);
+  stroke: none;
+  opacity: 0.12;
+}
+
+/* Lakes — water cut back into the land (Finland reads as lake country). */
+.map-lake {
+  fill: var(--paper);
+  stroke: var(--ink-faint);
+  stroke-width: 0.7;
+  stroke-linejoin: round;
+}
+
+/* Neat-line — an inner ruled border with corner ticks, the map's frame. */
+.neatline rect {
+  fill: none;
+  stroke: var(--hairline-strong);
+  stroke-width: 1;
+}
+
+.neatline-ticks {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 1.2;
+}
+
+/* ---- the traveling route token ---- */
+
+.route-token {
+  fill: var(--signal-green);
+  opacity: 0;
+  offset-rotate: 0deg;
 }
 
 /* ---- the drawn map ---- */
@@ -885,47 +1142,75 @@ img {
   stroke-linejoin: round;
 }
 
-.map-land-faint {
-  opacity: 0.55;
-}
-
-.map-border {
+/* Engraved water-lines: the coastline echoed twice behind the land, so the
+   sea reads as an old hand-drawn survey rather than a flat cut-out. */
+.map-halo {
   fill: none;
-  stroke: var(--hairline-strong);
-  stroke-width: 1;
-  stroke-dasharray: 2 5;
+  stroke: var(--hairline);
+  stroke-width: 7;
+  stroke-linejoin: round;
+  opacity: 0.35;
 }
 
+.map-halo2 {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+  opacity: 0.5;
+}
+
+/* Labels carry a paper knockout halo (paint-order: stroke) so they read
+   clearly over the terrain instead of camouflaging into it. */
 .map-water,
 .map-country,
-.map-note,
 .doodle-n {
   font-family: var(--font-mono);
   fill: var(--ink-faint);
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 3.5;
+  stroke-linejoin: round;
 }
 
 .map-water {
   font-size: 16px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  opacity: 0.6;
+  text-anchor: middle;
 }
 
 .map-water-sm {
   font-size: 12px;
   letter-spacing: 1.5px;
-  opacity: 0.5;
+  stroke-width: 3;
 }
 
 .map-country {
   font-size: 19px;
   letter-spacing: 2px;
   fill: var(--ink-soft);
-  opacity: 0.75;
+  text-anchor: middle;
 }
 
 .map-country-sm {
   font-size: 14px;
+}
+
+/* Scale bar — a small fieldbook measuring detail. */
+.scalebar {
+  fill: none;
+  stroke: var(--ink-faint);
+  opacity: 0.6;
+}
+
+.scalebar-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--ink-faint);
+  stroke: none;
+  text-anchor: middle;
+  opacity: 0.9;
 }
 
 .map-note {
@@ -1112,6 +1397,17 @@ img {
   margin: var(--s-1) 0 var(--s-2);
   color: var(--ink-faint);
   font-size: var(--t-2xs);
+}
+
+/* A coordinate readout — the field-note detail, in the live-rail green. */
+.specimen-card-coord {
+  display: block;
+  margin: 0 0 var(--s-2);
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--hairline);
+  color: var(--signal-green);
+  font-size: var(--t-2xs);
+  letter-spacing: var(--track-mono);
 }
 
 /* The field log shows the full blurb; in the small map hover-card a long one
@@ -1314,30 +1610,53 @@ img {
    ============================================================ */
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Staged load: the plate settles, the grid and labels fade in, the route
+     inks across, a token travels it, and the pins drop in travel order. */
+  .cartouche,
+  .graticule,
+  .map-labels,
+  .legend {
+    animation: fade-in 0.6s var(--ease) both;
+  }
+  .cartouche { animation-delay: 0.1s; }
+  .graticule { animation-delay: 0.15s; }
+  .map-labels { animation-delay: 0.45s; }
+  .legend { animation-delay: 0.6s; }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
   .route-leg {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
     animation: route-draw 0.55s var(--ease) forwards;
-    animation-delay: calc(var(--leg-i, 0) * 0.1s + 0.2s);
+    animation-delay: calc(var(--leg-i, 0) * 0.12s + 0.5s);
   }
 
   @keyframes route-draw {
-    to {
-      stroke-dashoffset: 0;
-    }
+    to { stroke-dashoffset: 0; }
+  }
+
+  .route-token {
+    animation: token 3.3s var(--ease) 0.7s both;
+  }
+
+  @keyframes token {
+    0% { offset-distance: 0%; opacity: 0; }
+    8% { opacity: 0.9; }
+    92% { opacity: 0.9; }
+    100% { offset-distance: 100%; opacity: 0; }
   }
 
   .stop {
     animation: stop-in 0.5s var(--ease) both;
-    animation-delay: calc(var(--i, 1) * 0.09s + 0.25s);
+    animation-delay: calc(var(--i, 1) * 0.14s + 0.8s);
   }
 
   @keyframes stop-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }

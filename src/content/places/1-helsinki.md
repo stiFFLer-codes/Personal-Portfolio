@@ -3,8 +3,8 @@ name: Helsinki
 country: Finland
 dateLabel: "August '25"
 order: 1
-x: 84.7
-y: 41.6
+x: 73.79
+y: 40.24
 anchor: false
 blurb: "Landed here first, with one thing on my mind: Jyväskylä, still a train ride away."
 photos:

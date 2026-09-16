@@ -23,6 +23,14 @@ If a section does not serve that sentence, it does not ship.
 A professor, 11 PM, having read 200 applications. They are reading, not
 admiring. Optimize for: scannable, credible, specific. Never for: impressive.
 
+**Revised with Maitreya:** this site is not an EDISS deliverable — EDISS never
+asks for a portfolio. It's a supporting digital presence someone may look up
+from the CV / LinkedIn. For a *lookup* (not a scored document), evident craft
+and care read as an asset, not a liability. So: content stays
+scannable/credible/specific, but the `/travel` plate is a sanctioned showcase
+where deliberate visual ambition is allowed. That licence is scoped to `/travel`
+unless extended explicitly — it does not loosen the content rules anywhere.
+
 ---
 
 ## CLAUDE'S ROLE — read this carefully
@@ -149,27 +157,37 @@ markup lives in `Entry.astro`; change the shape there, not per page.
 Motion
 
 - Allowed: opacity fade, ≤8px translate, 200–500ms, ease-out (`.reveal`)
+- One sanctioned hover micro-interaction, site-wide: the directional arrow
+  glide on forward/back links (a `→`/`←` pseudo-element that translates ≤3px
+  in its own direction on hover/focus). It obeys the Allowed rule above
+  (≤8px translate, ease-out, reduced-motion gated), so it is a note for
+  honesty, not a carve-out — and it is the only hover-driven motion permitted
+  outside `/travel`.
 - Banned: scale on hover, spring physics, parallax, scroll-jacking,
   spinning, staggered letter reveals, gradient text, glassmorphism
 - All of it lives inside `@media (prefers-reduced-motion: no-preference)`.
   Motion that animates for a user who asked for none is a REJECT.
 
 **One sanctioned motion carve-out: the `/travel` plate.** Reviewed and
-accepted with Maitreya as a deliberate exception, on the same footing as
-the StatusLedger script. It adds three things the list above would
+accepted with Maitreya as a deliberate showcase exception, on the same footing
+as the StatusLedger script. It carries a bounded set the list above would
 otherwise forbid: (1) the route line *draws itself* once on load via
-`stroke-dashoffset` (not an opacity/translate fade); (2) a **bounded
-pointer-parallax** — the map plate drifts ≤6px toward the cursor, gated to
-fine pointers; (3) a static ≤1.5° tilt on mounted photos (a tilt, not a
+`stroke-dashoffset`; (2) a small green **token that travels the route path**
+on load (CSS `offset-path`); (3) a **multi-layer pointer-parallax** — the map
+and the pins drift on two planes toward the cursor (small bound), gated to fine
+pointers; (4) a **staged load** (grid/labels fade, route inks, token travels,
+pins drop in order); (5) a static ≤1.5° tilt on mounted photos (a tilt, not a
 spin). All of it lives inside `prefers-reduced-motion: no-preference` and
-degrades to a fully static, functional plate without motion or JS. This is
-the *only* place any of the three is allowed — the bans above still hold
-everywhere else. Do not extend it to other sections, and do not remove it
-without an explicit instruction from Maitreya.
+degrades to a fully static, functional plate without motion or JS. This is the
+*only* place any of it is allowed — the bans above still hold everywhere else.
+Do not extend it to other sections, and do not remove it without an explicit
+instruction from Maitreya.
 
-Banned CSS patterns: box-shadow of any kind, border-radius above 14px
-(the favicon) or 4px (everything else — circles excepted, the status dots
-are `50%`), any emoji in UI chrome. Symbol glyphs in chrome are a hazard
+Banned CSS patterns: box-shadow of any kind (one sanctioned exception: the
+single soft lift on the `/travel` plate, so it reads as a page mounted on the
+desk — reviewed with Maitreya), border-radius above 14px (the favicon) or 4px
+(everything else — circles excepted, the status dots are `50%`), any emoji in
+UI chrome. Symbol glyphs in chrome are a hazard
 too: `⧗` and `↻` were removed from the ledger because neither is in
 JetBrains Mono and both fell back to a different font. Use words.
 
@@ -236,13 +254,18 @@ the page.
 8. ~~Writing~~ DONE — shipped ahead of 6/7. Deviation from "do not skip
    ahead," left as-is rather than unwound; noted here so it reads as a
    decision, not drift.
-9. ~~Travel map~~ DONE (scaffold) — `/travel`: a hand-drawn inline-SVG plate
-   of the Aug 2025 Nordic/Baltic trip, anchored on the Jyväskylä Summer
+9. ~~Travel map~~ DONE — `/travel`: an inline-SVG survey plate (accurate
+   Natural Earth boundaries + lakes, projected and baked at build time by
+   `scripts/build-travel-geo.py` → `src/components/travel-geo.ts`; no runtime
+   dep or request) of the Aug 2025 Nordic/Baltic trip, anchored on the Jyväskylä Summer
    School, with a `places` collection, one linked marker per stop, and a
-   "field log" list below that carries every stop without JS. Photos and the
-   per-stop blurbs (plus the page h1/lede) are Maitreya's to supply — the
-   page ships with honest empty specimen frames until then. Motion + the one
-   inline script are the documented carve-outs above.
+   "field log" list below that carries every stop without JS. Elevated past
+   the scaffold into an atlas plate: the map breaks out of the text measure
+   with its title/legend/stop-index as marginalia in the side space, labels
+   carry a paper knockout halo, and the graticule shows in the sea only.
+   Maitreya's photos are mounted and his per-stop blurbs + hero copy are in;
+   the `/writing` h1/lede remain the one open piece of his prose to supply.
+   Motion + the one inline script are the documented carve-outs above.
 
 ## Git
 

@@ -1,25 +1,36 @@
 ---
-// The travel plate: a hand-drawn survey map of northern Europe, with the
-// Aug 2025 trip traced across it. Coastlines, labels, and doodles are static
-// inline SVG (the site's first substantive inline art). Route legs and the
-// markers are generated from the `places` collection, so geometry lives in
-// content, not here.
+// The travel plate: a survey map of northern Europe with the Aug 2025 trip
+// traced across it. Coastlines and lakes are accurate Natural Earth
+// (public-domain) geometry, projected (Lambert conformal conic) and baked into
+// travel-geo.ts at build time — no map library, no runtime request. Each
+// country is its own path, so real borders read. Markers and route are
+// generated from the `places` collection, projected through the same transform
+// so every pin lands in the right country.
 //
-// The one small inline script below is a documented carve-out (see CLAUDE.md,
-// alongside the StatusLedger countdown): it adds bounded pointer-parallax and
-// lights the route leg leading into a hovered stop. It is pure enhancement —
-// with no JS the map still renders, the route still draws, hovering still
-// shows each stop's card, and every marker still links to its field-log entry.
+// The map furniture (title, legend, stop index) lives OUTSIDE the plate as
+// marginalia in the page — the plate itself carries only what belongs on a map.
+//
+// The inline script (documented carve-out, see CLAUDE.md) adds multi-layer
+// pointer-parallax and route-leg glow. Pure enhancement.
 import type { CollectionEntry } from 'astro:content';
+import {
+  VIEW,
+  KM_PER_PX,
+  COUNTRIES,
+  COUNTRY_LABELS,
+  LAKES,
+  GRATICULE,
+  CITY_COORDS,
+} from './travel-geo';
 
 interface Props {
   places: CollectionEntry<'places'>[];
 }
 const { places } = Astro.props;
 
-// SVG coordinate space. Markers store x/y as percentages of this box.
-const VW = 1000;
-const VH = 820;
+const VW = VIEW.w;
+const VH = VIEW.h;
+const coordFor = (id: string) => CITY_COORDS[id.replace(/^\d+-/, '')] ?? '';
 
 const stops = [...places]
   .sort((a, b) => a.data.order - b.data.order)
@@ -31,112 +42,128 @@ const stops = [...places]
     dateLabel: p.data.dateLabel,
     blurb: p.data.blurb,
     anchor: p.data.anchor,
+    coord: coordFor(p.id),
     x: p.data.x,
     y: p.data.y,
     px: (p.data.x / 100) * VW,
     py: (p.data.y / 100) * VH,
-    // Which way the hover card and label open, so edge stops stay in frame.
     toLeft: p.data.x > 52,
-    toUp: p.data.y > 52,
+    toUp: p.data.y > 60,
   }));
 
-// One leg per gap between consecutive stops. A leg is named for the stop it
-// leads into, so hovering a stop can light the leg that arrives there.
 const legs = stops.slice(1).map((to, i) => {
   const from = stops[i];
-  return {
-    i,
-    to,
-    anchor: to.anchor,
-    d: `M ${from.px} ${from.py} L ${to.px} ${to.py}`,
-  };
+  return { i, to, anchor: to.anchor, d: `M ${from.px} ${from.py} L ${to.px} ${to.py}` };
 });
+
+const routePathD =
+  'M ' + stops.map((s) => `${s.px.toFixed(1)} ${s.py.toFixed(1)}`).join(' L ');
+
+const countryLabels = [
+  { name: 'NORWAY', x: 175, y: 250 },
+  { name: 'SWEDEN', x: 455, y: 250 },
+  { name: 'FINLAND', x: 790, y: 118 },
+  { name: 'DENMARK', x: 205, y: 505 },
+  { name: 'ESTONIA', x: 820, y: 352 },
+  { name: 'LATVIA', x: 822, y: 505 },
+];
+const waterLabels = [
+  { t: 'NORTH SEA', x: 118, y: 470, cls: 'map-water-sm' },
+  { t: 'BALTIC SEA', x: 545, y: 520, cls: 'map-water' },
+];
+
+const scaleKm = 200;
+const scalePx = scaleKm / KM_PER_PX;
 ---
 
 <figure class="plate" data-plate>
-  <figcaption class="plate-tag mono">
-    <span>the north</span>
-    <span aria-hidden="true">·</span>
-    <span>august '25</span>
-  </figcaption>
-
-  <div class="plate-inner" data-plate-inner>
+  <div class="plate-inner">
     <svg
       class="plate-map"
+      data-depth="3"
       viewBox={`0 0 ${VW} ${VH}`}
       role="img"
       aria-labelledby="plate-title plate-desc"
     >
-      <title id="plate-title">Hand-drawn map of northern Europe</title>
+      <title id="plate-title">Map of northern Europe</title>
       <desc id="plate-desc">
-        Norway, Sweden, Finland, Estonia, and Latvia around the Baltic Sea,
-        with the route of the August 2025 trip traced between its stops. The
-        same stops are listed as text below the map.
+        Norway, Sweden, Finland, Denmark, Estonia and Latvia around the Baltic
+        Sea, with lakes, and the route of the August 2025 trip traced between
+        its stops. The same stops are listed as text below the map.
       </desc>
 
-      <!-- Land -->
-      <path
-        class="map-land"
-        d="M 250 0 C 232 40 250 70 238 108 C 210 150 232 175 190 200 C 168 236 190 268 158 300 C 146 336 150 372 140 405 C 132 440 150 470 172 500 C 186 546 196 578 205 604 C 250 632 300 626 336 616 C 396 590 448 548 486 500 C 508 462 520 430 524 402 C 540 356 556 300 566 250 C 582 190 584 120 560 60 C 552 40 548 18 545 0 Z"
-      />
-      <path
-        class="map-land"
-        d="M 660 0 C 646 60 664 110 656 160 C 648 220 672 270 662 320 C 690 356 720 372 760 372 C 800 366 828 350 860 346 C 900 352 940 344 968 350 C 988 300 980 210 966 150 C 948 80 918 30 900 0 Z"
-      />
-      <path
-        class="map-land"
-        d="M 700 452 C 748 436 800 424 838 418 C 892 424 940 430 978 442 C 988 520 978 600 958 668 C 940 730 918 780 902 820 L 726 820 C 706 792 700 756 700 720 C 726 690 760 676 792 672 C 772 640 726 628 704 604 C 690 548 692 496 700 452 Z"
-      />
-      <path
-        class="map-land map-land-faint"
-        d="M 70 690 C 90 660 120 654 150 664 C 168 690 150 720 158 748 C 120 762 84 754 66 730 C 60 714 62 700 70 690 Z"
-      />
+      <defs>
+        <pattern
+          id="land-hatch"
+          width="7"
+          height="7"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(45)"
+        >
+          <line class="hatch-line" x1="0" y1="0" x2="0" y2="7" />
+        </pattern>
+        <mask id="sea-mask">
+          <rect x="0" y="0" width={VW} height={VH} fill="white" />
+          {COUNTRIES.map((c) => <path d={c.d} fill="black" />)}
+        </mask>
+      </defs>
 
-      <!-- Internal borders, dashed and quiet -->
-      <path class="map-border" d="M 300 40 C 360 150 380 320 405 470 C 415 540 430 580 336 616" />
-      <path class="map-border" d="M 792 672 C 830 620 860 560 866 520" />
-
-      <!-- Water labels -->
-      <text class="map-water map-water-v" x="612" y="215" transform="rotate(-90 612 215)">GULF OF BOTHNIA</text>
-      <text class="map-water" x="600" y="650">BALTIC SEA</text>
-      <text class="map-water map-water-sm" x="636" y="406">gulf of finland</text>
-      <text class="map-water map-water-sm" x="48" y="250">norwegian sea</text>
-      <text class="map-water map-water-sm" x="60" y="560">north sea</text>
-
-      <!-- Country labels -->
-      <text class="map-country" x="150" y="150">NORWAY</text>
-      <text class="map-country" x="392" y="300">SWEDEN</text>
-      <text class="map-country" x="792" y="175">FINLAND</text>
-      <text class="map-country map-country-sm" x="862" y="472">ESTONIA</text>
-      <text class="map-country map-country-sm" x="878" y="585">LATVIA</text>
-      <text class="map-country map-country-sm" x="86" y="712">DENMARK</text>
-
-      <!-- Doodle: compass rose (open ocean, top-left) -->
-      <g class="doodle" transform="translate(96 138)">
-        <circle r="34" />
-        <circle r="4" class="doodle-fill" />
-        <path d="M 0 -46 L 8 -6 L 0 -34 L -8 -6 Z" class="doodle-fill" />
-        <path d="M 0 46 L 8 6 L 0 34 L -8 6 Z" />
-        <path d="M -46 0 L -6 -8 L -34 0 L -6 8 Z" />
-        <path d="M 46 0 L 6 -8 L 34 0 L 6 8 Z" />
-        <text class="doodle-n" x="0" y="-52">N</text>
+      <!-- Graticule, masked to the sea only -->
+      <g class="graticule" mask="url(#sea-mask)" aria-hidden="true">
+        {GRATICULE.map((d) => <path d={d} />)}
       </g>
 
-      <!-- Doodle: a small whale in the Baltic -->
-      <g class="doodle" transform="translate(452 712)">
-        <path d="M 0 4 C 18 -12 60 -12 84 0 C 100 8 112 4 122 -4 C 116 12 100 18 82 14 C 58 26 18 24 0 10 C -6 8 -6 6 0 4 Z" />
-        <path class="doodle-thin" d="M 24 -4 C 26 -14 32 -18 38 -20" />
-        <circle cx="16" cy="4" r="1.6" class="doodle-fill" />
+      <!-- Engraved water-lines behind the coasts -->
+      <g aria-hidden="true">
+        {COUNTRIES.map((c) => <path class="map-halo" d={c.d} />)}
+        {COUNTRIES.map((c) => <path class="map-halo2" d={c.d} />)}
       </g>
 
-      <!-- Doodle: a few current strokes -->
-      <path class="doodle doodle-thin" d="M 250 700 C 270 692 290 708 310 700" />
-      <path class="doodle doodle-thin" d="M 250 720 C 270 712 290 728 310 720" />
+      <!-- Land: base fill, engraved hatch, then lakes cut back to water -->
+      <g aria-hidden="true">
+        {COUNTRIES.map((c) => <path class="map-land" d={c.d} />)}
+        {COUNTRIES.map((c) => <path class="map-hatch" d={c.d} />)}
+        {LAKES.map((d) => <path class="map-lake" d={d} />)}
+      </g>
 
-      <text class="map-note" x="44" y="806">solo · 9 stops · 5 countries · august '25</text>
+      <!-- Labels, with a paper knockout halo so they read over the terrain -->
+      <g class="map-labels" aria-hidden="true">
+        {countryLabels.map((l) => (
+          <text class="map-country" x={l.x} y={l.y}>{l.name}</text>
+        ))}
+        <text
+          class="map-water map-water-v"
+          x="588"
+          y="205"
+          transform="rotate(-90 588 205)">GULF OF BOTHNIA</text>
+        {waterLabels.map((w) => (
+          <text class:list={['map-water', w.cls]} x={w.x} y={w.y}>{w.t}</text>
+        ))}
+      </g>
+
+      <!-- Compass rose -->
+      <g class="doodle" transform="translate(108 116)" aria-hidden="true">
+        <circle r="28" />
+        <circle r="20" class="doodle-thin" />
+        <circle r="3" class="doodle-fill" />
+        <path d="M 0 -38 L 6 -5 L 0 -24 L -6 -5 Z" class="doodle-fill" />
+        <path d="M 0 38 L 6 5 L 0 24 L -6 5 Z" />
+        <path d="M -38 0 L -5 -6 L -24 0 L -5 6 Z" />
+        <path d="M 38 0 L 5 -6 L 24 0 L 5 6 Z" />
+        <text class="doodle-n" x="0" y="-43">N</text>
+      </g>
+
+      <!-- Scale bar -->
+      <g class="scalebar" transform="translate(44 640)" aria-hidden="true">
+        <path class="doodle-thin" d={`M 0 0 H ${scalePx.toFixed(1)}`} />
+        <path class="doodle-thin" d="M 0 -4 V 4" />
+        <path class="doodle-thin" d={`M ${scalePx.toFixed(1)} -4 V 4`} />
+        <path class="doodle-thin" d={`M ${(scalePx / 2).toFixed(1)} -3 V 3`} />
+        <text class="scalebar-text" x={(scalePx / 2).toFixed(1)} y="16">{scaleKm} km</text>
+      </g>
 
       <!-- Route legs, drawn between stops in travel order -->
-      <g class="route">
+      <g class="route" aria-hidden="true">
         {legs.map((leg) => (
           <path
             class:list={['route-leg', { 'anchor-leg': leg.anchor }]}
@@ -146,11 +173,18 @@ const legs = stops.slice(1).map((to, i) => {
             style={`--leg-i:${leg.i}`}
           />
         ))}
+        <circle class="route-token" r="3.4" cx="0" cy="0" style={`offset-path: path('${routePathD}')`}></circle>
+      </g>
+
+      <!-- Neat-line: an inner ruled border with corner ticks -->
+      <g class="neatline" aria-hidden="true">
+        <rect x="7" y="7" width={VW - 14} height={VH - 14} />
+        <path d={`M 7 26 V 7 H 26 M ${VW - 26} 7 H ${VW - 7} V 26 M 7 ${VH - 26} V ${VH - 7} H 26 M ${VW - 26} ${VH - 7} H ${VW - 7} V ${VH - 26}`} class="neatline-ticks" />
       </g>
     </svg>
 
     <!-- Markers: real links on top of the map, one per stop -->
-    <ul class="plate-stops">
+    <ul class="plate-stops" data-depth="7">
       {stops.map((s) => (
         <li>
           <a
@@ -171,6 +205,7 @@ const legs = stops.slice(1).map((to, i) => {
             <span class="specimen-card" aria-hidden="true">
               <span class="specimen-card-name">{s.name}</span>
               <span class="specimen-card-meta mono">{s.country} · {s.dateLabel}</span>
+              {s.coord && <span class="specimen-card-coord mono">{s.coord}</span>}
               <span class="specimen-card-blurb">{s.blurb}</span>
             </span>
           </a>
@@ -181,24 +216,27 @@ const legs = stops.slice(1).map((to, i) => {
 </figure>
 
 <script>
-  // Documented carve-out (see CLAUDE.md): pointer-parallax + route-leg glow.
-  // Pure enhancement — everything works without it.
+  // Documented carve-out (see CLAUDE.md): multi-layer pointer-parallax + route
+  // leg glow. Pure enhancement — everything works without it.
   var plate = document.querySelector('[data-plate]');
   if (plate && window.matchMedia) {
-    var inner = plate.querySelector('[data-plate-inner]');
+    var layers = plate.querySelectorAll('[data-depth]');
     var fine = matchMedia('(hover: hover) and (pointer: fine)');
     var motionOK = matchMedia('(prefers-reduced-motion: no-preference)');
 
-    if (inner && fine.matches && motionOK.matches) {
+    if (layers.length && fine.matches && motionOK.matches) {
       plate.addEventListener('pointermove', function (e) {
         var r = plate.getBoundingClientRect();
         var dx = (e.clientX - r.left) / r.width - 0.5;
         var dy = (e.clientY - r.top) / r.height - 0.5;
-        inner.style.transform =
-          'translate(' + (dx * -6).toFixed(2) + 'px,' + (dy * -6).toFixed(2) + 'px)';
+        layers.forEach(function (el) {
+          var f = parseFloat(el.getAttribute('data-depth')) || 0;
+          el.style.transform =
+            'translate(' + (dx * -f).toFixed(2) + 'px,' + (dy * -f).toFixed(2) + 'px)';
+        });
       });
       plate.addEventListener('pointerleave', function () {
-        inner.style.transform = '';
+        layers.forEach(function (el) { el.style.transform = ''; });
       });
     }
 

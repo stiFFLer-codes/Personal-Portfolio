@@ -3,8 +3,8 @@ name: Baltic Sea
 country: Helsinki → Stockholm
 dateLabel: "August '25"
 order: 3
-x: 60
-y: 49
+x: 63.5
+y: 44.5
 anchor: false
 blurb: "My first overnight cruise. Falling asleep in one country and waking up in another is still an odd feeling."
 photos:

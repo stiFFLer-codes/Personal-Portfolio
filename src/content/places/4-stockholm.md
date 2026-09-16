@@ -3,8 +3,8 @@ name: Stockholm
 country: Sweden
 dateLabel: "August '25"
 order: 4
-x: 50.35
-y: 52.1
+x: 53.30
+y: 49.68
 anchor: false
 blurb: "First stop in Sweden, and the first day of the trip with nothing scheduled. Just walked until I'd seen most of the city center."
 photos:

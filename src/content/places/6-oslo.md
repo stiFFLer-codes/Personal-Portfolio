@@ -3,8 +3,8 @@ name: Oslo
 country: Norway
 dateLabel: "August '25"
 order: 6
-x: 13.7
-y: 45
+x: 31.11
+y: 43.31
 anchor: false
 blurb: "The vibe here was unmatched. Walked up the sloped roof of the Opera House and just stood there a while, looking out over the water."
 photos:
