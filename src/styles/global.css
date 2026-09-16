@@ -866,9 +866,12 @@ a.see-all::after {
     transform: translateX(-3px);
   }
 
-  /* Composed hero entrance: the landing sequences kicker → h1 → lede → cta
+  /* Composed hero entrance: the hero sequences kicker → h1 → lede → last row
      instead of popping as one block, so the thesis line reads as a deliberate
-     arrival. Hero-scoped; every other section keeps the plain rise. */
+     arrival. The last row is the CTA on the landing page and the status line on
+     a detail page — both take the 0.29s step so it stays after the lede rather
+     than falling back to the generic :nth-child(4) delay (which would put it
+     before the lede). Hero-scoped; every other section keeps the plain rise. */
   .hero .reveal {
     animation-duration: 0.6s;
   }
@@ -881,7 +884,8 @@ a.see-all::after {
     animation-delay: 0.19s;
   }
 
-  .hero .cta-row.reveal {
+  .hero .cta-row.reveal,
+  .hero .status-line.reveal {
     animation-delay: 0.29s;
   }
 }
@@ -1611,17 +1615,15 @@ a.see-all::after {
 
 @media (prefers-reduced-motion: no-preference) {
   /* Staged load: the plate settles, the grid and labels fade in, the route
-     inks across, a token travels it, and the pins drop in travel order. */
-  .cartouche,
+     inks across, a token travels it, and the pins drop in travel order. (The
+     title/legend/index live in the page marginalia now, not on the plate, so
+     they ride the normal page reveal — not this carve-out.) */
   .graticule,
-  .map-labels,
-  .legend {
+  .map-labels {
     animation: fade-in 0.6s var(--ease) both;
   }
-  .cartouche { animation-delay: 0.1s; }
   .graticule { animation-delay: 0.15s; }
   .map-labels { animation-delay: 0.45s; }
-  .legend { animation-delay: 0.6s; }
 
   @keyframes fade-in {
     from { opacity: 0; }
