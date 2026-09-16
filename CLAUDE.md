@@ -157,6 +157,12 @@ markup lives in `Entry.astro`; change the shape there, not per page.
 Motion
 
 - Allowed: opacity fade, ≤8px translate, 200–500ms, ease-out (`.reveal`)
+- One sanctioned hover micro-interaction, site-wide: the directional arrow
+  glide on forward/back links (a `→`/`←` pseudo-element that translates ≤3px
+  in its own direction on hover/focus). It obeys the Allowed rule above
+  (≤8px translate, ease-out, reduced-motion gated), so it is a note for
+  honesty, not a carve-out — and it is the only hover-driven motion permitted
+  outside `/travel`.
 - Banned: scale on hover, spring physics, parallax, scroll-jacking,
   spinning, staggered letter reveals, gradient text, glassmorphism
 - All of it lives inside `@media (prefers-reduced-motion: no-preference)`.
@@ -248,15 +254,18 @@ the page.
 8. ~~Writing~~ DONE — shipped ahead of 6/7. Deviation from "do not skip
    ahead," left as-is rather than unwound; noted here so it reads as a
    decision, not drift.
-9. ~~Travel map~~ DONE (scaffold) — `/travel`: an inline-SVG plate (accurate
-   Natural Earth boundaries, projected and baked at build time by
+9. ~~Travel map~~ DONE — `/travel`: an inline-SVG survey plate (accurate
+   Natural Earth boundaries + lakes, projected and baked at build time by
    `scripts/build-travel-geo.py` → `src/components/travel-geo.ts`; no runtime
    dep or request) of the Aug 2025 Nordic/Baltic trip, anchored on the Jyväskylä Summer
    School, with a `places` collection, one linked marker per stop, and a
-   "field log" list below that carries every stop without JS. Photos and the
-   per-stop blurbs (plus the page h1/lede) are Maitreya's to supply — the
-   page ships with honest empty specimen frames until then. Motion + the one
-   inline script are the documented carve-outs above.
+   "field log" list below that carries every stop without JS. Elevated past
+   the scaffold into an atlas plate: the map breaks out of the text measure
+   with its title/legend/stop-index as marginalia in the side space, labels
+   carry a paper knockout halo, and the graticule shows in the sea only.
+   Maitreya's photos are mounted and his per-stop blurbs + hero copy are in;
+   the `/writing` h1/lede remain the one open piece of his prose to supply.
+   Motion + the one inline script are the documented carve-outs above.
 
 ## Git
 

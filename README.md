@@ -15,7 +15,7 @@ npm run preview  # serve the production build locally
 
 ## Content model
 
-Projects, research, and changelog entries are each single-file content collections. To add work to the site, add one file. Schema lives in `src/content.config.ts`.
+Projects, research, writing, experience, changelog, and travel stops (`places`, rendered on `/travel`) are each single-file content collections. To add work to the site, add one file. Schema lives in `src/content.config.ts`.
 
 ## Governance
 
