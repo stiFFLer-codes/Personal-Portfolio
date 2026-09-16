@@ -3,8 +3,8 @@ name: Gothenburg
 country: Sweden
 dateLabel: "August '25"
 order: 5
-x: 19.85
-y: 72.4
+x: 33.78
+y: 63.11
 anchor: false
 blurb: "West coast, and a childhood dream finally checked off: the World of Volvo museum. Worth the detour for anyone who grew up caring about how things are built."
 photos:

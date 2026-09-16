@@ -3,8 +3,8 @@ name: Tallinn
 country: Estonia
 dateLabel: "August '25"
 order: 9
-x: 83.75
-y: 50.75
+x: 73.74
+y: 46.73
 anchor: false
 blurb: "The last stop, and one I'd wanted to see for years before I ever had a reason to book the flight. A good way to close the loop."
 photos:

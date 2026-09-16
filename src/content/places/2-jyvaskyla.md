@@ -3,8 +3,8 @@ name: Jyväskylä
 country: Finland
 dateLabel: "August '25"
 order: 2
-x: 88.75
-y: 15.75
+x: 74.57
+y: 21.69
 anchor: true
 blurb: "Two weeks at the Jyväskylä Summer School, studying machine learning and stochastic control. I was nervous about coming. By the end it felt like home. Jyväskylä has my heart."
 source:

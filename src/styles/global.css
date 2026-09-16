@@ -885,15 +885,22 @@ img {
   stroke-linejoin: round;
 }
 
-.map-land-faint {
-  opacity: 0.55;
+/* Engraved water-lines: the coastline echoed twice behind the land, so the
+   sea reads as an old hand-drawn survey rather than a flat cut-out. */
+.map-halo {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 7;
+  stroke-linejoin: round;
+  opacity: 0.35;
 }
 
-.map-border {
+.map-halo2 {
   fill: none;
-  stroke: var(--hairline-strong);
-  stroke-width: 1;
-  stroke-dasharray: 2 5;
+  stroke: var(--hairline);
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+  opacity: 0.5;
 }
 
 .map-water,
@@ -908,6 +915,7 @@ img {
   font-size: 16px;
   letter-spacing: 3px;
   text-transform: uppercase;
+  text-anchor: middle;
   opacity: 0.6;
 }
 
@@ -921,11 +929,28 @@ img {
   font-size: 19px;
   letter-spacing: 2px;
   fill: var(--ink-soft);
+  text-anchor: middle;
   opacity: 0.75;
 }
 
 .map-country-sm {
   font-size: 14px;
+}
+
+/* Scale bar — a small fieldbook measuring detail. */
+.scalebar {
+  fill: none;
+  stroke: var(--ink-faint);
+  opacity: 0.6;
+}
+
+.scalebar-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--ink-faint);
+  stroke: none;
+  text-anchor: middle;
+  opacity: 0.9;
 }
 
 .map-note {

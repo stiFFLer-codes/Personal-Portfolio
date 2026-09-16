@@ -236,8 +236,10 @@ the page.
 8. ~~Writing~~ DONE — shipped ahead of 6/7. Deviation from "do not skip
    ahead," left as-is rather than unwound; noted here so it reads as a
    decision, not drift.
-9. ~~Travel map~~ DONE (scaffold) — `/travel`: a hand-drawn inline-SVG plate
-   of the Aug 2025 Nordic/Baltic trip, anchored on the Jyväskylä Summer
+9. ~~Travel map~~ DONE (scaffold) — `/travel`: an inline-SVG plate (accurate
+   Natural Earth boundaries, projected and baked at build time by
+   `scripts/build-travel-geo.py` → `src/components/travel-geo.ts`; no runtime
+   dep or request) of the Aug 2025 Nordic/Baltic trip, anchored on the Jyväskylä Summer
    School, with a `places` collection, one linked marker per stop, and a
    "field log" list below that carries every stop without JS. Photos and the
    per-stop blurbs (plus the page h1/lede) are Maitreya's to supply — the

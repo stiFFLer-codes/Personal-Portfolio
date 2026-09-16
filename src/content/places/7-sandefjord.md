@@ -3,8 +3,8 @@ name: Sandefjord
 country: Norway
 dateLabel: "August '25"
 order: 7
-x: 13.5
-y: 55
+x: 29.03
+y: 49.92
 anchor: false
 blurb: "A quiet coastal town that kept me up all night anyway, and I don't regret a minute of it. Still think about those views."
 photos:

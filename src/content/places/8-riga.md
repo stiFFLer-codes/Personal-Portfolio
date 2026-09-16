@@ -3,8 +3,8 @@ name: Riga
 country: Latvia
 dateLabel: "August '25"
 order: 8
-x: 80.5
-y: 81.9
+x: 73.39
+y: 68.89
 anchor: false
 blurb: "First Baltic state on the route, and it didn't feel like a stop between other stops. Riga's Old Town is genuinely beautiful, worth slowing down for."
 photos:
