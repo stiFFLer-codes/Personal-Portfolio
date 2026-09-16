@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TravelMap from '../../components/TravelMap.astro';
+import Specimen from '../../components/Specimen.astro';
+
+const places = (await getCollection('places')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base
+  title="Travel — Maitreya Sapariya"
+  description="A hand-drawn map of the August 2025 Nordic and Baltic trip, built around the 34th Jyväskylä Summer School."
+>
+  <div class="container">
+    <section class="hero">
+      <p class="kicker reveal">travel</p>
+      <h1 class="reveal">The trip that made Europe stop being a maybe.</h1>
+      <p class="lede reveal">
+        One summer school in Finland, five countries solo, and more trains
+        than I can count. I went to learn machine learning and stochastic
+        control. I came back certain about where I want to do the rest.
+      </p>
+    </section>
+
+    <section class="section">
+      <TravelMap places={places} />
+      <p class="travel-hint mono reveal">
+        Hover or focus a stop to read its note. Select one to jump to its
+        photos below.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Field log</h2>
+        <span class="see-all">{places.length} stops · 5 countries</span>
+      </div>
+
+      <ol class="field-log">
+        {places.map((p) => (
+          <li class="field-entry" id={`stop-${p.id}`}>
+            <span
+              class:list={['dot', p.data.anchor ? 'dot-shipped' : 'dot-note']}
+              aria-hidden="true"
+            ></span>
+            <div class="field-head">
+              <h3 class="field-name">
+                {p.data.name}
+                <span class="field-order mono">
+                  {String(p.data.order).padStart(2, '0')}
+                </span>
+              </h3>
+              <p class="field-meta mono">
+                {p.data.country} · {p.data.dateLabel}
+                {p.data.anchor && ' · anchor'}
+              </p>
+            </div>
+            <p class="field-blurb">{p.data.blurb}</p>
+            {p.data.source && (
+              <a
+                class="field-source mono"
+                href={p.data.source.href}
+                target="_blank"
+                rel="noopener"
+              >
+                {p.data.source.label} ↗
+              </a>
+            )}
+            <div class="specimen-row">
+              {(p.data.photos.length ? p.data.photos : [null]).map((ph, i) => (
+                <Specimen photo={ph} index={i} />
+              ))}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
+</Base>

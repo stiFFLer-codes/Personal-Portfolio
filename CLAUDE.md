@@ -154,6 +154,19 @@ Motion
 - All of it lives inside `@media (prefers-reduced-motion: no-preference)`.
   Motion that animates for a user who asked for none is a REJECT.
 
+**One sanctioned motion carve-out: the `/travel` plate.** Reviewed and
+accepted with Maitreya as a deliberate exception, on the same footing as
+the StatusLedger script. It adds three things the list above would
+otherwise forbid: (1) the route line *draws itself* once on load via
+`stroke-dashoffset` (not an opacity/translate fade); (2) a **bounded
+pointer-parallax** — the map plate drifts ≤6px toward the cursor, gated to
+fine pointers; (3) a static ≤1.5° tilt on mounted photos (a tilt, not a
+spin). All of it lives inside `prefers-reduced-motion: no-preference` and
+degrades to a fully static, functional plate without motion or JS. This is
+the *only* place any of the three is allowed — the bans above still hold
+everywhere else. Do not extend it to other sections, and do not remove it
+without an explicit instruction from Maitreya.
+
 Banned CSS patterns: box-shadow of any kind, border-radius above 14px
 (the favicon) or 4px (everything else — circles excepted, the status dots
 are `50%`), any emoji in UI chrome. Symbol glyphs in chrome are a hazard
@@ -183,8 +196,13 @@ Any other gradient is a REJECT.
       reviewed and accepted as a permanent, intentional carve-out — the
       values must be computed at view time, not build time. It is not an
       open violation. Do not re-flag it, and do not remove it without an
-      explicit instruction from Maitreya. Any *other* client-side JS on a
-      static section is still a REJECT.
+      explicit instruction from Maitreya. **A second sanctioned exception:**
+      the small inline script in `TravelMap.astro` (`/travel`), which adds
+      bounded pointer-parallax and lights the route leg into a hovered stop.
+      It is pure enhancement — the map renders, the route draws, hover cards
+      show, and every marker still links to its field-log entry with the
+      script absent. Same standing as the ledger script; do not re-flag it.
+      Any *other* client-side JS on a static section is still a REJECT.
 - [ ] Semantic HTML — `<article>`, `<time>`, `<nav>`, real heading order
 - [ ] Alt text is descriptive, not decorative filler
 - [ ] No third-party network request added
@@ -218,7 +236,13 @@ the page.
 8. ~~Writing~~ DONE — shipped ahead of 6/7. Deviation from "do not skip
    ahead," left as-is rather than unwound; noted here so it reads as a
    decision, not drift.
-9. travel map — optional, only after everything above is live
+9. ~~Travel map~~ DONE (scaffold) — `/travel`: a hand-drawn inline-SVG plate
+   of the Aug 2025 Nordic/Baltic trip, anchored on the Jyväskylä Summer
+   School, with a `places` collection, one linked marker per stop, and a
+   "field log" list below that carries every stop without JS. Photos and the
+   per-stop blurbs (plus the page h1/lede) are Maitreya's to supply — the
+   page ships with honest empty specimen frames until then. Motion + the one
+   inline script are the documented carve-outs above.
 
 ## Git
 

@@ -86,4 +86,47 @@ const experience = defineCollection({
   }),
 });
 
-export const collections = { projects, changelog, research, writing, experience };
+// One stop on the Aug 2025 Nordic/Baltic trip (the Jyväskylä Summer School
+// and the solo travel around it). Rendered on /travel: as a marker on the
+// hand-drawn map, and as a row in the field log below it. `order` is the
+// travel order and drives the route line drawn between stops. `x`/`y` are the
+// marker's position on the map, as percentages of the SVG viewBox — geometry
+// lives in the content record, not the component, so a stop moves by editing
+// one file. `anchor` marks the single summer-school stop (drawn green, the
+// spine of the trip). Prose (`blurb`) is human-authored; photos are optional
+// so the page ships with empty specimen frames until they are mounted.
+const places = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/places' }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      country: z.string(),
+      dateLabel: z.string(),
+      order: z.number().default(99),
+      // Marker position as a percentage of the map viewBox (0–100).
+      x: z.number().min(0).max(100),
+      y: z.number().min(0).max(100),
+      // The summer-school stop — the anchor of the trip. Exactly one.
+      anchor: z.boolean().default(false),
+      // One honest line, human-authored.
+      blurb: z.string(),
+      // 1–2 per stop. Optional: an unmounted stop shows a "to be mounted"
+      // frame rather than a broken image.
+      photos: z
+        .array(z.object({ src: image(), alt: z.string() }))
+        .default([]),
+      // Optional checkable artifact for a stop (e.g. the Jyväskylä summer-school
+      // certificate). `href` is a path under public/. Same "verify this" idea
+      // as SourceLinks on the project/research pages.
+      source: z.object({ label: z.string(), href: z.string() }).optional(),
+    }),
+});
+
+export const collections = {
+  projects,
+  changelog,
+  research,
+  writing,
+  experience,
+  places,
+};
