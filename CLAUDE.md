@@ -23,9 +23,9 @@ If a section does not serve that sentence, it does not ship.
 A professor, 11 PM, having read 200 applications. They are reading, not
 admiring. Optimize for: scannable, credible, specific. Never for: impressive.
 
-**Revised with Maitreya:** this site is not an EDISS deliverable — EDISS never
-asks for a portfolio. It's a supporting digital presence someone may look up
-from the CV / LinkedIn. For a *lookup* (not a scored document), evident craft
+**Revised with Maitreya:** this site is not a deliverable for the target
+programme — that programme never asks for a portfolio. It's a supporting digital
+presence someone may look up from the CV / LinkedIn. For a *lookup* (not a scored document), evident craft
 and care read as an asset, not a liability. So: content stays
 scannable/credible/specific, but the `/travel` plate is a sanctioned showcase
 where deliberate visual ambition is allowed. That licence is scoped to `/travel`

@@ -13,11 +13,14 @@
 // The inline script (documented carve-out, see CLAUDE.md) adds multi-layer
 // pointer-parallax and route-leg glow. Pure enhancement.
 import type { CollectionEntry } from 'astro:content';
+// Note: the generator also emits COUNTRY_LABELS (raw largest-ring centroids),
+// but those aren't imported on purpose — a centroid sits badly for a concave
+// country (Norway's lands offshore, Sweden's mid-water), so the label anchors
+// below are hand-placed for legibility and verified against the rendered plate.
 import {
   VIEW,
   KM_PER_PX,
   COUNTRIES,
-  COUNTRY_LABELS,
   LAKES,
   GRATICULE,
   CITY_COORDS,
