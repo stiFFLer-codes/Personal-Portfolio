@@ -812,7 +812,9 @@ a.see-all::after {
 }
 
 /* ============================================================
-   Motion — one gesture, used once, on page load.
+   Motion — the load reveal (one gesture, once, on page load) plus one
+   sanctioned hover micro-interaction: the directional arrow glide on
+   forward/back links (≤8px translate, ease-out — within the design law).
    Everything here is opt-in via prefers-reduced-motion.
    ============================================================ */
 
@@ -849,7 +851,7 @@ a.see-all::after {
   .cta::after,
   a.see-all::after,
   .kicker a.back::before {
-    transition: transform 0.18s var(--ease);
+    transition: transform 0.2s var(--ease);
   }
 
   .cta:hover::after,
