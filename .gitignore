@@ -39,3 +39,6 @@ PRIVATE_NOTES.md
 
 # original certificates and other personal documents; only redacted copies go in public/
 /private-docs/
+
+# session working notes; local only (see its own header)
+state.md
