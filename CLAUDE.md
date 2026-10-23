@@ -75,6 +75,10 @@ No hedging. No "this is great, but..."
    programme intended for master's, doctoral, and postdoctoral
    researchers" > "selected from a global pool".
 
+7. **Avoid the em dash.** Use a comma, colon or full stop instead; keep
+   an em dash only where nothing else works. Labels, titles and page
+   titles never carry one (the title separator is ` · `).
+
 Violating rule 1 or 5 is grounds for immediate REJECT.
 
 ---
@@ -169,8 +173,7 @@ Motion
   Motion that animates for a user who asked for none is a REJECT.
 
 **One sanctioned motion carve-out: the `/travel` plate.** Reviewed and
-accepted with Maitreya as a deliberate showcase exception, on the same footing
-as the StatusLedger script. It carries a bounded set the list above would
+accepted with Maitreya as a deliberate showcase exception. It carries a bounded set the list above would
 otherwise forbid: (1) the route line *draws itself* once on load via
 `stroke-dashoffset`; (2) a small green **token that travels the route path**
 on load (CSS `offset-path`); (3) a **multi-layer pointer-parallax** — the map
@@ -208,18 +211,14 @@ Any other gradient is a REJECT.
 - [ ] Keyboard navigable; visible focus states
 - [ ] Renders correctly at 375px
 - [ ] No client-side JS shipped for a static section (Astro islands only
-      where interactivity is real). **One sanctioned exception:** the
-      ~500-byte inline script in `StatusLedger.astro` that renders the
-      countdown and the "log:" date in the terminal strip. This was
-      reviewed and accepted as a permanent, intentional carve-out — the
-      values must be computed at view time, not build time. It is not an
-      open violation. Do not re-flag it, and do not remove it without an
-      explicit instruction from Maitreya. **A second sanctioned exception:**
+      where interactivity is real). **One sanctioned exception:**
       the small inline script in `TravelMap.astro` (`/travel`), which adds
       bounded pointer-parallax and lights the route leg into a hovered stop.
       It is pure enhancement — the map renders, the route draws, hover cards
       show, and every marker still links to its field-log entry with the
-      script absent. Same standing as the ledger script; do not re-flag it.
+      script absent. Reviewed and accepted; do not re-flag it.
+      (The StatusLedger countdown script, once a second exception, was
+      removed in phase 10 on Maitreya's instruction. The ledger is static.)
       Any *other* client-side JS on a static section is still a REJECT.
 - [ ] Semantic HTML — `<article>`, `<time>`, `<nav>`, real heading order
 - [ ] Alt text is descriptive, not decorative filler
@@ -266,6 +265,18 @@ the page.
    Maitreya's photos are mounted and his per-stop blurbs + hero copy are in;
    the `/writing` h1/lede remain the one open piece of his prose to supply.
    Motion + the one inline script are the documented carve-outs above.
+10. ~~Status refresh, October 2026~~ DONE on branch, pending Maitreya's review.
+    The `/log` route, the ledger's `target:` countdown and `log:` date, and
+    their inline script are retired (`/log` 308s to `/` via `vercel.json`);
+    the ledger shows `now:` only, and home carries a "Recent" list of the
+    newest five changelog entries. Research statuses refreshed (CARTA at
+    IJMADA, the accessibility-workshop position paper, Three Voices on
+    arXiv); ADS-Cascade is superseded by "Prediction is not selection"
+    (`/research/ads-cascade` redirects), so phase 7's research question now
+    ships there. Maatritwa AI is an archived prototype. www is the canonical
+    host; static Open Graph card (`scripts/og-image.html` → `public/og.png`);
+    ORCID in the footer; redacted certificates in `public/` with originals
+    kept in the gitignored `private-docs/`.
 
 ## Git
 

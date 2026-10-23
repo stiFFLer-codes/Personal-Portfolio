@@ -14,13 +14,13 @@ The reader: a professor at 11 PM who has already read ~200 applications. Optimiz
 
 | Route | Status | Purpose |
 | --- | --- | --- |
-| `/` | Live | Hero, current work, research, recent log |
+| `/` | Live | Hero, current work, first three research entries, Recent (newest five changelog entries) |
 | `/about` | Live | Biography, education, research interests |
 | `/projects` | Live | List of all projects with status |
 | `/projects/[slug]` | Live | Project detail + sources block |
-| `/research` | Live | List of research (ADS-Cascade, CARTA, Three Voices) |
+| `/research` | Live | List of research (CARTA, What AI should refuse to say, Three Voices, Prediction is not selection) |
 | `/research/[slug]` | Live | Research detail + sources block |
-| `/log` | Live | Timestamped changelog |
+| `/log` | Retired (phase 10) | 308 redirect to `/` in `vercel.json` |
 | `/writing` | Live | List of writing |
 | `/writing/[slug]` | Live | Human-authored writing, 4 posts |
 | Experience (section on `/about`) | Live | Employer entries via the status rail, no detail pages |
@@ -37,7 +37,7 @@ and the schema disagree, the schema wins and this file is the bug.
 
 Create `src/content/projects/[slug].md`.
 
-Required: `title`, `status` (`shipped` / `in-progress` / `planned`), `statusLabel` (a sentence naming the real state, e.g. "Methodology locked, model training not started"), `summary`.
+Required: `title`, `status` (`shipped` / `in-progress` / `planned`), `statusLabel` (a sentence naming the real state, e.g. "Archived prototype, built for the India Innovates 2026 demo (28 March 2026)"), `summary`.
 Optional: `stack` (array of strings), `order` (integer, default 99), `startDate`, `links` (`repo`, `live`, `preprint` — full URLs).
 
 Body is Markdown. Each `##` gets a rule above it; there is no per-section box.
@@ -57,12 +57,12 @@ detail page, since a job isn't a case study.
 Required: `company`, `role`, `status`, `statusLabel`, `summary`.
 Optional: `order` (integer, default 99).
 
-### Adding a log entry
+### Adding a Recent entry
 
 Create `src/content/changelog/[YYYY-MM-DD]-slug.md`.
 
 Required: `date`, `title`.
-Optional: `tag` — one of `ship`, `progress`, `note` (default `note`). Note these are *not* the project status words. Body optional; if present it shows under the title.
+Optional: `tag`: one of `ship`, `progress`, `note` (default `note`). Not the project status words, and not shown: the home Recent list renders date and title only, with one neutral dot, so a body is never rendered either.
 
 ### Adding a travel stop
 
