@@ -11,6 +11,7 @@ export const SITE = {
 
   github: 'https://github.com/stiFFLer-codes',
   linkedin: 'https://www.linkedin.com/in/maitreya-sapariya/',
+  orcid: 'https://orcid.org/0009-0003-9346-3775',
 
   // Shown in the status ledger as "now:"
   now: 'Software Engineer @ Crest Infosystems',
