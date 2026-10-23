@@ -1,13 +1,13 @@
 ---
 title: 'Maatritwa AI'
-status: 'in-progress'
-statusLabel: 'ASHA and doctor views fully wired; mother view is a documented UI mock'
-summary: "A three-sided referral system for rural antenatal care in India, built for a national innovation demo: ASHA community health workers log a mother's vitals and get a risk score, doctors see the case as a referral with full history and lab data, and the mother gets a simplified, Hindi-language view of her own risk."
+status: 'shipped'
+statusLabel: 'Archived prototype, built for the India Innovates 2026 demo (28 March 2026)'
+summary: 'A maternal-health referral prototype for rural India, ASHA worker to doctor, with the mother in the loop.'
 stack: ['React', 'Vite', 'FastAPI', 'Supabase']
 order: 1
 links:
   repo: 'https://github.com/stiFFLer-codes/Maatritwa-AI'
-  live: 'https://stiffler-codes.github.io/Maatritwa-AI/'
+  # TODO(markie): add https://stiffler-codes.github.io/Maatritwa-AI/ once the data cleanup is verified
 ---
 
 ## The design problem
