@@ -26,7 +26,7 @@ const projects = defineCollection({
 
 // Each changelog entry is one markdown file, named YYYY-MM-DD-slug.md so
 // entries sort naturally in a file browser too. To log an update, add one
-// small file here — the home page and /log both pick it up automatically.
+// small file here. The home page's Recent list shows the newest five.
 const changelog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/changelog' }),
   schema: z.object({

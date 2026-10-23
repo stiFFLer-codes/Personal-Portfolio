@@ -7,14 +7,14 @@ const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
-const research = (await getCollection('research')).sort(
-  (a, b) => a.data.order - b.data.order
-);
+const research = (await getCollection('research'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
 
 const changelog = (await getCollection('changelog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
-const recentLog = changelog.slice(0, 3);
+const recent = changelog.slice(0, 5);
 
 const dateFmt = (d: Date) =>
   d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
@@ -77,14 +77,15 @@ const dateFmt = (d: Date) =>
 
     <section class="section">
       <div class="section-head">
-        <h2>Recent log</h2>
-        <a class="see-all" href="/log">full log</a>
+        <h2>Recent</h2>
       </div>
+      {/* One neutral dot for every row: the tag colour has no word beside it
+          here, and colour is never the only carrier of meaning. */}
       <div class="rail">
-        {recentLog.map((e) => (
+        {recent.map((e) => (
           <Entry
             title={e.data.title}
-            status={e.data.tag}
+            status="note"
             meta={dateFmt(e.data.date)}
             datetime={e.data.date}
           />
