@@ -1,6 +1,24 @@
 {
   "redirects": [
-    { "source": "/log", "destination": "/", "permanent": true },
-    { "source": "/log/", "destination": "/", "permanent": true }
+    {
+      "source": "/log",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/log/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/research/ads-cascade",
+      "destination": "/research/prediction-is-not-selection",
+      "permanent": true
+    },
+    {
+      "source": "/research/ads-cascade/",
+      "destination": "/research/prediction-is-not-selection",
+      "permanent": true
+    }
   ]
 }
