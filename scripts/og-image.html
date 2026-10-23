@@ -1,0 +1,86 @@
+<!doctype html>
+<!--
+  Source for public/og.png, the 1200×630 Open Graph card. Built from the
+  site's own tokens and self-hosted fonts; no external request. Regenerate
+  after `npm install` with headless Chromium, then crop the top 1200×630
+  (new headless mode reserves part of the window for browser chrome, so a
+  630px-tall window clips the strip):
+
+    chromium --headless --hide-scrollbars --force-device-scale-factor=1 \
+      --allow-file-access-from-files --virtual-time-budget=3000 \
+      --window-size=1200,900 --screenshot=og-tall.png scripts/og-image.html
+    # then crop og-tall.png to (0, 0, 1200, 630) and save as public/og.png
+
+  Fixed pixel sizes are deliberate here: this is a raster at one known size,
+  not a page that reflows.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../node_modules/@fontsource-variable/newsreader/index.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource-variable/jetbrains-mono/index.css" />
+    <link rel="stylesheet" href="../src/styles/global.css" />
+    <style>
+      html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+      .card {
+        box-sizing: border-box;
+        width: 1200px;
+        height: 630px;
+        display: flex;
+        flex-direction: column;
+      }
+      .plate {
+        flex: 1;
+        padding: 72px 88px 0;
+        border-left: 6px solid var(--signal-green);
+        margin-left: 0;
+      }
+      .wordmark {
+        font-family: var(--font-mono);
+        font-size: 24px;
+        color: var(--ink-faint);
+        margin: 0 0 56px;
+      }
+      .name {
+        font-family: var(--font-body);
+        font-weight: 500;
+        font-size: 44px;
+        color: var(--signal-green);
+        margin: 0 0 20px;
+      }
+      .thesis {
+        font-family: var(--font-body);
+        font-weight: 380;
+        font-size: 58px;
+        line-height: 1.12;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        margin: 0;
+        max-width: 980px;
+      }
+      .strip {
+        background: var(--terminal-bg);
+        color: var(--terminal-text);
+        font-family: var(--font-mono);
+        font-size: 22px;
+        padding: 26px 88px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .strip span { color: var(--terminal-soft); }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="plate">
+        <p class="wordmark">~/maitreya</p>
+        <p class="name">Maitreya Sapariya</p>
+        <p class="thesis">I build software systems that turn messy, real-world data into decisions people can act on.</p>
+      </div>
+      <div class="strip">
+        <div><span>now:</span> Software Engineer @ Crest Infosystems</div>
+        <div>maitreyasapariya.me</div>
+      </div>
+    </div>
+  </body>
+</html>
