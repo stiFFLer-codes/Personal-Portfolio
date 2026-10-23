@@ -1,8 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Update `site` to your real domain before deploying — it powers canonical
-// URLs and the Open Graph tags in Base.astro.
+// The primary host. It powers canonical URLs and the Open Graph tags in
+// Base.astro, so it must match the production domain set in Vercel (the
+// apex 308-redirects here).
 export default defineConfig({
-  site: 'https://maitreyasapariya.me',
+  site: 'https://www.maitreyasapariya.me',
 });
