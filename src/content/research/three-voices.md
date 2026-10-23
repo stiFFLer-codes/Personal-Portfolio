@@ -22,8 +22,8 @@ Evaluation to date is a formative single-evaluator heuristic critique of the art
 not a user study or clinical-validity claim. Co-authored with Aditi Patil (Sumandeep
 Vidyapeeth).
 
-This work extracted its core question — how to communicate model uncertainty to a
-non-clinical audience — from [Maatritwa AI](/projects/maatritwa-ai), an earlier
+This work extracted its core question, how to communicate model uncertainty to a
+non-clinical audience, from [Maatritwa AI](/projects/maatritwa-ai), an earlier
 prototype built for a national innovation demo. The two are related but distinct: this
 paper is a rigorous exercise on a public dataset, not an evaluation of that prototype's
 real-world performance.

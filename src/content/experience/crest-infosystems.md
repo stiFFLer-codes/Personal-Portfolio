@@ -3,7 +3,7 @@ company: 'Crest Infosystems'
 role: 'Software Engineer'
 status: 'in-progress'
 statusLabel: 'Full-time since June 2026, converted from a 6-month internship'
-summary: 'Software Engineer responsible for building scalable systems that people actually use — thinking through, integrating, and building AI solutions for existing systems.'
+summary: 'Software Engineer responsible for building scalable systems that people actually use: thinking through, integrating, and building AI solutions for existing systems.'
 order: 1
 ---
 
