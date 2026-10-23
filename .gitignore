@@ -36,3 +36,6 @@ PRIVATE_NOTES.md
 
 # machine-local Claude Code settings
 .claude/settings.local.json
+
+# original certificates and other personal documents; only redacted copies go in public/
+/private-docs/
