@@ -15,13 +15,12 @@ const changelog = (await getCollection('changelog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 const recentLog = changelog.slice(0, 3);
-const lastLogDate = changelog[0]?.data.date;
 
 const dateFmt = (d: Date) =>
   d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 ---
 
-<Base lastLogDate={lastLogDate}>
+<Base>
   <div class="container">
     <section class="hero">
       <p class="kicker reveal">software engineer · rural-health ML · finland alum</p>

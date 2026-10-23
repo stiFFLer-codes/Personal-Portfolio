@@ -6,7 +6,6 @@ import Entry from '../components/Entry.astro';
 const entries = (await getCollection('changelog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
-const lastLogDate = entries[0]?.data.date;
 
 const dateFmt = (d: Date) =>
   d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -15,7 +14,6 @@ const dateFmt = (d: Date) =>
 <Base
   title="Log — Maitreya Sapariya"
   description="A running record of what's shipped, what's in progress, and what's just a note."
-  lastLogDate={lastLogDate}
 >
   <div class="container">
     <section class="hero">

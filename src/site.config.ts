@@ -1,5 +1,5 @@
 // One place to update the small facts that show up all over the site.
-// Edit these as things change — the status ledger and footer read from here.
+// Edit these as things change. The status ledger and footer read from here.
 
 export const SITE = {
   name: 'Maitreya Sapariya',
@@ -14,8 +14,4 @@ export const SITE = {
 
   // Shown in the status ledger as "now:"
   now: 'Software Engineer @ Crest Infosystems',
-
-  // The countdown in the ledger and footer counts down to this date.
-  deadline: new Date('2026-12-18T00:00:00'),
-  deadlineLabel: 'self-imposed submission target',
 } as const;

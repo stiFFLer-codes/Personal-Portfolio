@@ -22,13 +22,11 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
-  lastLogDate?: Date;
 }
 
 const {
   title = SITE.title,
   description = SITE.description,
-  lastLogDate,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -54,7 +52,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <body>
     <a class="sr-only-focusable" href="#main">Skip to content</a>
     <Nav />
-    <StatusLedger lastLogDate={lastLogDate} />
+    <StatusLedger />
     <main id="main">
       <slot />
     </main>
