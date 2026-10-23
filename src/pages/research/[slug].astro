@@ -14,6 +14,8 @@ export async function getStaticPaths() {
 
 const { research } = Astro.props;
 const { Content } = await render(research);
+const hasDetail =
+  Boolean(research.body?.trim()) || Object.values(research.data.links).some(Boolean);
 ---
 
 <Base
@@ -27,16 +29,24 @@ const { Content } = await render(research);
       <p class="lede reveal">{research.data.summary}</p>
       <p class="status-line reveal">
         <StatusDot status={research.data.status} />
-        {research.data.statusLabel}
-        {research.data.venue && <span>· {research.data.venue}</span>}
+        {/* One text run, so a long venue wraps as prose instead of becoming
+            a second flex column. */}
+        <span>
+          {research.data.statusLabel}
+          {research.data.venue && ` · ${research.data.venue}`}
+        </span>
       </p>
     </section>
 
-    <section class="section">
-      <article class="prose">
-        <Content />
-      </article>
-      <SourceLinks links={research.data.links} />
-    </section>
+    {/* A paper can ship as frontmatter only: no body and no sources yet.
+        Skip the section rather than draw a rule over nothing. */}
+    {hasDetail && (
+      <section class="section">
+        <article class="prose">
+          <Content />
+        </article>
+        <SourceLinks links={research.data.links} />
+      </section>
+    )}
   </div>
 </Base>
