@@ -5,8 +5,9 @@ export const SITE = {
   name: 'Maitreya Sapariya',
   title: 'Maitreya Sapariya · building data-intensive software systems',
   // Programme specifics deliberately omitted here — see PRIVATE_NOTES.md (gitignored).
+  // TODO(markie): replace this description; Markie is sending the text.
   description:
-    'Software engineer building production ML systems and working toward a research-oriented graduate programme in Europe. Notes, projects, and a running log.',
+    'Software engineer building production ML systems and working toward a research-oriented graduate programme in Europe.',
   email: 'maitreyasapariya@gmail.com',
 
   github: 'https://github.com/stiFFLer-codes',
