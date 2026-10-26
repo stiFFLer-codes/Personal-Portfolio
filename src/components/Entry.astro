@@ -1,5 +1,5 @@
 ---
-// One row on the status rail. Projects, research, and log entries are
+// One row on the status rail. Projects, research, and Recent entries are
 // all the same shape: a status dot on the spine, a title, a meta value
 // on the right, and optional body and tags.
 //
@@ -9,13 +9,13 @@ import StatusDot from './StatusDot.astro';
 
 interface Props {
   title: string;
-  /** shipped / in-progress / planned, or ship / progress / note for log entries. */
+  /** shipped / in-progress / planned, or ship / progress / note for Recent entries. */
   status: 'shipped' | 'in-progress' | 'planned' | 'ship' | 'progress' | 'note';
-  /** Right-hand column: a date for log entries, a status word for work. */
+  /** Right-hand column: a date for Recent entries, a status word for work. */
   meta: string;
   /** Set when `meta` is a date, so the date is machine-readable. */
   datetime?: Date;
-  /** Omit for entries with no page of their own — log entries. */
+  /** Omit for entries with no page of their own, such as Recent entries. */
   href?: string;
   summary?: string;
   tags?: string[];

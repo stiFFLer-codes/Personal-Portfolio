@@ -16,5 +16,5 @@ photos:
   - src: ./img/jyvaskyla-cohort.jpg
     alt: "Maitreya taking a selfie with a group of international summer-school students outside a brick campus building."
   - src: ./img/jyvaskyla-lecture.jpg
-    alt: "A summer-school lecture in progress — a laptop and notebook in the foreground, 'Machine learning and stochastic control' on the projector screen."
+    alt: "A summer-school lecture in progress: a laptop and notebook in the foreground, 'Machine learning and stochastic control' on the projector screen."
 ---

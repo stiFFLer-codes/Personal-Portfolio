@@ -620,8 +620,11 @@ a.see-all::after {
 
 .status-line {
   display: flex;
-  align-items: center;
+  /* baseline, not center: a long label wraps, and the dot belongs to its
+     first line rather than floating in the middle of the block. */
+  align-items: baseline;
   gap: var(--s-2);
+  max-width: var(--measure);
   margin-top: var(--s-5);
   font-family: var(--font-mono);
   font-size: var(--t-sm);

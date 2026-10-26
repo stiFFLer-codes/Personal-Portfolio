@@ -22,16 +22,16 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
-  lastLogDate?: Date;
 }
 
 const {
   title = SITE.title,
   description = SITE.description,
-  lastLogDate,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// Static card, regenerated from scripts/og-image.html.
+const ogImage = new URL('/og.png', Astro.site);
 ---
 
 <!doctype html>
@@ -47,14 +47,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Maitreya Sapariya: I build software systems that turn messy, real-world data into decisions people can act on."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
     <a class="sr-only-focusable" href="#main">Skip to content</a>
     <Nav />
-    <StatusLedger lastLogDate={lastLogDate} />
+    <StatusLedger />
     <main id="main">
       <slot />
     </main>
