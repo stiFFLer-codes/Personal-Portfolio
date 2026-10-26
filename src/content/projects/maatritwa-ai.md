@@ -7,7 +7,7 @@ stack: ['React', 'Vite', 'FastAPI', 'Supabase']
 order: 1
 links:
   repo: 'https://github.com/stiFFLer-codes/Maatritwa-AI'
-  # TODO(markie): add https://stiffler-codes.github.io/Maatritwa-AI/ once the data cleanup is verified
+  live: 'https://stiffler-codes.github.io/Maatritwa-AI/'
 ---
 
 ## The design problem
