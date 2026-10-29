@@ -1,7 +1,7 @@
 ---
 title: 'When Chats Split Apart: Formalizing Temporal Communication Fragmentation and the CARTA Reconstruction Framework'
-status: 'in-progress'
-statusLabel: 'Accepted with revisions at IJMADA; revised manuscript submitted, final decision pending'
+status: 'shipped'
+statusLabel: 'Accepted at IJMADA; forthcoming'
 venue: 'International Journal of Management and Data Analytics (IJMADA)'
 summary: 'Formalizes what happens when a messaging account''s history splits across two devices with no way to recombine them, and proposes CARTA, a reconstruction contract that quarantines and reports what it can''t safely resolve.'
 order: 1
