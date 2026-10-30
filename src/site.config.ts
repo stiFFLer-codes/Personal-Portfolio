@@ -16,4 +16,10 @@ export const SITE = {
 
   // Shown in the status ledger as "now:"
   now: 'Software Engineer @ Crest Infosystems',
+
+  // Structured data (schema.org Person) on the home page. This is what lets a
+  // search engine tie the name to this site and to the profiles below.
+  jobTitle: 'Software Engineer',
+  employer: 'Crest Infosystems',
+  alumniOf: 'A. D. Patel Institute of Technology, CVM University',
 } as const;

@@ -18,6 +18,7 @@ import '@fontsource-variable/newsreader';
 import '@fontsource-variable/newsreader/wght-italic.css';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
+import portrait from '../assets/maitreya.jpg';
 
 interface Props {
   title?: string;
@@ -32,6 +33,21 @@ const {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 // Static card, regenerated from scripts/og-image.html.
 const ogImage = new URL('/og.png', Astro.site);
+
+// schema.org Person, home page only. A data block, not a script: browsers
+// never execute application/ld+json, so this ships no client-side JS.
+const isHome = Astro.url.pathname === '/';
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.name,
+  url: new URL('/', Astro.site).href,
+  image: new URL(portrait.src, Astro.site).href,
+  jobTitle: SITE.jobTitle,
+  worksFor: { '@type': 'Organization', name: SITE.employer },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: SITE.alumniOf },
+  sameAs: [SITE.orcid, SITE.github, SITE.linkedin],
+};
 ---
 
 <!doctype html>
@@ -57,6 +73,8 @@ const ogImage = new URL('/og.png', Astro.site);
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    {isHome && <script type="application/ld+json" set:html={JSON.stringify(person)} />}
   </head>
   <body>
     <a class="sr-only-focusable" href="#main">Skip to content</a>
