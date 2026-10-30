@@ -19,6 +19,5 @@ const current = (href: string) =>
     {links.map((l) => (
       <a href={l.href} aria-current={current(l.href)}>{l.label}</a>
     ))}
-    {SITE.cv && <a href={SITE.cv}>cv</a>}
   </div>
 </nav>

@@ -17,11 +17,6 @@ export const SITE = {
   linkedin: 'https://www.linkedin.com/in/maitreya-sapariya/',
   orcid: 'https://orcid.org/0009-0003-9346-3775',
 
-  // Path under public/ to a redacted CV. Unset until the file exists: the CV
-  // link in the nav and hero renders only when this is set.
-  // TODO(markie): drop the redacted PDF at public/cv.pdf and set this to '/cv.pdf'.
-  cv: undefined as string | undefined,
-
   // The role line under the bio, and the schema.org Person block.
   jobTitle: 'Software Engineer',
   employer: 'Crest Infosystems',
@@ -36,7 +31,6 @@ export interface Credential {
   title: string;
   where?: string;
   href?: string;
-  hrefLabel?: string;
   proof?: string;
 }
 
@@ -57,7 +51,6 @@ export const EDUCATION: Credential[] = [
     title: '34th Jyväskylä Summer School: machine learning and stochastic control',
     where: 'University of Jyväskylä, Finland',
     href: '/travel',
-    hrefLabel: 'the trip',
     proof: '/jyvaskyla-summer-school-2025.pdf',
   },
 ];

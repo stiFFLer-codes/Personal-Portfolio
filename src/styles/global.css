@@ -259,7 +259,7 @@ img {
   color: var(--signal-green);
 }
 
-/* Wraps as a guard: at 375px the name and four or five mono words share
+/* Wraps as a guard: at 375px the name and four mono words share
    ~335px, so the links drop under the name rather than run off the edge. */
 .site-nav .links {
   display: flex;
@@ -850,7 +850,7 @@ a.see-all::after {
   letter-spacing: var(--track-mono);
 }
 
-.intro-links a:not(.cta) {
+.intro-links a {
   color: var(--ink);
 }
 

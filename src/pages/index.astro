@@ -46,7 +46,6 @@ const news = (await getCollection('changelog'))
           <strong>{SITE.jobTitle}, {SITE.employer}</strong> · {SITE.location}
         </p>
         <ul class="intro-links reveal" aria-label="Contact and profiles">
-          {SITE.cv && <li><a class="cta primary" href={SITE.cv}>CV (pdf)</a></li>}
           <li><a href={`mailto:${SITE.email}`}>email</a></li>
           <li><a href={SITE.orcid} rel="me noopener" target="_blank">orcid</a></li>
           <li><a href={SITE.github} rel="me noopener" target="_blank">github</a></li>
