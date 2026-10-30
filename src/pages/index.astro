@@ -1,96 +1,174 @@
 ---
+// The home page is the whole profile: who, what he has published, where he
+// has worked, what he studied. The detail pages (each paper, project and
+// post, and /travel) hold the depth. There is no separate /about; it
+// redirects here.
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Entry from '../components/Entry.astro';
+import PaperByline from '../components/PaperByline.astro';
+import portrait from '../assets/maitreya.jpg';
+import { SITE, EDUCATION, CERTIFICATIONS } from '../site.config';
+import { day, span } from '../format';
 
+const research = (await getCollection('research')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const experience = (await getCollection('experience')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
 );
-
-const research = (await getCollection('research'))
-  .sort((a, b) => a.data.order - b.data.order)
+const news = (await getCollection('changelog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
-
-const changelog = (await getCollection('changelog')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
-const recent = changelog.slice(0, 5);
-
-const dateFmt = (d: Date) =>
-  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 ---
 
-<Base>
+<Base title={`${SITE.name} · ${SITE.jobTitle}`}>
   <div class="container">
-    <section class="hero">
-      <p class="kicker reveal">software engineer · rural-health ML · finland alum</p>
-      <h1 class="reveal">
-        I build software systems that turn messy, real-world data into decisions people can act on.
-      </h1>
-      {/* Programme specifics intentionally not named here — see PRIVATE_NOTES.md (gitignored). */}
-      <p class="lede reveal">
-        Right now that means a production maternal-health risk system in rural India,
-        a full-time engineering role, and a running case for research-oriented
-        graduate study abroad, built one shipped thing at a time.
-      </p>
-      <div class="cta-row reveal">
-        <a class="cta primary" href="/projects">see what I'm building</a>
+    <section class="intro">
+      <div>
+        <h1 class="reveal">{SITE.name}</h1>
+        <p class="intro-thesis reveal">{SITE.thesis}</p>
+        {/* Maitreya's words. Agents fix typos only. */}
+        <div class="intro-bio reveal">
+          <p>
+            I’m a software engineer with a degree in AI and data science, so I work
+            on both halves: the pipelines, and the models that run on them. My
+            research is about the decisions inside those systems, at design time,
+            before any labels exist, and at runtime, when the data can’t settle the
+            answer.
+          </p>
+        </div>
+        <p class="intro-role reveal">
+          <strong>{SITE.jobTitle}, {SITE.employer}</strong> · {SITE.location}
+        </p>
+        <ul class="intro-links reveal" aria-label="Contact and profiles">
+          {SITE.cv && <li><a class="cta primary" href={SITE.cv}>CV (pdf)</a></li>}
+          <li><a href={`mailto:${SITE.email}`}>email</a></li>
+          <li><a href={SITE.orcid} rel="me noopener" target="_blank">orcid</a></li>
+          <li><a href={SITE.github} rel="me noopener" target="_blank">github</a></li>
+          <li><a href={SITE.linkedin} rel="me noopener" target="_blank">linkedin</a></li>
+        </ul>
       </div>
+      <Image
+        class="portrait reveal"
+        src={portrait}
+        alt="Maitreya Sapariya standing outdoors in a black blazer and glasses, smiling"
+        width={200}
+        densities={[1, 2]}
+        loading="eager"
+      />
     </section>
 
-    <section class="section">
+    <section class="section" aria-labelledby="publications">
       <div class="section-head">
-        <h2>Currently shipping</h2>
-        <a class="see-all" href="/projects">all projects</a>
+        <h2 id="publications">Publications and preprints</h2>
       </div>
-      <div class="rail">
-        {projects.map((p) => (
-          <Entry
-            href={`/projects/${p.id}`}
-            title={p.data.title}
-            status={p.data.status}
-            meta={p.data.status.replace('-', ' ')}
-            summary={p.data.summary}
-            tags={p.data.stack}
-          />
-        ))}
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <h2>Research</h2>
-        <a class="see-all" href="/research">all research</a>
-      </div>
-      <div class="rail">
+      <div class="rows">
         {research.map((r) => (
           <Entry
             href={`/research/${r.id}`}
             title={r.data.title}
             status={r.data.status}
-            meta={r.data.status.replace('-', ' ')}
-            summary={r.data.summary}
+            label={r.data.stage}
+            links={r.data.links}
+          >
+            <PaperByline slot="byline" paper={r} />
+          </Entry>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="experience">
+      <div class="section-head">
+        <h2 id="experience">Experience</h2>
+      </div>
+      <div class="rows">
+        {experience.map((e) => (
+          <Entry
+            title={e.data.role}
+            where={[e.data.company, e.data.location].filter(Boolean).join(', ')}
+            label={span(e.data.start, e.data.end)}
+            note={e.data.note}
+            summary={e.data.summary}
           />
         ))}
       </div>
     </section>
 
-    <section class="section">
-      <div class="section-head">
-        <h2>Recent</h2>
+    <div class="split">
+      <div>
+        <section class="section" aria-labelledby="education">
+          <div class="section-head">
+            <h2 id="education">Education</h2>
+          </div>
+          <div class="rows">
+            {EDUCATION.map((c) => (
+              <Entry
+                dense
+                as="p"
+                href={c.href}
+                title={c.title}
+                where={c.where}
+                label={c.date}
+                links={{ certificate: c.proof }}
+              />
+            ))}
+          </div>
+        </section>
+
+        <section class="section section-flush" aria-labelledby="certifications">
+          <div class="section-head">
+            <h2 id="certifications">Certifications</h2>
+          </div>
+          <div class="rows">
+            {CERTIFICATIONS.map((c) => (
+              <Entry dense as="p" title={c.title} label={c.date} />
+            ))}
+          </div>
+        </section>
       </div>
-      {/* One neutral dot for every row: the tag colour has no word beside it
-          here, and colour is never the only carrier of meaning. */}
-      <div class="rail">
-        {recent.map((e) => (
-          <Entry
-            title={e.data.title}
-            status="note"
-            meta={dateFmt(e.data.date)}
-            datetime={e.data.date}
-          />
-        ))}
+
+      <div>
+        <section class="section" aria-labelledby="projects">
+          <div class="section-head">
+            <h2 id="projects">Projects</h2>
+            <a class="see-all" href="/projects">all projects</a>
+          </div>
+          <div class="rows">
+            {projects.map((p) => (
+              <Entry
+                dense
+                href={`/projects/${p.id}`}
+                title={p.data.title}
+                status={p.data.status}
+                label={p.data.stage}
+                summary={p.data.summary}
+              />
+            ))}
+          </div>
+        </section>
+
+        <section class="section section-flush" aria-labelledby="news">
+          <div class="section-head">
+            <h2 id="news">News</h2>
+          </div>
+          <div class="rows">
+            {news.map((n) => (
+              <Entry
+                dense
+                as="p"
+                title={n.data.title}
+                label={day(n.data.date)}
+                datetime={n.data.date}
+              />
+            ))}
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
   </div>
 </Base>

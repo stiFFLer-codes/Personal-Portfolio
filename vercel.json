@@ -19,6 +19,16 @@
       "source": "/research/ads-cascade/",
       "destination": "/research/prediction-is-not-selection",
       "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about/",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }

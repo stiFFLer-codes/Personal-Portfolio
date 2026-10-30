@@ -4,7 +4,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
-const STATIC = ['/', '/about/', '/research/', '/projects/', '/writing/', '/travel/'];
+const STATIC = ['/', '/research/', '/projects/', '/writing/', '/travel/'];
 
 export const GET: APIRoute = async ({ site }) => {
   const [research, projects, writing] = await Promise.all([

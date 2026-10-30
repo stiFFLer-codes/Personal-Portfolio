@@ -1,13 +1,11 @@
 ---
-// A small colored dot. `status` accepts either the project vocabulary
-// (shipped / in-progress / planned) or the log vocabulary (ship / progress /
-// note) — both map to the same three colors on purpose, so the whole site
-// reads as one status language.
+// A small coloured dot: green for done, amber for moving, slate for planned
+// or archived.
 //
-// The dot is always decorative: a text label saying the same thing sits
-// next to it everywhere it is used. Color never carries meaning alone.
+// The dot is always decorative: a word saying the same thing sits next to it
+// everywhere it is used. Colour never carries meaning alone.
 interface Props {
-  status: 'shipped' | 'in-progress' | 'planned' | 'ship' | 'progress' | 'note';
+  status: 'shipped' | 'in-progress' | 'planned' | 'archived';
 }
 const { status } = Astro.props;
 ---

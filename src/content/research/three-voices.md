@@ -1,6 +1,8 @@
 ---
 title: 'Three Voices: Uncertainty-Gated Rendering of a Maternal-Health Risk Alarm for Mothers, Community Health Workers, and Clinicians'
 status: 'in-progress'
+stage: 'submitted'
+# TODO(markie): add authors in published order (you and Aditi Patil).
 statusLabel: 'Submitted to arXiv, awaiting announcement; code and artifacts archived on Zenodo'
 summary: "Takes one prediction from a random forest model trained on the UCI Maternal Health Risk dataset and renders it three different ways depending on who's reading it: the full SHAP decomposition for a clinician, a ranked-factor card for a community health worker, and a three-lamp visual with a spoken Hindi sentence for the mother."
 order: 3

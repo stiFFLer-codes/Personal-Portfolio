@@ -1,14 +1,21 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+// `status` only picks the colour of a dot: green (done), amber (moving),
+// slate (planned or archived). It is never shown as a word. The word a reader
+// sees is `stage`, written for the kind of thing it labels: "accepted" for a
+// paper, "archived" for a project. A job has neither; it has dates.
+const status = z.enum(['shipped', 'in-progress', 'planned', 'archived']);
+
 // Each project is one markdown file. To add a new project, drop a new file
 // into src/content/projects/ — nothing else needs to change.
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
-    // status drives the colored dot everywhere this project is listed.
-    status: z.enum(['shipped', 'in-progress', 'planned']),
+    status,
+    // One or two words: "complete", "archived", "live".
+    stage: z.string(),
     statusLabel: z.string(),
     summary: z.string(),
     stack: z.array(z.string()).default([]),
@@ -26,24 +33,32 @@ const projects = defineCollection({
 
 // Each changelog entry is one markdown file, named YYYY-MM-DD-slug.md so
 // entries sort naturally in a file browser too. To log an update, add one
-// small file here. The home page's Recent list shows the newest five.
+// small file here. The home page's News list shows the newest three, by date.
 const changelog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/changelog' }),
   schema: z.object({
     date: z.coerce.date(),
     title: z.string(),
-    // tag drives the colored dot: ship = green, progress = amber, note = slate
+    // Kept for the record; News is labelled by date, so no dot reads it.
     tag: z.enum(['ship', 'progress', 'note']).default('note'),
   }),
 });
 
+// A paper. Listed as a citation: stage word on the left, then the title,
+// the author line and the venue (or, with no venue yet, the status label).
 const research = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/research' }),
   schema: z.object({
     title: z.string(),
-    status: z.enum(['shipped', 'in-progress', 'planned']),
+    status,
+    // One or two words: "accepted", "presented", "submitted", "not submitted".
+    stage: z.string(),
     statusLabel: z.string(),
     summary: z.string(),
+    // Full author list in published order, exactly as on the paper. Leave it
+    // unset until the order is confirmed; the citation then omits the line
+    // rather than guess at it. SITE.name is set in bold wherever it appears.
+    authors: z.array(z.string()).optional(),
     venue: z.string().optional(),
     order: z.number().default(99),
     links: z
@@ -70,17 +85,19 @@ const writing = defineCollection({
   }),
 });
 
-// One entry per employer. Listed on /about via Entry.astro — no detail
-// pages, since a role isn't a case study. Reuses the same status enum as
-// projects/research: in-progress for a current role, shipped for one that's
-// finished.
+// One entry per employer, listed on the home page. No detail pages, since a
+// role isn't a case study. A job is labelled by its dates, not a status:
+// "shipped" beside an internship reads like cargo. `end` unset means current.
 const experience = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/experience' }),
   schema: z.object({
     company: z.string(),
     role: z.string(),
-    status: z.enum(['shipped', 'in-progress', 'planned']),
-    statusLabel: z.string(),
+    location: z.string().optional(),
+    start: z.coerce.date(),
+    end: z.coerce.date().optional(),
+    // One line of context the dates can't carry, e.g. a conversion to full-time.
+    note: z.string().optional(),
     summary: z.string(),
     order: z.number().default(99),
   }),

@@ -1,6 +1,5 @@
 ---
 import Nav from '../components/Nav.astro';
-import StatusLedger from '../components/StatusLedger.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../site.config';
 
@@ -42,6 +41,7 @@ const person = {
   '@type': 'Person',
   name: SITE.name,
   url: new URL('/', Astro.site).href,
+  description: SITE.description,
   image: new URL(portrait.src, Astro.site).href,
   jobTitle: SITE.jobTitle,
   worksFor: { '@type': 'Organization', name: SITE.employer },
@@ -68,7 +68,7 @@ const person = {
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Maitreya Sapariya: I build software systems that turn messy, real-world data into decisions people can act on."
+      content={`${SITE.name}: ${SITE.thesis}`}
     />
     <meta name="twitter:card" content="summary_large_image" />
 
@@ -79,7 +79,6 @@ const person = {
   <body>
     <a class="sr-only-focusable" href="#main">Skip to content</a>
     <Nav />
-    <StatusLedger />
     <main id="main">
       <slot />
     </main>

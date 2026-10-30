@@ -7,8 +7,9 @@
    typefaces: Newsreader carries display and body, JetBrains Mono
    carries everything mechanical — status, dates, labels, nav.
 
-   Signature element: the status rail. A hairline spine down every
-   list, with each entry's status dot sitting on the line.
+   Signature element: the margin. Every list row carries a mono
+   margin column that says what state the thing is in, in a word
+   that fits it ("accepted", "archived"), or when it happened.
 
    Everything below is a token. Component files use the token,
    never a literal value.
@@ -29,10 +30,6 @@
   --hairline: rgba(23, 28, 26, 0.13);
   --hairline-strong: rgba(23, 28, 26, 0.24);
 
-  --terminal-bg: #141a18;
-  --terminal-text: #e4e8e1;
-  --terminal-soft: #9aa49e;
-
   --signal-green: #2b6b4f;
   --signal-amber: #8a5a17;
   --signal-slate: #4a5d6b;
@@ -50,6 +47,9 @@
   --t-md: 1.1875rem;
   --t-lg: clamp(1.3rem, 2.4vw, 1.6rem);
   --t-xl: clamp(1.9rem, 4.6vw, 2.9rem);
+  /* Entry titles and dense row text: between body and --t-md, so a title
+     reads as a title without becoming a heading-sized block. */
+  --t-row: 1.0625rem;
 
   --lh-tight: 1.16;
   --lh-body: 1.65;
@@ -70,21 +70,25 @@
   --s-8: 4.5rem;
 
   --gutter: clamp(1.25rem, 5vw, 2.5rem);
-  --section-y: clamp(2.5rem, 6vw, 4rem);
-  --hero-y: clamp(3rem, 9vw, 6rem);
+  --section-y: clamp(1.75rem, 4vw, 2.75rem);
+  --hero-y: clamp(2rem, 5vw, 3.5rem);
 
   /* ---- layout ---- */
   --measure: 38rem;      /* prose. ~68 characters. never wider */
   --measure-wide: 54rem; /* page container */
-  --rail: var(--s-5);    /* distance from the status rail to content */
-
-  /* Drop from an entry's top padding to the optical center of its title's
-     first line. Derived from the title's size and line-height, so nudge it
-     if either changes. */
-  --dot-offset: 0.72rem;
+  /* The margin column on every list row. Wide enough for "not submitted"
+     or "Jan 2026 – now" on one line; the dense variant fits a short date. */
+  --label-col: 8.5rem;
+  --label-col-dense: 5.75rem;
 
   --radius: 3px;
   --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+
+  /* Travel field log: the one list that keeps a spine, because it is a
+     route. Distance from the spine to content, and the drop from an entry's
+     top padding to the optical centre of its title's first line. */
+  --rail: var(--s-5);
+  --dot-offset: 0.72rem;
 
   /* Travel plate: the taped-in tilt on a mounted photo. Small on purpose —
      a fieldbook is precise, so this is a wink, not a mess. */
@@ -149,7 +153,7 @@ h2 {
 }
 
 h3 {
-  font-size: 1.0625rem;
+  font-size: var(--t-row);
   font-weight: 600;
   letter-spacing: 0;
 }
@@ -244,10 +248,9 @@ img {
 }
 
 .site-nav .wordmark {
-  font-family: var(--font-mono);
-  font-size: var(--t-sm);
-  font-weight: 500;
-  letter-spacing: var(--track-mono);
+  font-family: var(--font-body);
+  font-size: var(--t-md);
+  font-weight: 600;
   color: var(--ink);
   text-decoration: none;
 }
@@ -256,11 +259,8 @@ img {
   color: var(--signal-green);
 }
 
-/* Wraps because the row grew to six items (travel joined the set). Six mono
-   words plus their gaps overrun ~335px of usable width at 375px, so the row
-   wraps to a second line on a phone rather than running off the edge. The
-   tightened gap below keeps it compact; the wrap is the guard for the
-   narrowest screens. */
+/* Wraps as a guard: at 375px the name and four or five mono words share
+   ~335px, so the links drop under the name rather than run off the edge. */
 .site-nav .links {
   display: flex;
   flex-wrap: wrap;
@@ -283,36 +283,9 @@ img {
 }
 
 /* The current page keeps the dot vocabulary used everywhere else. */
-.site-nav .links a[aria-current='page'] {
+.site-nav .links a[aria-current] {
   color: var(--ink);
   border-bottom-color: var(--signal-green);
-}
-
-/* ============================================================
-   Status ledger — the dark strip. The site's one high-contrast
-   surface, and the only place that inverts.
-   ============================================================ */
-
-.ledger {
-  background: var(--terminal-bg);
-  color: var(--terminal-text);
-  font-family: var(--font-mono);
-  font-size: var(--t-xs);
-  letter-spacing: var(--track-mono);
-}
-
-.ledger-inner {
-  max-width: var(--measure-wide);
-  margin: 0 auto;
-  padding: var(--s-2) var(--gutter);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-1) var(--s-6);
-  align-items: baseline;
-}
-
-.ledger-label {
-  color: var(--terminal-soft);
 }
 
 /* ============================================================
@@ -332,17 +305,16 @@ img {
   flex: none;
 }
 
-.dot-shipped,
-.dot-ship {
+.dot-shipped {
   background: var(--signal-green);
 }
 
-.dot-in-progress,
-.dot-progress {
+.dot-in-progress {
   background: var(--signal-amber);
 }
 
 .dot-planned,
+.dot-archived,
 .dot-note {
   background: var(--signal-slate);
 }
@@ -386,8 +358,8 @@ img {
 }
 
 /* ============================================================
-   Buttons — the filled one echoes the ledger strip: dark means
-   "the system". Two per view, at most.
+   Buttons — the filled one is ink on paper, the page's one dark
+   surface. Two per view, at most.
    ============================================================ */
 
 .cta-row {
@@ -486,52 +458,59 @@ a.see-all::after {
 }
 
 /* ============================================================
-   The status rail — signature element.
+   List rows — the margin.
 
-   Each entry owns one segment of a shared hairline spine, so the
-   segments join into a continuous line down the list and a single
-   segment can light up on hover. The dot straddles the line.
+   Every list on the site is the same shape: a mono margin column
+   that says what state a thing is in (a word chosen for the kind
+   of thing: "accepted", "archived") or when it happened, then the
+   content. The reader scans state down the left edge without
+   reading a single title.
    ============================================================ */
 
-.rail {
+.rows {
   display: flex;
   flex-direction: column;
 }
 
 .entry {
   position: relative;
-  display: block;
-  padding: var(--s-4) 0 var(--s-5) var(--rail);
-  border-left: 1px solid var(--hairline);
-  transition: border-color 0.18s var(--ease);
-}
-
-.entry:last-child {
-  padding-bottom: var(--s-4);
-}
-
-/* Only entries that link anywhere respond to hover. Log entries have no
-   page of their own and must not look clickable. */
-.entry:has(.entry-title a):hover {
-  border-left-color: var(--signal-green);
-}
-
-.entry .dot {
-  position: absolute;
-  left: -0.5px;
-  top: calc(var(--s-4) + var(--dot-offset));
-  transform: translate(-50%, -50%);
-}
-
-.entry-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: var(--label-col) minmax(0, 1fr);
   gap: var(--s-4);
+  padding: var(--s-4) 0;
+}
+
+.entry + .entry {
+  border-top: 1px solid var(--hairline);
+}
+
+.entry:first-child {
+  padding-top: 0;
+}
+
+.entry-label {
+  display: flex;
+  /* start, not stretch: the label is one line at the top of the row, and
+     its dot centres on that line rather than on the whole row. */
+  align-self: start;
+  align-items: center;
+  gap: var(--s-2);
+  /* Sits on the title's baseline: the title is --t-row at 1.35, the
+     label --t-xs; this nudge puts both on one line optically. */
+  padding-top: 0.28em;
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-soft);
+  font-variant-ligatures: none;
+}
+
+.entry-label .dot {
+  border-width: 0;
 }
 
 .entry-title {
-  font-size: 1.0625rem;
+  font-size: var(--t-row);
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.35;
@@ -544,7 +523,7 @@ a.see-all::after {
   transition: color 0.16s var(--ease);
 }
 
-/* Stretch the title link back over the whole card, so the entry is one
+/* Stretch the title link back over the whole row, so the row is one
    comfortable click target while the link still announces only its title. */
 .entry-title a::after {
   content: '';
@@ -552,25 +531,40 @@ a.see-all::after {
   inset: 0;
 }
 
-.entry:hover .entry-title a {
+.entry-linked:hover .entry-title a {
   color: var(--signal-green);
 }
 
-/* The right-hand meta column. Dates and statuses align down the
-   page, so the reader can scan state without reading titles. */
-.entry-meta {
+.entry-where {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.entry-byline {
+  margin: var(--s-1) 0 0;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: var(--measure);
+}
+
+.entry-byline b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.entry-note {
+  margin: var(--s-1) 0 0;
   font-family: var(--font-mono);
   font-size: var(--t-xs);
   letter-spacing: var(--track-mono);
   color: var(--ink-faint);
-  white-space: nowrap;
-  text-align: right;
-  flex: none;
 }
 
 .entry-body {
   color: var(--ink-soft);
   font-size: 1rem;
+  line-height: 1.55;
   max-width: var(--measure);
   margin: var(--s-2) 0 0;
 }
@@ -579,7 +573,7 @@ a.see-all::after {
    surface color to a page that only needs two. */
 .entry-tags {
   list-style: none;
-  margin: var(--s-3) 0 0;
+  margin: var(--s-2) 0 0;
   padding: 0;
   font-family: var(--font-mono);
   font-size: var(--t-2xs);
@@ -596,19 +590,70 @@ a.see-all::after {
   color: var(--hairline-strong);
 }
 
+/* The checkable artifacts. Above the stretched title link, so each one is
+   its own target rather than a click on the row. */
+.entry-links {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: var(--s-2) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+}
+
+.entry-links a {
+  color: var(--ink-faint);
+}
+
+.entry-links a::after {
+  content: ' \2197'; /* ↗ */
+}
+
+.entry-links a:hover {
+  color: var(--signal-green);
+}
+
+/* Dense rows: news, education, certifications. One line each, no rules
+   between them, a narrower margin for a short date. */
+.entry-dense {
+  grid-template-columns: var(--label-col-dense) minmax(0, 1fr);
+  gap: var(--s-3);
+  padding: var(--s-2) 0;
+}
+
+.entry-dense + .entry-dense {
+  border-top: 0;
+}
+
+/* A one-line fact (news, a certificate) is text, not a heading. */
+.entry-dense p.entry-title {
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.entry-dense .entry-label {
+  padding-top: 0.32em;
+}
+
 @media (max-width: 34rem) {
   .site-nav .links {
     gap: var(--s-2) var(--s-4);
   }
 
-  .entry-head {
-    flex-direction: column;
+  /* The margin moves above the title: a phone has no margin to spare. */
+  .entry,
+  .entry-dense {
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--s-1);
   }
 
-  .entry-meta {
-    text-align: left;
-    order: -1;
+  .entry-label {
+    padding-top: 0;
   }
 }
 
@@ -749,31 +794,104 @@ a.see-all::after {
 }
 
 /* ============================================================
-   About portrait
+   Intro — the top of the home page. Name, Maitreya's line, his
+   bio, the role, and the ways to reach him; the portrait beside.
    ============================================================ */
 
-.about-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--s-6);
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-7);
+  align-items: start;
+  padding: var(--hero-y) 0 var(--section-y);
 }
 
-.about-head-text {
-  flex: 1 1 20rem;
+.intro h1 {
+  margin-bottom: var(--s-2);
+}
+
+.intro-thesis {
+  font-size: var(--t-lg);
+  font-style: italic;
+  line-height: 1.3;
+  max-width: 30ch;
+  margin-bottom: var(--s-4);
+  text-wrap: balance;
+}
+
+.intro-bio {
+  max-width: var(--measure);
+  color: var(--ink-soft);
+}
+
+.intro-role {
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+  margin-bottom: var(--s-4);
+}
+
+.intro-role strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.intro-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-5);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+}
+
+.intro-links a:not(.cta) {
+  color: var(--ink);
 }
 
 .portrait {
-  flex: none;
-  width: 10.5rem;
+  width: 12.5rem;
   height: auto;
   border-radius: var(--radius);
   filter: saturate(0.92);
 }
 
-@media (max-width: 34rem) {
+@media (max-width: 40rem) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-5);
+  }
+
   .portrait {
+    grid-row: 1;
     width: 8rem;
+  }
+}
+
+/* Two columns of sections side by side: education beside projects and
+   news. Stacks below the width where each column would drop under ~20rem. */
+.split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-7);
+}
+
+/* A second section in the same column continues under the first, without
+   its own rule: the column already reads as one block. */
+.section + .section-flush {
+  border-top: 0;
+  padding-top: 0;
+}
+
+@media (max-width: 46rem) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
   }
 }
 
@@ -783,7 +901,7 @@ a.see-all::after {
 
 .site-footer {
   border-top: 1px solid var(--hairline);
-  margin-top: var(--s-8);
+  margin-top: var(--s-7);
 }
 
 .footer-inner {
@@ -1439,7 +1557,7 @@ a.see-all::after {
 /* ============================================================
    Field log — the same stops as text and photos, below the map.
    The no-JS, mobile, and screen-reader path to everything the
-   map shows. Built on the rail's spine-and-dot vocabulary.
+   map shows. A spine with a dot per stop: the route, drawn as a list.
    ============================================================ */
 
 .field-log {
@@ -1467,8 +1585,7 @@ a.see-all::after {
   transform: translate(-50%, -50%);
 }
 
-/* Jumping to a stop from the map lights its entry, the same green the
-   rail uses on hover. */
+/* Jumping to a stop from the map lights its entry in signal green. */
 .field-entry:target {
   border-left-color: var(--signal-green);
 }

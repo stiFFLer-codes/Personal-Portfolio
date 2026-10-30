@@ -2,15 +2,13 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Entry from '../../components/Entry.astro';
+import { day } from '../../format';
 
 // Sorted by `order`, not by date. The dates sit close together and the
 // reading order is an editorial call — strongest first.
 const posts = (await getCollection('writing')).sort(
   (a, b) => a.data.order - b.data.order
 );
-
-const dateFmt = (d: Date) =>
-  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
 
 {/* TODO(maitreya): the h1 and the lede are yours to write. I left the h1 flat
@@ -23,14 +21,13 @@ const dateFmt = (d: Date) =>
     </section>
 
     <section class="section">
-      <div class="rail">
+      <div class="rows">
         {posts.map((p) => (
           <Entry
             as="h2"
             href={`/writing/${p.id}`}
             title={p.data.title}
-            status="ship"
-            meta={dateFmt(p.data.date)}
+            label={day(p.data.date)}
             datetime={p.data.date}
             summary={p.data.summary}
             tags={p.data.tags}

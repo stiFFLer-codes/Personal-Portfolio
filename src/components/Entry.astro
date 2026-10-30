@@ -1,61 +1,104 @@
 ---
-// One row on the status rail. Projects, research, and Recent entries are
-// all the same shape: a status dot on the spine, a title, a meta value
-// on the right, and optional body and tags.
+// One row in any list on the site: papers, projects, jobs, posts, news,
+// education. Two columns: a mono margin on the left that says what state the
+// thing is in, in a word that fits the thing ("accepted", "archived") or
+// simply when it happened ("Jan 2026 – now"); the content on the right.
 //
 // This is the only place list rows are described. Change the shape of a
 // listing here and every page that lists anything follows.
 import StatusDot from './StatusDot.astro';
 
+type Status = 'shipped' | 'in-progress' | 'planned' | 'archived';
+
+const LINK_LABELS: Record<string, string> = {
+  repo: 'repository',
+  live: 'live site',
+  preprint: 'preprint',
+  arxiv: 'arXiv',
+  code: 'code',
+  doi: 'doi',
+  certificate: 'certificate',
+};
+
 interface Props {
   title: string;
-  /** shipped / in-progress / planned, or ship / progress / note for Recent entries. */
-  status: 'shipped' | 'in-progress' | 'planned' | 'ship' | 'progress' | 'note';
-  /** Right-hand column: a date for Recent entries, a status word for work. */
-  meta: string;
-  /** Set when `meta` is a date, so the date is machine-readable. */
+  /** The margin word or date. Always a word: colour never carries meaning alone. */
+  label: string;
+  /** Picks the dot beside the label. Omit for rows labelled by a date. */
+  status?: Status;
+  /** Set when `label` is a date, so it is machine-readable. */
   datetime?: Date;
-  /** Omit for entries with no page of their own, such as Recent entries. */
   href?: string;
+  /** Muted text after the title: an employer, an institution. */
+  where?: string;
+  /** One mono line under the title. */
+  note?: string;
   summary?: string;
   tags?: string[];
-  /** h2 under a page title, h3 under a section heading. */
-  as?: 'h2' | 'h3';
+  /** External, checkable artifacts (doi, code, repository). */
+  links?: Record<string, string | undefined>;
+  /** h2 directly under a page title, h3 under a section heading, p for rows
+      that are not worth a heading (news, certifications). */
+  as?: 'h2' | 'h3' | 'p';
+  /** Tighter rows for narrow columns and one-line items. */
+  dense?: boolean;
 }
 
 const {
   title,
+  label,
   status,
-  meta,
   datetime,
   href,
+  where,
+  note,
   summary,
   tags = [],
+  links = {},
   as: Heading = 'h3',
+  dense = false,
 } = Astro.props;
 
+const linkEntries = Object.entries(links).filter(([, url]) => Boolean(url)) as [
+  string,
+  string,
+][];
+const hasByline = Astro.slots.has('byline');
 ---
 
-<article class="entry">
-  <StatusDot status={status} />
-  <div class="entry-head">
-    {/* Only the title is the link. Wrapping the whole card in an <a> would
-        make the link's accessible name the title, the status, the summary
-        and every tag read out as one string. CSS stretches the hit area
-        back over the card. */}
-    <Heading class="entry-title">
-      {href ? <a href={href}>{title}</a> : title}
-    </Heading>
+<article class:list={['entry', { 'entry-dense': dense, 'entry-linked': href }]}>
+  <div class="entry-label">
+    {status && <StatusDot status={status} />}
     {datetime ? (
-      <time class="entry-meta" datetime={datetime.toISOString().slice(0, 10)}>{meta}</time>
+      <time datetime={datetime.toISOString().slice(0, 10)}>{label}</time>
     ) : (
-      <span class="entry-meta">{meta}</span>
+      <span>{label}</span>
     )}
   </div>
-  {summary && <p class="entry-body">{summary}</p>}
-  {tags.length > 0 && (
-    <ul class="entry-tags">
-      {tags.map((t) => <li>{t}</li>)}
-    </ul>
-  )}
+  <div class="entry-main">
+    {/* Only the title is the link. Wrapping the whole row in an <a> would make
+        the link's accessible name the label, the byline and the summary read
+        out as one string. CSS stretches the hit area back over the row. */}
+    <Heading class="entry-title">
+      {href ? <a href={href}>{title}</a> : title}
+      {where && <span class="entry-where"> · {where}</span>}
+    </Heading>
+    {hasByline && <p class="entry-byline"><slot name="byline" /></p>}
+    {note && <p class="entry-note">{note}</p>}
+    {summary && <p class="entry-body">{summary}</p>}
+    {tags.length > 0 && (
+      <ul class="entry-tags">
+        {tags.map((t) => <li>{t}</li>)}
+      </ul>
+    )}
+    {linkEntries.length > 0 && (
+      <ul class="entry-links">
+        {linkEntries.map(([key, url]) => (
+          <li>
+            <a href={url} target="_blank" rel="noopener">{LINK_LABELS[key] ?? key}</a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
 </article>

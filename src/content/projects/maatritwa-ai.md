@@ -1,6 +1,7 @@
 ---
 title: 'Maatritwa AI'
-status: 'shipped'
+status: 'archived'
+stage: 'archived'
 statusLabel: 'Archived prototype, built for the India Innovates 2026 demo (28 March 2026)'
 summary: 'A maternal-health referral prototype for rural India, ASHA worker to doctor, with the mother in the loop.'
 stack: ['React', 'Vite', 'FastAPI', 'Supabase']

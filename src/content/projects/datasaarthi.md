@@ -1,6 +1,7 @@
 ---
 title: 'DataSaarthi'
 status: 'shipped'
+stage: 'complete'
 statusLabel: 'Complete, not deployed'
 summary: 'An AI-assisted data analysis platform: upload a CSV, automatically identify patterns and anomalies, generate visual insights, compare datasets, and interact with the data through an AI-powered chat interface.'
 stack: ['React', 'TypeScript', 'Vite', 'FastAPI', 'Python', 'Supabase', 'Groq']

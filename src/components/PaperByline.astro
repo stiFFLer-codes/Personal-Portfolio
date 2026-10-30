@@ -1,0 +1,29 @@
+---
+// The second line of a citation: the author list (SITE.name in bold), then
+// the venue in italics. A paper with no venue yet shows its status label
+// instead, so the line always says where the paper actually stands.
+//
+// Authors render only when the record lists them. A missing author line is
+// honest; a guessed one is not.
+import type { CollectionEntry } from 'astro:content';
+import { SITE } from '../site.config';
+
+interface Props {
+  paper: CollectionEntry<'research'>;
+}
+const { paper } = Astro.props;
+const { authors = [], venue, statusLabel } = paper.data;
+---
+
+{authors.length > 0 && (
+  <>
+    {authors.map((a, i) => (
+      <>
+        {i > 0 && ', '}
+        {a === SITE.name ? <b>{a}</b> : a}
+      </>
+    ))}
+    {'. '}
+  </>
+)}
+{venue ? <i>{venue}</i> : statusLabel}
