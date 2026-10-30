@@ -179,7 +179,7 @@ markup lives in `Entry.astro`; change the shape there, not per page.
 
 Home page shape (phase 11): the home page is the whole profile, in the
 academic-homepage genre a professor already knows how to read. Name as the
-h1, the thesis line, Maitreya's bio, role, links (CV, email, ORCID, GitHub,
+h1, the thesis line, Maitreya's bio, role, links (email, ORCID, GitHub,
 LinkedIn), portrait; then publications as citations; experience; education
 and certifications beside projects and news. Every section is capped (news:
 three) so one page stays scannable. There is no `/about`.
@@ -288,8 +288,8 @@ the page.
    the scaffold into an atlas plate: the map breaks out of the text measure
    with its title/legend/stop-index as marginalia in the side space, labels
    carry a paper knockout halo, and the graticule shows in the sea only.
-   Maitreya's photos are mounted and his per-stop blurbs + hero copy are in;
-   the `/writing` h1/lede remain the one open piece of his prose to supply.
+   Maitreya's photos are mounted and his per-stop blurbs + hero copy are in.
+   (The `/writing` h1 and lede, open here, landed in phase 11.)
    Motion + the one inline script are the documented carve-outs above.
 10. ~~Status refresh, October 2026~~ DONE on branch, pending Maitreya's review.
     The `/log` route, the ledger's `target:` countdown and `log:` date, and
@@ -310,10 +310,11 @@ the page.
     every list uses the margin column with words fitted to the kind of
     thing (no "shipped" beside a job); tighter rhythm; full-name wordmark;
     new Open Graph card; Person JSON-LD and `/sitemap.xml`. Claude now
-    builds as well as reviews. Open, all Maitreya's: author lists per paper
-    (`authors`, left unset rather than guessed), a redacted CV at
-    `public/cv.pdf` (then set `SITE.cv`), the `/projects` lede, and the
-    `/writing` h1/lede.
+    builds as well as reviews. Follow-ups settled with Maitreya the same day:
+    author lists per paper (`authors`, in published order), the `/projects`
+    lede kept to his last sentence, the `/writing` lede (his words). The CV
+    link was removed outright, with no placeholder: whether a CV belongs on
+    the site is his call, later. Do not re-add it unasked.
 
 ## Git
 

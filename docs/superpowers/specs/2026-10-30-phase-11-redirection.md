@@ -2,8 +2,9 @@
 
 Status: approved by Maitreya on 30 Oct 2026 and built (phase 11 in
 `CLAUDE.md`). Revision 1 below is what shipped; sections 3 and 4 are the
-first draft it superseded. Still open, all Maitreya's: author lists per paper,
-the redacted CV, the `/projects` lede, the `/writing` h1 and lede.
+first draft it superseded. Follow-ups settled: author lists filled in; the CV
+link was dropped entirely (no placeholder), so every CV mention below is
+superseded; `/projects` and `/writing` ledes are Maitreya's.
 
 ## Revision 1 (after Maitreya's first review). Supersedes sections 3 and 4.
 
