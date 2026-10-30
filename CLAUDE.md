@@ -277,6 +277,12 @@ the page.
     host; static Open Graph card (`scripts/og-image.html` → `public/og.png`);
     ORCID in the footer; redacted certificates in `public/` with originals
     kept in the gitignored `private-docs/`.
+11. Redirection: academic homepage. PROPOSED, awaiting Maitreya's approval.
+    Brief: `docs/superpowers/specs/2026-10-30-phase-11-redirection.md`. The
+    home page moves to the academic-homepage genre (name as h1, bio, CV
+    link, publications as citations, news), the ledger strip is retired,
+    and the vertical rhythm tightens. Design-law edits below wait on
+    approval. Already shipped from it: Person JSON-LD and `/sitemap.xml`.
 
 ## Git
 
