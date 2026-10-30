@@ -3,6 +3,50 @@
 Status: proposed, awaiting Maitreya's approval. Nothing here is built except
 the SEO plumbing in section 6.
 
+## Revision 1 (after Maitreya's first review). Supersedes sections 3 and 4.
+
+**One page, no `/about`.** The home page *is* the about page; that is how
+the academic-homepage genre works, and a visitor who never clicks "about"
+currently misses the portrait, experience and education. `/about` retires
+and 308-redirects to `/` in `vercel.json` (the URL may already be linked
+from LinkedIn or a CV). Detail pages stay: `/research/*`, `/projects/*`,
+`/writing/*`, `/travel`. Nav: research · projects · writing · travel · cv.
+
+Order on `/`, each section capped so the page stays scannable:
+
+1. Hero: name (h1), Maitreya's thesis line, his two-sentence bio, a mono
+   role line, links (CV filled; email, ORCID, GitHub, LinkedIn). Portrait.
+2. Publications & preprints, as citations (all research entries).
+3. Experience: dated rows, no status dot.
+4. Education + Certifications | Projects + News (two columns on desktop;
+   News capped at three).
+
+What leaves with `/about`: the "Finland, briefly" paragraph becomes one
+Education line linking to `/travel`; "Where I'm headed" is replaced by the
+bio's research sentence. Both are Maitreya's prose, so their removal is his
+call, not an agent's.
+
+**Status words are contextual, not one enum everywhere.** "shipped" /
+"in progress" next to a job reads like cargo tracking. The enum stays in
+the schema only to pick the dot colour; the *displayed* word is specific to
+the kind of thing:
+
+| Kind | Left column shows | Dot |
+| --- | --- | --- |
+| Research | accepted · presented · submitted · not submitted | yes |
+| Projects | archived · complete · live | yes |
+| Experience | date range (`Jan 2026 – now`) | no |
+| Education, certifications, news | date | no |
+
+Schema: research and projects gain a short `stage` string (one or two
+words, as above); experience gains `start` / `end` dates; research gains
+`authors: string[]` and `year`. Authorship per paper is confirmed by
+Maitreya before it ships.
+
+**Thesis (Maitreya's, proposed for CLAUDE.md on approval):**
+"I build software systems that report what they couldn't resolve."
+It replaces the old thesis sentence as the editorial filter.
+
 ## 1. Diagnosis: why the site feels off
 
 The rules are good. The problem is that the site has a *concept* (a
