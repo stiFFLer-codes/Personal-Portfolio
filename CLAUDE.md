@@ -9,8 +9,11 @@ Not a portfolio. Not a landing page. A lab notebook that happens to be public.
 
 Every element on this site serves one sentence:
 
-> **I build software systems that turn messy, real-world data into
-> decisions people can act on.**
+> **I build software systems that report what they couldn't resolve.**
+
+(Maitreya's line, adopted in phase 11. It replaced "I build software systems
+that turn messy, real-world data into decisions people can act on", which
+described a job rather than a research identity.)
 
 <!-- Maitreya: this is the working thesis, carried over from the v2 hero.
      Confirm or rewrite the exact wording before the site goes public.
@@ -35,25 +38,33 @@ unless extended explicitly — it does not loosen the content rules anywhere.
 
 ## CLAUDE'S ROLE — read this carefully
 
-You are the **architect, reviewer, and orchestrator.** You are not the builder.
+**Revised with Maitreya, 30 Oct 2026 (phase 11):** Claude is the **architect,
+builder and reviewer.** No other agent builds on this site. That makes the
+review step more important, not less: Claude reviews its own diff against the
+checklist below before every push, with the same severity it would apply to
+anyone else's.
 
 You DO:
 
 - Maintain the plan and the phase order
 - Decide file structure, component boundaries, data modelling
-- Review every PR against the checklist below and REJECT work that fails it
+- Build the components, styles and pages
+- Run the review checklist on every diff, and fix what fails before pushing
 - Write commit messages and keep git history clean
 - Say no. Frequently. That is the job.
 
 You DO NOT:
 
-- Write feature components (Kimi / DeepSeek do that)
-- Write prose for the site (Maitreya does that, alone)
+- Write prose for the site (Maitreya does that, alone). Cutting a sentence
+  that a change has made false is allowed; flag it with a `TODO(markie)` so
+  he can rewrite it. Rewording it is not.
+- Guess at a fact (an author list, a date, a venue). Leave the field unset
+  and flag it.
 - Add sections, animations, or pages that were not planned
 - Accept work because it "looks fine"
 
-When reviewing, output exactly: `APPROVE` or `REJECT` + numbered reasons.
-No hedging. No "this is great, but..."
+When asked to review, output exactly: `APPROVE` or `REJECT` + numbered
+reasons. No hedging. No "this is great, but..."
 
 ---
 
@@ -103,8 +114,9 @@ Violating rule 1 or 5 is grounds for immediate REJECT.
 
 Concept: **a fieldbook.** One hue family — a deep pine green — tinted the
 whole way from paper to ink, so the page reads as a single material rather
-than a neutral sheet with accents dropped on it. Two typefaces. One dark
-"terminal" strip (the status ledger) as the single high-contrast surface.
+than a neutral sheet with accents dropped on it. Two typefaces. The one dark
+surface is the filled button (ink on paper). The dark "terminal" ledger strip
+was retired in phase 11: it had shrunk to one fact the intro already carries.
 
 ```
 Paper           #F2F4EF   page background — pale limestone, green cast
@@ -115,13 +127,9 @@ Ink faint       #646E69   meta text
 Hairline        rgba(23,28,26,0.13)
 Hairline strong rgba(23,28,26,0.24)   borders, underlines
 
-Terminal bg     #141A18   the ledger strip only
-Terminal text   #E4E8E1
-Terminal soft   #9AA49E
-
 Signal green    #2B6B4F   shipped, links on hover, focus ring, live rail
 Signal amber    #8A5A17   in progress
-Signal slate    #4A5D6B   planned / note
+Signal slate    #4A5D6B   planned / archived
 ```
 
 Every one of these is a CSS custom property in `global.css`. Use the
@@ -136,7 +144,7 @@ Type
 
 ```
 Display + body  Newsreader (serif)   380 for h1, 500 h2, 600 h3, 400 body
-Mono            JetBrains Mono       meta, labels, nav, ledger, status
+Mono            JetBrains Mono       meta, labels, nav, margin column, status
 Measure         38rem   (--measure)       prose, ~68 chars, never wider
 Measure wide    54rem   (--measure-wide)  page container
 ```
@@ -152,11 +160,29 @@ missing, add it to the token block with a reason.
 Spacing: the `--s-1` … `--s-8` scale (0.25rem step), `--gutter`,
 `--section-y`, `--hero-y`. No magic pixels, no bare `rem` in a component.
 
-Signature element: **the status rail.** Every list is a hairline spine with
-each entry's status dot straddling the line; hovering a linked entry lights
-that segment green. It exists because it encodes something true — this site
-is a ledger of state — not because a list needed decorating. All list
+Signature element: **the margin.** Every list on the site is one shape
+(`Entry.astro`): a mono margin column on the left, then the content. The
+margin says what state the thing is in, in a word chosen for the kind of
+thing, or when it happened:
+
+| Kind | Margin shows | Dot |
+| --- | --- | --- |
+| Papers | `stage`: accepted · presented · submitted · not submitted | yes |
+| Projects | `stage`: complete · archived · live | yes |
+| Jobs | dates: `Jan 2026 – now` | no |
+| Education, certifications, news, posts | a date | no |
+
+Never show the raw `status` enum ("shipped", "in progress") as a word: beside
+a job it reads like cargo. `status` only picks a dot colour. The one list that
+keeps a spine is the `/travel` field log, because it is a route. All list
 markup lives in `Entry.astro`; change the shape there, not per page.
+
+Home page shape (phase 11): the home page is the whole profile, in the
+academic-homepage genre a professor already knows how to read. Name as the
+h1, the thesis line, Maitreya's bio, role, links (CV, email, ORCID, GitHub,
+LinkedIn), portrait; then publications as citations; experience; education
+and certifications beside projects and news. Every section is capped (news:
+three) so one page stays scannable. There is no `/about`.
 
 Motion
 
@@ -191,7 +217,7 @@ single soft lift on the `/travel` plate, so it reads as a page mounted on the
 desk — reviewed with Maitreya), border-radius above 14px (the favicon) or 4px
 (everything else — circles excepted, the status dots are `50%`), any emoji in
 UI chrome. Symbol glyphs in chrome are a hazard
-too: `⧗` and `↻` were removed from the ledger because neither is in
+too: `⧗` and `↻` were removed from the old ledger because neither is in
 JetBrains Mono and both fell back to a different font. Use words.
 
 **One sanctioned gradient:** the faint `radial-gradient` dot grid on
@@ -218,7 +244,7 @@ Any other gradient is a REJECT.
       show, and every marker still links to its field-log entry with the
       script absent. Reviewed and accepted; do not re-flag it.
       (The StatusLedger countdown script, once a second exception, was
-      removed in phase 10 on Maitreya's instruction. The ledger is static.)
+      removed in phase 10; the ledger itself was retired in phase 11.)
       Any *other* client-side JS on a static section is still a REJECT.
 - [ ] Semantic HTML — `<article>`, `<time>`, `<nav>`, real heading order
 - [ ] Alt text is descriptive, not decorative filler
@@ -277,12 +303,17 @@ the page.
     host; static Open Graph card (`scripts/og-image.html` → `public/og.png`);
     ORCID in the footer; redacted certificates in `public/` with originals
     kept in the gitignored `private-docs/`.
-11. Redirection: academic homepage. PROPOSED, awaiting Maitreya's approval.
-    Brief: `docs/superpowers/specs/2026-10-30-phase-11-redirection.md`. The
-    home page moves to the academic-homepage genre (name as h1, bio, CV
-    link, publications as citations, news), the ledger strip is retired,
-    and the vertical rhythm tightens. Design-law edits below wait on
-    approval. Already shipped from it: Person JSON-LD and `/sitemap.xml`.
+11. ~~Redirection: academic homepage~~ DONE on branch, approved by Maitreya
+    30 Oct 2026. Brief: `docs/superpowers/specs/2026-10-30-phase-11-redirection.md`.
+    Maitreya's new thesis line and bio; the home page is the whole profile
+    and `/about` 308s to `/`; the ledger strip and terminal tokens are gone;
+    every list uses the margin column with words fitted to the kind of
+    thing (no "shipped" beside a job); tighter rhythm; full-name wordmark;
+    new Open Graph card; Person JSON-LD and `/sitemap.xml`. Claude now
+    builds as well as reviews. Open, all Maitreya's: author lists per paper
+    (`authors`, left unset rather than guessed), a redacted CV at
+    `public/cv.pdf` (then set `SITE.cv`), the `/projects` lede, and the
+    `/writing` h1/lede.
 
 ## Git
 

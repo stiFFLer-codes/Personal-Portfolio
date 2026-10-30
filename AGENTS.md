@@ -6,7 +6,7 @@ This site is a maintained system, not a brochure. Every claim is true; every sta
 
 A research profile supporting an application to a research-oriented graduate programme in Europe. See `PRIVATE_NOTES.md` (gitignored) for the specific programme and reasoning. The public site refers only to "a research-oriented graduate programme in Europe."
 
-The thesis: **"I build software systems that turn messy, real-world data into decisions people can act on."** Every section serves that sentence or it doesn't ship.
+The thesis, in Maitreya's words: **"I build software systems that report what they couldn't resolve."** Every section serves that sentence or it doesn't ship.
 
 The reader: a professor at 11 PM who has already read ~200 applications. Optimize for scannable, credible, specific.
 
@@ -14,17 +14,17 @@ The reader: a professor at 11 PM who has already read ~200 applications. Optimiz
 
 | Route | Status | Purpose |
 | --- | --- | --- |
-| `/` | Live | Hero, current work, first three research entries, Recent (newest five changelog entries) |
-| `/about` | Live | Biography, education, research interests |
-| `/projects` | Live | List of all projects with status |
+| `/` | Live | The whole profile on one page (phase 11): name, thesis line, bio, role and links, portrait; publications as citations; experience; education and certifications; projects; news (newest three changelog entries) |
+| `/about` | Retired (phase 11) | 308 redirect to `/` in `vercel.json`; its content now lives on `/` |
+| `/research` | Live | All papers as citations, with summaries |
+| `/research/[slug]` | Live | Paper detail + sources block |
+| `/projects` | Live | All projects with stage and stack |
 | `/projects/[slug]` | Live | Project detail + sources block |
-| `/research` | Live | List of research (CARTA, What AI should refuse to say, Three Voices, Prediction is not selection) |
-| `/research/[slug]` | Live | Research detail + sources block |
-| `/log` | Retired (phase 10) | 308 redirect to `/` in `vercel.json` |
 | `/writing` | Live | List of writing |
 | `/writing/[slug]` | Live | Human-authored writing, 4 posts |
-| Experience (section on `/about`) | Live | Employer entries via the status rail, no detail pages |
 | `/travel` | Live | Aug 2025 Nordic/Baltic trip: survey-map plate + field log (phase 9, done) |
+| `/log` | Retired (phase 10) | 308 redirect to `/` |
+| `/sitemap.xml` | Live | Generated from the collections |
 
 The phase order in `CLAUDE.md` is the source of truth. Follow it; don't skip ahead.
 
@@ -37,7 +37,7 @@ and the schema disagree, the schema wins and this file is the bug.
 
 Create `src/content/projects/[slug].md`.
 
-Required: `title`, `status` (`shipped` / `in-progress` / `planned`), `statusLabel` (a sentence naming the real state, e.g. "Archived prototype, built for the India Innovates 2026 demo (28 March 2026)"), `summary`.
+Required: `title`, `status` (`shipped` / `in-progress` / `planned` / `archived`, which only picks the dot colour), `stage` (the one or two words shown beside the dot: `complete`, `archived`, `live`), `statusLabel` (a sentence naming the real state, e.g. "Archived prototype, built for the India Innovates 2026 demo (28 March 2026)"), `summary`.
 Optional: `stack` (array of strings), `order` (integer, default 99), `startDate`, `links` (`repo`, `live`, `preprint` — full URLs).
 
 Body is Markdown. Each `##` gets a rule above it; there is no per-section box.
@@ -46,23 +46,30 @@ Body is Markdown. Each `##` gets a rule above it; there is no per-section box.
 
 Create `src/content/research/[slug].md`.
 
-Required: `title`, `status`, `statusLabel`, `summary`.
-Optional: `venue`, `order`, `links` (`arxiv`, `code`, `doi` — full URLs).
+Required: `title`, `status` (dot colour only), `stage` (the word shown: `accepted`, `presented`, `submitted`, `not submitted`), `statusLabel`, `summary`.
+Optional: `authors` (full list in published order, exactly as on the paper; `SITE.name` renders in bold; leave unset until confirmed, never guess), `venue` (shown in italics in the citation; with no venue the citation shows `statusLabel`), `order`, `links` (`arxiv`, `code`, `doi`: full URLs).
 
 ### Adding experience
 
-Create `src/content/experience/[slug].md`. Renders as a section on `/about` — no
-detail page, since a job isn't a case study.
+Create `src/content/experience/[slug].md`. Renders in the Experience section on
+`/`. No detail page, since a job isn't a case study, and no status dot: a job is
+labelled by its dates ("Jan 2026 – now"), never "shipped" or "in progress".
 
-Required: `company`, `role`, `status`, `statusLabel`, `summary`.
-Optional: `order` (integer, default 99).
+Required: `company`, `role`, `start` (date), `summary`.
+Optional: `end` (date; unset means current), `location`, `note` (one line the
+dates can't carry, e.g. a conversion to full-time), `order` (integer, default 99).
 
-### Adding a Recent entry
+### Education and certifications
+
+`EDUCATION` and `CERTIFICATIONS` in `src/site.config.ts`. Each line can carry a
+`proof` (a redacted certificate under `public/`) and an internal `href`.
+
+### Adding a News entry
 
 Create `src/content/changelog/[YYYY-MM-DD]-slug.md`.
 
 Required: `date`, `title`.
-Optional: `tag`: one of `ship`, `progress`, `note` (default `note`). Not the project status words, and not shown: the home Recent list renders date and title only, with one neutral dot, so a body is never rendered either.
+Optional: `tag`: one of `ship`, `progress`, `note` (default `note`). Kept for the record, not shown: the home News list renders date and title only, so a body is never rendered either.
 
 ### Adding a travel stop
 
@@ -86,7 +93,7 @@ runtime network request.
 
 ### Links are not optional decoration
 
-Anything in `links` renders as a "sources" block at the foot of the detail page. On a site whose argument is "check my claims", a paper with a public repo and no link to it is a bug.
+Anything in `links` renders under the entry in every list, and as a "sources" block at the foot of the detail page. On a site whose argument is "check my claims", a paper with a public repo and no link to it is a bug.
 
 `npm run build` must pass. No TypeScript errors. Test at 375px and 1440px. Lighthouse a11y = 100.
 
@@ -103,6 +110,6 @@ Never name the programme, consortium, or partner institutions in any committed f
 ## Session startup
 
 1. Read this file.
-2. Check `state.md` to see where work left off.
+2. Check `state.md` (local, untracked) to see where work left off, if it exists.
 3. Check `CLAUDE.md` for design system and full review checklist before shipping anything.
 4. If you're unsure whether something is in scope, it probably isn't—ask the user.

@@ -1,7 +1,9 @@
 # Phase 11: from fieldbook concept to academic homepage
 
-Status: proposed, awaiting Maitreya's approval. Nothing here is built except
-the SEO plumbing in section 6.
+Status: approved by Maitreya on 30 Oct 2026 and built (phase 11 in
+`CLAUDE.md`). Revision 1 below is what shipped; sections 3 and 4 are the
+first draft it superseded. Still open, all Maitreya's: author lists per paper,
+the redacted CV, the `/projects` lede, the `/writing` h1 and lede.
 
 ## Revision 1 (after Maitreya's first review). Supersedes sections 3 and 4.
 
