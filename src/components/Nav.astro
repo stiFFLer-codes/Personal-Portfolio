@@ -1,19 +1,23 @@
 ---
+import { SITE } from '../site.config';
+
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const links = [
-  { href: '/about', label: 'about' },
-  { href: '/projects', label: 'projects' },
   { href: '/research', label: 'research' },
+  { href: '/projects', label: 'projects' },
   { href: '/writing', label: 'writing' },
   { href: '/travel', label: 'travel' },
 ];
+// A detail page marks its section, so /research/three-voices lights "research".
+const current = (href: string) =>
+  path === href ? 'page' : path.startsWith(`${href}/`) ? 'true' : undefined;
 ---
 
 <nav class="site-nav" aria-label="Primary">
-  <a class="wordmark" href="/">~/maitreya</a>
+  <a class="wordmark" href="/" aria-current={path === '/' ? 'page' : undefined}>{SITE.name}</a>
   <div class="links">
     {links.map((l) => (
-      <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
+      <a href={l.href} aria-current={current(l.href)}>{l.label}</a>
     ))}
   </div>
 </nav>

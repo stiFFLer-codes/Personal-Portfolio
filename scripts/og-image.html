@@ -4,7 +4,7 @@
   site's own tokens and self-hosted fonts; no external request. Regenerate
   after `npm install` with headless Chromium, then crop the top 1200×630
   (new headless mode reserves part of the window for browser chrome, so a
-  630px-tall window clips the strip):
+  630px-tall window clips the bottom of the card):
 
     chromium --headless --hide-scrollbars --force-device-scale-factor=1 \
       --allow-file-access-from-files --virtual-time-budget=3000 \
@@ -18,6 +18,7 @@
   <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../node_modules/@fontsource-variable/newsreader/index.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource-variable/newsreader/wght-italic.css" />
     <link rel="stylesheet" href="../node_modules/@fontsource-variable/jetbrains-mono/index.css" />
     <link rel="stylesheet" href="../src/styles/global.css" />
     <style>
@@ -28,58 +29,50 @@
         height: 630px;
         display: flex;
         flex-direction: column;
-      }
-      .plate {
-        flex: 1;
-        padding: 72px 88px 0;
+        justify-content: space-between;
+        padding: 84px 88px 56px;
         border-left: 6px solid var(--signal-green);
-        margin-left: 0;
-      }
-      .wordmark {
-        font-family: var(--font-mono);
-        font-size: 24px;
-        color: var(--ink-faint);
-        margin: 0 0 56px;
       }
       .name {
         font-family: var(--font-body);
-        font-weight: 500;
-        font-size: 44px;
-        color: var(--signal-green);
-        margin: 0 0 20px;
+        font-weight: 400;
+        font-size: 92px;
+        line-height: 1;
+        letter-spacing: -0.018em;
+        color: var(--ink);
+        margin: 0 0 32px;
       }
       .thesis {
         font-family: var(--font-body);
-        font-weight: 380;
-        font-size: 58px;
-        line-height: 1.12;
-        letter-spacing: -0.01em;
-        color: var(--ink);
+        font-style: italic;
+        font-weight: 400;
+        font-size: 48px;
+        line-height: 1.18;
+        color: var(--ink-soft);
         margin: 0;
-        max-width: 980px;
+        max-width: 900px;
       }
-      .strip {
-        background: var(--terminal-bg);
-        color: var(--terminal-text);
-        font-family: var(--font-mono);
-        font-size: 22px;
-        padding: 26px 88px;
+      .foot {
         display: flex;
         justify-content: space-between;
+        padding-top: 24px;
+        border-top: 1px solid var(--hairline-strong);
+        font-family: var(--font-mono);
+        font-size: 22px;
+        color: var(--ink-faint);
       }
-      .strip span { color: var(--terminal-soft); }
+      .foot b { color: var(--ink); font-weight: 500; }
     </style>
   </head>
   <body>
     <div class="card">
-      <div class="plate">
-        <p class="wordmark">~/maitreya</p>
+      <div>
         <p class="name">Maitreya Sapariya</p>
-        <p class="thesis">I build software systems that turn messy, real-world data into decisions people can act on.</p>
+        <p class="thesis">I build software systems that report what they couldn’t resolve.</p>
       </div>
-      <div class="strip">
-        <div><span>now:</span> Software Engineer @ Crest Infosystems</div>
-        <div>maitreyasapariya.me</div>
+      <div class="foot">
+        <span><b>Software Engineer</b>, Crest Infosystems</span>
+        <span>maitreyasapariya.me</span>
       </div>
     </div>
   </body>
