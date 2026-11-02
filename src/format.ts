@@ -9,6 +9,9 @@ const mon = (d: Date) => MONTHS[d.getUTCMonth()];
 /** "29 Oct 2026" */
 export const day = (d: Date) => `${d.getUTCDate()} ${mon(d)} ${d.getUTCFullYear()}`;
 
+/** "2026": for writing, where the exact day is not a claim the site makes. */
+export const year = (d: Date) => String(d.getUTCFullYear());
+
 /** "Jun 2026" */
 export const month = (d: Date) => `${mon(d)} ${d.getUTCFullYear()}`;
 

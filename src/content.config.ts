@@ -83,6 +83,10 @@ const writing = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/writing' }),
   schema: z.object({
     title: z.string(),
+    // The day the post went up. The site shows only its year: the questions
+    // behind the posts came up months apart in early 2026, and a single
+    // publish day would misstate that, while an invented month would be a
+    // made-up fact. Show the day only for a post whose date is its own.
     date: z.coerce.date(),
     summary: z.string(),
     tags: z.array(z.string()).default([]),

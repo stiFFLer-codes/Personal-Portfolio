@@ -2,10 +2,10 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Entry from '../../components/Entry.astro';
-import { day } from '../../format';
+import { year } from '../../format';
 
-// Sorted by `order`, not by date. The dates sit close together and the
-// reading order is an editorial call — strongest first.
+// Sorted by `order`, not by date, and labelled by year only (see the writing
+// schema). The reading order is an editorial call: strongest first.
 const posts = (await getCollection('writing')).sort(
   (a, b) => a.data.order - b.data.order
 );
@@ -29,8 +29,8 @@ const posts = (await getCollection('writing')).sort(
             as="h2"
             href={`/writing/${p.id}`}
             title={p.data.title}
-            label={day(p.data.date)}
-            datetime={p.data.date}
+            label={year(p.data.date)}
+            datetime={year(p.data.date)}
             summary={p.data.summary}
             tags={p.data.tags}
           />
