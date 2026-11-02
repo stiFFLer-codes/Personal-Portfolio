@@ -85,6 +85,9 @@
      or "Jan 2026 – now" on one line; the dense variant fits a short date. */
   --label-col: 8.5rem;
   --label-col-dense: 5.75rem;
+  /* A narrow figure (the architecture diagram): wide enough to read on a
+     desktop, narrow enough that its 11-unit labels stay near 14px. */
+  --figure-narrow: 28rem;
 
   --radius: 3px;
   --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
@@ -896,6 +899,74 @@ a.see-all::after {
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
   }
+}
+
+/* ============================================================
+   Architecture figure — a static inline SVG on a project page,
+   drawn narrow (352 units) and stacked top to bottom so it reads
+   at near actual size on a phone. Its text list underneath carries
+   the same flow for screen readers and for reading without SVG.
+   ============================================================ */
+
+.arch {
+  margin: var(--s-6) 0;
+}
+
+.arch svg {
+  display: block;
+  width: 100%;
+  max-width: var(--figure-narrow);
+  height: auto;
+}
+
+.arch-box {
+  fill: var(--paper);
+  stroke: var(--hairline-strong);
+}
+
+.arch-inner {
+  fill: var(--paper-raised);
+  stroke: var(--hairline);
+}
+
+/* The fallback box is the one answer the system gives without the model;
+   amber marks it, and its own words say what it is. */
+.arch-fallback {
+  stroke: var(--signal-amber);
+}
+
+.arch-text,
+.arch-label {
+  font-family: var(--font-mono);
+  fill: var(--ink);
+}
+
+.arch-strong {
+  font-weight: 600;
+}
+
+.arch-label {
+  fill: var(--ink-soft);
+}
+
+.arch-line {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 1.2;
+}
+
+.arch-dashed {
+  stroke-dasharray: 4 3;
+}
+
+.arch-head {
+  fill: var(--ink-faint);
+}
+
+.arch-steps {
+  margin-top: var(--s-4);
+  font-size: 1rem;
+  color: var(--ink-soft);
 }
 
 /* ============================================================
