@@ -8,10 +8,6 @@ summary: "A production Q&A assistant over a mortgage lender's guideline PDFs. Ev
 stack: ['React', 'TypeScript', 'pdf.js', 'AWS Bedrock', 'AWS Lambda', 'Amazon S3', 'Amazon DynamoDB']
 order: 1
 sourcesNote: 'Client work. The source code is private.'
-# TODO(markie): confirm what DynamoDB stores (chat history?), then label the
-# DynamoDB box in the diagram and the last step of the list under it. Until
-# then both say only "Amazon DynamoDB". (Kept here: a comment in the body
-# would ship in the page source.)
 ---
 
 ## The problem
@@ -25,7 +21,7 @@ I built the user-facing side: the chat interface, streamed answers, the document
 <figure class="arch">
 <svg viewBox="0 0 352 448" font-size="11" role="img" aria-labelledby="arch-title arch-desc">
 <title id="arch-title">Architecture of the mortgage knowledge assistant</title>
-<desc id="arch-desc">The client intranet and website embed a React app with a pdf.js viewer. The app sends questions to AWS Lambda, which calls Amazon Bedrock for agentic retrieval with reranking over a knowledge base of guideline PDFs in Amazon S3, and also uses Amazon DynamoDB. If nothing relevant is found, a fixed reply sends the user to a human underwriter; otherwise the answer streams back with citations, and the viewer opens the cited PDF from S3.</desc>
+<desc id="arch-desc">The client intranet and website embed a React app with a pdf.js viewer. The app sends questions to AWS Lambda, which calls Amazon Bedrock for agentic retrieval with reranking over a knowledge base of guideline PDFs in Amazon S3, and keeps chat history in Amazon DynamoDB. If nothing relevant is found, a fixed reply sends the user to a human underwriter; otherwise the answer streams back with citations, and the viewer opens the cited PDF from S3.</desc>
 <defs><marker id="arch-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="arch-head" d="M0 0L8 4L0 8z"/></marker></defs>
 <rect class="arch-box" x="16" y="1" width="156" height="32" rx="3"/>
 <text class="arch-text" x="94" y="21" text-anchor="middle">Client intranet</text>
@@ -52,8 +48,9 @@ I built the user-facing side: the chat interface, streamed answers, the document
 <text class="arch-text" x="28" y="294">agentic retrieval with</text>
 <text class="arch-text" x="28" y="309">reranking over a knowledge</text>
 <text class="arch-text" x="28" y="324">base, filtered per document</text>
-<rect class="arch-box" x="240" y="258" width="111" height="34" rx="3"/>
-<text class="arch-text" x="295.5" y="279" text-anchor="middle">Amazon DynamoDB</text>
+<rect class="arch-box" x="240" y="258" width="111" height="48" rx="3"/>
+<text class="arch-text arch-strong" x="295.5" y="278" text-anchor="middle">Amazon DynamoDB</text>
+<text class="arch-text" x="295.5" y="295" text-anchor="middle">chat history</text>
 <path class="arch-line" d="M90 382V340" marker-end="url(#arch-arrow)"/>
 <text class="arch-label" x="96" y="365" font-size="10">reads</text>
 <path class="arch-line" d="M212 338V380" marker-end="url(#arch-arrow)"/>
@@ -77,7 +74,7 @@ I built the user-facing side: the chat interface, streamed answers, the document
 <li>If nothing relevant is found, the reply is fixed: check with a human underwriter.</li>
 <li>Otherwise the answer streams back to the React app with citations.</li>
 <li>The pdf.js viewer loads the cited PDF from S3, opens the cited page and highlights the supporting sentences.</li>
-<li>Lambda also uses Amazon DynamoDB.</li>
+<li>Lambda keeps chat history in Amazon DynamoDB.</li>
 </ol>
 </figcaption>
 </figure>
