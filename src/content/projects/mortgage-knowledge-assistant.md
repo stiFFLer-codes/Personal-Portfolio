@@ -1,5 +1,5 @@
 ---
-title: 'AI knowledge assistant for a mortgage lender'
+title: 'eRESI: AI knowledge assistant for a mortgage lender'
 context: 'client work · Crest Infosystems'
 status: 'shipped'
 stage: 'in production'
@@ -20,7 +20,7 @@ I built the user-facing side: the chat interface, streamed answers, the document
 
 <figure class="arch">
 <svg viewBox="0 0 352 448" font-size="11" role="img" aria-labelledby="arch-title arch-desc">
-<title id="arch-title">Architecture of the mortgage knowledge assistant</title>
+<title id="arch-title">Architecture of eRESI, the mortgage knowledge assistant</title>
 <desc id="arch-desc">The client intranet and website embed a React app with a pdf.js viewer. The app sends questions to AWS Lambda, which calls Amazon Bedrock for agentic retrieval with reranking over a knowledge base of guideline PDFs in Amazon S3, and keeps chat history in Amazon DynamoDB. If nothing relevant is found, a fixed reply sends the user to a human underwriter; otherwise the answer streams back with citations, and the viewer opens the cited PDF from S3.</desc>
 <defs><marker id="arch-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="arch-head" d="M0 0L8 4L0 8z"/></marker></defs>
 <rect class="arch-box" x="16" y="1" width="156" height="32" rx="3"/>
