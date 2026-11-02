@@ -34,6 +34,11 @@
   --signal-amber: #8a5a17;
   --signal-slate: #4a5d6b;
 
+  /* Brand colour, used for one mark only: the ORCID iD disc, which ORCID's
+     guidelines ask to be shown in its own green. A graphic beside a text
+     label, never text itself, so it is exempt from the 4.5:1 text rule. */
+  --brand-orcid: #a6ce39;
+
   /* ---- type ---- */
   --font-body: 'Newsreader Variable', Newsreader, Georgia, 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
@@ -837,23 +842,6 @@ a.see-all::after {
   font-weight: 500;
 }
 
-.intro-links {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--s-2) var(--s-5);
-  font-family: var(--font-mono);
-  font-size: var(--t-sm);
-  letter-spacing: var(--track-mono);
-}
-
-.intro-links a {
-  color: var(--ink);
-}
-
 .portrait {
   width: 12.5rem;
   height: auto;
@@ -918,18 +906,78 @@ a.see-all::after {
   color: var(--ink-faint);
 }
 
-.footer-links {
+/* ============================================================
+   Profile links — email, ORCID, GitHub, LinkedIn, each a mark
+   beside its name. In the intro they read at body scale; in the
+   footer they drop to the footer's mono size and faint ink.
+   ============================================================ */
+
+.plinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  gap: var(--s-5);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3) var(--s-5);
 }
 
-.footer-links a {
-  color: var(--ink-faint);
+.plinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--ink);
   text-decoration: none;
 }
 
-.footer-links a:hover {
+.plinks a:hover {
   color: var(--signal-green);
+}
+
+.plinks a:hover span {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+}
+
+.plinks svg {
+  flex: none;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+/* The ORCID iD keeps its brand green and its knocked-out "iD" whatever the
+   link state, as ORCID's display guidelines ask. */
+.plinks .orcid-disc {
+  fill: var(--brand-orcid);
+}
+
+.plinks .orcid-id {
+  fill: var(--paper);
+}
+
+.plinks-intro {
+  font-size: var(--t-row);
+}
+
+/* The full iD URL is long, so it takes its own line under the other three,
+   set in the mono so its digits read as an identifier rather than a
+   sentence. */
+.plinks-intro .plinks-orcid {
+  flex-basis: 100%;
+}
+
+.plinks-intro .plinks-orcid span {
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+}
+
+.plinks-footer {
+  gap: var(--s-2) var(--s-5);
+}
+
+.plinks-footer a {
+  color: var(--ink-faint);
 }
 
 /* ============================================================

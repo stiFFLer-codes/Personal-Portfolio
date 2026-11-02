@@ -130,6 +130,8 @@ Hairline strong rgba(23,28,26,0.24)   borders, underlines
 Signal green    #2B6B4F   shipped, links on hover, focus ring, live rail
 Signal amber    #8A5A17   in progress
 Signal slate    #4A5D6B   planned / archived
+
+Brand ORCID     #A6CE39   the ORCID iD disc only (--brand-orcid)
 ```
 
 Every one of these is a CSS custom property in `global.css`. Use the
@@ -219,6 +221,13 @@ desk — reviewed with Maitreya), border-radius above 14px (the favicon) or 4px
 UI chrome. Symbol glyphs in chrome are a hazard
 too: `⧗` and `↻` were removed from the old ledger because neither is in
 JetBrains Mono and both fell back to a different font. Use words.
+
+**One sanctioned set of marks:** the profile links (`ProfileLinks.astro`,
+intro and footer) carry the official Email/GitHub/LinkedIn/ORCID marks as
+inline SVG, each beside its name and `aria-hidden`. Never an `<img>` from the
+brand's own server: that is a third-party request. GitHub and LinkedIn are
+monochrome (an official form of both); the ORCID iD keeps its brand green,
+the only non-palette colour on the site. No icons anywhere else.
 
 **One sanctioned gradient:** the faint `radial-gradient` dot grid on
 `body`. It is the notebook texture and the only gradient on the site.

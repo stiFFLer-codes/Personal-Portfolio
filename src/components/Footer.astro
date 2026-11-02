@@ -1,16 +1,12 @@
 ---
 import { SITE } from '../site.config';
+import ProfileLinks from './ProfileLinks.astro';
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="footer-inner">
     <span>© {year} {SITE.name}</span>
-    <div class="footer-links">
-      <a href={`mailto:${SITE.email}`}>email</a>
-      <a href={SITE.github} target="_blank" rel="noopener">github</a>
-      <a href={SITE.linkedin} target="_blank" rel="noopener">linkedin</a>
-      <a href={SITE.orcid} target="_blank" rel="noopener">orcid</a>
-    </div>
+    <ProfileLinks variant="footer" />
   </div>
 </footer>
