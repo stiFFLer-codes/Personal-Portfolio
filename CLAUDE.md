@@ -172,7 +172,8 @@ thing, or when it happened:
 | Papers | `stage`: accepted · presented · submitted · not submitted | yes |
 | Projects | `stage`: complete · archived · live | yes |
 | Jobs | dates: `Jan 2026 – now` | no |
-| Education, certifications, news, posts | a date | no |
+| Education, certifications, news | a date | no |
+| Writing posts | the year only (`2026`): never a day or month the post can't vouch for | no |
 
 Never show the raw `status` enum ("shipped", "in progress") as a word: beside
 a job it reads like cargo. `status` only picks a dot colour. The one list that

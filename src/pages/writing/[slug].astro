@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { day } from '../../format';
+import { year } from '../../format';
 
 export async function getStaticPaths() {
   const posts = await getCollection('writing');
@@ -28,9 +28,7 @@ const { Content } = await render(post);
           date and tags, not a status. Reusing the class beats a second one
           that would be identical apart from its name. */}
       <p class="status-line reveal">
-        <time datetime={post.data.date.toISOString().slice(0, 10)}>
-          {day(post.data.date)}
-        </time>
+        <time datetime={year(post.data.date)}>{year(post.data.date)}</time>
         {post.data.tags.length > 0 && <span>· {post.data.tags.join(', ')}</span>}
       </p>
     </section>

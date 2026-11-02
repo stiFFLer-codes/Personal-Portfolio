@@ -1,4 +1,4 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, reference, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 // `status` only picks the colour of a dot: green (done), amber (moving),
@@ -18,6 +18,11 @@ const projects = defineCollection({
     stage: z.string(),
     statusLabel: z.string(),
     summary: z.string(),
+    // Whose work it was, as a mono line on cards and atop the detail page:
+    // "independent", "client work · Crest Infosystems".
+    context: z.string().optional(),
+    // Shown in the sources block when there are no links, e.g. private code.
+    sourcesNote: z.string().optional(),
     stack: z.array(z.string()).default([]),
     order: z.number().default(99),
     startDate: z.coerce.date().optional(),
@@ -78,6 +83,10 @@ const writing = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/writing' }),
   schema: z.object({
     title: z.string(),
+    // The day the post went up. The site shows only its year: the questions
+    // behind the posts came up months apart in early 2026, and a single
+    // publish day would misstate that, while an invented month would be a
+    // made-up fact. Show the day only for a post whose date is its own.
     date: z.coerce.date(),
     summary: z.string(),
     tags: z.array(z.string()).default([]),
@@ -98,6 +107,8 @@ const experience = defineCollection({
     end: z.coerce.date().optional(),
     // One line of context the dates can't carry, e.g. a conversion to full-time.
     note: z.string().optional(),
+    // The project page this role produced. The entry's title links to it.
+    project: reference('projects').optional(),
     summary: z.string(),
     order: z.number().default(99),
   }),

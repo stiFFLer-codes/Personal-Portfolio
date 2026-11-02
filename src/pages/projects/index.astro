@@ -27,6 +27,7 @@ const projects = (await getCollection('projects')).sort(
             title={p.data.title}
             status={p.data.status}
             label={p.data.stage}
+            context={p.data.context}
             note={p.data.statusLabel}
             summary={p.data.summary}
             tags={p.data.stack}

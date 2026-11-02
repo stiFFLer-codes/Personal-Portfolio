@@ -26,11 +26,14 @@ interface Props {
   label: string;
   /** Picks the dot beside the label. Omit for rows labelled by a date. */
   status?: Status;
-  /** Set when `label` is a date, so it is machine-readable. */
-  datetime?: Date;
+  /** Set when `label` is a date, so it is machine-readable. A string is used
+      as-is, for a date known only to the year ("2026"). */
+  datetime?: Date | string;
   href?: string;
   /** Muted text after the title: an employer, an institution. */
   where?: string;
+  /** Mono line under the title saying whose work it was. */
+  context?: string;
   /** One mono line under the title. */
   note?: string;
   summary?: string;
@@ -51,6 +54,7 @@ const {
   datetime,
   href,
   where,
+  context,
   note,
   summary,
   tags = [],
@@ -70,7 +74,7 @@ const hasByline = Astro.slots.has('byline');
   <div class="entry-label">
     {status && <StatusDot status={status} />}
     {datetime ? (
-      <time datetime={datetime.toISOString().slice(0, 10)}>{label}</time>
+      <time datetime={typeof datetime === 'string' ? datetime : datetime.toISOString().slice(0, 10)}>{label}</time>
     ) : (
       <span>{label}</span>
     )}
@@ -84,6 +88,7 @@ const hasByline = Astro.slots.has('byline');
       {where && <span class="entry-where"> · {where}</span>}
     </Heading>
     {hasByline && <p class="entry-byline"><slot name="byline" /></p>}
+    {context && <p class="entry-note">{context}</p>}
     {note && <p class="entry-note">{note}</p>}
     {summary && <p class="entry-body">{summary}</p>}
     {tags.length > 0 && (

@@ -4,7 +4,7 @@
 
 export const SITE = {
   name: 'Maitreya Sapariya',
-  title: 'Maitreya Sapariya',
+  title: 'Maitreya Sapariya · software engineer and researcher',
   // Maitreya's line. Shown under the name on the home page and on the Open
   // Graph card. The description below is his own first two sentences, verbatim.
   thesis: 'I build software systems that report what they couldn’t resolve.',
