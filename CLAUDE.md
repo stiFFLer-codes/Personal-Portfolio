@@ -148,7 +148,7 @@ Type
 Display + body  Newsreader (serif)   380 for h1, 500 h2, 600 h3, 400 body
 Mono            JetBrains Mono       meta, labels, nav, margin column, status
 Measure         38rem   (--measure)       prose, ~68 chars, never wider
-Measure wide    54rem   (--measure-wide)  page container
+Measure wide    64rem   (--measure-wide)  page container (54rem until phase 12)
 ```
 
 One serif doing display and body is deliberate. Hierarchy comes from size,
@@ -183,9 +183,10 @@ markup lives in `Entry.astro`; change the shape there, not per page.
 Home page shape (phase 11): the home page is the whole profile, in the
 academic-homepage genre a professor already knows how to read. Name as the
 h1, the thesis line, Maitreya's bio, role, links (email, ORCID, GitHub,
-LinkedIn), portrait; then publications as citations; experience; education
-and certifications beside projects and news. Every section is capped (news:
-three) so one page stays scannable. There is no `/about`.
+LinkedIn), portrait; then publications as citations; experience; projects
+(the first two, full-width rows); then education beside certifications and
+news. Every section is capped (projects: two, news: three) so one page
+stays scannable. There is no `/about`.
 
 Motion
 

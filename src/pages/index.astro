@@ -98,6 +98,25 @@ const news = (await getCollection('changelog'))
       </div>
     </section>
 
+    <section class="section" aria-labelledby="projects">
+      <div class="section-head">
+        <h2 id="projects">Projects</h2>
+        <a class="see-all" href="/projects">all projects</a>
+      </div>
+      <div class="rows">
+        {projects.map((p) => (
+          <Entry
+            href={`/projects/${p.id}`}
+            title={p.data.title}
+            status={p.data.status}
+            label={p.data.stage}
+            context={p.data.context}
+            summary={p.data.summary}
+          />
+        ))}
+      </div>
+    </section>
+
     <div class="split">
       <div>
         <section class="section" aria-labelledby="education">
@@ -118,36 +137,16 @@ const news = (await getCollection('changelog'))
             ))}
           </div>
         </section>
+      </div>
 
-        <section class="section section-flush" aria-labelledby="certifications">
+      <div>
+        <section class="section" aria-labelledby="certifications">
           <div class="section-head">
             <h2 id="certifications">Certifications</h2>
           </div>
           <div class="rows">
             {CERTIFICATIONS.map((c) => (
               <Entry dense as="p" title={c.title} label={c.date} />
-            ))}
-          </div>
-        </section>
-      </div>
-
-      <div>
-        <section class="section" aria-labelledby="projects">
-          <div class="section-head">
-            <h2 id="projects">Projects</h2>
-            <a class="see-all" href="/projects">all projects</a>
-          </div>
-          <div class="rows">
-            {projects.map((p) => (
-              <Entry
-                dense
-                href={`/projects/${p.id}`}
-                title={p.data.title}
-                status={p.data.status}
-                label={p.data.stage}
-                context={p.data.context}
-                summary={p.data.summary}
-              />
             ))}
           </div>
         </section>
