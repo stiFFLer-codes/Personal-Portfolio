@@ -27,7 +27,7 @@ const news = (await getCollection('changelog'))
   .slice(0, 3);
 ---
 
-<Base title={`${SITE.name} · ${SITE.jobTitle}`}>
+<Base title={SITE.title}>
   <div class="container">
     <section class="intro">
       <div>
