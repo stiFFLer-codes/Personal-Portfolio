@@ -9,9 +9,6 @@ stack: ['Python', 'pandas', 'matplotlib']
 order: 4
 links:
   repo: 'https://github.com/stiFFLer-codes/amazon-sales-analysis'
-# TODO(markie): finding 2 and finding 3 for "What it found". Candidates, with
-# sources in INSIGHTS.md, are in the phase 12 report. Kept here rather than as
-# list items in the body, where they would render on the page.
 ---
 
 ## The brief
@@ -27,7 +24,7 @@ A one-month internship task: analyse an Amazon India sales report covering March
 
 ## What it found
 
-- Gross order value (₹78.59M) overstates realised revenue (₹70.28M) by 10.6% once cancelled, returned and failed lines are taken out.
+- Gross order value (₹78.59M) overstates realised revenue (₹70.28M) by ₹8.31M, 10.6% of the gross figure, once cancelled, returned and failed lines are taken out.
 
 ## A note on duplicates
 
