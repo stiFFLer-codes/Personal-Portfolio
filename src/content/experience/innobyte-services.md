@@ -3,7 +3,8 @@ company: 'InnoByte Services'
 role: 'Data Analyst Intern'
 start: 2025-06-01
 end: 2025-07-01
-summary: 'Performed an end-to-end exploratory data analysis on 128,976 Amazon India sales transactions (120,229 orders) spanning March–June 2022, generating ₹78.59M in gross order value.'
+summary: 'Internship, June to July 2025. Exploratory analysis of an Amazon India sales report, 128,976 line items across 120,229 orders.'
+project: 'amazon-sales-analysis'
 order: 2
 ---
 
