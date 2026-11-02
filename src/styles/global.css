@@ -80,11 +80,14 @@
 
   /* ---- layout ---- */
   --measure: 38rem;      /* prose. ~68 characters. never wider */
-  --measure-wide: 54rem; /* page container */
+  /* Page container. 64rem, up from 54rem: the home page's paired columns
+     (education beside certifications and news) need ~30rem each to stop
+     wrapping every title onto three lines. Prose stays at --measure. */
+  --measure-wide: 64rem;
   /* The margin column on every list row. Wide enough for "not submitted"
      or "Jan 2026 – now" on one line; the dense variant fits a short date. */
   --label-col: 8.5rem;
-  --label-col-dense: 5.75rem;
+  --label-col-dense: 7rem;
   /* A narrow figure (the architecture diagram): wide enough to read on a
      desktop, narrow enough that its 11-unit labels stay near 14px. */
   --figure-narrow: 28rem;
@@ -498,6 +501,8 @@ a.see-all::after {
 
 .entry-label {
   display: flex;
+  /* One line, always: a stage like "in production" must not break in two. */
+  white-space: nowrap;
   /* start, not stretch: the label is one line at the top of the row, and
      its dot centres on that line rather than on the whole row. */
   align-self: start;
@@ -879,8 +884,9 @@ a.see-all::after {
   }
 }
 
-/* Two columns of sections side by side: education beside projects and
-   news. Stacks below the width where each column would drop under ~20rem. */
+/* Two columns of sections side by side: education beside certifications
+   and news. Stacks below the width where each column would drop under
+   ~20rem. */
 .split {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -990,6 +996,13 @@ a.see-all::after {
   font-size: var(--t-xs);
   letter-spacing: var(--track-mono);
   color: var(--ink-faint);
+}
+
+/* The copyright, then the accessibility note under it. */
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
 }
 
 /* ============================================================
