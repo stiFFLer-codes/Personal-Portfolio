@@ -6,7 +6,7 @@ context: 'independent'
 statusLabel: 'Archived prototype, built for the India Innovates 2026 demo (28 March 2026)'
 summary: 'A maternal-health referral prototype for rural India, ASHA worker to doctor, with the mother in the loop.'
 stack: ['React', 'Vite', 'FastAPI', 'Supabase']
-order: 1
+order: 2
 links:
   repo: 'https://github.com/stiFFLer-codes/Maatritwa-AI'
   live: 'https://stiffler-codes.github.io/Maatritwa-AI/'

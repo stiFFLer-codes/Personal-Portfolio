@@ -19,9 +19,10 @@ const research = (await getCollection('research')).sort(
 const experience = (await getCollection('experience')).sort(
   (a, b) => a.data.order - b.data.order
 );
-const projects = (await getCollection('projects')).sort(
-  (a, b) => a.data.order - b.data.order
-);
+// The home page shows the first two projects by order; /projects has them all.
+const projects = (await getCollection('projects'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2);
 const news = (await getCollection('changelog'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
