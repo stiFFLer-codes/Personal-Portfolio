@@ -558,7 +558,10 @@ a.see-all::after {
   font-weight: 600;
 }
 
-.entry-note {
+/* A small mono meta line: under a list title, and atop a project page
+   (meta-line) to say whose work it was. */
+.entry-note,
+.meta-line {
   margin: var(--s-1) 0 0;
   font-family: var(--font-mono);
   font-size: var(--t-xs);
@@ -791,6 +794,18 @@ a.see-all::after {
   font-family: var(--font-mono);
   font-size: var(--t-sm);
   letter-spacing: var(--track-mono);
+}
+
+.hero .meta-line {
+  margin: 0 0 var(--s-3);
+}
+
+.sources-note {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-soft);
 }
 
 .sources a {

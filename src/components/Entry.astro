@@ -31,6 +31,8 @@ interface Props {
   href?: string;
   /** Muted text after the title: an employer, an institution. */
   where?: string;
+  /** Mono line under the title saying whose work it was. */
+  context?: string;
   /** One mono line under the title. */
   note?: string;
   summary?: string;
@@ -51,6 +53,7 @@ const {
   datetime,
   href,
   where,
+  context,
   note,
   summary,
   tags = [],
@@ -84,6 +87,7 @@ const hasByline = Astro.slots.has('byline');
       {where && <span class="entry-where"> · {where}</span>}
     </Heading>
     {hasByline && <p class="entry-byline"><slot name="byline" /></p>}
+    {context && <p class="entry-note">{context}</p>}
     {note && <p class="entry-note">{note}</p>}
     {summary && <p class="entry-body">{summary}</p>}
     {tags.length > 0 && (

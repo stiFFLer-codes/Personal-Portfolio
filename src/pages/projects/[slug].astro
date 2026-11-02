@@ -23,6 +23,7 @@ const { Content } = await render(project);
   <div class="container">
     <section class="hero">
       <p class="kicker reveal"><a class="back" href="/projects">projects</a></p>
+      {project.data.context && <p class="meta-line reveal">{project.data.context}</p>}
       <h1 class="reveal">{project.data.title}</h1>
       <p class="lede reveal">{project.data.summary}</p>
       <p class="status-line reveal">
@@ -35,7 +36,7 @@ const { Content } = await render(project);
       <article class="prose">
         <Content />
       </article>
-      <SourceLinks links={project.data.links} />
+      <SourceLinks links={project.data.links} note={project.data.sourcesNote} />
     </section>
   </div>
 </Base>
