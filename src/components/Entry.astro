@@ -68,6 +68,9 @@ const linkEntries = Object.entries(links).filter(([, url]) => Boolean(url)) as [
   string,
 ][];
 const hasByline = Astro.slots.has('byline');
+// A note that only repeats the margin word ("Complete" beside "complete")
+// says nothing twice; drop it.
+const showNote = note && note.trim().toLowerCase() !== label.trim().toLowerCase();
 ---
 
 <article class:list={['entry', { 'entry-dense': dense, 'entry-linked': href }]}>
@@ -89,7 +92,7 @@ const hasByline = Astro.slots.has('byline');
     </Heading>
     {hasByline && <p class="entry-byline"><slot name="byline" /></p>}
     {context && <p class="entry-note">{context}</p>}
-    {note && <p class="entry-note">{note}</p>}
+    {showNote && <p class="entry-note">{note}</p>}
     {summary && <p class="entry-body">{summary}</p>}
     {tags.length > 0 && (
       <ul class="entry-tags">
