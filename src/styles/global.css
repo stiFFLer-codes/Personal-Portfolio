@@ -902,7 +902,7 @@ a.see-all::after {
 }
 
 /* ============================================================
-   Architecture figure — a static inline SVG on a project page,
+   Architecture figure: a static inline SVG on a project page,
    drawn narrow (352 units) and stacked top to bottom so it reads
    at near actual size on a phone. Its text list underneath carries
    the same flow for screen readers and for reading without SVG.
