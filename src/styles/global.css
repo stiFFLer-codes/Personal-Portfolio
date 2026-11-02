@@ -998,6 +998,13 @@ a.see-all::after {
   color: var(--ink-faint);
 }
 
+/* The copyright, then the accessibility note under it. */
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
 /* ============================================================
    Profile links — email, ORCID, GitHub, LinkedIn, each a mark
    beside its name. In the intro they read at body scale; in the

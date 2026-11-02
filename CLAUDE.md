@@ -262,6 +262,10 @@ Any other gradient is a REJECT.
 - [ ] No third-party network request added
 - [ ] No dependency added without justification in the PR body
 
+The footer says, on every page, "Accessibility checked with axe-core and
+keyboard-only navigation." That sentence is a claim (content rule 1): an axe
+sweep and a keyboard pass run before every push, or the footer is lying.
+
 Accessibility is not a checkbox here. It's the thesis. A site arguing
 that technology should work for real people cannot itself exclude
 screen-reader users. That would be the single most damaging thing on
