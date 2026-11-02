@@ -22,6 +22,21 @@ export const SITE = {
   employer: 'Crest Infosystems',
   location: 'Surat, India',
   alumniOf: 'A. D. Patel Institute of Technology, CVM University',
+  // schema.org `knowsAbout`: read by search engines, never shown. Each topic
+  // is one the publications and education on the home page bear out.
+  knowsAbout: [
+    'Accessibility',
+    'Human-centred AI',
+    'Uncertainty communication',
+    'Machine learning',
+    'Software engineering',
+  ],
+
+  // The footer's one-line accessibility note. It states only what is run
+  // before every release (CLAUDE.md checklist); keep it that narrow. Not
+  // "WCAG compliant" (automated checks are not an audit), and no screen-reader
+  // claim until one has actually been tested.
+  accessibilityNote: 'Accessibility checked with axe-core and keyboard-only navigation.',
 } as const;
 
 // Education and certifications on the home page, newest first. `proof` is a
