@@ -8,6 +8,7 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Entry from '../components/Entry.astro';
 import PaperByline from '../components/PaperByline.astro';
+import ProfileLinks from '../components/ProfileLinks.astro';
 import portrait from '../assets/maitreya.jpg';
 import { SITE, EDUCATION, CERTIFICATIONS } from '../site.config';
 import { day, span } from '../format';
@@ -45,12 +46,9 @@ const news = (await getCollection('changelog'))
         <p class="intro-role reveal">
           <strong>{SITE.jobTitle}, {SITE.employer}</strong> · {SITE.location}
         </p>
-        <ul class="intro-links reveal" aria-label="Contact and profiles">
-          <li><a href={`mailto:${SITE.email}`}>email</a></li>
-          <li><a href={SITE.orcid} rel="me noopener" target="_blank">orcid</a></li>
-          <li><a href={SITE.github} rel="me noopener" target="_blank">github</a></li>
-          <li><a href={SITE.linkedin} rel="me noopener" target="_blank">linkedin</a></li>
-        </ul>
+        <div class="reveal">
+          <ProfileLinks />
+        </div>
       </div>
       <Image
         class="portrait reveal"
