@@ -52,7 +52,7 @@ export interface Credential {
 export const EDUCATION: Credential[] = [
   {
     date: '2026',
-    title: 'B.E., Artificial Intelligence and Data Science',
+    title: 'Bachelor of Technology, Artificial Intelligence (AI) and Data Science',
     where: 'A. D. Patel Institute of Technology, CVM University, Anand',
   },
   {
