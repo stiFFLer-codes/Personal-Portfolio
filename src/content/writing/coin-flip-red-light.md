@@ -2,7 +2,7 @@
 title: "A coin flip should not look like a red light"
 summary: "One AI prediction, three very different people reading it, and the awkward question of who gets to know when the model is unsure."
 date: 2026-09-06
-tags: ["ai", "accessibility", "explainability", "healthcare", "design"]
+tags: ["ai", "accessibility", "ethics", "explainability", "healthcare", "design"]
 order: 1
 ---
 

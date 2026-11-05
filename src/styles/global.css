@@ -84,7 +84,7 @@
      (education beside certifications and news) need ~30rem each to stop
      wrapping every title onto three lines. Prose stays at --measure. */
   --measure-wide: 64rem;
-  /* The margin column on every list row. Wide enough for "not submitted"
+  /* The margin column on every list row. Wide enough for "in production"
      or "Jan 2026 – now" on one line; the dense variant fits a short date. */
   --label-col: 8.5rem;
   --label-col-dense: 7rem;

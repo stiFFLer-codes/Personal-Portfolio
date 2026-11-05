@@ -26,6 +26,7 @@ export const SITE = {
   // is one the publications and education on the home page bear out.
   knowsAbout: [
     'Accessibility',
+    'AI ethics',
     'Human-centred AI',
     'Uncertainty communication',
     'Machine learning',

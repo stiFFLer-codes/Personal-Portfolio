@@ -169,7 +169,7 @@ thing, or when it happened:
 
 | Kind | Margin shows | Dot |
 | --- | --- | --- |
-| Papers | `stage`: accepted · presented · submitted · not submitted | yes |
+| Papers | `stage`: accepted · presented · submitted · completed | yes |
 | Projects | `stage`: complete · archived · live | yes |
 | Jobs | dates: `Jan 2026 – now` | no |
 | Education, certifications | a date | no |
