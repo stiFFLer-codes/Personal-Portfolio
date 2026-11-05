@@ -45,6 +45,8 @@ export interface Credential {
   date: string;
   title: string;
   where?: string;
+  /** A mono line under the title: the course taken at a school, say. */
+  note?: string;
   href?: string;
   proof?: string;
 }
@@ -55,16 +57,22 @@ export const EDUCATION: Credential[] = [
     title: 'Bachelor of Technology, Artificial Intelligence (AI) and Data Science',
     where: 'A. D. Patel Institute of Technology, CVM University, Anand',
   },
+  // Both Jyväskylä lines lead with the school's official name, as printed on
+  // its certificates; the course follows as the note.
   {
     date: '2026',
-    title: 'COG1: Fundamentals of Inclusive and Accessible Design of Technology (3 ECTS)',
-    where: 'University of Jyväskylä, attended online',
+    title: '35th Jyväskylä Summer School',
+    where: 'University of Jyväskylä, online',
+    note: 'COG1: Fundamentals of Inclusive and Accessible Design of Technology (3 ECTS)',
     proof: '/jyu-cog1-2026-credits.pdf',
   },
   {
     date: '2025',
-    title: '34th Jyväskylä Summer School: machine learning and stochastic control',
+    title: '34th Jyväskylä Summer School',
     where: 'University of Jyväskylä, Finland',
+    // TODO(markie): the 2025 certificate names no course. Give the official
+    // course title (and code) to replace this description.
+    note: 'Machine learning and stochastic control',
     href: '/travel',
     proof: '/jyvaskyla-summer-school-2025.pdf',
   },

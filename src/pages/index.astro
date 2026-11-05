@@ -133,6 +133,7 @@ const news = (await getCollection('changelog'))
                 href={c.href}
                 title={c.title}
                 where={c.where}
+                note={c.note}
                 label={c.date}
                 links={{ certificate: c.proof }}
               />
