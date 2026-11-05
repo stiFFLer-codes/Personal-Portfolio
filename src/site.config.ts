@@ -70,9 +70,8 @@ export const EDUCATION: Credential[] = [
     date: '2025',
     title: '34th Jyväskylä Summer School',
     where: 'University of Jyväskylä, Finland',
-    // TODO(markie): the 2025 certificate names no course. Give the official
-    // course title (and code) to replace this description.
-    note: 'Machine learning and stochastic control',
+    // Course name and code as the 2025 letter of admission gives them.
+    note: 'MA1: Machine Learning and Stochastic Control',
     href: '/travel',
     proof: '/jyvaskyla-summer-school-2025.pdf',
   },
