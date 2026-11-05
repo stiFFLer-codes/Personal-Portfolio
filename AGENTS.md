@@ -14,7 +14,7 @@ The reader: a professor at 11 PM who has already read ~200 applications. Optimiz
 
 | Route | Status | Purpose |
 | --- | --- | --- |
-| `/` | Live | The whole profile on one page (phase 11): name, thesis line, bio, role and links, portrait; publications as citations; experience; education and certifications; projects; news (newest three changelog entries) |
+| `/` | Live | The whole profile on one page (phase 11): name, thesis line, bio, role and links, portrait; publications as citations; experience; education and certifications; projects; education beside certifications. No News list (retired in phase 12) |
 | `/about` | Retired (phase 11) | 308 redirect to `/` in `vercel.json`; its content now lives on `/` |
 | `/research` | Live | All papers as citations, with summaries |
 | `/research/[slug]` | Live | Paper detail + sources block |
@@ -64,12 +64,12 @@ dates can't carry, e.g. a conversion to full-time), `order` (integer, default 99
 `EDUCATION` and `CERTIFICATIONS` in `src/site.config.ts`. Each line can carry a
 `proof` (a redacted certificate under `public/`) and an internal `href`.
 
-### Adding a News entry
+### Adding a changelog entry
 
 Create `src/content/changelog/[YYYY-MM-DD]-slug.md`.
 
 Required: `date`, `title`.
-Optional: `tag`: one of `ship`, `progress`, `note` (default `note`). Kept for the record, not shown: the home News list renders date and title only, so a body is never rendered either.
+Optional: `tag`: one of `ship`, `progress`, `note` (default `note`). Not shown. Changelog entries are not rendered anywhere since the home News list was retired in phase 12; they are kept as a record.
 
 ### Adding a travel stop
 

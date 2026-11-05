@@ -884,8 +884,8 @@ a.see-all::after {
   }
 }
 
-/* Two columns of sections side by side: education beside certifications
-   and news. Stacks below the width where each column would drop under
+/* Two columns of sections side by side: education beside certifications.
+   Stacks below the width where each column would drop under
    ~20rem. */
 .split {
   display: grid;

@@ -11,7 +11,7 @@ import PaperByline from '../components/PaperByline.astro';
 import ProfileLinks from '../components/ProfileLinks.astro';
 import portrait from '../assets/maitreya.jpg';
 import { SITE, EDUCATION, CERTIFICATIONS } from '../site.config';
-import { day, span } from '../format';
+import { span } from '../format';
 
 const research = (await getCollection('research')).sort(
   (a, b) => a.data.order - b.data.order
@@ -23,9 +23,6 @@ const experience = (await getCollection('experience')).sort(
 const projects = (await getCollection('projects'))
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 2);
-const news = (await getCollection('changelog'))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
 ---
 
 <Base title={SITE.title}>
@@ -161,22 +158,6 @@ const news = (await getCollection('changelog'))
           </div>
         </section>
 
-        <section class="section section-flush" aria-labelledby="news">
-          <div class="section-head">
-            <h2 id="news">News</h2>
-          </div>
-          <div class="rows">
-            {news.map((n) => (
-              <Entry
-                dense
-                as="p"
-                title={n.data.title}
-                label={day(n.data.date)}
-                datetime={n.data.date}
-              />
-            ))}
-          </div>
-        </section>
       </div>
     </div>
   </div>
