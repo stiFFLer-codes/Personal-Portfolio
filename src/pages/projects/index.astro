@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Entry from '../../components/Entry.astro';
+import StageCounts from '../../components/StageCounts.astro';
 
 const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
@@ -13,6 +14,9 @@ const projects = (await getCollection('projects')).sort(
     <section class="hero">
       <p class="kicker reveal">projects</p>
       <h1 class="reveal">What I'm building, and what state it's actually in.</h1>
+      <div class="reveal">
+        <StageCounts items={projects.map((p) => p.data)} noun={['project', 'projects']} />
+      </div>
       <p class="lede reveal">
         This page gets one new entry when a new project earns one, not before.
       </p>

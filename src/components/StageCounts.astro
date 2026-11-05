@@ -1,0 +1,32 @@
+---
+// A one-line tally under a page heading: "4 papers · 1 accepted · 1 presented".
+// Counted from the collection at build time, so it can never drift from the
+// list below it or overstate it. Done stages come first, then moving ones,
+// then archived; within a status, the order the list shows them. A real list,
+// so a screen reader hears items rather than "dot dot".
+type Status = 'shipped' | 'in-progress' | 'planned' | 'archived';
+const RANK: Record<Status, number> = { shipped: 0, 'in-progress': 1, planned: 2, archived: 3 };
+
+interface Props {
+  items: { stage: string; status: Status }[];
+  noun: [singular: string, plural: string];
+}
+const { items, noun } = Astro.props;
+
+const counts = new Map<string, { n: number; rank: number; first: number }>();
+items.forEach(({ stage, status }, i) => {
+  const c = counts.get(stage);
+  if (c) c.n += 1;
+  else counts.set(stage, { n: 1, rank: RANK[status], first: i });
+});
+const rows = [...counts].sort(([, a], [, b]) => a.rank - b.rank || a.first - b.first);
+const total = items.length;
+const word = total === 1 ? noun[0] : noun[1];
+---
+
+<ul class="counts" aria-label={`${total} ${word}, by stage`}>
+  <li><strong>{total}</strong> {word}</li>
+  {rows.map(([stage, { n }]) => (
+    <li><strong>{n}</strong> {stage}</li>
+  ))}
+</ul>
