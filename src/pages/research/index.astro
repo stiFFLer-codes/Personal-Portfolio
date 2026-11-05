@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Entry from '../../components/Entry.astro';
 import PaperByline from '../../components/PaperByline.astro';
-import StageCounts from '../../components/StageCounts.astro';
 
 const research = (await getCollection('research')).sort(
   (a, b) => a.data.order - b.data.order
@@ -15,12 +14,8 @@ const research = (await getCollection('research')).sort(
     <section class="hero">
       <p class="kicker reveal">research</p>
       <h1 class="reveal">What I've written, and where it stands.</h1>
-      <div class="reveal">
-        <StageCounts items={research.map((r) => r.data)} noun={['paper', 'papers']} />
-      </div>
       {/* Maitreya's sentence. Its counts are hand-written: update it when a
-          paper changes stage or a fifth one lands (the tally above updates
-          itself). */}
+          fifth paper lands. */}
       <p class="lede reveal">
         A journal paper, a workshop paper, and two more that drive my work. Each
         one says what it couldn't settle.
