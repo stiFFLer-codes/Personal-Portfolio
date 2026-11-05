@@ -79,6 +79,13 @@ export const EDUCATION: Credential[] = [
 ];
 
 export const CERTIFICATIONS: Credential[] = [
+  {
+    date: 'Nov 2026',
+    title: 'Ethics of AI (2 ECTS)',
+    where: 'University of Helsinki, online',
+    // The university's own validation page, so no copy is hosted here.
+    proof: 'https://certificates.mooc.fi/validate/i1o2gbgn5',
+  },
   { date: 'Jun 2026', title: 'AWS Certified Machine Learning Engineer – Associate' },
   { date: 'Apr 2026', title: 'AWS Certified AI Practitioner' },
 ];

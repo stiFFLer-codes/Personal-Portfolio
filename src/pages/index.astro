@@ -149,7 +149,14 @@ const news = (await getCollection('changelog'))
           </div>
           <div class="rows">
             {CERTIFICATIONS.map((c) => (
-              <Entry dense as="p" title={c.title} label={c.date} />
+              <Entry
+                dense
+                as="p"
+                title={c.title}
+                where={c.where}
+                label={c.date}
+                links={{ certificate: c.proof }}
+              />
             ))}
           </div>
         </section>
