@@ -38,13 +38,15 @@ const projects = defineCollection({
 
 // Each changelog entry is one markdown file, named YYYY-MM-DD-slug.md so
 // entries sort naturally in a file browser too. To log an update, add one
-// small file here. The home page's News list shows the newest three, by date.
+// small file here. Nothing on the site renders these now: the home page's News
+// list was retired in phase 12 (it repeated the publications' stage words and
+// aged badly). The records are kept so a list can come back without rework.
 const changelog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/changelog' }),
   schema: z.object({
     date: z.coerce.date(),
     title: z.string(),
-    // Kept for the record; News is labelled by date, so no dot reads it.
+    // Kept for the record; nothing reads it.
     tag: z.enum(['ship', 'progress', 'note']).default('note'),
   }),
 });

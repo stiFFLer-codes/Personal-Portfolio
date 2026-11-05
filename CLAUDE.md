@@ -172,7 +172,7 @@ thing, or when it happened:
 | Papers | `stage`: accepted · presented · submitted · not submitted | yes |
 | Projects | `stage`: complete · archived · live | yes |
 | Jobs | dates: `Jan 2026 – now` | no |
-| Education, certifications, news | a date | no |
+| Education, certifications | a date | no |
 | Writing posts | the year only (`2026`): never a day or month the post can't vouch for | no |
 
 Never show the raw `status` enum ("shipped", "in progress") as a word: beside
@@ -184,9 +184,10 @@ Home page shape (phase 11): the home page is the whole profile, in the
 academic-homepage genre a professor already knows how to read. Name as the
 h1, the thesis line, Maitreya's bio, role, links (email, ORCID, GitHub,
 LinkedIn), portrait; then publications as citations; experience; projects
-(the first two, full-width rows); then education beside certifications and
-news. Every section is capped (projects: two, news: three) so one page
-stays scannable. There is no `/about`.
+(the first two, full-width rows); then education beside certifications.
+Every section is capped (projects: two) so one page stays scannable. There
+is no `/about`, and no News list: it was retired in phase 12 because it
+repeated the publications' stage words and aged badly.
 
 Motion
 
