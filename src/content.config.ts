@@ -58,7 +58,7 @@ const research = defineCollection({
   schema: z.object({
     title: z.string(),
     status,
-    // One or two words: "accepted", "presented", "submitted", "completed".
+    // One or two words: "published", "accepted", "presented", "submitted", "completed".
     stage: z.string(),
     statusLabel: z.string(),
     summary: z.string(),
@@ -67,12 +67,18 @@ const research = defineCollection({
     // rather than guess at it. SITE.name is set in bold wherever it appears.
     authors: z.array(z.string()).optional(),
     venue: z.string().optional(),
+    // Where in the venue, once published: "Vol. 6, Issue 1, 2026, pp. 449–470".
+    // Printed after the venue in the citation. Copy it from the article itself.
+    citation: z.string().optional(),
     order: z.number().default(99),
     links: z
       .object({
-        arxiv: z.string().url().optional(),
-        code: z.string().url().optional(),
+        // `doi` is the paper's own DOI (the journal's, once published);
+        // `zenodo` is the archived manuscript and artefacts.
         doi: z.string().url().optional(),
+        arxiv: z.string().url().optional(),
+        zenodo: z.string().url().optional(),
+        code: z.string().url().optional(),
       })
       .default({}),
   }),

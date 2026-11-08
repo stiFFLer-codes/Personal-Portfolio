@@ -12,7 +12,7 @@ interface Props {
   paper: CollectionEntry<'research'>;
 }
 const { paper } = Astro.props;
-const { authors = [], venue, statusLabel } = paper.data;
+const { authors = [], venue, citation, statusLabel } = paper.data;
 ---
 
 {authors.length > 0 && (
@@ -27,3 +27,4 @@ const { authors = [], venue, statusLabel } = paper.data;
   </>
 )}
 {venue ? <i>{venue}</i> : statusLabel}
+{venue && citation && `, ${citation}`}
