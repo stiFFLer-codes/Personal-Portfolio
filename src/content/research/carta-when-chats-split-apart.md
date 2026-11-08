@@ -30,12 +30,9 @@ The CHAMP-Pipeline is a zero-dependency reference implementation of this contrac
 
 ## Current status
 
-The manuscript is complete and archived on Zenodo, alongside CHAMP-Pipeline, its
+Published in the International Journal of Management and Data Analytics (IJMADA),
+Vol. 6, Issue 1, 2026, pp. 449–470, under a CC BY 4.0 licence. The manuscript is
+also archived on Zenodo, alongside CHAMP-Pipeline, its
 zero-dependency WhatsApp reference implementation. Evaluation is against a synthetic
 corpus with known ground truth, not a real archive. No real WhatsApp export has been
 reconstructed, and no accuracy figure is claimed.
-
-## What's next
-
-- Submit to arXiv (cs.DL, cross-listed cs.CR)
-- Sync ORCID, Google Scholar, and ResearchGate once live
