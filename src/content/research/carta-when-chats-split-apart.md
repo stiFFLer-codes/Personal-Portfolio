@@ -1,15 +1,17 @@
 ---
 title: 'When Chats Split Apart: Formalizing Temporal Communication Fragmentation and the CARTA Reconstruction Framework'
 status: 'shipped'
-stage: 'accepted'
+stage: 'published'
 authors: ['Maitreya Sapariya']
-statusLabel: 'Accepted at IJMADA; forthcoming'
+statusLabel: 'Published November 2026'
 venue: 'International Journal of Management and Data Analytics (IJMADA)'
+citation: 'Vol. 6, Issue 1, 2026, pp. 449–470'
 summary: 'Formalizes what happens when a messaging account''s history splits across two devices with no way to recombine them, and proposes CARTA, a reconstruction contract that quarantines and reports what it can''t safely resolve.'
 order: 1
 links:
+  doi: 'https://doi.org/10.68485/ijmada.20266168'
+  zenodo: 'https://doi.org/10.5281/zenodo.23526491'
   code: 'https://github.com/stiFFLer-codes/champ-pipeline'
-  doi: 'https://doi.org/10.5281/zenodo.23526491'
 ---
 
 ## The problem
