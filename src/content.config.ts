@@ -58,7 +58,7 @@ const research = defineCollection({
   schema: z.object({
     title: z.string(),
     status,
-    // One or two words: "published", "accepted", "presented", "submitted", "completed".
+    // One or two words: "published", "accepted", "presented", "preprint", "submitted", "completed".
     stage: z.string(),
     statusLabel: z.string(),
     summary: z.string(),
