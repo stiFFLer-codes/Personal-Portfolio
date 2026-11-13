@@ -46,7 +46,7 @@ Body is Markdown. Each `##` gets a rule above it; there is no per-section box.
 
 Create `src/content/research/[slug].md`.
 
-Required: `title`, `status` (dot colour only), `stage` (the word shown: `accepted`, `presented`, `submitted`, `completed`), `statusLabel`, `summary`.
+Required: `title`, `status` (dot colour only), `stage` (the word shown: `published`, `accepted`, `presented`, `preprint`, `submitted`, `completed`), `statusLabel`, `summary`.
 Optional: `authors` (full list in published order, exactly as on the paper; `SITE.name` renders in bold; leave unset until confirmed, never guess), `venue` (shown in italics in the citation; with no venue the citation shows `statusLabel`), `citation` (volume, issue, year and pages once published, printed after the venue), `order`, `links` (`doi` for the paper's own DOI, `arxiv`, `zenodo`, `code`: full URLs).
 
 ### Adding experience
