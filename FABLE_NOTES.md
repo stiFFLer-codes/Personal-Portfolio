@@ -526,3 +526,8 @@ published PDF Maitreya shared, with the paper's own captions. The favicon is
 an M over the amber highlighter.
 
 The screenshots in `docs/fable/` still show the site as Fable left it.
+
+**And a last pass on the opening.** The crossed-out first draft above the
+thesis is gone ("not needed at all"); the role line became three labelled
+fields under one rule (currently, at, based in); and the record's heading
+is now "Papers, systems, work and study."

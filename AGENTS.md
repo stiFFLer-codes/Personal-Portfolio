@@ -32,7 +32,7 @@ reasoning behind phase 13. This file is the working context.
 
 | Route | Status | Purpose |
 | --- | --- | --- |
-| `/` | Live | The thesis, bio and links; six findings, five struck through as found and CARTA's figure; the coin-flip demo; the record (papers, systems, work, study); writing; the north |
+| `/` | Live | The masthead (currently, at, based in), the thesis, bio and links; six findings, five struck through as found and CARTA's figure; the coin-flip demo; the record (papers, systems, work, study); writing; the north |
 | `/research` | Live | All papers ("papers" in the nav), with stage, citation and links |
 | `/research/[slug]` | Live | A paper: the write-up, with its Sources and related work beside it |
 | `/projects` | Live | All systems and analyses ("systems" in the nav) |

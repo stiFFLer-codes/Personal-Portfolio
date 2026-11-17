@@ -167,7 +167,6 @@ Line strong     ink at 30 to 32% alpha              borders, underlines
 
 Green           #1D6747   #77CF9F    6.08 /  9.86   link hover
 Amber           #925600   #F0B04C    5.28 /  9.69   the lead accent
-Red             #A52A1F   #FF9A8B    6.36 /  9.01   text beside a strike ("first draft")
 Slate           #48596A   #A9BCCB    6.44 /  9.45   travel stop dots
 
 Fills, never text: --amber-fill (lamps; also the focus ring), --green-fill,
@@ -183,8 +182,8 @@ Brand ORCID     #A6CE39   the ORCID iD disc only (--brand-orcid)
   pair above, and exits non-zero if any fails. A new text-on-fill pair joins
   its list.
 - **Amber is the lead accent:** the highlighter, the focus ring, and the
-  near-tie lamp in the demo. Red is only for the strike and the red lamp.
-  Green is link hover.
+  near-tie lamp in the demo. Red is a fill only (`--red-fill`), for the
+  strike and the red lamp; there is no red text. Green is link hover.
 - **Both themes are first-class.** The site follows the system setting; the
   footer switch (auto, light, dark) stores a choice in `localStorage`. Check
   every new component in both.
@@ -248,10 +247,14 @@ Wide      74rem  (--measure-wide)   page container
    says, inside itself, which numbers are real and which are stand-ins
    (`MARGIN` until Maitreya supplies the paper's; `HINDI_SENTENCE` empty
    until he supplies it). Keep it that way.
-4. **The highlighter** (`mark`, `.marked`): an amber marker stroke on the
+4. **The masthead** (`.masthead-meta` on `/`): above the thesis, three
+   labelled fields under one rule, like a journal article's header:
+   *currently* the role, *at* the employer, *based in* the city, all read
+   from `site.config.ts`. On a phone they stack into label and value rows.
+5. **The highlighter** (`mark`, `.marked`): an amber marker stroke on the
    words that carry the argument. Sparingly: the thesis and the titles that
    restate it.
-5. **A paper's own figures** go on its page as images cropped from the
+6. **A paper's own figures** go on its page as images cropped from the
    published PDF, with the paper's caption word for word and alt text that
    describes the whole diagram (`.prose figure`; CARTA's Fig. 1 and 2).
 
@@ -448,11 +451,12 @@ was retired before it ever deployed, so it needs no redirect.
   of claims, no "What this couldn't resolve" boxes, no page listing claims
   (`/unresolved` went first), anywhere. Do not bring any of it back.
 - `TODO(markie)` notes never render in production.
+- The crossed-out first draft of the thesis is removed (Maitreya, 17 Nov
+  2026: "not needed at all"). The thesis stands alone under the masthead.
 - Writing posts show the year only.
 
 ## Pending Maitreya's call: do not decide for him
 
-- The crossed-out first draft of the thesis above the thesis on `/`
 - The drafted copy (search `drafted by`)
 - The facts behind the open `todo:` notes
 - Whether the AI-assistance disclosure, the accessibility-run table and the
