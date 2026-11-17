@@ -37,16 +37,22 @@ const places = await getCollection('places');
 <Base title={SITE.title}>
   <div class="container">
     <section class="masthead">
-      <p class="masthead-role reveal">{SITE.jobTitle}, {SITE.employer} · {SITE.location}</p>
-
-      {/* The sentence this one replaced, crossed out in public: the site's
-          own gesture, applied to its own thesis. The old line is Maitreya's
-          (it is quoted in CLAUDE.md); the note beside it is drafted by Fable. */}
-      <p class="thesis-was reveal">
-        <span class="sr-only">An earlier version of the next sentence, since crossed out: </span>
-        <s>I build software systems that turn messy, real-world data into decisions people can act on.</s>
-        <span class="thesis-was-note">first draft. It described a job.</span>
-      </p>
+      {/* Who and where, read from site.config.ts. The three labels are
+          drafted by Claude. */}
+      <dl class="masthead-meta reveal">
+        <div>
+          <dt>currently</dt>
+          <dd>{SITE.jobTitle}</dd>
+        </div>
+        <div>
+          <dt>at</dt>
+          <dd>{SITE.employer}</dd>
+        </div>
+        <div>
+          <dt>based in</dt>
+          <dd>{SITE.location}</dd>
+        </div>
+      </dl>
 
       {/* Maitreya's line. */}
       <p class="thesis reveal reveal-2">
@@ -256,7 +262,8 @@ const places = await getCollection('places');
     <section class="section" aria-labelledby="record">
       {/* drafted by Fable */}
       <p class="eyebrow">the record</p>
-      <h2 id="record">The same work, as a CV would list it.</h2>
+      {/* drafted by Claude */}
+      <h2 id="record">Papers, systems, work and study.</h2>
 
       <div class="record" style="margin-top: var(--s-7)">
         <div>

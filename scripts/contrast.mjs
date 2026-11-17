@@ -21,7 +21,7 @@ let fail = false;
 for (const [name, t] of [['light', light], ['dark', { ...light, ...dark }]]) {
   console.log(`\n${name}`);
   for (const bg of ['paper', 'paper-2']) {
-    for (const fg of ['ink', 'ink-soft', 'ink-faint', 'green', 'amber', 'red', 'slate']) {
+    for (const fg of ['ink', 'ink-soft', 'ink-faint', 'green', 'amber', 'slate']) {
       const r = ratio(t[fg], t[bg]);
       if (r < 4.5) fail = true;
       console.log(`  ${fg.padEnd(10)} on ${bg.padEnd(8)} ${r.toFixed(2)} ${r < 4.5 ? 'FAIL' : ''}`);

@@ -35,7 +35,6 @@
 
   --green: #1d6747;
   --amber: #925600;
-  --red: #a52a1f;
   --slate: #48596a;
 
   /* Fills: lamps, the marker, the strike. Never used for text. */
@@ -135,7 +134,6 @@
     --line-strong: rgba(236, 232, 220, 0.32);
     --green: #77cf9f;
     --amber: #f0b04c;
-    --red: #ff9a8b;
     --slate: #a9bccb;
     --amber-fill: #f0a92e;
     --green-fill: #3fb57f;
@@ -159,7 +157,6 @@
   --line-strong: rgba(236, 232, 220, 0.32);
   --green: #77cf9f;
   --amber: #f0b04c;
-  --red: #ff9a8b;
   --slate: #a9bccb;
   --amber-fill: #f0a92e;
   --green-fill: #3fb57f;
@@ -429,12 +426,45 @@ pre {
   padding: var(--hero-y) 0 var(--s-7);
 }
 
-.masthead-role {
-  margin: 0 0 var(--s-5);
+/* Who and where, as labelled fields under one rule, like the header of a
+   journal article. On a phone the fields stack into label and value rows. */
+.masthead-meta {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  margin: 0 0 clamp(1.75rem, 4vw, 3rem);
+  border-top: 2px solid var(--ink);
+}
+
+.masthead-meta > div {
+  padding: var(--s-3) var(--s-6) 0;
+}
+
+.masthead-meta > div:first-child {
+  padding-left: 0;
+}
+
+.masthead-meta > div + div {
+  border-left: 1px solid var(--line);
+}
+
+.masthead-meta dt {
+  margin: 0 0 var(--s-1);
   font-family: var(--font-mono);
-  font-size: var(--t-sm);
-  letter-spacing: var(--track-mono);
+  font-size: var(--t-2xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--ink-faint);
+}
+
+.masthead-meta dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 60;
+  font-size: var(--t-md);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
 .thesis {
@@ -2038,6 +2068,28 @@ p.entry-title {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .masthead-meta {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .masthead-meta > div,
+  .masthead-meta > div:first-child {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    align-items: baseline;
+    padding: var(--s-2) 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .masthead-meta > div + div {
+    border-left: 0;
+  }
+
+  .masthead-meta dt {
+    margin: 0;
+  }
+
   .entry,
   .entry-dense {
     grid-template-columns: minmax(0, 1fr);
@@ -2325,34 +2377,8 @@ html:not(.js) .demo-control {
    Improvised, last pass
    ============================================================ */
 
-/* The first draft of the thesis, crossed out in public. */
 .masthead {
   padding-top: clamp(1.5rem, 3vw, 2.75rem);
-}
-
-.thesis-was {
-  max-width: 36rem;
-  margin: 0 0 var(--s-5);
-  font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 70;
-  font-size: var(--t-md);
-  line-height: 1.32;
-  color: var(--ink-faint);
-}
-
-.thesis-was s {
-  text-decoration-line: line-through;
-  text-decoration-color: var(--red-fill);
-  text-decoration-thickness: 0.1em;
-}
-
-.thesis-was-note {
-  display: block;
-  margin-top: var(--s-2);
-  font-family: var(--font-mono);
-  font-size: var(--t-xs);
-  letter-spacing: var(--track-mono);
-  color: var(--red);
 }
 
 /* The three lamps sit in a housing, like the object they are. */
