@@ -4,11 +4,11 @@
   "pages": [
     {
       "path": "/",
-      "passes": 44,
+      "passes": 45,
       "violations": [],
       "keyboard": {
-        "reached": 62,
-        "total": 62
+        "reached": 60,
+        "total": 60
       }
     },
     {
@@ -49,7 +49,7 @@
     },
     {
       "path": "/research/carta-when-chats-split-apart/",
-      "passes": 37,
+      "passes": 39,
       "violations": [],
       "keyboard": {
         "reached": 16,
@@ -61,22 +61,22 @@
       "passes": 37,
       "violations": [],
       "keyboard": {
-        "reached": 24,
-        "total": 24
+        "reached": 20,
+        "total": 20
       }
     },
     {
       "path": "/research/three-voices/",
-      "passes": 38,
+      "passes": 37,
       "violations": [],
       "keyboard": {
-        "reached": 21,
-        "total": 21
+        "reached": 20,
+        "total": 20
       }
     },
     {
       "path": "/research/what-ai-should-refuse-to-say/",
-      "passes": 38,
+      "passes": 37,
       "violations": [],
       "keyboard": {
         "reached": 15,
