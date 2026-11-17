@@ -35,11 +35,11 @@ const { Content } = await render(post);
         <Content />
       </article>
       {post.data.related.length > 0 && (
-        <aside class="ledger" aria-labelledby="related-title">
+        <aside class="side" aria-labelledby="related-title">
           <h2 id="related-title">The work behind this post</h2>
           <ul>
             {post.data.related.map((r) => (
-              <li class="ledger-item">
+              <li class="side-item">
                 <a class="go" href={r.href}>{r.label}</a>
               </li>
             ))}

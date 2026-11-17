@@ -9,16 +9,7 @@ summary: 'Most work on making AI accessible asks how to present what a model say
 order: 2
 # TODO(markie): add links.preprint (or a hosted PDF) if you choose to publish one.
 kind: 'workshop position paper'
-# The ledger below was drafted by Fable from sentences already in this repo.
-# Notes in double quotes that read like Maitreya are his, verbatim. Rewrite freely.
-ledger:
-  - claim: 'Presented remotely on 27 October 2026 at the Human-Centered Perspectives on the Role of AI in Accessibility workshop, Academic Mindtrek 2026, Tampere.'
-    state: word
-    todo: 'link the workshop programme or acceptance, if either is public.'
-  - claim: 'A copy of the paper you can read.'
-    state: open
-    note: 'No PDF or preprint is linked here yet.'
-    todo: 'add links.preprint (or a hosted PDF) if you choose to publish one.'
+# TODO(markie): link the workshop programme or acceptance, if either is public.
 related:
   - { label: 'The same question on one concrete system: Three Voices', href: '/research/three-voices' }
   - { label: 'In plain words: A coin flip should not look like a red light', href: '/writing/coin-flip-red-light' }

@@ -36,7 +36,6 @@ const projects = (await getCollection('projects')).sort(
             summary={p.data.summary}
             tags={p.data.stack}
             links={p.data.links}
-            ledger={p.data.ledger}
           />
         ))}
       </div>

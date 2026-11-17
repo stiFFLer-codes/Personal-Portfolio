@@ -10,21 +10,6 @@ order: 4
 links:
   repo: 'https://github.com/stiFFLer-codes/amazon-sales-analysis'
 kind: 'analysis'
-# The ledger below was drafted by Fable from sentences already in this repo.
-# Notes in double quotes that read like Maitreya are his, verbatim. Rewrite freely.
-ledger:
-  - claim: 'Gross order value (₹78.59M) overstates realised revenue (₹70.28M) by ₹8.31M, 10.6% of the gross figure.'
-    state: checkable
-    links:
-      - { label: 'repository', href: 'https://github.com/stiFFLer-codes/amazon-sales-analysis' }
-  - claim: 'Done during a one-month internship at InnoByte Services, June to July 2025.'
-    state: word
-  - claim: 'Whether 959 identical rows are export duplicates or identical units.'
-    state: open
-    note: 'The file has no product-level identifier, so it can’t tell two identical units in one order from an export duplicate. I kept the rows and report every figure as it stands.'
-  - claim: 'Which state some of the orders belong to.'
-    state: open
-    note: 'State names arrived in 69 spellings for about 36 states. Trimming and upper-casing brought that to 47. I left the remaining genuine misspellings unmerged, so fuzzy matching couldn’t join two different places.'
 ---
 
 ## The brief

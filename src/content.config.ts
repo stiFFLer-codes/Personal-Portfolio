@@ -7,29 +7,6 @@ import { glob } from 'astro/loaders';
 // has neither; it has dates.
 const status = z.enum(['shipped', 'in-progress', 'planned', 'archived']);
 
-// The ledger: what a page claims, and how far a reader can check each claim.
-// This is the site doing what the work argues for. Three states, and each is
-// shown as a word and a shape as well as a colour:
-//   checkable  there is a public artifact; `links` points at it
-//   word       stated, with nothing public to link. Ask and I'll send it.
-//   open       unresolved: not done, not known, not tested, or still pending
-// `note` is the detail (Maitreya's own sentence wherever one exists).
-// `todo` is a fact only Maitreya can supply. It renders as an amber
-// TODO(markie) in development and is left out of production (src/todo.ts).
-const ledger = z
-  .array(
-    z.object({
-      claim: z.string(),
-      state: z.enum(['checkable', 'word', 'open']),
-      note: z.string().optional(),
-      todo: z.string().optional(),
-      links: z
-        .array(z.object({ label: z.string(), href: z.string() }))
-        .default([]),
-    })
-  )
-  .default([]);
-
 // Each project is one markdown file. To add a new project, drop a new file
 // into src/content/projects/ — nothing else needs to change.
 const projects = defineCollection({
@@ -46,9 +23,7 @@ const projects = defineCollection({
     context: z.string().optional(),
     // What sort of thing it is, in two or three words: "production system".
     kind: z.string().optional(),
-    ledger,
-    // Not rendered since phase 13: the ledger carries this now (eRESI's
-    // private-code note is the note on a `word` claim).
+    // Shown under Sources when there are no links, e.g. private code.
     sourcesNote: z.string().optional(),
     stack: z.array(z.string()).default([]),
     order: z.number().default(99),
@@ -99,7 +74,6 @@ const research = defineCollection({
     citation: z.string().optional(),
     // What sort of thing it is: "journal paper", "pre-registered study".
     kind: z.string().optional(),
-    ledger,
     // Other ways into the same work: the plain-language post, the demo.
     related: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
     order: z.number().default(99),
@@ -187,7 +161,7 @@ const places = defineCollection({
         .default([]),
       // Optional checkable artifact for a stop (e.g. the Jyväskylä summer-school
       // certificate). `href` is a path under public/. Same "verify this" idea
-      // as the ledger links on the paper and system pages.
+      // as the Sources on the paper and system pages.
       source: z.object({ label: z.string(), href: z.string() }).optional(),
     }),
 });

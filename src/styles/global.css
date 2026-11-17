@@ -1,23 +1,17 @@
 /* ============================================================
    maitreyasapariya.me
 
-   Concept: a proof sheet. The page looks like something that has been
-   checked in public: the flattering number struck through beside the
-   reported one, an amber mark on whatever is still unresolved, and a
-   margin that says how far each claim can be verified.
+   The work, shown plainly: the better-sounding number struck through
+   beside the one that was reported, an amber highlighter on the words
+   that carry the argument, and a mono margin that says what stage each
+   thing is at.
 
    Three voices in type:
      Fraunces        display. Warm, sturdy, soft at the corners. The person.
                      (The weight and SOFT axes only: half the bytes of the
                      full build, and the text-size cut is the friendlier one.)
      Newsreader      body. For reading.
-     JetBrains Mono  the system: states, dates, labels, evidence.
-
-   Three states, used everywhere, always as a shape and a word as well
-   as a colour:
-     checkable   filled disc   green   there is a public artifact
-     on my word  half disc     slate   stated, nothing public to link
-     unresolved  open ring     amber   not done, not known, or pending
+     JetBrains Mono  the system: stages, dates, labels, links.
 
    Everything below is a token. Components use the token, never a
    literal value. Light and dark are both first-class.
@@ -55,9 +49,6 @@
   --housing-edge: #15201c;
   --housing-off: rgba(245, 242, 233, 0.13);
   --housing-ring: rgba(245, 242, 233, 0.28);
-  /* Text on an amber fill (the closing band's button on hover). The same in
-     both themes, because --amber-fill is. Checked by npm run contrast. */
-  --on-amber: #15201c;
 
   --brand-orcid: #a6ce39;
 
@@ -336,60 +327,8 @@ pre {
   padding: 0 var(--gutter);
 }
 
-/* ============================================================
-   The marks: one per state. Shape and word, then colour.
-   ============================================================ */
-
-.mark {
-  display: inline-block;
-  flex: none;
-  width: 0.72em;
-  height: 0.72em;
-  border-radius: 50%;
-  border: 0.14em solid currentColor;
-  vertical-align: 0.02em;
-}
-
-.mark-checkable {
-  color: var(--green);
-  background: currentColor;
-}
-
-.mark-word {
-  color: var(--slate);
-  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
-}
-
-.mark-open {
-  color: var(--amber);
-  border-style: dashed;
-  border-width: 0.13em;
-}
-
-.state {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.55em;
-  font-family: var(--font-mono);
-  font-size: var(--t-xs);
-  letter-spacing: var(--track-mono);
-  white-space: nowrap;
-}
-
-.state-checkable {
-  color: var(--green);
-}
-
-.state-word {
-  color: var(--slate);
-}
-
-.state-open {
-  color: var(--amber);
-}
-
-/* A fact only Maitreya can supply. Reported, in the unresolved colour,
-   instead of being guessed at. */
+/* A fact only Maitreya can supply. Development builds only (src/todo.ts):
+   the author sees the gap in amber; a visitor never does. */
 .todo {
   display: inline;
   font-family: var(--font-mono);
@@ -519,62 +458,6 @@ pre {
   padding: 0 0.06em;
 }
 
-.masthead-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  gap: var(--s-6) clamp(2rem, 6vw, 5rem);
-  align-items: start;
-}
-
-/* The site reporting on itself. */
-.selfreport {
-  border-top: 2px solid var(--ink);
-  padding-top: var(--s-4);
-}
-
-.selfreport-lead {
-  font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 60;
-  font-size: var(--t-md);
-  line-height: 1.3;
-  margin-bottom: var(--s-4);
-}
-
-.tally {
-  list-style: none;
-  margin: 0 0 var(--s-4);
-  padding: 0;
-  display: grid;
-  gap: var(--s-2);
-}
-
-.tally li {
-  display: grid;
-  grid-template-columns: 1.1rem 2.4rem minmax(0, 1fr);
-  align-items: baseline;
-  gap: var(--s-2);
-  font-family: var(--font-mono);
-  font-size: var(--t-sm);
-  letter-spacing: var(--track-mono);
-  color: var(--ink-soft);
-}
-
-.tally .mark {
-  font-size: 1rem;
-  transform: translateY(0.08em);
-}
-
-.tally b {
-  font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 60;
-  font-size: var(--t-md);
-  font-weight: 560;
-  font-variant-numeric: tabular-nums lining-nums;
-  color: var(--ink);
-  text-align: right;
-  letter-spacing: 0;
-}
-
 .go {
   display: inline-flex;
   align-items: baseline;
@@ -603,7 +486,7 @@ pre {
 .go::after,
 .back::before,
 .entry-links a::after,
-.ledger-links a[target]::after,
+.side-links a[target]::after,
 .field-source::after {
   content: '';
   display: inline-block;
@@ -629,8 +512,10 @@ pre {
 .bio {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--s-5);
+  gap: var(--s-5) var(--s-6);
   align-items: start;
+  /* The bio paragraph keeps a reading measure beside the portrait. */
+  max-width: calc(var(--measure) + 10rem);
 }
 
 .bio p {
@@ -850,21 +735,72 @@ pre {
   color: var(--amber);
 }
 
-/* The number CARTA doesn't claim: a slot left visibly empty. */
-.blank {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(var(--t-num) * 1.02);
-  margin-top: calc(var(--t-num) * 0.1);
-  border: 2px dashed var(--amber);
-  border-radius: var(--radius);
+/* CARTA's card: the paper's Fig. 1, redrawn in the site's colours so it
+   follows the theme. The original is on the paper's page. */
+.finding-figure {
+  margin: 0 0 var(--s-5);
+}
+
+.finding-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.finding-figure figcaption {
+  margin-top: var(--s-2);
   font-family: var(--font-mono);
-  font-size: var(--t-xs);
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--amber);
+  font-size: var(--t-2xs);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+}
+
+.tcf-f1 {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 1.25;
+}
+
+.tcf-f2 {
+  fill: var(--paper-3);
+  stroke: var(--ink);
+  stroke-width: 1.25;
+}
+
+.tcf-hatch {
+  fill: url(#tcf-hatch);
+}
+
+.tcf-hatch-line {
+  stroke: var(--ink-faint);
+  stroke-width: 1.2;
+}
+
+.tcf-paused {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-dasharray: 4 3;
+}
+
+.tcf-axis {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.25;
+}
+
+.tcf-label,
+.tcf-note {
+  font-family: var(--font-mono);
+  letter-spacing: var(--track-mono);
+}
+
+/* Sizes are viewBox units, set on the SVG like the eRESI figure's. */
+.tcf-label {
+  fill: var(--ink);
+}
+
+.tcf-note {
+  fill: var(--ink-soft);
 }
 
 .finding-body {
@@ -1402,16 +1338,6 @@ pre {
   color: var(--ink-soft);
 }
 
-.fine li {
-  display: grid;
-  grid-template-columns: 1rem minmax(0, 1fr);
-  gap: var(--s-2);
-  align-items: baseline;
-}
-
-.fine .mark {
-  transform: translateY(0.05em);
-}
 
 /* ============================================================
    The record: rows with a margin. Papers, work, study, posts.
@@ -1560,10 +1486,6 @@ pre {
   mask-image: var(--arrow-out);
 }
 
-.entry-links .state {
-  margin-right: var(--s-1);
-}
-
 .entry-dense {
   grid-template-columns: var(--label-col-dense) minmax(0, 1fr);
   padding: var(--s-3) 0;
@@ -1578,7 +1500,7 @@ p.entry-title {
 }
 
 /* ============================================================
-   Inner pages: head, limits, prose, ledger
+   Inner pages: head, prose, sources
    ============================================================ */
 
 .hero,
@@ -1618,53 +1540,6 @@ p.entry-title {
 
 .status-line .dot {
   transform: translateY(-0.08em);
-}
-
-/* What the work couldn't resolve, said first. */
-.limits {
-  max-width: 46rem;
-  margin: var(--s-6) 0 0;
-  padding: var(--s-5);
-  border: 2px dashed var(--amber);
-  border-radius: var(--radius-lg);
-}
-
-.limits h2 {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6em;
-  font-family: var(--font-mono);
-  font-size: var(--t-sm);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--amber);
-  margin: 0 0 var(--s-4);
-}
-
-.limits ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--s-4);
-}
-
-.limits li strong {
-  display: block;
-  font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 60;
-  font-size: var(--t-md);
-  font-weight: 520;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-}
-
-.limits li p {
-  margin: var(--s-1) 0 0;
-  font-size: var(--t-row);
-  line-height: 1.5;
-  color: var(--ink-soft);
 }
 
 .two-col {
@@ -1739,18 +1614,18 @@ p.entry-title {
   line-height: 1.5;
 }
 
-/* The ledger: a page's claims, sorted by how far they can be checked. */
-.ledger {
+/* Beside the write-up on a paper, system or post page: its sources and
+   the other ways into the same work. */
+.side {
   position: sticky;
   top: var(--s-5);
 }
 
-.ledger-wide {
+.side-wide {
   position: static;
 }
 
-.ledger h2,
-.ledger-title {
+.side h2 {
   font-family: var(--font-mono);
   font-size: var(--t-sm);
   font-weight: 500;
@@ -1762,61 +1637,44 @@ p.entry-title {
   border-bottom: 2px solid var(--ink);
 }
 
-.ledger ul {
+.side section + section {
+  margin-top: var(--s-7);
+}
+
+.side ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.ledger-item {
-  padding: var(--s-4) 0;
+.side-item {
+  padding: var(--s-3) 0;
   border-bottom: 1px solid var(--line);
 }
 
-.ledger-item .state {
-  margin-bottom: var(--s-1);
-}
-
-.ledger-claim {
-  margin: 0;
-  font-size: var(--t-row);
-  line-height: 1.45;
-}
-
-.ledger-note {
-  margin: var(--s-2) 0 0;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: var(--ink-soft);
-}
-
-.ledger-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 var(--s-4);
-  margin: var(--s-2) 0 0;
+.side-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
   font-family: var(--font-mono);
-  font-size: var(--t-xs);
+  font-size: var(--t-sm);
   letter-spacing: var(--track-mono);
 }
 
-.ledger-links a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.75rem;
-}
-
-.ledger-links a[target]::after {
+.side-links a[target]::after {
   width: 0.7em;
   height: 0.7em;
-  margin-left: 0.35em;
+  margin-left: 0.4em;
   -webkit-mask-image: var(--arrow-out);
   mask-image: var(--arrow-out);
 }
 
-.ledger-item .todo {
-  display: inline-block;
-  margin-top: var(--s-2);
+.side-note {
+  margin: var(--s-3) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-soft);
 }
 
 /* ---- writing list ---- */
@@ -2117,7 +1975,7 @@ p.entry-title {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .ledger {
+  .side {
     position: static;
     max-width: var(--measure);
   }
@@ -2125,7 +1983,6 @@ p.entry-title {
 }
 
 @media (max-width: 52rem) {
-  .masthead-grid,
   .demo-intro,
   .record-pair,
   .north,
@@ -2188,9 +2045,6 @@ p.entry-title {
     padding-bottom: 0;
   }
 
-  .limits {
-    padding: var(--s-4);
-  }
 }
 
 /* ============================================================
@@ -2266,9 +2120,8 @@ p.entry-title {
 }
 
 /* Windows high contrast: colours are replaced, so lean on borders and the
-   words. Fills that carried state get a system colour. */
+   words. Fills that carry meaning get a system colour. */
 @media (forced-colors: active) {
-  .mark,
   .lamp i,
   .probs .bar,
   .flip input {
@@ -2276,7 +2129,6 @@ p.entry-title {
     border-color: CanvasText;
   }
 
-  .mark-checkable,
   .lamp.is-lit i,
   .probs .bar i {
     background: Highlight;
@@ -2292,7 +2144,7 @@ p.entry-title {
   .go::after,
   .back::before,
   .entry-links a::after,
-  .ledger-links a[target]::after,
+  .side-links a[target]::after,
   .field-source::after {
     forced-color-adjust: none;
     background: LinkText;
@@ -2375,10 +2227,6 @@ p.entry-title {
   text-decoration: none;
 }
 
-.kicker .mark {
-  margin-right: 0.3em;
-}
-
 /* The section titles that carry the argument. */
 h2.display {
   font-size: var(--t-xl);
@@ -2414,10 +2262,8 @@ html:not(.js) .demo-control {
   margin-right: 0.06em;
 }
 
-.selfreport-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-2) var(--s-6);
+.masthead-skip {
+  margin: var(--s-3) 0 0;
 }
 
 .go-down::after {
@@ -2449,10 +2295,6 @@ html:not(.js) .demo-control {
 
 .offline[hidden] {
   display: none;
-}
-
-.offline .mark {
-  transform: translateY(0.05em);
 }
 
 /* ============================================================
@@ -2520,63 +2362,6 @@ html:not(.js) .demo-control {
 
 .lamp-amber.is-lit i {
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--amber-fill) 35%, transparent), 0 0 22px 2px color-mix(in srgb, var(--amber-fill) 55%, transparent);
-}
-
-/* The last word: an inverted band, the one place the page changes colour. */
-.closing {
-  margin-top: var(--section-y);
-  padding: clamp(3.5rem, 9vw, 7rem) 0;
-  background: var(--ink);
-  color: var(--paper);
-}
-
-.closing .eyebrow {
-  color: color-mix(in srgb, var(--paper) 74%, var(--ink));
-}
-
-.closing h2 {
-  font-size: var(--t-hero);
-  font-weight: 360;
-  line-height: 1.02;
-  letter-spacing: -0.032em;
-  max-width: 13em;
-  margin-bottom: var(--s-5);
-}
-
-.closing h2 b {
-  font-weight: inherit;
-  text-decoration: underline;
-  text-decoration-style: dashed;
-  text-decoration-color: var(--amber-fill);
-  text-decoration-thickness: 0.07em;
-  text-underline-offset: 0.14em;
-}
-
-.closing p:not(.eyebrow) {
-  max-width: var(--measure);
-  font-size: var(--t-md);
-  line-height: 1.5;
-  color: color-mix(in srgb, var(--paper) 86%, var(--ink));
-}
-
-.closing .cta {
-  border-color: var(--paper);
-  color: var(--paper);
-}
-
-.closing .cta.primary {
-  background: var(--paper);
-  color: var(--ink);
-}
-
-.closing .cta:hover {
-  background: var(--amber-fill);
-  border-color: var(--amber-fill);
-  color: var(--on-amber);
-}
-
-main:has(.closing) + .site-footer {
-  margin-top: 0;
 }
 
 @media (forced-colors: active) {

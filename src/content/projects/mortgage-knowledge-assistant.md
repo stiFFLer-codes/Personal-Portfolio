@@ -9,17 +9,6 @@ stack: ['React', 'TypeScript', 'pdf.js', 'AWS Bedrock', 'AWS Lambda', 'Amazon S3
 order: 1
 sourcesNote: 'Client work. The source code is private.'
 kind: 'production system'
-# The ledger below was drafted by Fable from sentences already in this repo.
-# Notes in double quotes that read like Maitreya are his, verbatim. Rewrite freely.
-ledger:
-  - claim: 'In production for the client, embedded in its intranet and its public website.'
-    state: word
-    note: 'Client work. The source code is private.'
-  - claim: 'Built in a Crest Infosystems team, in a codebase with a 229-test Vitest suite.'
-    state: word
-  - claim: 'Catching a weak answer that still cites something.'
-    state: open
-    note: 'The fallback fires when retrieval cites nothing. That can’t catch a weak answer that still cites something.'
 ---
 
 ## The problem

@@ -166,16 +166,10 @@ const f = (n: number) => n.toFixed(3);
     </p>
     <ul class="fine">
       <li>
-        <span class="mark mark-checkable" aria-hidden="true"></span>
-        <span><span class="sr-only">Checkable: </span>{f(mid)} against {f(hi)} is a real case, the one the post describes. The model was wrong on it: the true answer was the middle level. The low figure is what is left over.</span>
+        {f(mid)} against {f(hi)} is a real case, the one the post describes. The model was wrong on it: the true answer was the middle level. The low figure is what is left over.
       </li>
       <li>
-        <span class="mark mark-open" aria-hidden="true"></span>
-        <span><span class="sr-only">Unresolved: </span>The margin drawn here ({MARGIN.toFixed(2)}) is a stand-in so the slider has somewhere to go. The paper fixes its own. <Todo text="the real margin." /></span>
-      </li>
-      <li>
-        <span class="mark mark-open" aria-hidden="true"></span>
-        <span><span class="sr-only">Unresolved: </span>Nobody in any of the three groups has used this yet, so nothing here says it works.</span>
+        The margin drawn here ({MARGIN.toFixed(2)}) is a stand-in so the slider has somewhere to go. The paper fixes its own. <Todo text="the real margin." />
       </li>
     </ul>
   </div>

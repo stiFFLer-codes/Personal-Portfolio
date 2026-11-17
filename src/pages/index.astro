@@ -1,12 +1,12 @@
 ---
 // The home page makes one argument, then keeps the record.
 //
-//   1. The thesis, and the site applying it to itself (the tally).
-//   2. Reported as found: six pieces of work, each shown as the answer that
-//      sounded better, struck through, beside the one that was reported.
+//   1. The thesis, the bio and the links.
+//   2. Reported as found: six pieces of work, five of them shown as the answer
+//      that sounded better, struck through, beside the one that was reported;
+//      the sixth (CARTA) shows the paper's Fig. 1, redrawn.
 //   3. The coin flip, playable.
-//   4. The record: the same work as a CV lists it, each line with how far it
-//      can be checked.
+//   4. The record: the same work as a CV lists it.
 //   5. Writing, and the north.
 //
 // Copy: the thesis and the bio are Maitreya's. Everything else on this page
@@ -24,7 +24,6 @@ import lecture from '../content/places/img/jyvaskyla-lecture.jpg';
 import dawn from '../content/places/img/sandefjord-dawn.jpg';
 import { SITE, EDUCATION, CERTIFICATIONS } from '../site.config';
 import { span, year } from '../format';
-import { getLedger, tally } from '../ledger';
 
 const byOrder = <T extends { data: { order: number } }>(a: T, b: T) => a.data.order - b.data.order;
 const research = (await getCollection('research')).sort(byOrder);
@@ -33,7 +32,6 @@ const projects = (await getCollection('projects')).sort(byOrder);
 const writing = (await getCollection('writing')).sort(byOrder);
 const places = await getCollection('places');
 
-const t = tally(await getLedger());
 ---
 
 <Base title={SITE.title}>
@@ -55,38 +53,7 @@ const t = tally(await getLedger());
         I build software systems that report what they <mark>couldn’t resolve.</mark>
       </p>
 
-      <div class="masthead-grid reveal reveal-3">
-        {/* drafted by Fable. The numbers are counted from the ledger at build. */}
-        <div class="selfreport">
-          <p class="selfreport-lead">
-            This site tries to do the same. It makes {t.total} claims about me and my work, and
-            sorts them by how far you can check them.
-          </p>
-          <ul class="tally">
-            <li>
-              <span class="mark mark-checkable" aria-hidden="true"></span>
-              <b>{t.checkable}</b>
-              <span>link to something you can check right now</span>
-            </li>
-            <li>
-              <span class="mark mark-word" aria-hidden="true"></span>
-              <b>{t.word}</b>
-              <span>rest on my word</span>
-            </li>
-            <li>
-              <span class="mark mark-open" aria-hidden="true"></span>
-              <b>{t.open}</b>
-              <span>are unresolved</span>
-            </li>
-          </ul>
-          {/* Every row in the record shows its own count, so the totals above
-              can be checked line by line without a separate page. */}
-          <p class="selfreport-links">
-            <a class="go go-down" href="#record">See each one in the record</a>
-          </p>
-        </div>
-
-        <div class="bio">
+      <div class="bio reveal reveal-3">
           <div>
             {/* Maitreya's words. Agents fix typos only. */}
             <p>
@@ -99,6 +66,10 @@ const t = tally(await getLedger());
               unsure.
             </p>
             <ProfileLinks />
+            {/* drafted by Fable */}
+            <p class="masthead-skip">
+              <a class="go go-down" href="#record">Short on time? Skip to the record</a>
+            </p>
           </div>
           <Image
             class="portrait"
@@ -108,7 +79,6 @@ const t = tally(await getLedger());
             densities={[1, 2, 3]}
             loading="eager"
           />
-        </div>
       </div>
     </section>
 
@@ -164,15 +134,50 @@ const t = tally(await getLedger());
 
         <li class="finding">
           <p class="finding-kind">CARTA · published</p>
-          <p class="finding-metric">accuracy on a real chat archive</p>
-          <p class="finding-values">
-            <span class="was" aria-hidden="true"></span>
-            <span class="is"><span class="blank">no figure claimed</span></span>
+          {/* drafted by Claude */}
+          <p class="finding-metric">one account, two phones</p>
+          <figure class="finding-figure">
+            {/* Redrawn from Fig. 1 of the paper, keeping only what reads at
+                card size: the two fragments, the overlaps, failure and
+                recovery. The full figure is on the paper's page. */}
+            <svg viewBox="0 0 320 156" font-size="11" role="img" aria-labelledby="tcf-title tcf-desc">
+              <title id="tcf-title">One account's chat history, split across two phones</title>
+              <desc id="tcf-desc">
+                A timeline redrawn from Fig. 1 of the paper. The primary phone's history, F1, runs
+                until the failure and then pauses. The secondary phone's history, F2, runs from just
+                before the failure to just after the recovery. At the recovery F1 resumes. The two
+                stretches where both phones hold the same time are hatched.
+              </desc>
+              <defs>
+                <pattern id="tcf-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                  <line class="tcf-hatch-line" x1="0" y1="0" x2="0" y2="5" />
+                </pattern>
+              </defs>
+              <rect class="tcf-hatch" x="84" y="62" width="28" height="18" />
+              <rect class="tcf-hatch" x="208" y="62" width="28" height="18" />
+              <rect class="tcf-f2" x="84" y="38" width="152" height="24" rx="3" />
+              <text class="tcf-label" x="160" y="54" text-anchor="middle">F<tspan font-size="8" dy="3">2</tspan><tspan dy="-3"> secondary</tspan></text>
+              <rect class="tcf-f1" x="8" y="80" width="104" height="24" rx="3" />
+              <text class="tcf-label" x="60" y="96" text-anchor="middle">F<tspan font-size="8" dy="3">1</tspan><tspan dy="-3"> primary</tspan></text>
+              <path class="tcf-paused" d="M112 92H208" />
+              <rect class="tcf-f1" x="208" y="80" width="104" height="24" rx="3" />
+              <text class="tcf-label" x="260" y="96" text-anchor="middle">F<tspan font-size="8" dy="3">1</tspan></text>
+              <path class="tcf-axis" d="M8 124H312M306 120l6 4-6 4M112 119v10M208 119v10" />
+              <text class="tcf-note" font-size="10" x="112" y="145" text-anchor="middle">failure</text>
+              <text class="tcf-note" font-size="10" x="208" y="145" text-anchor="middle">recovery</text>
+              <text class="tcf-note" font-size="10" x="312" y="145" text-anchor="end">time</text>
+            </svg>
+            <figcaption>Redrawn from Fig. 1 of the paper</figcaption>
+          </figure>
+          {/* Maitreya's words, from the paper's introduction. */}
+          <p class="finding-body finding-quote">
+            “The owner has lost the history without losing a message. It is a loss by
+            non-union: both halves survive, and what is missing is the join.”
           </p>
+          {/* drafted by Claude, from the paper's abstract */}
           <p class="finding-body">
-            The framework recovers what is unambiguous and quarantines what conflicts. It has
-            only been run on a synthetic corpus with known ground truth, so the paper leaves this
-            number out.
+            CARTA rebuilds one archive from the pieces, with a report of where each record
+            came from.
           </p>
           <p class="finding-foot"><a class="go" href="/research/carta-when-chats-split-apart">When chats split apart</a></p>
         </li>
@@ -252,9 +257,6 @@ const t = tally(await getLedger());
       {/* drafted by Fable */}
       <p class="eyebrow">the record</p>
       <h2 id="record">The same work, as a CV would list it.</h2>
-      <p class="section-lede">
-        Every line ends with how far you can check it.
-      </p>
 
       <div class="record" style="margin-top: var(--s-7)">
         <div>
@@ -267,7 +269,6 @@ const t = tally(await getLedger());
                 title={r.data.title}
                 label={r.data.stage}
                 links={r.data.links}
-                ledger={r.data.ledger}
               >
                 <PaperByline slot="byline" paper={r} />
               </Entry>
@@ -287,7 +288,6 @@ const t = tally(await getLedger());
                 context={p.data.context}
                 summary={p.data.summary}
                 links={p.data.links}
-                ledger={p.data.ledger}
               />
             ))}
           </div>
@@ -306,7 +306,6 @@ const t = tally(await getLedger());
                   where={[e.data.company, e.data.location].filter(Boolean).join(', ')}
                   label={span(e.data.start, e.data.end)}
                   note={e.data.note}
-                  state="word"
                 />
               ))}
             </div>
@@ -324,7 +323,6 @@ const t = tally(await getLedger());
                   where={c.where}
                   note={c.note}
                   label={c.date}
-                  state={c.proof ? 'checkable' : 'word'}
                   links={{ certificate: c.proof }}
                   todo={c.proof ? undefined : c.todo}
                 />
@@ -403,22 +401,4 @@ const t = tally(await getLedger());
     </section>
   </div>
 
-  {/* ---------------- The last word ---------------- */}
-  {/* drafted by Fable. The number is counted from the ledger at build. */}
-  <section class="closing" aria-labelledby="closing-title">
-    <div class="container">
-      <p class="eyebrow">before you go</p>
-      <h2 id="closing-title"><b>{t.open}</b> things on this site are still unresolved.</h2>
-      {/* edited after Fable's run: the aggregate page this pointed to was
-          retired, so the sentence now says where the items actually are. */}
-      <p>
-        Each paper and system lists its own first, on purpose. If one of them is the thing
-        you needed to know, ask me and I’ll tell you what I have.
-      </p>
-      <div class="cta-row">
-        <a class="cta primary" href={`mailto:${SITE.email}`}>ask me</a>
-        <a class="cta" href="#record">back to the record</a>
-      </div>
-    </div>
-  </section>
 </Base>

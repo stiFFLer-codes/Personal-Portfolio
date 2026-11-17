@@ -1,34 +1,36 @@
 ---
-// The shape of a paper page and a system page. What the work couldn't
-// resolve is said first, straight under the summary; then the write-up, with
-// the page's ledger beside it.
-import Todo from './Todo.astro';
-import { SHOW_TODOS } from '../todo';
-import LedgerList from './LedgerList.astro';
-import type { State as S } from '../ledger';
+// The shape of a paper page and a system page: the head, then the write-up
+// with its sources and related work beside it.
+import { LINK_LABELS, presentLinks } from '../links';
 
-interface Item {
-  claim: string;
-  state: S;
-  note?: string;
-  todo?: string;
-  links: { label: string; href: string }[];
-}
 interface Props {
   back: { href: string; label: string };
   /** "journal paper · published" */
   meta: string[];
   title: string;
   summary: string;
-  ledger: Item[];
+  /** External artifacts: doi, zenodo, code, repository, live site. */
+  links?: Record<string, string | undefined>;
+  /** Shown under Sources when there is nothing to link, e.g. private code. */
+  sourcesNote?: string;
   hasBody: boolean;
   longTitle?: boolean;
   /** Other ways into the same work: the plain-language post, the demo. */
   related?: { label: string; href: string }[];
 }
-const { back, meta, title, summary, ledger, hasBody, longTitle = false, related = [] } = Astro.props;
-const open = ledger.filter((l) => l.state === 'open');
-const rest = ledger.filter((l) => l.state !== 'open');
+const {
+  back,
+  meta,
+  title,
+  summary,
+  links = {},
+  sourcesNote,
+  hasBody,
+  longTitle = false,
+  related = [],
+} = Astro.props;
+const sources = presentLinks(links);
+const hasSources = sources.length > 0 || Boolean(sourcesNote);
 ---
 
 <div class="container">
@@ -38,24 +40,6 @@ const rest = ledger.filter((l) => l.state !== 'open');
     <h1 class="reveal">{title}</h1>
     <p class="lede reveal reveal-2">{summary}</p>
     <slot name="byline" />
-
-    {open.length > 0 && (
-      <aside class="limits reveal reveal-3" aria-labelledby="limits-title">
-        <h2 id="limits-title">
-          <span class="mark mark-open" aria-hidden="true"></span>
-          What this couldn’t resolve
-        </h2>
-        <ul>
-          {open.map((l) => (
-            <li>
-              <strong>{l.claim}</strong>
-              {l.note && <p>{l.note}</p>}
-              {l.todo && SHOW_TODOS && <p><Todo text={l.todo} /></p>}
-            </li>
-          ))}
-        </ul>
-      </aside>
-    )}
   </section>
 
   <section class:list={['section', { 'two-col': hasBody }]}>
@@ -64,20 +48,30 @@ const rest = ledger.filter((l) => l.state !== 'open');
         <slot />
       </article>
     )}
-    {(rest.length > 0 || related.length > 0) && (
-      <aside class:list={['ledger', { 'ledger-wide': !hasBody }]}>
-        {rest.length > 0 && (
-          <section aria-labelledby="ledger-title">
-            <h2 id="ledger-title">How far you can check this</h2>
-            <LedgerList items={rest} />
+    {(hasSources || related.length > 0) && (
+      <aside class:list={['side', { 'side-wide': !hasBody }]}>
+        {hasSources && (
+          <section aria-labelledby="sources-title">
+            <h2 id="sources-title">Sources</h2>
+            {sources.length > 0 ? (
+              <ul class="side-links">
+                {sources.map(([key, url]) => (
+                  <li class="side-item">
+                    <a href={url} target="_blank" rel="noopener">{LINK_LABELS[key] ?? key}</a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="side-note">{sourcesNote}</p>
+            )}
           </section>
         )}
         {related.length > 0 && (
-          <section aria-labelledby="related-title" style="margin-top: var(--s-7)">
+          <section aria-labelledby="related-title">
             <h2 id="related-title">Other ways into this work</h2>
             <ul>
               {related.map((r) => (
-                <li class="ledger-item">
+                <li class="side-item">
                   <a class="go" href={r.href}>{r.label}</a>
                 </li>
               ))}

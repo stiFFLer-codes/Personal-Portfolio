@@ -2,26 +2,13 @@
 // One row in any list on the site: papers, systems, jobs, study. Two
 // columns: a mono margin on the left that says what stage the thing is at
 // ("published", "archived") or when it happened ("Jan 2026 – now"); the
-// content on the right. The last line of every row says how far it can be
-// checked: the links if there are any, and the row's tally from the ledger.
+// content on the right. The row ends with its links, if it has any.
 //
 // This is the only place list rows are described. Change the shape of a
 // listing here and every page that lists anything follows.
-import State from './State.astro';
 import Todo from './Todo.astro';
 import { SHOW_TODOS } from '../todo';
-import type { State as S } from '../ledger';
-
-const LINK_LABELS: Record<string, string> = {
-  repo: 'repository',
-  live: 'live site',
-  preprint: 'preprint',
-  arxiv: 'arXiv',
-  code: 'code',
-  doi: 'doi',
-  zenodo: 'zenodo',
-  certificate: 'certificate',
-};
+import { LINK_LABELS, presentLinks } from '../links';
 
 interface Props {
   title: string;
@@ -38,12 +25,8 @@ interface Props {
   note?: string;
   summary?: string;
   tags?: string[];
-  /** External, checkable artifacts (doi, code, repository). */
+  /** External artifacts: doi, code, repository, certificate. */
   links?: Record<string, string | undefined>;
-  /** The row's claims, from the ledger. Rendered as a tally by state. */
-  ledger?: { state: S }[];
-  /** For rows with no ledger of their own: a single state. */
-  state?: S;
   todo?: string;
   as?: 'h2' | 'h3' | 'h4' | 'p';
   dense?: boolean;
@@ -60,32 +43,15 @@ const {
   summary,
   tags = [],
   links = {},
-  ledger = [],
-  state,
   todo,
   as: Heading = 'h3',
   dense = false,
 } = Astro.props;
 
-const linkEntries = Object.entries(links).filter(([, url]) => Boolean(url)) as [
-  string,
-  string,
-][];
+const linkEntries = presentLinks(links);
 const hasByline = Astro.slots.has('byline');
 const showNote = note && note.trim().toLowerCase() !== label.trim().toLowerCase();
 
-const count = (s: S) => ledger.filter((l) => l.state === s).length;
-const tally: [S, string][] = ledger.length
-  ? (
-      [
-        ['checkable', `${count('checkable')} checkable`],
-        ['word', `${count('word')} on my word`],
-        ['open', `${count('open')} unresolved`],
-      ] as [S, string][]
-    ).filter(([s]) => count(s) > 0)
-  : state
-    ? [[state, state === 'checkable' ? 'checkable' : state === 'word' ? 'on my word' : 'unresolved']]
-    : [];
 ---
 
 <article class:list={['entry', { 'entry-dense': dense, 'entry-linked': href }]}>
@@ -111,11 +77,8 @@ const tally: [S, string][] = ledger.length
         {tags.map((t) => <li>{t}</li>)}
       </ul>
     )}
-    {(tally.length > 0 || linkEntries.length > 0) && (
+    {linkEntries.length > 0 && (
       <ul class="entry-links">
-        {tally.map(([s, text]) => (
-          <li><State state={s} label={text} /></li>
-        ))}
         {linkEntries.map(([key, url]) => (
           <li>
             <a href={url} target="_blank" rel="noopener">{LINK_LABELS[key] ?? key}</a>

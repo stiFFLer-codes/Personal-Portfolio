@@ -25,7 +25,7 @@ const { Content } = await render(research);
     meta={[research.data.kind ?? 'paper', research.data.stage]}
     title={research.data.title}
     summary={research.data.summary}
-    ledger={research.data.ledger}
+    links={research.data.links}
     hasBody={Boolean(research.body?.trim())}
     related={research.data.related}
     longTitle

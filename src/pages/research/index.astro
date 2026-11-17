@@ -33,7 +33,6 @@ const research = (await getCollection('research')).sort(
             context={r.data.kind}
             summary={r.data.summary}
             links={r.data.links}
-            ledger={r.data.ledger}
           >
             <PaperByline slot="byline" paper={r} />
           </Entry>

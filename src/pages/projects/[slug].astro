@@ -24,7 +24,8 @@ const { Content } = await render(project);
     meta={[project.data.kind ?? 'project', project.data.stage, project.data.context ?? '']}
     title={project.data.title}
     summary={project.data.summary}
-    ledger={project.data.ledger}
+    links={project.data.links}
+    sourcesNote={project.data.sourcesNote}
     hasBody={Boolean(project.body?.trim())}
   >
     <p slot="byline" class="status-line reveal reveal-2">
