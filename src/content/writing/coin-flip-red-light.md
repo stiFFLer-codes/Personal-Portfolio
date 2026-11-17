@@ -4,6 +4,11 @@ summary: "One AI prediction, three very different people reading it, and the awk
 date: 2026-09-06
 tags: ["ai", "accessibility", "ethics", "explainability", "healthcare", "design"]
 order: 1
+related:
+  - { label: 'Move the gap yourself', href: '/#coin-flip' }
+  - { label: 'The paper: Three Voices', href: '/research/three-voices' }
+  - { label: 'The position paper: What AI should refuse to say, and to whom', href: '/research/what-ai-should-refuse-to-say' }
+  - { label: 'The prototype it came from: Maatritwa AI', href: '/projects/maatritwa-ai' }
 ---
 
 A model I built once split a case almost exactly down the middle. It gave one risk level 0.487 and the next level up 0.499. That is a gap of 0.012. A coin flip with extra steps. And the model was wrong anyway: the true answer was the middle level, not the high one.

@@ -1,0 +1,13 @@
+---
+// A fact only Maitreya can supply. In development it renders in the
+// unresolved colour, so the gap is in front of him while he works; a
+// production build leaves it out (see src/todo.ts).
+import { SHOW_TODOS } from '../todo';
+
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+{SHOW_TODOS && <span class="todo">TODO(markie): {text}</span>}

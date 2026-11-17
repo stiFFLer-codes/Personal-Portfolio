@@ -4,14 +4,14 @@ import Base from '../../layouts/Base.astro';
 import { year } from '../../format';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('writing');
-  return posts.map((p) => ({
+  const posts = (await getCollection('writing')).sort((a, b) => a.data.order - b.data.order);
+  return posts.map((p, i) => ({
     params: { slug: p.id },
-    props: { post: p },
+    props: { post: p, next: posts[(i + 1) % posts.length] },
   }));
 }
 
-const { post } = Astro.props;
+const { post, next } = Astro.props;
 const { Content } = await render(post);
 ---
 
@@ -19,24 +19,39 @@ const { Content } = await render(post);
   title={`${post.data.title} · Maitreya Sapariya`}
   description={post.data.summary}
 >
-  <div class="container">
-    <section class="hero">
+  <div class="container post">
+    <section class="page-head">
       <p class="kicker reveal"><a class="back" href="/writing">writing</a></p>
-      <h1 class="reveal">{post.data.title}</h1>
-      <p class="lede reveal">{post.data.summary}</p>
-      {/* Same mono meta row the work pages use, minus the dot — a post has a
-          date and tags, not a status. Reusing the class beats a second one
-          that would be identical apart from its name. */}
-      <p class="status-line reveal">
+      <h1 class="post-title reveal">{post.data.title}</h1>
+      <p class="lede reveal reveal-2">{post.data.summary}</p>
+      <p class="status-line reveal reveal-2">
         <time datetime={year(post.data.date)}>{year(post.data.date)}</time>
         {post.data.tags.length > 0 && <span>· {post.data.tags.join(', ')}</span>}
       </p>
     </section>
 
-    <section class="section">
+    <section class:list={['section', { 'two-col': post.data.related.length > 0 }]}>
       <article class="prose">
         <Content />
       </article>
+      {post.data.related.length > 0 && (
+        <aside class="side" aria-labelledby="related-title">
+          <h2 id="related-title">The work behind this post</h2>
+          <ul>
+            {post.data.related.map((r) => (
+              <li class="side-item">
+                <a class="go" href={r.href}>{r.label}</a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )}
     </section>
+
+    <nav class="section next-post" aria-label="More writing">
+      <p class="eyebrow">next</p>
+      <p class="next-title"><a href={`/writing/${next.id}`}>{next.data.title}</a></p>
+      <p class="lede">{next.data.summary}</p>
+    </nav>
   </div>
 </Base>

@@ -13,6 +13,7 @@ links:
   code: 'https://github.com/stiFFLer-codes/prediction-is-not-selection'
 # Body: two sections of Maitreya's repository README, verbatim; links point at
 # the v2.0.0 release, the version of the PDF.
+kind: 'pre-registered study'
 ---
 
 ## What the study found

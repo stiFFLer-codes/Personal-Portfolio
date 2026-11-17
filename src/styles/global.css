@@ -1,70 +1,87 @@
 /* ============================================================
-   maitreyasapariya.me — design tokens
+   maitreyasapariya.me
 
-   Concept: a fieldbook. One hue family (a deep pine green) tinted
-   all the way from paper to ink, so the page reads as one material
-   rather than a neutral sheet with accents dropped on it. Two
-   typefaces: Newsreader carries display and body, JetBrains Mono
-   carries everything mechanical — status, dates, labels, nav.
+   The work, shown plainly: the better-sounding number struck through
+   beside the one that was reported, an amber highlighter on the words
+   that carry the argument, and a mono margin that says what stage each
+   thing is at.
 
-   Signature element: the margin. Every list row carries a mono
-   margin column that says what state the thing is in, in a word
-   that fits it ("accepted", "archived"), or when it happened.
+   Three voices in type:
+     Fraunces        display. Warm, sturdy, soft at the corners. The person.
+                     (The weight and SOFT axes only: half the bytes of the
+                     full build, and the text-size cut is the friendlier one.)
+     Newsreader      body. For reading.
+     JetBrains Mono  the system: stages, dates, labels, links.
 
-   Everything below is a token. Component files use the token,
-   never a literal value.
+   Everything below is a token. Components use the token, never a
+   literal value. Light and dark are both first-class.
    ============================================================ */
 
 :root {
-  /* ---- color ------------------------------------------------
-     Contrast against --paper, verified:
-       ink 15.6 · ink-soft 7.1 · ink-faint 4.6
-       green 5.7 · amber 5.3 · slate 6.2
-     Every text color clears WCAG AA (4.5) at body size.
-     -------------------------------------------------------- */
-  --paper: #f2f4ef;
-  --paper-raised: #e6eae1;
-  --ink: #171c1a;
-  --ink-soft: #4c5450;
-  --ink-faint: #646e69;
-  --hairline: rgba(23, 28, 26, 0.13);
-  --hairline-strong: rgba(23, 28, 26, 0.24);
+  color-scheme: light;
 
-  --signal-green: #2b6b4f;
-  --signal-amber: #8a5a17;
-  --signal-slate: #4a5d6b;
+  /* ---- colour (light) ----
+     Contrast on --paper, computed (scripts/contrast.mjs):
+       ink 15.0 · ink-soft 7.7 · ink-faint 5.2
+       green 5.9 · amber 5.2 · red 6.3 · slate 6.1 */
+  --paper: #f5f2e9;
+  --paper-2: #ece8db;
+  --paper-3: #e0dbca;
+  --ink: #15201c;
+  --ink-soft: #414c47;
+  --ink-faint: #5d6761;
+  --line: rgba(21, 32, 28, 0.14);
+  --line-strong: rgba(21, 32, 28, 0.3);
 
-  /* Brand colour, used for one mark only: the ORCID iD disc, which ORCID's
-     guidelines ask to be shown in its own green. A graphic beside a text
-     label, never text itself, so it is exempt from the 4.5:1 text rule. */
+  --green: #1d6747;
+  --amber: #925600;
+  --slate: #48596a;
+
+  /* Fills: lamps, the marker, the strike. Never used for text. */
+  --amber-fill: #f0a92e;
+  --green-fill: #2f9e6c;
+  --red-fill: #d8452f;
+  --marker: rgba(240, 169, 46, 0.5);
+  --lamp-off: rgba(21, 32, 28, 0.1);
+  /* The body of the three-lamp signal. Dark in both themes: it is an object. */
+  --housing: #15201c;
+  --housing-edge: #15201c;
+  --housing-off: rgba(245, 242, 233, 0.13);
+  --housing-ring: rgba(245, 242, 233, 0.28);
+
   --brand-orcid: #a6ce39;
 
+  /* Arrow shapes, drawn rather than typed: none of the three web fonts
+     carries the right, left or out arrow in its Latin file, so a typed one
+     fell back to a system font. Used as masks, so only their alpha matters;
+     they paint in the current text colour (see "Drawn arrows" below). */
+  --arrow-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.5 8h11M9.5 4l4 4-4 4' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --arrow-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.5 8h-11M6.5 4l-4 4 4 4' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --arrow-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 2.5v11M4 9.5l4 4 4-4' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --arrow-out: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 11.5l7-7M5.5 4.5h6v6' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
   /* ---- type ---- */
+  --font-display: 'Fraunces Variable', Fraunces, 'Newsreader Variable', Georgia, serif;
   --font-body: 'Newsreader Variable', Newsreader, Georgia, 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
 
-  /* Set once, here. Do not introduce a new size in a component
-     file — add it to this block with a reason instead. */
   --t-2xs: 0.6875rem;
   --t-xs: 0.75rem;
   --t-sm: 0.8125rem;
-  --t-base: 1.125rem;
-  --t-md: 1.1875rem;
-  --t-lg: clamp(1.3rem, 2.4vw, 1.6rem);
-  --t-xl: clamp(1.9rem, 4.6vw, 2.9rem);
-  /* Entry titles and dense row text: between body and --t-md, so a title
-     reads as a title without becoming a heading-sized block. */
   --t-row: 1.0625rem;
+  --t-base: 1.125rem;
+  --t-md: 1.25rem;
+  --t-lg: clamp(1.55rem, 1.1rem + 1.7vw, 2.15rem);
+  --t-xl: clamp(2.1rem, 1.3rem + 3.6vw, 3.5rem);
+  --t-hero: clamp(2.3rem, 1rem + 5.4vw, 5rem);
+  --t-num: clamp(2.9rem, 2rem + 3.2vw, 4.5rem);
 
-  --lh-tight: 1.16;
-  --lh-body: 1.65;
-  --track-tight: -0.018em;
+  --lh-tight: 1.08;
+  --lh-body: 1.62;
+  --track-tight: -0.022em;
   --track-mono: 0.02em;
 
-  /* ---- space ------------------------------------------------
-     A 0.25rem step. Use a token, never a magic pixel. The two
-     rhythm values at the end are the only fluid ones.
-     -------------------------------------------------------- */
+  /* ---- space ---- */
   --s-1: 0.25rem;
   --s-2: 0.5rem;
   --s-3: 0.75rem;
@@ -73,37 +90,90 @@
   --s-6: 2rem;
   --s-7: 3rem;
   --s-8: 4.5rem;
+  --s-9: 6.5rem;
 
-  --gutter: clamp(1.25rem, 5vw, 2.5rem);
-  --section-y: clamp(1.75rem, 4vw, 2.75rem);
-  --hero-y: clamp(2rem, 5vw, 3.5rem);
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+  --section-y: clamp(3rem, 7vw, 5.5rem);
+  --hero-y: clamp(2rem, 5vw, 4rem);
 
-  /* ---- layout ---- */
-  --measure: 38rem;      /* prose. ~68 characters. never wider */
-  /* Page container. 64rem, up from 54rem: the home page's paired columns
-     (education beside certifications and news) need ~30rem each to stop
-     wrapping every title onto three lines. Prose stays at --measure. */
-  --measure-wide: 64rem;
-  /* The margin column on every list row. Wide enough for "in production"
-     or "Jan 2026 – now" on one line; the dense variant fits a short date. */
-  --label-col: 8.5rem;
+  --measure: 38rem;
+  --measure-wide: 74rem;
+  --label-col: 9.5rem;
   --label-col-dense: 7rem;
-  /* A narrow figure (the architecture diagram): wide enough to read on a
-     desktop, narrow enough that its 11-unit labels stay near 14px. */
   --figure-narrow: 28rem;
 
-  --radius: 3px;
+  --radius: 4px;
+  --radius-lg: 14px;
   --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
 
-  /* Travel field log: the one list that keeps a spine, because it is a
-     route. Distance from the spine to content, and the drop from an entry's
-     top padding to the optical centre of its title's first line. */
+  /* Names the travel stylesheet was written against. */
+  --paper-raised: var(--paper-2);
+  --hairline: var(--line);
+  --hairline-strong: var(--line-strong);
+  --signal-green: var(--green);
+  --signal-amber: var(--amber);
+  --signal-slate: var(--slate);
   --rail: var(--s-5);
   --dot-offset: 0.72rem;
-
-  /* Travel plate: the taped-in tilt on a mounted photo. Small on purpose —
-     a fieldbook is precise, so this is a wink, not a mess. */
   --specimen-tilt: 1.5deg;
+}
+
+/* ---- colour (dark) ----
+   Contrast on --paper: ink 14.9 · ink-soft 9.6 · ink-faint 6.0
+     green 9.2 · amber 9.3 · red 8.0 · slate 8.6 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --paper: #0f1513;
+    --paper-2: #18201d;
+    --paper-3: #222c28;
+    --ink: #ece8dc;
+    --ink-soft: #bcc2b9;
+    --ink-faint: #929c95;
+    --line: rgba(236, 232, 220, 0.14);
+    --line-strong: rgba(236, 232, 220, 0.32);
+    --green: #77cf9f;
+    --amber: #f0b04c;
+    --slate: #a9bccb;
+    --amber-fill: #f0a92e;
+    --green-fill: #3fb57f;
+    --red-fill: #ee5a43;
+    --marker: rgba(240, 169, 46, 0.3);
+    --lamp-off: rgba(236, 232, 220, 0.1);
+    --housing: #060a09;
+    --housing-edge: rgba(236, 232, 220, 0.32);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #0f1513;
+  --paper-2: #18201d;
+  --paper-3: #222c28;
+  --ink: #ece8dc;
+  --ink-soft: #bcc2b9;
+  --ink-faint: #929c95;
+  --line: rgba(236, 232, 220, 0.14);
+  --line-strong: rgba(236, 232, 220, 0.32);
+  --green: #77cf9f;
+  --amber: #f0b04c;
+  --slate: #a9bccb;
+  --amber-fill: #f0a92e;
+  --green-fill: #3fb57f;
+  --red-fill: #ee5a43;
+  --marker: rgba(240, 169, 46, 0.3);
+  --lamp-off: rgba(236, 232, 220, 0.1);
+  --housing: #060a09;
+  --housing-edge: rgba(236, 232, 220, 0.32);
+}
+
+/* A reader who asks for more contrast gets the faint tier folded into the
+   soft one and every hairline made solid. */
+@media (prefers-contrast: more) {
+  :root {
+    --ink-faint: var(--ink-soft);
+    --line: var(--line-strong);
+  }
 }
 
 /* ============================================================
@@ -117,9 +187,9 @@
 }
 
 html {
-  background: var(--paper);
-  color-scheme: light;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: var(--s-6);
 }
 
 body {
@@ -129,44 +199,36 @@ body {
   font-family: var(--font-body);
   font-size: var(--t-base);
   line-height: var(--lh-body);
-  font-synthesis-weight: none;
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-
-  /* The one sanctioned gradient: a faint dot grid, the notebook
-     texture. Any other gradient on this site is a mistake. */
-  background-image: radial-gradient(var(--hairline) 1px, transparent 1px);
-  background-size: 24px 24px;
+  overflow-wrap: break-word;
 }
 
 h1,
 h2,
 h3 {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 60;
+  font-weight: 420;
   line-height: var(--lh-tight);
   letter-spacing: var(--track-tight);
-  color: var(--ink);
   margin: 0 0 var(--s-4);
   text-wrap: balance;
 }
 
-/* Newsreader is a text face doing display duty. It holds up at
-   size when it is set light and tight — heavy weights at 2.9rem
-   read as a magazine headline, which is not what this is. */
 h1 {
   font-size: var(--t-xl);
-  font-weight: 380;
 }
 
 h2 {
   font-size: var(--t-lg);
-  font-weight: 500;
 }
 
 h3 {
-  font-size: var(--t-row);
-  font-weight: 600;
-  letter-spacing: 0;
+  font-size: var(--t-md);
+  font-weight: 560;
+  letter-spacing: -0.01em;
 }
 
 p {
@@ -174,264 +236,385 @@ p {
 }
 
 a {
-  color: var(--ink);
+  color: inherit;
+  text-decoration-line: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.22em;
-  text-decoration-color: var(--hairline-strong);
-  transition: color 0.16s var(--ease), text-decoration-color 0.16s var(--ease);
+  text-underline-offset: 0.18em;
+  text-decoration-color: var(--line-strong);
+  transition: color 0.15s var(--ease), text-decoration-color 0.15s var(--ease);
 }
 
 a:hover {
-  color: var(--signal-green);
+  color: var(--green);
   text-decoration-color: currentColor;
 }
 
+/* One focus ring for everything: thick, amber, offset. It has to be the
+   easiest thing on the page to find. */
 :focus-visible {
-  outline: 2px solid var(--signal-green);
+  outline: 3px solid var(--amber-fill);
   outline-offset: 3px;
-  border-radius: 1px;
+  border-radius: 2px;
 }
 
-img {
+::selection {
+  background: var(--marker);
+  color: var(--ink);
+}
+
+img,
+svg {
   max-width: 100%;
-  height: auto;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+}
+
+:not(pre) > code {
+  background: var(--paper-2);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: var(--track-mono);
 }
 
 .sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
+  margin: -1px;
   padding: 0;
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+  border: 0;
 }
 
 .sr-only-focusable {
   position: absolute;
-  top: 0;
-  left: -9999px;
-  z-index: 100;
+  left: var(--s-4);
+  top: var(--s-4);
+  z-index: 10;
+  padding: var(--s-2) var(--s-4);
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-mono);
   font-size: var(--t-sm);
-  padding: var(--s-3) var(--s-4);
+  text-decoration: none;
   border-radius: var(--radius);
+  transform: translateY(-300%);
 }
 
 .sr-only-focusable:focus {
-  top: var(--s-3);
-  left: var(--s-3);
+  transform: none;
+  color: var(--paper);
 }
 
-/* ============================================================
-   Layout primitives
-   ============================================================ */
-
 .container {
+  width: 100%;
   max-width: var(--measure-wide);
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
 
-.mono {
+/* A fact only Maitreya can supply. Development builds only (src/todo.ts):
+   the author sees the gap in amber; a visitor never does. */
+.todo {
+  display: inline;
   font-family: var(--font-mono);
-  font-size: var(--t-sm);
-  font-weight: 450;
+  font-size: 0.78em;
   letter-spacing: var(--track-mono);
-  font-variant-ligatures: none;
+  color: var(--ink);
+  background: var(--marker);
+  padding: 0.12em 0.4em;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Legacy dots: the travel page and status rows. */
+.dot {
+  display: inline-block;
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--slate);
+}
+
+.dot-shipped {
+  background: var(--green);
+}
+
+.dot-in-progress {
+  background: var(--amber-fill);
 }
 
 /* ============================================================
-   Nav
+   Navigation
    ============================================================ */
 
 .site-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-4);
-  flex-wrap: wrap;
   max-width: var(--measure-wide);
   margin: 0 auto;
   padding: var(--s-4) var(--gutter);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-1) var(--s-5);
 }
 
-.site-nav .wordmark {
-  font-family: var(--font-body);
-  font-size: var(--t-md);
+.wordmark {
+  margin: 0;
+  line-height: var(--lh-body);
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 60;
   font-weight: 600;
-  color: var(--ink);
+  font-size: var(--t-row);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  padding: var(--s-2) 0;
+}
+
+.wordmark a {
   text-decoration: none;
 }
 
-.site-nav .wordmark:hover {
-  color: var(--signal-green);
-}
-
-/* Wraps as a guard: at 375px the name and four mono words share
-   ~335px, so the links drop under the name rather than run off the edge. */
 .site-nav .links {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--s-2) var(--s-5);
+  gap: 0 var(--s-5);
   font-family: var(--font-mono);
   font-size: var(--t-sm);
   letter-spacing: var(--track-mono);
 }
 
 .site-nav .links a {
-  color: var(--ink-faint);
-  text-decoration: none;
-  padding-bottom: 2px;
-  border-bottom: 1px solid transparent;
-}
-
-.site-nav .links a:hover {
-  color: var(--ink);
-  border-bottom-color: var(--hairline-strong);
-}
-
-/* The current page keeps the dot vocabulary used everywhere else. */
-.site-nav .links a[aria-current] {
-  color: var(--ink);
-  border-bottom-color: var(--signal-green);
-}
-
-/* ============================================================
-   Status dots — one vocabulary, sitewide.
-   Never the sole carrier of meaning; a text label always sits
-   alongside. The paper-colored ring lets a dot sit on the rail
-   without the rail running through it.
-   ============================================================ */
-
-.dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  border: 3px solid var(--paper);
-  box-sizing: content-box;
-  flex: none;
-}
-
-.dot-shipped {
-  background: var(--signal-green);
-}
-
-.dot-in-progress {
-  background: var(--signal-amber);
-}
-
-.dot-planned,
-.dot-archived,
-.dot-note {
-  background: var(--signal-slate);
-}
-
-/* ============================================================
-   Hero
-   ============================================================ */
-
-.hero {
-  padding: var(--hero-y) 0 var(--section-y);
-}
-
-.kicker {
-  font-family: var(--font-mono);
-  font-size: var(--t-sm);
-  letter-spacing: 0.06em;
-  text-transform: lowercase;
-  color: var(--ink-faint);
-  margin-bottom: var(--s-5);
-}
-
-.kicker a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.kicker a:hover {
-  color: var(--signal-green);
-}
-
-.hero h1 {
-  max-width: 21ch;
-  margin-bottom: var(--s-5);
-}
-
-.lede {
-  max-width: var(--measure);
-  font-size: var(--t-md);
-  color: var(--ink-soft);
-  margin-bottom: 0;
-}
-
-/* ============================================================
-   Buttons — the filled one is ink on paper, the page's one dark
-   surface. Two per view, at most.
-   ============================================================ */
-
-.cta-row {
-  display: flex;
-  gap: var(--s-3);
-  flex-wrap: wrap;
-  margin-top: var(--s-6);
-}
-
-.cta {
   display: inline-flex;
   align-items: center;
-  gap: var(--s-2);
-  padding: 0.7em 1.2em;
-  border: 1px solid var(--hairline-strong);
-  border-radius: var(--radius);
+  gap: 0.5em;
+  min-height: 2.75rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.site-nav .links a:hover,
+.site-nav .links a[aria-current] {
+  color: var(--ink);
+}
+
+.site-nav .links a[aria-current] {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.4em;
+  text-decoration-color: var(--amber-fill);
+}
+
+/* ============================================================
+   Masthead: the home page opening
+   ============================================================ */
+
+.masthead {
+  padding: var(--hero-y) 0 var(--s-7);
+}
+
+/* Who and where, as labelled fields under one rule, like the header of a
+   journal article. On a phone the fields stack into label and value rows. */
+.masthead-meta {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  margin: 0 0 clamp(1.75rem, 4vw, 3rem);
+  border-top: 2px solid var(--ink);
+}
+
+.masthead-meta > div {
+  padding: var(--s-3) var(--s-6) 0;
+}
+
+.masthead-meta > div:first-child {
+  padding-left: 0;
+}
+
+.masthead-meta > div + div {
+  border-left: 1px solid var(--line);
+}
+
+.masthead-meta dt {
+  margin: 0 0 var(--s-1);
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.masthead-meta dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 60;
+  font-size: var(--t-md);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.thesis {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 70;
+  font-size: var(--t-hero);
+  font-weight: 360;
+  line-height: 1.02;
+  letter-spacing: -0.032em;
+  max-width: 15.5em;
+  margin: 0 0 clamp(1.75rem, 4vw, 3rem);
+  text-wrap: balance;
+}
+
+.thesis mark,
+.marked {
+  color: inherit;
+  background: linear-gradient(transparent 56%, var(--marker) 56% 93%, transparent 93%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.06em;
+}
+
+.go {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
   font-family: var(--font-mono);
   font-size: var(--t-sm);
   letter-spacing: var(--track-mono);
+  text-decoration-color: var(--line-strong);
+}
+
+.go::after {
+  /* Sits on the text baseline; nudged to the middle of the lowercase. */
+  position: relative;
+  top: 0.12em;
+  transition: transform 0.2s var(--ease);
+}
+
+.go:hover::after,
+.go:focus-visible::after {
+  transform: translateX(3px);
+}
+
+/* Drawn arrows: one shape, masked, in the current text colour. Screen
+   readers announce nothing for them, which is right: each sits beside
+   words that already say where the link goes. */
+.go::after,
+.back::before,
+.entry-links a::after,
+.side-links a[target]::after,
+.field-source::after {
+  content: '';
+  display: inline-block;
+  flex: none;
+  width: 0.8em;
+  height: 0.8em;
+  background: currentColor;
+  -webkit-mask: var(--arrow-right) center / contain no-repeat;
+  mask: var(--arrow-right) center / contain no-repeat;
+}
+
+.back {
   text-decoration: none;
-  color: var(--ink);
-  transition: background 0.16s var(--ease), color 0.16s var(--ease),
-    border-color 0.16s var(--ease);
 }
 
-.cta:hover {
-  background: var(--paper-raised);
-  border-color: var(--ink-faint);
-  color: var(--ink);
+.back::before {
+  margin-right: 0.45em;
+  vertical-align: -0.06em;
+  -webkit-mask-image: var(--arrow-left);
+  mask-image: var(--arrow-left);
 }
 
-.cta.primary {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--paper);
+.bio {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-5) var(--s-6);
+  align-items: start;
+  /* The bio paragraph keeps a reading measure beside the portrait. */
+  max-width: calc(var(--measure) + 10rem);
 }
 
-.cta.primary:hover {
-  background: var(--signal-green);
-  border-color: var(--signal-green);
-  color: var(--paper);
+.bio p {
+  color: var(--ink-soft);
+  margin-bottom: var(--s-4);
 }
 
-/* Directional affordance: forward links (cta, see-all) carry a → and back-nav
-   kickers carry a ←, rendered as pseudo-elements so they stay out of the
-   accessible name. They are static here; the hover glide lives in the motion
-   block, reduced-motion gated, so a no-motion reader still sees the arrow. */
-.cta::after,
-a.see-all::after {
-  content: '\2192'; /* → */
-  display: inline-block;
+.portrait {
+  display: block;
+  width: 6.5rem;
+  height: auto;
+  border-radius: var(--radius-lg);
+  background: var(--paper-2);
 }
 
-a.see-all::after {
-  margin-left: 0.4em;
+/* ---- profile links ---- */
+
+.plinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-5);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
 }
 
-.kicker a.back::before {
-  content: '\2190'; /* ← */
-  display: inline-block;
-  margin-right: 0.4em;
+.plinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  min-height: 2.25rem;
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+
+.plinks a:hover {
+  color: var(--green);
+}
+
+.plinks a span {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--line-strong);
+}
+
+.plinks svg {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+}
+
+.orcid-disc {
+  fill: var(--brand-orcid);
+}
+
+.orcid-id {
+  fill: #fff;
+}
+
+.plinks-orcid {
+  flex-basis: 100%;
+}
+
+.plinks-footer .plinks-orcid {
+  flex-basis: auto;
 }
 
 /* ============================================================
@@ -440,19 +623,42 @@ a.see-all::after {
 
 .section {
   padding: var(--section-y) 0;
-  border-top: 1px solid var(--hairline);
+  border-top: 1px solid var(--line);
 }
 
 .section-head {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: var(--s-4);
-  margin-bottom: var(--s-5);
+  gap: var(--s-2) var(--s-5);
+  margin-bottom: var(--s-6);
 }
 
 .section-head h2 {
   margin: 0;
+}
+
+.eyebrow,
+.kicker {
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--ink-faint);
+  margin: 0 0 var(--s-4);
+}
+
+.kicker a {
+  color: inherit;
+}
+
+.section-lede,
+.lede {
+  max-width: var(--measure);
+  font-size: var(--t-md);
+  line-height: 1.5;
+  color: var(--ink-soft);
 }
 
 .see-all {
@@ -460,92 +666,789 @@ a.see-all::after {
   font-size: var(--t-sm);
   letter-spacing: var(--track-mono);
   color: var(--ink-faint);
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-.see-all:hover {
-  color: var(--signal-green);
 }
 
 /* ============================================================
-   List rows — the margin.
-
-   Every list on the site is the same shape: a mono margin column
-   that says what state a thing is in (a word chosen for the kind
-   of thing: "accepted", "archived") or when it happened, then the
-   content. The reader scans state down the left edge without
-   reading a single title.
+   The wall: reported as found
    ============================================================ */
 
-.rows {
+.wall {
+  list-style: none;
+  margin: var(--s-7) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+}
+
+.finding {
+  position: relative;
   display: flex;
   flex-direction: column;
+  padding: var(--s-5) var(--s-5) var(--s-6);
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  min-width: 0;
+}
+
+.finding-kind {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+  margin: 0 0 var(--s-5);
+}
+
+.finding-metric {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 var(--s-2);
+}
+
+.finding-values {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0 0 var(--s-5);
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 80;
+  font-variant-numeric: lining-nums;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.was {
+  position: relative;
+  align-self: flex-start;
+  font-size: calc(var(--t-num) * 0.5);
+  font-weight: 380;
+  color: var(--ink-faint);
+  min-height: 1.25em;
+}
+
+/* The strike: one stroke of red, a little off level, the way a person
+   crosses something out. Drawn as the card scrolls into view where the
+   browser can do that; simply there otherwise. */
+.was:not(:empty)::after {
+  content: '';
+  position: absolute;
+  left: -0.12em;
+  right: -0.12em;
+  top: 0.52em;
+  height: 0.085em;
+  border-radius: 1em;
+  background: var(--red-fill);
+  transform: rotate(-2.5deg);
+  transform-origin: left center;
+}
+
+.is {
+  font-size: var(--t-num);
+  font-weight: 480;
+  color: var(--ink);
+}
+
+/* Words in the number slot ("Inconclusive", "a human underwriter") run
+   smaller than digits so they hold one or two lines. */
+.is-words {
+  font-size: calc(var(--t-num) * 0.62);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  padding-top: 0.12em;
+}
+
+.is-amber {
+  color: var(--amber);
+}
+
+/* CARTA's card: the paper's Fig. 1, redrawn in the site's colours so it
+   follows the theme. The original is on the paper's page. */
+.finding-figure {
+  margin: 0 0 var(--s-5);
+}
+
+.finding-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.finding-figure figcaption {
+  margin-top: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+}
+
+.tcf-f1 {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 1.25;
+}
+
+.tcf-f2 {
+  fill: var(--paper-3);
+  stroke: var(--ink);
+  stroke-width: 1.25;
+}
+
+.tcf-hatch {
+  fill: url(#tcf-hatch);
+}
+
+.tcf-hatch-line {
+  stroke: var(--ink-faint);
+  stroke-width: 1.2;
+}
+
+.tcf-paused {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-dasharray: 4 3;
+}
+
+.tcf-axis {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.25;
+}
+
+.tcf-label,
+.tcf-note {
+  font-family: var(--font-mono);
+  letter-spacing: var(--track-mono);
+}
+
+/* Sizes are viewBox units, set on the SVG like the eRESI figure's. */
+.tcf-label {
+  fill: var(--ink);
+}
+
+.tcf-note {
+  fill: var(--ink-soft);
+}
+
+.finding-body {
+  font-size: var(--t-row);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin-bottom: var(--s-4);
+}
+
+.finding-quote {
+  font-style: italic;
+  color: var(--ink);
+}
+
+.finding-foot {
+  margin: auto 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+}
+
+/* Stretch the card's link over the whole card. */
+.finding-foot a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.finding:hover {
+  background: var(--paper-2);
+}
+
+/* The one line of code, as a switch. Pure CSS: the checkbox is real, both
+   numbers are always in the page, and :has() only moves the strike. */
+.flip {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin: 0 0 var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  cursor: pointer;
+  align-self: flex-start;
+  min-height: 2.75rem;
+}
+
+.flip input {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex: none;
+  width: 2.6rem;
+  height: 1.5rem;
+  margin: 0;
+  border: 2px solid var(--ink);
+  border-radius: 1rem;
+  background: var(--paper);
+  cursor: pointer;
+}
+
+.flip input::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--ink);
+  transition: transform 0.2s var(--ease);
+}
+
+.flip input:checked {
+  background: var(--ink);
+}
+
+.flip input:checked::after {
+  background: var(--paper);
+  transform: translateX(1.1rem);
+}
+
+.flip code {
+  background: none;
+  padding: 0;
+  font-size: 1em;
+}
+
+.finding:has(.flip input:not(:checked)) .was::after {
+  display: none;
+}
+
+.finding:has(.flip input:not(:checked)) .was {
+  color: var(--ink);
+  font-size: var(--t-num);
+  font-weight: 480;
+  order: 2;
+}
+
+.finding:has(.flip input:not(:checked)) .is {
+  font-size: calc(var(--t-num) * 0.5);
+  font-weight: 380;
+  color: var(--ink-faint);
+  min-height: 1.25em;
+  order: 1;
+}
+
+.flip-off,
+.finding:has(.flip input:not(:checked)) .flip-on {
+  display: none;
+}
+
+.finding:has(.flip input:not(:checked)) .flip-off {
+  display: inline;
+}
+
+/* ============================================================
+   The coin flip: one prediction, three readers
+   ============================================================ */
+
+.demo-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--s-6) clamp(2rem, 6vw, 5rem);
+  align-items: end;
+  margin-bottom: var(--s-7);
+}
+
+.demo-intro h2 {
+  font-size: var(--t-xl);
+  font-variation-settings: 'SOFT' 70;
+  margin: 0;
+}
+
+.pull {
+  margin: 0;
+  padding-left: var(--s-5);
+  border-left: 3px solid var(--amber-fill);
+  font-size: var(--t-md);
+  line-height: 1.5;
+}
+
+.pull p {
+  margin-bottom: var(--s-3);
+}
+
+.pull cite,
+.pull footer {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  font-style: normal;
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+}
+
+.demo {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--paper-2);
+  overflow: hidden;
+}
+
+.demo-control {
+  padding: var(--s-5) var(--s-5) var(--s-4);
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--paper);
+}
+
+.demo-control-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-5);
+  margin-bottom: var(--s-3);
+}
+
+.demo-control label {
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+}
+
+.demo-readout {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 80;
+  font-size: var(--t-lg);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums lining-nums;
+  line-height: 1;
+}
+
+.demo-track {
+  position: relative;
+  padding-bottom: var(--s-6);
+}
+
+.demo input[type='range'] {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  width: 100%;
+  height: 2.75rem;
+  margin: 0;
+  background: transparent;
+  cursor: grab;
+}
+
+.demo input[type='range']::-webkit-slider-runnable-track {
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background: linear-gradient(
+    90deg,
+    var(--amber-fill) 0 var(--margin-pct, 16.67%),
+    var(--red-fill) var(--margin-pct, 16.67%) 100%
+  );
+}
+
+.demo input[type='range']::-moz-range-track {
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background: linear-gradient(
+    90deg,
+    var(--amber-fill) 0 var(--margin-pct, 16.67%),
+    var(--red-fill) var(--margin-pct, 16.67%) 100%
+  );
+}
+
+.demo input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-top: -0.625rem;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+}
+
+.demo input[type='range']::-moz-range-thumb {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  box-sizing: border-box;
+}
+
+.demo-ticks {
+  position: absolute;
+  left: 0.875rem;
+  right: 0.875rem;
+  top: 2.6rem;
+  height: 2rem;
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+  pointer-events: none;
+}
+
+.demo-ticks span {
+  position: absolute;
+  top: 0;
+  padding-top: 0.6rem;
+  white-space: nowrap;
+}
+
+.demo-ticks span::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0.5rem;
+  border-left: 1px solid var(--ink-faint);
+}
+
+.demo-ticks .tick-right {
+  transform: translateX(-100%);
+}
+
+.demo-ticks .tick-right::before {
+  left: auto;
+  right: 0;
+}
+
+.demo-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.chip {
+  appearance: none;
+  min-height: 2.75rem;
+  padding: var(--s-2) var(--s-4);
+  border: 1px solid var(--line-strong);
+  border-radius: 2rem;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--ink);
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.voices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.voice {
+  padding: var(--s-5);
+  border-right: 1px solid var(--line-strong);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.voice:last-child {
+  border-right: 0;
+}
+
+.voice-who {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 var(--s-1);
+}
+
+.voice h3 {
+  margin: 0 0 var(--s-4);
+  font-size: var(--t-md);
+}
+
+.voice-screen {
+  flex: 1;
+  padding: var(--s-4);
+  border-radius: var(--radius);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  margin-bottom: var(--s-4);
+}
+
+.voice-note {
+  font-size: var(--t-sm);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* clinician */
+.probs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+}
+
+.probs li {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr) 3.4rem;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.probs .bar {
+  height: 0.75rem;
+  border-radius: 2px;
+  background: var(--lamp-off);
+  overflow: hidden;
+}
+
+.probs .bar i {
+  display: block;
+  height: 100%;
+  width: calc(var(--p) * 100%);
+  background: var(--ink);
+  transition: width 0.25s var(--ease);
+}
+
+.probs output,
+.probs .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+  color: var(--amber);
+}
+
+.flag[hidden] {
+  display: none;
+}
+
+.skeleton {
+  display: block;
+  height: 0.6rem;
+  margin: var(--s-2) 0;
+  border-radius: 2px;
+  background: var(--lamp-off);
+}
+
+.skeleton-label {
+  display: block;
+  margin-top: var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+}
+
+/* health worker */
+.card-risk {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 80;
+  font-size: var(--t-lg);
+  font-weight: 560;
+  line-height: 1.1;
+  border-bottom: 4px solid var(--red-fill);
+  margin-bottom: var(--s-3);
+}
+
+/* mother */
+.lamps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-3);
+}
+
+.lamp {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+}
+
+.lamp i {
+  display: block;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+  background: var(--lamp-off);
+  transition: background-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.lamp.is-lit {
+  color: var(--ink);
+}
+
+.lamp.is-lit b {
+  display: block;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 80;
+  font-size: var(--t-md);
+  font-weight: 560;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.lamp-red.is-lit i {
+  background: var(--red-fill);
+  border-color: var(--red-fill);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--red-fill) 22%, transparent);
+}
+
+.lamp-amber.is-lit i {
+  background: var(--amber-fill);
+  border-color: var(--amber-fill);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--amber-fill) 28%, transparent);
+}
+
+.lamp-msg {
+  display: none;
+}
+
+.lamp.is-lit .lamp-msg {
+  display: block;
+}
+
+.demo-foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--s-4) var(--s-7);
+  padding: var(--s-5);
+  border-top: 1px solid var(--line-strong);
+  background: var(--paper);
+}
+
+.demo-said {
+  font-size: var(--t-row);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.fine {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-3);
+  font-size: var(--t-sm);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+
+/* ============================================================
+   The record: rows with a margin. Papers, work, study, posts.
+   ============================================================ */
+
+.record {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-8);
+}
+
+.record-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--s-8) clamp(2rem, 6vw, 5rem);
+}
+
+.record h3,
+.sub-head {
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 var(--s-3);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.rows {
+  display: grid;
 }
 
 .entry {
   position: relative;
   display: grid;
   grid-template-columns: var(--label-col) minmax(0, 1fr);
-  gap: var(--s-4);
+  gap: var(--s-2) var(--s-5);
   padding: var(--s-4) 0;
-}
-
-.entry + .entry {
-  border-top: 1px solid var(--hairline);
-}
-
-.entry:first-child {
-  padding-top: 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .entry-label {
   display: flex;
-  /* One line, always: a stage like "in production" must not break in two. */
-  white-space: nowrap;
-  /* start, not stretch: the label is one line at the top of the row, and
-     its dot centres on that line rather than on the whole row. */
-  align-self: start;
-  align-items: center;
-  gap: var(--s-2);
-  /* Sits on the title's baseline: the title is --t-row at 1.35, the
-     label --t-xs; this nudge puts both on one line optically. */
-  padding-top: 0.28em;
+  align-items: baseline;
+  gap: 0.55em;
+  padding-top: 0.2em;
   font-family: var(--font-mono);
   font-size: var(--t-xs);
   letter-spacing: var(--track-mono);
-  color: var(--ink-soft);
-  font-variant-ligatures: none;
+  color: var(--ink-faint);
 }
 
 .entry-label .dot {
-  border-width: 0;
+  transform: translateY(-0.05em);
 }
 
 .entry-title {
+  font-family: var(--font-body);
   font-size: var(--t-row);
   font-weight: 600;
-  letter-spacing: 0;
   line-height: 1.35;
+  letter-spacing: 0;
   margin: 0;
+  text-wrap: pretty;
+  max-width: 44rem;
 }
 
 .entry-title a {
-  color: inherit;
   text-decoration: none;
-  transition: color 0.16s var(--ease);
 }
 
-/* Stretch the title link back over the whole row, so the row is one
-   comfortable click target while the link still announces only its title. */
-.entry-title a::after {
+.entry-linked .entry-title a::before {
   content: '';
   position: absolute;
   inset: 0;
 }
 
 .entry-linked:hover .entry-title a {
-  color: var(--signal-green);
+  color: var(--green);
 }
 
 .entry-where {
@@ -553,12 +1456,13 @@ a.see-all::after {
   color: var(--ink-soft);
 }
 
-.entry-byline {
+.entry-byline,
+.entry-body {
   margin: var(--s-1) 0 0;
-  color: var(--ink-soft);
   font-size: 1rem;
   line-height: 1.5;
-  max-width: var(--measure);
+  color: var(--ink-soft);
+  max-width: 44rem;
 }
 
 .entry-byline b {
@@ -566,140 +1470,114 @@ a.see-all::after {
   font-weight: 600;
 }
 
-/* A small mono meta line: under a list title, and atop a project page
-   (meta-line) to say whose work it was. */
-.entry-note,
-.meta-line {
+.entry-note {
   margin: var(--s-1) 0 0;
   font-family: var(--font-mono);
   font-size: var(--t-xs);
   letter-spacing: var(--track-mono);
   color: var(--ink-faint);
+  max-width: 44rem;
 }
 
-.entry-body {
-  color: var(--ink-soft);
-  font-size: 1rem;
-  line-height: 1.55;
-  max-width: var(--measure);
-  margin: var(--s-2) 0 0;
-}
-
-/* Stack as a plain run of mono words rather than chips. Chips add a third
-   surface color to a page that only needs two. */
-.entry-tags {
-  list-style: none;
-  margin: var(--s-2) 0 0;
-  padding: 0;
-  font-family: var(--font-mono);
-  font-size: var(--t-2xs);
-  letter-spacing: var(--track-mono);
-  color: var(--ink-faint);
-}
-
-.entry-tags li {
-  display: inline;
-}
-
-.entry-tags li + li::before {
-  content: ' · ';
-  color: var(--hairline-strong);
-}
-
-/* The checkable artifacts. Above the stretched title link, so each one is
-   its own target rather than a click on the row. */
+.entry-tags,
 .entry-links {
-  position: relative;
-  z-index: 1;
   list-style: none;
   margin: var(--s-2) 0 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--s-1) var(--s-4);
+  gap: 0 var(--s-4);
   font-family: var(--font-mono);
   font-size: var(--t-xs);
   letter-spacing: var(--track-mono);
-}
-
-.entry-links a {
   color: var(--ink-faint);
 }
 
+/* How far the row can be checked: the links if there are any, the words
+   "on my word" if there are none. Above the stretched title link. */
+.entry-links {
+  position: relative;
+  z-index: 1;
+  align-items: center;
+}
+
+.entry-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+  color: var(--ink-soft);
+}
+
 .entry-links a::after {
-  content: ' \2197'; /* ↗ */
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 0.35em;
+  -webkit-mask-image: var(--arrow-out);
+  mask-image: var(--arrow-out);
 }
 
-.entry-links a:hover {
-  color: var(--signal-green);
-}
-
-/* Dense rows: news, education, certifications. One line each, no rules
-   between them, a narrower margin for a short date. */
 .entry-dense {
   grid-template-columns: var(--label-col-dense) minmax(0, 1fr);
-  gap: var(--s-3);
-  padding: var(--s-2) 0;
+  padding: var(--s-3) 0;
 }
 
-.entry-dense + .entry-dense {
-  border-top: 0;
+.entry-dense .entry-title {
+  font-weight: 500;
 }
 
-/* A one-line fact (news, a certificate) is text, not a heading. */
-.entry-dense p.entry-title {
-  font-weight: 400;
-  line-height: 1.45;
-}
-
-.entry-dense .entry-label {
-  padding-top: 0.32em;
-}
-
-@media (max-width: 34rem) {
-  .site-nav .links {
-    gap: var(--s-2) var(--s-4);
-  }
-
-  /* The margin moves above the title: a phone has no margin to spare. */
-  .entry,
-  .entry-dense {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--s-1);
-  }
-
-  .entry-label {
-    padding-top: 0;
-  }
+p.entry-title {
+  font-weight: 500;
 }
 
 /* ============================================================
-   Status line on detail pages — a dot and a sentence, not a
-   colored pill. The label says the status in words, so color is
-   never load-bearing.
+   Inner pages: head, prose, sources
    ============================================================ */
 
+.hero,
+.page-head {
+  padding: var(--hero-y) 0 var(--s-7);
+}
+
+.hero h1,
+.page-head h1 {
+  max-width: 22ch;
+  margin-bottom: var(--s-5);
+}
+
+.page-head-long h1 {
+  font-size: var(--t-lg);
+  max-width: 34ch;
+  line-height: 1.14;
+}
+
+.meta-line,
 .status-line {
   display: flex;
-  /* baseline, not center: a long label wraps, and the dot belongs to its
-     first line rather than floating in the middle of the block. */
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--s-2);
-  max-width: var(--measure);
-  margin-top: var(--s-5);
+  gap: var(--s-2) var(--s-3);
   font-family: var(--font-mono);
   font-size: var(--t-sm);
   letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+  margin: 0 0 var(--s-4);
+}
+
+.status-line {
+  margin: var(--s-5) 0 0;
   color: var(--ink-soft);
 }
 
 .status-line .dot {
-  border-width: 0;
+  transform: translateY(-0.08em);
 }
 
-/* ============================================================
-   Prose
-   ============================================================ */
+.two-col {
+  display: grid;
+  grid-template-columns: minmax(0, var(--measure)) minmax(0, 1fr);
+  gap: var(--s-7) clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
 
 .prose {
   max-width: var(--measure);
@@ -709,25 +1587,18 @@ a.see-all::after {
   margin-top: 0;
 }
 
-/* A rule above each section, not a box around it. The old
-   bordered-box treatment needed a selector per possible run of
-   sibling elements and broke on any section longer than one
-   paragraph; a rule cannot break. */
 .prose h2 {
-  margin-top: var(--s-7);
-  padding-top: var(--s-5);
-  border-top: 1px solid var(--hairline);
-}
-
-/* The section wrapper already draws a rule above the article; a second one
-   immediately under it reads as a mistake. */
-.prose > h2:first-child {
-  padding-top: 0;
-  border-top: 0;
+  font-size: var(--t-lg);
+  margin: var(--s-7) 0 var(--s-4);
 }
 
 .prose h3 {
-  margin-top: var(--s-6);
+  margin: var(--s-6) 0 var(--s-3);
+}
+
+.prose p,
+.prose li {
+  text-wrap: pretty;
 }
 
 .prose ul,
@@ -744,175 +1615,256 @@ a.see-all::after {
   color: var(--ink-faint);
 }
 
+.prose a {
+  text-decoration-color: var(--green);
+}
+
 .prose blockquote {
   margin: var(--s-5) 0;
-  padding-left: var(--s-4);
-  border-left: 2px solid var(--signal-green);
-  color: var(--ink-soft);
+  padding-left: var(--s-5);
+  border-left: 3px solid var(--amber-fill);
   font-style: italic;
 }
 
-.prose code {
-  font-family: var(--font-mono);
-  font-size: 0.85em;
-  background: var(--paper-raised);
-  padding: 0.12em 0.36em;
-  border-radius: var(--radius);
+.prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: var(--s-6) 0;
+  border-radius: var(--radius-lg);
 }
 
 .prose strong {
-  font-weight: 650;
+  font-weight: 600;
 }
 
-.prose a {
-  text-decoration-color: var(--signal-green);
+/* A figure from a paper: the image, framed, with the paper's caption. */
+.prose figure {
+  margin: var(--s-6) 0;
 }
 
-/* ============================================================
-   Source links — the checkable artifacts. On a site whose whole
-   argument is "verify this", these are not an afterthought.
-   ============================================================ */
-
-.sources {
-  margin-top: var(--s-6);
-  padding-top: var(--s-5);
-  border-top: 1px solid var(--hairline);
-  max-width: var(--measure);
+.prose figure p {
+  margin: 0;
 }
 
-.sources h2 {
+.prose figure img {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.prose figcaption {
+  margin-top: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  line-height: 1.6;
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+}
+
+/* A post opens big: the first paragraph is the hook. */
+.post .prose > p:first-of-type {
+  font-size: var(--t-md);
+  line-height: 1.5;
+}
+
+/* Beside the write-up on a paper, system or post page: its sources and
+   the other ways into the same work. */
+.side {
+  position: sticky;
+  top: var(--s-5);
+}
+
+.side-wide {
+  position: static;
+}
+
+.side h2 {
   font-family: var(--font-mono);
   font-size: var(--t-sm);
   font-weight: 500;
-  letter-spacing: var(--track-mono);
-  text-transform: lowercase;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--ink-faint);
-  margin: 0 0 var(--s-3);
-  border: 0;
-  padding: 0;
+  margin: 0;
+  padding-bottom: var(--s-3);
+  border-bottom: 2px solid var(--ink);
 }
 
-.sources ul {
+.side section + section {
+  margin-top: var(--s-7);
+}
+
+.side ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-2) var(--s-5);
+}
+
+.side-item {
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.side-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
   font-family: var(--font-mono);
   font-size: var(--t-sm);
   letter-spacing: var(--track-mono);
 }
 
-.hero .meta-line {
+.side-links a[target]::after {
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 0.4em;
+  -webkit-mask-image: var(--arrow-out);
+  mask-image: var(--arrow-out);
+}
+
+.side-note {
+  margin: var(--s-3) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-soft);
+}
+
+/* ---- writing list ---- */
+
+.posts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(2rem, 6vw, 5rem);
+}
+
+.post-card {
+  position: relative;
+  padding: var(--s-5) 0 var(--s-6);
+  border-top: 1px solid var(--line-strong);
+}
+
+.post-card h3 {
+  font-size: var(--t-lg);
+  font-weight: 420;
+  font-variation-settings: 'SOFT' 70;
+  letter-spacing: var(--track-tight);
   margin: 0 0 var(--s-3);
 }
 
-.sources-note {
+.post-card h3 a {
+  text-decoration: none;
+}
+
+.post-card h3 a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.post-card:hover h3 a {
+  color: var(--green);
+}
+
+.post-card p {
+  color: var(--ink-soft);
+  margin: 0 0 var(--s-3);
+  max-width: 34rem;
+}
+
+.post-card .entry-tags {
   margin: 0;
-  font-family: var(--font-mono);
-  font-size: var(--t-sm);
-  letter-spacing: var(--track-mono);
-  color: var(--ink-soft);
 }
 
-.sources a {
-  color: var(--ink);
-  text-decoration-color: var(--hairline-strong);
-}
+/* ---- the north: travel teaser on the home page ---- */
 
-/* ============================================================
-   Intro — the top of the home page. Name, Maitreya's line, his
-   bio, the role, and the ways to reach him; the portrait beside.
-   ============================================================ */
-
-.intro {
+.north {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--s-7);
-  align-items: start;
-  padding: var(--hero-y) 0 var(--section-y);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--s-6) clamp(2rem, 6vw, 5rem);
+  align-items: center;
 }
 
-.intro h1 {
-  margin-bottom: var(--s-2);
+.north-figure {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 80;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  margin: 0 0 var(--s-4);
 }
 
-.intro-thesis {
-  font-size: var(--t-lg);
-  font-style: italic;
-  line-height: 1.3;
-  max-width: 30ch;
-  margin-bottom: var(--s-4);
-  text-wrap: balance;
+.north-figure b {
+  font-size: clamp(4.5rem, 2rem + 9vw, 9rem);
+  font-weight: 420;
 }
 
-.intro-bio {
-  max-width: var(--measure);
-  color: var(--ink-soft);
-}
-
-.intro-role {
+.north-figure span {
   font-family: var(--font-mono);
-  font-size: var(--t-sm);
-  letter-spacing: var(--track-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
   color: var(--ink-faint);
-  margin-bottom: var(--s-4);
+  max-width: 14ch;
 }
 
-.intro-role strong {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-.portrait {
-  width: 12.5rem;
-  height: auto;
-  border-radius: var(--radius);
-  filter: saturate(0.92);
-}
-
-@media (max-width: 40rem) {
-  .intro {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--s-5);
-  }
-
-  .portrait {
-    grid-row: 1;
-    width: 8rem;
-  }
-}
-
-/* Two columns of sections side by side: education beside certifications.
-   Stacks below the width where each column would drop under
-   ~20rem. */
-.split {
+.north-photos {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--s-7);
+  grid-template-columns: 1.25fr 1fr;
+  gap: var(--s-3);
 }
 
-/* A second section in the same column continues under the first, without
-   its own rule: the column already reads as one block. */
-.section + .section-flush {
-  border-top: 0;
-  padding-top: 0;
+.north-photos img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  background: var(--paper-2);
 }
 
-@media (max-width: 46rem) {
-  .split {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
+/* ---- call-to-action buttons (404) ---- */
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-6);
 }
 
-/* ============================================================
-   Architecture figure: a static inline SVG on a project page,
-   drawn narrow (352 units) and stacked top to bottom so it reads
-   at near actual size on a phone. Its text list underneath carries
-   the same flow for screen readers and for reading without SVG.
-   ============================================================ */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: var(--s-2) var(--s-5);
+  border: 1px solid var(--ink);
+  border-radius: 2rem;
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: var(--track-mono);
+  text-decoration: none;
+}
+
+.cta.primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.cta:hover {
+  color: var(--paper);
+  background: var(--green);
+  border-color: var(--green);
+}
+
+/* ---- architecture figure (eRESI) ---- */
 
 .arch {
   margin: var(--s-6) 0;
@@ -927,18 +1879,18 @@ a.see-all::after {
 
 .arch-box {
   fill: var(--paper);
-  stroke: var(--hairline-strong);
+  stroke: var(--line-strong);
 }
 
 .arch-inner {
-  fill: var(--paper-raised);
-  stroke: var(--hairline);
+  fill: var(--paper-2);
+  stroke: var(--line);
 }
 
-/* The fallback box is the one answer the system gives without the model;
-   amber marks it, and its own words say what it is. */
 .arch-fallback {
-  stroke: var(--signal-amber);
+  stroke: var(--amber);
+  stroke-width: 2;
+  stroke-dasharray: 5 3;
 }
 
 .arch-text,
@@ -980,127 +1932,212 @@ a.see-all::after {
    ============================================================ */
 
 .site-footer {
-  border-top: 1px solid var(--hairline);
-  margin-top: var(--s-7);
+  margin-top: var(--s-8);
+  border-top: 2px solid var(--ink);
 }
 
 .footer-inner {
   max-width: var(--measure-wide);
   margin: 0 auto;
-  padding: var(--s-5) var(--gutter) var(--s-7);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--s-3) var(--s-5);
+  padding: var(--s-6) var(--gutter) var(--s-7);
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: var(--s-6) clamp(2rem, 6vw, 5rem);
+}
+
+.footer-report {
   font-family: var(--font-mono);
   font-size: var(--t-xs);
   letter-spacing: var(--track-mono);
-  color: var(--ink-faint);
+  line-height: 1.7;
+  color: var(--ink-soft);
 }
 
-/* The copyright, then the accessibility note under it. */
-.footer-meta {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-1);
+.footer-report p {
+  margin: 0 0 var(--s-2);
+  max-width: 44rem;
 }
 
-/* ============================================================
-   Profile links — email, ORCID, GitHub, LinkedIn, each a mark
-   beside its name. In the intro they read at body scale; in the
-   footer they drop to the footer's mono size and faint ink.
-   ============================================================ */
+.footer-side {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+  justify-items: start;
+}
 
-.plinks {
-  list-style: none;
+.theme-switch {
+  display: none;
+  border: 0;
   margin: 0;
   padding: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+  color: var(--ink-soft);
+}
+
+.js .theme-switch {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--s-3) var(--s-5);
+  gap: var(--s-2);
 }
 
-.plinks a {
+.theme-switch legend {
+  float: left;
+  padding: 0;
+  margin-right: var(--s-3);
+}
+
+.theme-switch label {
   display: inline-flex;
   align-items: center;
-  gap: var(--s-2);
-  color: var(--ink);
-  text-decoration: none;
+  min-height: 2.25rem;
+  padding: 0 var(--s-3);
+  border: 1px solid var(--line-strong);
+  border-radius: 2rem;
+  cursor: pointer;
 }
 
-.plinks a:hover {
-  color: var(--signal-green);
+.theme-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.plinks a:hover span {
-  text-decoration: underline;
-  text-decoration-color: currentColor;
+.theme-switch label:has(input:checked) {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
 }
 
-.plinks svg {
-  flex: none;
-  width: 1.1em;
-  height: 1.1em;
-}
-
-/* The ORCID iD keeps its brand green and its knocked-out "iD" whatever the
-   link state, as ORCID's display guidelines ask. */
-.plinks .orcid-disc {
-  fill: var(--brand-orcid);
-}
-
-.plinks .orcid-id {
-  fill: var(--paper);
-}
-
-.plinks-intro {
-  font-size: var(--t-row);
-}
-
-/* The full iD URL is long, so it takes its own line under the other three,
-   set in the mono so its digits read as an identifier rather than a
-   sentence. */
-.plinks-intro .plinks-orcid {
-  flex-basis: 100%;
-}
-
-.plinks-intro .plinks-orcid span {
-  font-family: var(--font-mono);
-  font-size: var(--t-sm);
-  letter-spacing: var(--track-mono);
-}
-
-.plinks-footer {
-  gap: var(--s-2) var(--s-5);
-}
-
-.plinks-footer a {
-  color: var(--ink-faint);
+.theme-switch label:has(input:focus-visible) {
+  outline: 3px solid var(--amber-fill);
+  outline-offset: 3px;
 }
 
 /* ============================================================
-   Motion — the load reveal (one gesture, once, on page load) plus one
-   sanctioned hover micro-interaction: the directional arrow glide on
-   forward/back links (≤8px translate, ease-out — within the design law).
-   Everything here is opt-in via prefers-reduced-motion.
+   Small screens
+   ============================================================ */
+
+@media (max-width: 62rem) {
+  .wall {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .two-col {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .side {
+    position: static;
+    max-width: var(--measure);
+  }
+
+}
+
+@media (max-width: 52rem) {
+  .demo-intro,
+  .record-pair,
+  .north,
+  .footer-inner,
+  .demo-foot {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .voices {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .voice {
+    border-right: 0;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .voice:last-child {
+    border-bottom: 0;
+  }
+
+  .posts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 40rem) {
+  .wall {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .masthead-meta {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .masthead-meta > div,
+  .masthead-meta > div:first-child {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    align-items: baseline;
+    padding: var(--s-2) 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .masthead-meta > div + div {
+    border-left: 0;
+  }
+
+  .masthead-meta dt {
+    margin: 0;
+  }
+
+  .entry,
+  .entry-dense {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-1);
+  }
+
+  .entry-label {
+    padding-top: 0;
+  }
+
+  .bio {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .portrait {
+    width: 6rem;
+    order: -1;
+  }
+
+  .site-nav .links {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0 var(--s-2);
+    font-size: var(--t-xs);
+    letter-spacing: 0;
+  }
+
+  .site-nav {
+    padding-bottom: 0;
+  }
+
+}
+
+/* ============================================================
+   Motion. Opt-in: a reader who asked for none gets none.
    ============================================================ */
 
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
-    animation: rise 0.5s var(--ease) both;
+    animation: rise 0.6s var(--ease) both;
   }
 
-  .reveal:nth-child(2) {
-    animation-delay: 0.05s;
+  .reveal-2 {
+    animation-delay: 0.08s;
   }
 
-  .reveal:nth-child(3) {
-    animation-delay: 0.1s;
-  }
-
-  .reveal:nth-child(4) {
-    animation-delay: 0.15s;
+  .reveal-3 {
+    animation-delay: 0.16s;
   }
 
   @keyframes rise {
@@ -1114,818 +2151,271 @@ a.see-all::after {
     }
   }
 
-  /* Directional link glide — the arrow slides a few px in its own direction on
-     hover/focus. Within the motion law (≤8px, ease-out). */
-  .cta::after,
-  a.see-all::after,
-  .kicker a.back::before {
-    transition: transform 0.2s var(--ease);
+  @supports (animation-timeline: view()) {
+    .was:not(:empty)::after {
+      animation: strike linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 38%;
+    }
+
+    @keyframes strike {
+      from {
+        transform: rotate(-2.5deg) scaleX(0);
+      }
+      to {
+        transform: rotate(-2.5deg) scaleX(1);
+      }
+    }
   }
 
-  .cta:hover::after,
-  .cta:focus-visible::after,
-  a.see-all:hover::after,
-  a.see-all:focus-visible::after {
-    transform: translateX(3px);
+  /* The marker is drawn across the thesis once, like a highlighter. */
+  .thesis mark {
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    animation: swipe 0.7s var(--ease) 0.5s forwards;
   }
 
-  .kicker a.back:hover::before,
-  .kicker a.back:focus-visible::before {
-    transform: translateX(-3px);
+  @keyframes swipe {
+    to {
+      background-size: 100% 100%;
+    }
   }
 
-  /* Composed hero entrance: the hero sequences kicker → h1 → lede → last row
-     instead of popping as one block, so the thesis line reads as a deliberate
-     arrival. The last row is the CTA on the landing page and the status line on
-     a detail page — both take the 0.29s step so it stays after the lede rather
-     than falling back to the generic :nth-child(4) delay (which would put it
-     before the lede). Hero-scoped; every other section keeps the plain rise. */
-  .hero .reveal {
-    animation-duration: 0.6s;
-  }
-
-  .hero h1.reveal {
-    animation-delay: 0.09s;
-  }
-
-  .hero .lede.reveal {
-    animation-delay: 0.19s;
-  }
-
-  .hero .cta-row.reveal,
-  .hero .status-line.reveal {
-    animation-delay: 0.29s;
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-/* ============================================================
-   Travel plate — the hand-drawn survey map (/travel).
-
-   A framed figure holding an inline-SVG map with one linked marker
-   per stop on top of it. The route draw and the pointer-parallax
-   are a documented carve-out (see CLAUDE.md); the animated parts
-   all live in the reduced-motion guard at the very end.
-   ============================================================ */
-
-/* The plate is a paper mat; the SVG neat-line inside is the map's frame. A
-   subtle lift — the one sanctioned box-shadow on the site (CLAUDE.md). */
-.plate {
-  position: relative;
-  margin: 0;
-  padding: var(--s-4);
-  border-radius: var(--radius);
-  background: var(--paper);
-  box-shadow: 0 1px 1px rgba(23, 28, 26, 0.05), 0 12px 30px -16px rgba(23, 28, 26, 0.22);
-  /* Clip the parallax drift at the frame. Hover cards flip inward, so they
-     stay inside the frame rather than needing to spill past it. */
-  overflow: hidden;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
 
-.plate-inner {
-  position: relative;
+/* Windows high contrast: colours are replaced, so lean on borders and the
+   words. Fills that carry meaning get a system colour. */
+@media (forced-colors: active) {
+  .lamp i,
+  .probs .bar,
+  .flip input {
+    forced-color-adjust: none;
+    border-color: CanvasText;
+  }
+
+  .lamp.is-lit i,
+  .probs .bar i {
+    background: Highlight;
+  }
+
+  .thesis mark,
+  .marked,
+  .todo {
+    background: none;
+    text-decoration: underline;
+  }
+
+  .go::after,
+  .back::before,
+  .entry-links a::after,
+  .side-links a[target]::after,
+  .field-source::after {
+    forced-color-adjust: none;
+    background: LinkText;
+  }
 }
 
-/* Two parallax planes: the map drifts less (further), the pins more (nearer). */
-.plate-map,
-.plate-stops {
-  transition: transform 0.4s var(--ease);
-  will-change: transform;
+@media print {
+  .site-nav .links,
+  .theme-switch,
+  .demo-control {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+  }
 }
 
-.plate-map {
+/* Lamp text: the lit lamp shows its name and message, an unlit one says so
+   in words, so the state never rests on the colour of a circle. */
+.lamp b,
+.lamp.is-lit .lamp-off {
+  display: none;
+}
+
+.lamp.is-lit b {
   display: block;
-  width: 100%;
-  height: auto;
 }
 
-/* ============================================================
-   Travel atlas — the map breaks out of the text column into a
-   wide plate, with the cartographic furniture set as marginalia
-   in the reclaimed side space (title, legend, stop index).
-   ============================================================ */
-
-.travel-atlas {
-  max-width: min(96vw, 82rem);
-  margin: var(--section-y) auto;
-  padding: 0 var(--gutter);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 17rem;
-  gap: var(--s-7);
-  align-items: start;
-}
-
-.atlas-margin {
-  position: sticky;
-  top: var(--s-5);
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-5);
-  color: var(--ink-soft);
-}
-
-.atlas-title {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding-bottom: var(--s-3);
-  border-bottom: 1px solid var(--hairline-strong);
-}
-
-.atlas-title-main {
-  font-size: var(--t-md);
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  color: var(--ink);
-}
-
-.atlas-title-sub {
-  font-size: var(--t-2xs);
-  color: var(--ink-faint);
-  text-transform: lowercase;
-  letter-spacing: 0.04em;
-}
-
-.atlas-summary {
-  margin: 0;
-  font-size: var(--t-2xs);
-  color: var(--ink-faint);
-}
-
-.atlas-legend {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-2);
-  font-size: var(--t-2xs);
-  color: var(--ink-soft);
-}
-
-.atlas-legend li {
-  display: flex;
-  align-items: center;
-  gap: var(--s-2);
-}
-
-.atlas-legend .dot {
-  border-width: 2px;
-}
-
-.atlas-legend-line {
+.voice-screen .todo {
   display: inline-block;
-  width: 16px;
-  height: 0;
-  border-top: 1.5px solid var(--ink-faint);
-  flex: none;
+  margin-top: var(--s-2);
 }
 
-.atlas-index ol {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--hairline);
+/* ---- posts ---- */
+
+.post-card h2 {
+  font-size: var(--t-lg);
+  font-variation-settings: 'SOFT' 70;
+  margin: 0 0 var(--s-3);
 }
 
-.atlas-index li {
-  border-bottom: 1px solid var(--hairline);
-}
-
-.atlas-index a {
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-  padding: var(--s-2) 0;
-  color: var(--ink-soft);
+.post-card h2 a {
   text-decoration: none;
-  transition: color 0.16s var(--ease);
 }
 
-.atlas-index a:hover {
-  color: var(--signal-green);
-}
-
-.atlas-index-num {
-  font-size: var(--t-2xs);
-  color: var(--ink-faint);
-}
-
-.atlas-index-name {
-  flex: 1;
-  font-size: var(--t-sm);
-}
-
-.atlas-index a:hover .atlas-index-name {
-  color: var(--signal-green);
-}
-
-.atlas-index .dot {
-  border-width: 2px;
-}
-
-.atlas-hint {
-  margin: 0;
-  font-size: var(--t-2xs);
-  color: var(--ink-faint);
-  line-height: 1.5;
-}
-
-/* Stack on narrower screens: map first, marginalia below. */
-@media (max-width: 52rem) {
-  .travel-atlas {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--s-5);
-  }
-
-  .atlas-margin {
-    position: static;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--s-4) var(--s-6);
-    align-items: start;
-  }
-
-  .atlas-index {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 30rem) {
-  .atlas-margin {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ---- graticule + engraved land hatch ---- */
-
-.graticule path {
-  fill: none;
-  stroke: var(--hairline);
-  stroke-width: 0.6;
-  opacity: 0.7;
-}
-
-.hatch-line {
-  stroke: var(--ink-faint);
-  stroke-width: 0.4;
-}
-
-.map-hatch {
-  fill: url(#land-hatch);
-  stroke: none;
-  opacity: 0.12;
-}
-
-/* Lakes — water cut back into the land (Finland reads as lake country). */
-.map-lake {
-  fill: var(--paper);
-  stroke: var(--ink-faint);
-  stroke-width: 0.7;
-  stroke-linejoin: round;
-}
-
-/* Neat-line — an inner ruled border with corner ticks, the map's frame. */
-.neatline rect {
-  fill: none;
-  stroke: var(--hairline-strong);
-  stroke-width: 1;
-}
-
-.neatline-ticks {
-  fill: none;
-  stroke: var(--ink-faint);
-  stroke-width: 1.2;
-}
-
-/* ---- the traveling route token ---- */
-
-.route-token {
-  fill: var(--signal-green);
-  opacity: 0;
-  offset-rotate: 0deg;
-}
-
-/* ---- the drawn map ---- */
-
-.map-land {
-  fill: var(--paper-raised);
-  stroke: var(--ink-faint);
-  stroke-width: 1.5;
-  stroke-linejoin: round;
-}
-
-/* Engraved water-lines: the coastline echoed twice behind the land, so the
-   sea reads as an old hand-drawn survey rather than a flat cut-out. */
-.map-halo {
-  fill: none;
-  stroke: var(--hairline);
-  stroke-width: 7;
-  stroke-linejoin: round;
-  opacity: 0.35;
-}
-
-.map-halo2 {
-  fill: none;
-  stroke: var(--hairline);
-  stroke-width: 3.5;
-  stroke-linejoin: round;
-  opacity: 0.5;
-}
-
-/* Labels carry a paper knockout halo (paint-order: stroke) so they read
-   clearly over the terrain instead of camouflaging into it. */
-.map-water,
-.map-country,
-.doodle-n {
-  font-family: var(--font-mono);
-  fill: var(--ink-faint);
-  paint-order: stroke;
-  stroke: var(--paper);
-  stroke-width: 3.5;
-  stroke-linejoin: round;
-}
-
-.map-water {
-  font-size: 16px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  text-anchor: middle;
-}
-
-.map-water-sm {
-  font-size: 12px;
-  letter-spacing: 1.5px;
-  stroke-width: 3;
-}
-
-.map-country {
-  font-size: 19px;
-  letter-spacing: 2px;
-  fill: var(--ink-soft);
-  text-anchor: middle;
-}
-
-.map-country-sm {
-  font-size: 14px;
-}
-
-/* Scale bar — a small fieldbook measuring detail. */
-.scalebar {
-  fill: none;
-  stroke: var(--ink-faint);
-  opacity: 0.6;
-}
-
-.scalebar-text {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  fill: var(--ink-faint);
-  stroke: none;
-  text-anchor: middle;
-  opacity: 0.9;
-}
-
-.map-note {
-  font-size: 13px;
-  letter-spacing: 1px;
-  opacity: 0.7;
-}
-
-.doodle {
-  fill: none;
-  stroke: var(--ink-faint);
-  stroke-width: 1.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.5;
-}
-
-.doodle-thin {
-  stroke-width: 1;
-}
-
-.doodle-fill {
-  fill: var(--ink-faint);
-  stroke: none;
-}
-
-.doodle-n {
-  font-size: 14px;
-  text-anchor: middle;
-  opacity: 0.75;
-}
-
-/* ---- the route ---- */
-
-.route-leg {
-  fill: none;
-  stroke: var(--ink-faint);
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  opacity: 0.5;
-}
-
-.route-leg.anchor-leg {
-  stroke: var(--signal-green);
-  stroke-width: 2.2;
-  opacity: 1;
-}
-
-.route-leg.is-lit {
-  stroke: var(--signal-green);
-  opacity: 1;
-}
-
-/* ---- markers ---- */
-
-.plate-stops {
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.plate-stops li {
-  margin: 0;
-}
-
-/* A zero-origin anchor: the 24px box is the tap target, centered on the
-   point; the dot, name, and card are positioned out from its center. */
-.stop {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  transform: translate(-50%, -50%);
-  text-decoration: none;
-  color: var(--ink);
-}
-
-.stop-dot {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 11px;
-  height: 11px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 2px solid var(--paper);
-  background: var(--signal-slate);
-  box-sizing: content-box;
-  transition: background 0.16s var(--ease);
-}
-
-.stop.is-anchor .stop-dot {
-  width: 14px;
-  height: 14px;
-  background: var(--signal-green);
-}
-
-/* The anchor gets a second ring — a border, never a shadow. */
-.stop.is-anchor .stop-dot::after {
+.post-card h2 a::before {
   content: '';
   position: absolute;
-  inset: -5px;
-  border: 1px solid var(--signal-green);
-  border-radius: 50%;
-  opacity: 0.5;
+  inset: 0;
 }
 
-.stop:hover .stop-dot,
-.stop:focus-visible .stop-dot {
-  background: var(--signal-green);
+.post-card:hover h2 a {
+  color: var(--green);
 }
 
-.stop-name {
-  position: absolute;
-  left: calc(50% + 12px);
-  top: 50%;
-  transform: translateY(-50%);
-  white-space: nowrap;
-  padding: 0 var(--s-1);
-  background: var(--paper);
-  color: var(--ink-soft);
-  font-size: var(--t-2xs);
-  line-height: 1.35;
+.post-title {
+  font-variation-settings: 'SOFT' 70;
+  font-size: var(--t-hero);
+  font-weight: 360;
+  line-height: 1.02;
+  letter-spacing: -0.032em;
 }
 
-.stop.to-left .stop-name {
-  left: auto;
-  right: calc(50% + 12px);
-  text-align: right;
+.page-head .post-title {
+  max-width: 16ch;
 }
 
-.stop-tag {
-  display: block;
-  color: var(--signal-green);
-  font-size: var(--t-2xs);
+.next-title {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 70;
+  font-size: var(--t-xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-tight);
+  margin: 0 0 var(--s-3);
+  max-width: 22ch;
 }
 
-.specimen-card {
-  position: absolute;
-  left: calc(50% + 16px);
-  top: calc(50% + 16px);
-  z-index: 5;
-  width: 12.5rem;
-  padding: var(--s-3);
-  background: var(--paper);
-  border: 1px solid var(--hairline-strong);
-  border-radius: var(--radius);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(4px);
-  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease),
-    visibility 0.2s;
-  pointer-events: none;
-}
-
-.stop.to-left .specimen-card {
-  left: auto;
-  right: calc(50% + 16px);
-}
-
-.stop.to-up .specimen-card {
-  top: auto;
-  bottom: calc(50% + 16px);
-}
-
-.stop:hover .specimen-card,
-.stop:focus .specimen-card {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-}
-
-.specimen-card-name {
-  display: block;
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-.specimen-card-meta {
-  display: block;
-  margin: var(--s-1) 0 var(--s-2);
-  color: var(--ink-faint);
-  font-size: var(--t-2xs);
-}
-
-/* A coordinate readout — the field-note detail, in the live-rail green. */
-.specimen-card-coord {
-  display: block;
-  margin: 0 0 var(--s-2);
-  padding-top: var(--s-2);
-  border-top: 1px solid var(--hairline);
-  color: var(--signal-green);
-  font-size: var(--t-2xs);
-  letter-spacing: var(--track-mono);
-}
-
-/* The field log shows the full blurb; in the small map hover-card a long one
-   is clamped so the card stays compact. */
-.specimen-card-blurb {
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  line-clamp: 5;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  color: var(--ink-soft);
-  font-size: var(--t-sm);
-  line-height: 1.5;
-}
-
-.travel-hint {
-  margin: var(--s-4) 0 0;
-  color: var(--ink-faint);
-  font-size: var(--t-xs);
-}
-
-/* ============================================================
-   Field log — the same stops as text and photos, below the map.
-   The no-JS, mobile, and screen-reader path to everything the
-   map shows. A spine with a dot per stop: the route, drawn as a list.
-   ============================================================ */
-
-.field-log {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.field-entry {
-  position: relative;
-  padding: var(--s-5) 0 var(--s-6) var(--rail);
-  border-left: 1px solid var(--hairline);
-  scroll-margin-top: var(--s-6);
-  transition: border-color 0.18s var(--ease);
-}
-
-.field-entry:last-child {
-  padding-bottom: var(--s-4);
-}
-
-.field-entry > .dot {
-  position: absolute;
-  left: -0.5px;
-  top: calc(var(--s-5) + var(--dot-offset));
-  transform: translate(-50%, -50%);
-}
-
-/* Jumping to a stop from the map lights its entry in signal green. */
-.field-entry:target {
-  border-left-color: var(--signal-green);
-}
-
-.field-entry:target .field-name {
-  color: var(--signal-green);
-}
-
-.field-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s-4);
-  flex-wrap: wrap;
-}
-
-.field-name {
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-3);
-  margin: 0;
-}
-
-.field-order {
-  color: var(--ink-faint);
-  font-size: var(--t-xs);
-}
-
-.field-meta {
-  margin: 0;
-  color: var(--ink-faint);
-  font-size: var(--t-xs);
-  white-space: nowrap;
-}
-
-.field-blurb {
-  max-width: var(--measure);
-  margin: var(--s-3) 0 var(--s-4);
-  color: var(--ink-soft);
-}
-
-/* A checkable artifact for a stop (currently the Jyväskylä certificate),
-   in the same mono, quiet-until-hover key as .see-all and .sources. */
-.field-source {
-  display: inline-block;
-  margin: calc(-1 * var(--s-2)) 0 var(--s-4);
-  color: var(--ink-faint);
+.next-title a {
   text-decoration: none;
 }
 
-.field-source:hover {
-  color: var(--signal-green);
+/* The section titles that carry the argument. */
+h2.display {
+  font-size: var(--t-xl);
+  font-variation-settings: 'SOFT' 70;
+  max-width: 18ch;
 }
 
-.specimen-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-5) var(--s-4);
-  align-items: flex-start;
+/* With scripts off the slider can't move anything, so it isn't offered. The
+   three readers below still show the one real case. */
+html:not(.js) .demo-control {
+  display: none;
 }
 
-/* ---- one mounted photo ---- */
-
-/* Every mounted photo shares one height and takes its width from its own
-   aspect ratio — so a portrait and a landscape sit on the same baseline
-   like prints laid in a row, rather than one towering over the other. */
-.specimen {
-  margin: 0;
-  max-width: 100%;
+.spoken {
+  font-size: var(--t-md);
+  line-height: 1.5;
+  margin: var(--s-2) 0 var(--s-3);
 }
 
-.specimen.tilt-a {
-  transform: rotate(calc(-1 * var(--specimen-tilt)));
+/* The rupee sign comes from a system face. Both web faces carry it only in
+   a second, Latin Extended file that nothing else on the home page needs. */
+.rs,
+.cur {
+  font-family: Georgia, 'Times New Roman', 'Noto Serif', serif;
 }
 
-.specimen.tilt-b {
-  transform: rotate(var(--specimen-tilt));
-}
-
-.specimen-mat {
+.cur {
   display: inline-block;
-  padding: var(--s-2);
-  background: var(--paper-raised);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius);
+  font-size: 0.62em;
+  font-weight: 400;
+  letter-spacing: 0;
+  vertical-align: 0.42em;
+  margin-right: 0.06em;
 }
 
-.specimen-photo {
-  display: block;
-  height: clamp(7.5rem, 17vw, 10.5rem);
-  width: auto;
-  max-width: 100%;
-  border-radius: 1px;
+.masthead-skip {
+  margin: var(--s-3) 0 0;
 }
 
-.specimen-empty {
+.go-down::after {
+  -webkit-mask-image: var(--arrow-down);
+  mask-image: var(--arrow-down);
+}
+
+.go-down:hover::after,
+.go-down:focus-visible::after {
+  transform: translateY(3px);
+}
+
+/* The page saying it couldn't reach the network. */
+.offline {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
-  width: 15rem;
-  max-width: 100%;
-  height: clamp(7.5rem, 17vw, 10.5rem);
-  border: 1px dashed var(--hairline-strong);
-  border-radius: 1px;
-  color: var(--ink-faint);
-  text-align: center;
+  gap: var(--s-3);
+  margin: 0;
+  padding: var(--s-3) var(--gutter);
+  background: var(--paper-2);
+  border-bottom: 2px dashed var(--amber);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+  line-height: 1.6;
+  color: var(--ink);
 }
 
-.specimen-empty .mono {
-  font-size: var(--t-2xs);
-}
-
-.specimen-caption {
-  margin-top: var(--s-2);
-  color: var(--ink-faint);
-  font-size: var(--t-2xs);
-  text-align: center;
-}
-
-@media (max-width: 34rem) {
-  /* Names would collide at 9 stops on a phone-width map; the dots stay
-     tappable and the field log carries the labels. */
-  .stop-name {
-    display: none;
-  }
-
-  .map-water-sm,
-  .map-note {
-    display: none;
-  }
-
-  .field-head {
-    gap: var(--s-1);
-  }
-
-  .field-meta {
-    white-space: normal;
-  }
+.offline[hidden] {
+  display: none;
 }
 
 /* ============================================================
-   Travel plate motion — the documented carve-out. All opt-in via
-   prefers-reduced-motion: the route draws once, pins fade in in
-   travel order. Without motion (or without JS) the route is solid
-   and the pins are simply present.
+   Improvised, last pass
    ============================================================ */
 
-@media (prefers-reduced-motion: no-preference) {
-  /* Staged load: the plate settles, the grid and labels fade in, the route
-     inks across, a token travels it, and the pins drop in travel order. (The
-     title/legend/index live in the page marginalia now, not on the plate, so
-     they ride the normal page reveal — not this carve-out.) */
-  .graticule,
-  .map-labels {
-    animation: fade-in 0.6s var(--ease) both;
-  }
-  .graticule { animation-delay: 0.15s; }
-  .map-labels { animation-delay: 0.45s; }
+.masthead {
+  padding-top: clamp(1.5rem, 3vw, 2.75rem);
+}
 
-  @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+/* The three lamps sit in a housing, like the object they are. */
+.lamps {
+  position: relative;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  isolation: isolate;
+}
 
-  .route-leg {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    animation: route-draw 0.55s var(--ease) forwards;
-    animation-delay: calc(var(--leg-i, 0) * 0.12s + 0.5s);
-  }
+.lamps::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4.25rem;
+  border-radius: 2.2rem;
+  background: var(--housing);
+  border: 1px solid var(--housing-edge);
+}
 
-  @keyframes route-draw {
-    to { stroke-dashoffset: 0; }
-  }
+.lamp i {
+  background: var(--housing-off);
+  border-color: var(--housing-ring);
+}
 
-  .route-token {
-    animation: token 3.3s var(--ease) 0.7s both;
-  }
+.lamp-red.is-lit i {
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--red-fill) 35%, transparent), 0 0 22px 2px color-mix(in srgb, var(--red-fill) 55%, transparent);
+}
 
-  @keyframes token {
-    0% { offset-distance: 0%; opacity: 0; }
-    8% { opacity: 0.9; }
-    92% { opacity: 0.9; }
-    100% { offset-distance: 100%; opacity: 0; }
-  }
+.lamp-amber.is-lit i {
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--amber-fill) 35%, transparent), 0 0 22px 2px color-mix(in srgb, var(--amber-fill) 55%, transparent);
+}
 
-  .stop {
-    animation: stop-in 0.5s var(--ease) both;
-    animation-delay: calc(var(--i, 1) * 0.14s + 0.8s);
-  }
-
-  @keyframes stop-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+@media (forced-colors: active) {
+  .lamps::before {
+    display: none;
   }
 }

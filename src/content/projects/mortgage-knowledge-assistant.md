@@ -8,6 +8,7 @@ summary: "A production Q&A assistant over a mortgage lender's guideline PDFs. Ev
 stack: ['React', 'TypeScript', 'pdf.js', 'AWS Bedrock', 'AWS Lambda', 'Amazon S3', 'Amazon DynamoDB']
 order: 1
 sourcesNote: 'Client work. The source code is private.'
+kind: 'production system'
 ---
 
 ## The problem

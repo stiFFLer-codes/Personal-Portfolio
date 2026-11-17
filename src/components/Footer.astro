@@ -1,15 +1,70 @@
 ---
+// The footer is the site's own report: when it was built, what was checked,
+// and what was not. Every sentence is computed or is a plain fact.
 import { SITE } from '../site.config';
 import ProfileLinks from './ProfileLinks.astro';
-const year = new Date().getFullYear();
+import { audit, auditTotals } from '../data/audit';
+import { day } from '../format';
+
+const built = new Date();
+const { pages, violations, reached, stops } = auditTotals;
 ---
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-meta">
-      <span>© {year} {SITE.name}</span>
-      <span>{SITE.accessibilityNote}</span>
+    <div class="footer-report">
+      {/* drafted by Fable */}
+      <p>
+        Built {day(built)}. Anything marked submitted or awaiting may have moved since.
+      </p>
+      {pages > 0 ? (
+        <p>
+          Accessibility: axe-core ran on {pages} pages in light and dark on {audit.date} and found
+          {violations === 0 ? ' no violations' : ` ${violations} violations`}. A scripted Tab pass
+          reached {reached} of {stops} links and controls.
+          Not yet tested by someone who relies on a screen reader.
+        </p>
+      ) : (
+        <p>{SITE.accessibilityNote}</p>
+      )}
+      <p>
+        Open it once and every page of text stays readable with no connection, for{' '}
+        <a href="/writing/phone-elevator-faraday">when the bars hit zero</a>.
+      </p>
+      <p>© {built.getFullYear()} {SITE.name}. No trackers, no third-party requests.</p>
     </div>
-    <ProfileLinks variant="footer" />
+    <div class="footer-side">
+      <ProfileLinks variant="footer" />
+      <fieldset class="theme-switch" data-theme-switch>
+        <legend>theme</legend>
+        <label><input type="radio" name="theme" value="auto" checked /> auto</label>
+        <label><input type="radio" name="theme" value="light" /> light</label>
+        <label><input type="radio" name="theme" value="dark" /> dark</label>
+      </fieldset>
+    </div>
   </div>
 </footer>
+
+<script is:inline>
+  // The theme follows the system unless the reader picks one. Without this
+  // script the page still follows the system; the switch simply stays hidden.
+  (function () {
+    var box = document.querySelector('[data-theme-switch]');
+    if (!box) return;
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    var pick = saved === 'light' || saved === 'dark' ? saved : 'auto';
+    var input = box.querySelector('input[value="' + pick + '"]');
+    if (input) input.checked = true;
+    box.addEventListener('change', function (e) {
+      var v = e.target.value;
+      if (v === 'auto') {
+        document.documentElement.removeAttribute('data-theme');
+        try { localStorage.removeItem('theme'); } catch (err) {}
+      } else {
+        document.documentElement.setAttribute('data-theme', v);
+        try { localStorage.setItem('theme', v); } catch (err) {}
+      }
+    });
+  })();
+</script>

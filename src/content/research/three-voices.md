@@ -9,6 +9,13 @@ order: 4
 links:
   code: 'https://github.com/stiFFLer-codes/three-voices'
   doi: 'https://doi.org/10.5281/zenodo.22252076'
+kind: 'paper, with Aditi Patil'
+# TODO(markie): add links.arxiv once it is announced.
+related:
+  - { label: 'In plain words: A coin flip should not look like a red light', href: '/writing/coin-flip-red-light' }
+  - { label: 'Hands on: move the gap yourself', href: '/#coin-flip' }
+  - { label: 'The dataset audit, in plain words: One line of code deleted a third of my accuracy', href: '/writing/one-line-deleted-accuracy' }
+  - { label: 'Where the question came from: Maatritwa AI', href: '/projects/maatritwa-ai' }
 ---
 
 When the model's top two risk classes are separated by less than a fixed margin, the

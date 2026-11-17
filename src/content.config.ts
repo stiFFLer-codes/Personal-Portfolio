@@ -1,10 +1,10 @@
 import { defineCollection, reference, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// `status` only picks the colour of a dot: green (done), amber (moving),
-// slate (planned or archived). It is never shown as a word. The word a reader
-// sees is `stage`, written for the kind of thing it labels: "accepted" for a
-// paper, "archived" for a project. A job has neither; it has dates.
+// `status` is not rendered since phase 13 (it used to pick a dot colour);
+// keep it truthful. The word a reader sees is `stage`, written for the kind
+// of thing it labels: "accepted" for a paper, "archived" for a project. A job
+// has neither; it has dates.
 const status = z.enum(['shipped', 'in-progress', 'planned', 'archived']);
 
 // Each project is one markdown file. To add a new project, drop a new file
@@ -14,14 +14,16 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     status,
-    // One or two words: "complete", "archived", "live".
+    // One or two words: "in production", "complete", "archived", "live".
     stage: z.string(),
     statusLabel: z.string(),
     summary: z.string(),
     // Whose work it was, as a mono line on cards and atop the detail page:
     // "independent", "client work · Crest Infosystems".
     context: z.string().optional(),
-    // Shown in the sources block when there are no links, e.g. private code.
+    // What sort of thing it is, in two or three words: "production system".
+    kind: z.string().optional(),
+    // Shown under Sources when there are no links, e.g. private code.
     sourcesNote: z.string().optional(),
     stack: z.array(z.string()).default([]),
     order: z.number().default(99),
@@ -70,6 +72,10 @@ const research = defineCollection({
     // Where in the venue, once published: "Vol. 6, Issue 1, 2026, pp. 449–470".
     // Printed after the venue in the citation. Copy it from the article itself.
     citation: z.string().optional(),
+    // What sort of thing it is: "journal paper", "pre-registered study".
+    kind: z.string().optional(),
+    // Other ways into the same work: the plain-language post, the demo.
+    related: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
     order: z.number().default(99),
     links: z
       .object({
@@ -98,6 +104,8 @@ const writing = defineCollection({
     date: z.coerce.date(),
     summary: z.string(),
     tags: z.array(z.string()).default([]),
+    // The work a post is the plain-language version of. Shown beside it.
+    related: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
     order: z.number().default(99),
   }),
 });
@@ -153,7 +161,7 @@ const places = defineCollection({
         .default([]),
       // Optional checkable artifact for a stop (e.g. the Jyväskylä summer-school
       // certificate). `href` is a path under public/. Same "verify this" idea
-      // as SourceLinks on the project/research pages.
+      // as the Sources on the paper and system pages.
       source: z.object({ label: z.string(), href: z.string() }).optional(),
     }),
 });

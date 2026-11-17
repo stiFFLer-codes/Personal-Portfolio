@@ -1,0 +1,255 @@
+---
+// The Three Voices idea, playable: one prediction, three readers, and a
+// slider for how sure the model is. The page is rendered at the one real
+// case (0.487 against 0.499), so it is complete and correct with no script;
+// the script only lets the reader move the gap.
+//
+// What is real and what is a stand-in is said inside the demo itself, in the
+// same three marks the rest of the site uses.
+//
+// All copy in this file was drafted by Fable from Maitreya's post and paper
+// page. Sentences lifted from the post verbatim are marked in comments.
+import Todo from './Todo.astro';
+import { SHOW_TODOS } from '../todo';
+
+// The two top classes of the real case sum to 0.986; the slider moves the
+// gap between them along that line, so it passes through the real case.
+const TOTAL = 0.986;
+const REAL_GAP = 0.012;
+// A stand-in. TODO(markie): the margin the paper fixes.
+const MARGIN = 0.1;
+const MAX_GAP = 0.6;
+const STEP = 0.002;
+// The one sentence the mother hears. Empty until Maitreya supplies it from
+// the paper. Fill it in and the demo grows a button that speaks it, using
+// the browser's own Hindi voice (no audio file, no request). Until then the
+// gap is shown on the page as a TODO.
+const HINDI_SENTENCE = '';
+
+const hi = (TOTAL + REAL_GAP) / 2;
+const mid = (TOTAL - REAL_GAP) / 2;
+const low = 1 - TOTAL;
+const f = (n: number) => n.toFixed(3);
+---
+
+<div
+  class="demo"
+  data-coinflip
+  data-total={TOTAL}
+  data-margin={MARGIN}
+  data-step={STEP}
+  style={`--margin-pct:${((MARGIN / MAX_GAP) * 100).toFixed(2)}%`}
+>
+  <div class="demo-control">
+    <div class="demo-control-head">
+      <label for="gap">Gap between the model’s top two risk levels</label>
+      <output class="demo-readout" for="gap" data-out="gap">{f(REAL_GAP)}</output>
+    </div>
+    <div class="demo-track">
+      <input
+        id="gap"
+        type="range"
+        min="0"
+        max={Math.round(MAX_GAP / STEP)}
+        step="1"
+        value={Math.round(REAL_GAP / STEP)}
+        aria-describedby="gap-help"
+        aria-valuetext={`${f(REAL_GAP)}, a near-tie`}
+      />
+      <div class="demo-ticks" aria-hidden="true">
+        <span style="left:0">0</span>
+        <span style={`left:${((MARGIN / MAX_GAP) * 100).toFixed(2)}%`}>margin {MARGIN.toFixed(2)}</span>
+        <span class="tick-right" style="left:100%">{MAX_GAP.toFixed(1)}</span>
+      </div>
+    </div>
+    <div class="demo-buttons" role="group" aria-label="Jump to a case">
+      <button class="chip" type="button" data-gap={REAL_GAP} aria-pressed="true">the real case: {f(REAL_GAP)}</button>
+      <button class="chip" type="button" data-gap="0">a dead heat: 0.000</button>
+      <button class="chip" type="button" data-gap="0.4">a clear call: 0.400</button>
+    </div>
+    <p id="gap-help" class="sr-only">
+      Move the slider to change how far apart the model’s two most likely risk levels are.
+      Below the margin, the mother’s screen shows amber in place of red. The other two readers
+      see the same thing at every setting.
+    </p>
+  </div>
+
+  <div class="voices">
+    <section class="voice" aria-labelledby="voice-clinician">
+      <p class="voice-who">reader one</p>
+      <h3 id="voice-clinician">The clinician</h3>
+      <div class="voice-screen">
+        <ul class="probs" aria-label="Probability of each risk level">
+          <li>
+            <span>high</span>
+            <span class="bar"><i data-bar="hi" style={`--p:${hi}`}></i></span>
+            <span class="num" data-out="hi">{f(hi)}</span>
+          </li>
+          <li>
+            <span>mid</span>
+            <span class="bar"><i data-bar="mid" style={`--p:${mid}`}></i></span>
+            <span class="num" data-out="mid">{f(mid)}</span>
+          </li>
+          <li>
+            <span>low</span>
+            <span class="bar"><i style={`--p:${low}`}></i></span>
+            <span class="num">{f(low)}</span>
+          </li>
+        </ul>
+        <span class="skeleton-label">every feature’s contribution (not reproduced here)</span>
+        <span class="skeleton" style="width:82%"></span>
+        <span class="skeleton" style="width:54%"></span>
+        <span class="skeleton" style="width:31%"></span>
+      </div>
+      {/* Maitreya's sentence, from the post. */}
+      <p class="voice-note">“They can argue with the model, so give them the ammunition.”</p>
+    </section>
+
+    <section class="voice" aria-labelledby="voice-worker">
+      <p class="voice-who">reader two</p>
+      <h3 id="voice-worker">The community health worker</h3>
+      <div class="voice-screen">
+        <span class="card-risk">High risk</span>
+        <span class="skeleton-label">the two factors that mattered most, in plain words</span>
+        <span class="skeleton" style="width:74%"></span>
+        <span class="skeleton" style="width:62%"></span>
+        <span class="skeleton-label">one next step</span>
+        <span class="skeleton" style="width:48%"></span>
+      </div>
+      {/* Maitreya's sentences, from the post. */}
+      <p class="voice-note">“Not a smaller version of the doctor’s screen. A lighter one, because her day is already full of forms.”</p>
+    </section>
+
+    <section class="voice" aria-labelledby="voice-mother">
+      <p class="voice-who">reader three</p>
+      <h3 id="voice-mother">The mother</h3>
+      <div class="voice-screen">
+        <ul class="lamps" data-lamps aria-label="The three lamps">
+          <li class="lamp lamp-red" data-lamp="red">
+            <i aria-hidden="true"></i>
+            <span><b>Red</b><span class="lamp-msg">the alarm at full strength</span><span class="lamp-off">red: off</span></span>
+          </li>
+          <li class="lamp lamp-amber is-lit" data-lamp="amber">
+            <i aria-hidden="true"></i>
+            <span><b>Amber</b><span class="lamp-msg">go and get checked, soon</span><span class="lamp-off">amber: off</span></span>
+          </li>
+          <li class="lamp lamp-green" data-lamp="green">
+            <i aria-hidden="true"></i>
+            <span>green: off. A near-tie is never shown as green.</span>
+          </li>
+        </ul>
+        <span class="skeleton-label">
+          and one spoken sentence in Hindi{!HINDI_SENTENCE && !SHOW_TODOS && ' (not reproduced here)'}
+        </span>
+        {HINDI_SENTENCE ? (
+          <>
+            <p class="spoken" lang="hi">{HINDI_SENTENCE}</p>
+            <button class="chip" type="button" data-speak={HINDI_SENTENCE} hidden>hear it</button>
+            <p class="voice-note" data-speak-note hidden></p>
+          </>
+        ) : SHOW_TODOS ? (
+          <Todo text="the sentence, from the paper." />
+        ) : (
+          <span class="skeleton" style="width:72%"></span>
+        )}
+      </div>
+      {/* Maitreya's sentence, from the post. */}
+      <p class="voice-note">“No percentage, no chart, no reading required.”</p>
+    </section>
+  </div>
+
+  <div class="demo-foot">
+    <p class="demo-said" data-said aria-live="polite">
+      The model gives high risk {f(hi)} and the middle level {f(mid)}: {f(REAL_GAP)} apart, inside the margin.
+      The clinician sees both numbers. The health worker’s card says high risk. The mother’s lamp is{' '}
+      <strong>amber, not red</strong>.
+    </p>
+    <ul class="fine">
+      <li>
+        {f(mid)} against {f(hi)} is a real case, the one the post describes. The model was wrong on it: the true answer was the middle level. The low figure is what is left over.
+      </li>
+      <li>
+        The margin drawn here ({MARGIN.toFixed(2)}) is a stand-in so the slider has somewhere to go. The paper fixes its own. <Todo text="the real margin." />
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  // Progressive enhancement: the server-rendered state is the real case.
+  const root = document.querySelector<HTMLElement>('[data-coinflip]');
+  if (root) {
+    const total = Number(root.dataset.total);
+    const margin = Number(root.dataset.margin);
+    const step = Number(root.dataset.step);
+    const slider = root.querySelector<HTMLInputElement>('#gap')!;
+    const out = (k: string) => root.querySelector<HTMLElement>(`[data-out="${k}"]`)!;
+    const bar = (k: string) => root.querySelector<HTMLElement>(`[data-bar="${k}"]`)!;
+    const lamp = (k: string) => root.querySelector<HTMLElement>(`[data-lamp="${k}"]`)!;
+    const said = root.querySelector<HTMLElement>('[data-said]')!;
+    const chips = [...root.querySelectorAll<HTMLButtonElement>('.chip')];
+    const f = (n: number) => n.toFixed(3);
+    let timer: number | undefined;
+
+    const render = () => {
+      const gap = Number(slider.value) * step;
+      const hi = (total + gap) / 2;
+      const mid = (total - gap) / 2;
+      const near = gap < margin;
+
+      out('gap').textContent = f(gap);
+      out('hi').textContent = f(hi);
+      out('mid').textContent = f(mid);
+      bar('hi').style.setProperty('--p', String(hi));
+      bar('mid').style.setProperty('--p', String(mid));
+      lamp('red').classList.toggle('is-lit', !near);
+      lamp('amber').classList.toggle('is-lit', near);
+      slider.setAttribute(
+        'aria-valuetext',
+        `${f(gap)}, ${near ? 'a near-tie: the mother sees amber' : 'a clear call: the mother sees red'}`
+      );
+      chips.forEach((c) =>
+        c.setAttribute('aria-pressed', String(Math.abs(Number(c.dataset.gap) - gap) < step / 2))
+      );
+
+      // The sentence is a live region; let the slider settle before it speaks.
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        said.innerHTML =
+          `The model gives high risk ${f(hi)} and the middle level ${f(mid)}: ${f(gap)} apart, ` +
+          `${near ? 'inside' : 'outside'} the margin. The clinician sees both numbers. ` +
+          `The health worker’s card says high risk. The mother’s lamp is ` +
+          `<strong>${near ? 'amber, not red' : 'red'}</strong>.`;
+      }, 350);
+    };
+
+    // The spoken sentence, if one has been supplied. The browser's own voice
+    // speaks it; if there is no Hindi voice, the page says so.
+    const speak = root.querySelector<HTMLButtonElement>('[data-speak]');
+    const speakNote = root.querySelector<HTMLElement>('[data-speak-note]');
+    if (speak && 'speechSynthesis' in window) {
+      speak.hidden = false;
+      speak.addEventListener('click', () => {
+        const hindi = speechSynthesis.getVoices().find((v) => v.lang.toLowerCase().startsWith('hi'));
+        const u = new SpeechSynthesisUtterance(speak.dataset.speak);
+        u.lang = 'hi-IN';
+        if (hindi) u.voice = hindi;
+        else if (speakNote) {
+          speakNote.hidden = false;
+          speakNote.textContent =
+            'Couldn’t resolve: this browser has no Hindi voice installed, so the sentence may be read with the wrong one.';
+        }
+        speechSynthesis.cancel();
+        speechSynthesis.speak(u);
+      });
+    }
+
+    slider.addEventListener('input', render);
+    chips.forEach((c) =>
+      c.addEventListener('click', () => {
+        slider.value = String(Math.round(Number(c.dataset.gap) / step));
+        render();
+      })
+    );
+  }
+</script>

@@ -9,6 +9,7 @@ stack: ['Python', 'pandas', 'matplotlib']
 order: 4
 links:
   repo: 'https://github.com/stiFFLer-codes/amazon-sales-analysis'
+kind: 'analysis'
 ---
 
 ## The brief

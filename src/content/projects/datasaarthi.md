@@ -9,6 +9,7 @@ stack: ['React', 'TypeScript', 'Vite', 'FastAPI', 'Python', 'Supabase', 'Groq']
 order: 3
 links:
   repo: 'https://github.com/stiFFLer-codes/DataSaarthi'
+kind: 'platform'
 ---
 
 ## Stack and history

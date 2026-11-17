@@ -10,6 +10,7 @@ order: 2
 links:
   repo: 'https://github.com/stiFFLer-codes/Maatritwa-AI'
   live: 'https://stiffler-codes.github.io/Maatritwa-AI/'
+kind: 'prototype'
 ---
 
 ## The design problem

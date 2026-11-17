@@ -1,0 +1,84 @@
+---
+// The shape of a paper page and a system page: the head, then the write-up
+// with its sources and related work beside it.
+import { LINK_LABELS, presentLinks } from '../links';
+
+interface Props {
+  back: { href: string; label: string };
+  /** "journal paper · published" */
+  meta: string[];
+  title: string;
+  summary: string;
+  /** External artifacts: doi, zenodo, code, repository, live site. */
+  links?: Record<string, string | undefined>;
+  /** Shown under Sources when there is nothing to link, e.g. private code. */
+  sourcesNote?: string;
+  hasBody: boolean;
+  longTitle?: boolean;
+  /** Other ways into the same work: the plain-language post, the demo. */
+  related?: { label: string; href: string }[];
+}
+const {
+  back,
+  meta,
+  title,
+  summary,
+  links = {},
+  sourcesNote,
+  hasBody,
+  longTitle = false,
+  related = [],
+} = Astro.props;
+const sources = presentLinks(links);
+const hasSources = sources.length > 0 || Boolean(sourcesNote);
+---
+
+<div class="container">
+  <section class:list={['page-head', { 'page-head-long': longTitle }]}>
+    <p class="kicker reveal"><a class="back" href={back.href}>{back.label}</a></p>
+    <p class="meta-line reveal">{meta.filter(Boolean).join(' · ')}</p>
+    <h1 class="reveal">{title}</h1>
+    <p class="lede reveal reveal-2">{summary}</p>
+    <slot name="byline" />
+  </section>
+
+  <section class:list={['section', { 'two-col': hasBody }]}>
+    {hasBody && (
+      <article class="prose">
+        <slot />
+      </article>
+    )}
+    {(hasSources || related.length > 0) && (
+      <aside class:list={['side', { 'side-wide': !hasBody }]}>
+        {hasSources && (
+          <section aria-labelledby="sources-title">
+            <h2 id="sources-title">Sources</h2>
+            {sources.length > 0 ? (
+              <ul class="side-links">
+                {sources.map(([key, url]) => (
+                  <li class="side-item">
+                    <a href={url} target="_blank" rel="noopener">{LINK_LABELS[key] ?? key}</a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="side-note">{sourcesNote}</p>
+            )}
+          </section>
+        )}
+        {related.length > 0 && (
+          <section aria-labelledby="related-title">
+            <h2 id="related-title">Other ways into this work</h2>
+            <ul>
+              {related.map((r) => (
+                <li class="side-item">
+                  <a class="go" href={r.href}>{r.label}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </aside>
+    )}
+  </section>
+</div>

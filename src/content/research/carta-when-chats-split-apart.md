@@ -12,11 +12,20 @@ links:
   doi: 'https://doi.org/10.68485/ijmada.20266168'
   zenodo: 'https://doi.org/10.5281/zenodo.23526491'
   code: 'https://github.com/stiFFLer-codes/champ-pipeline'
+kind: 'journal paper'
 ---
 
 ## The problem
 
 Temporal Communication Fragmentation occurs when a messaging account's history becomes irreconcilably split across two or more devices with no synchronization bridge. This isn't just a sync bug. It's a structural problem in systems where the ground truth of conversation state is distributed, and the devices can't re-converge.
+
+<!-- Figures 1 and 2 are the paper's own (CC BY 4.0), cropped from the published PDF; the captions are the paper's. Added by Claude; Maitreya's text is unchanged. -->
+<figure>
+
+![A timeline. Fragment F1, the primary device's history, runs until the failure time t_f, pauses with no new history, and resumes at the recovery time t_r. Fragment F2, the secondary device's history, runs from just before t_f to just after t_r; the two overlaps, delta and epsilon, are hatched. Braces mark the three conditions: C1, bifurcation, at t_f; C2, independent persistence, between t_f and t_r; C3, absent reconciliation, from t_f onwards. After t_r both fragments stay readable (the latent case) until a restore replaces F2 (the manifest case).](./img/carta-fig-1.png)
+
+<figcaption>Fig. 1. TCF on a timeline. C1 and the restore are points; C2 and C3 are spans; hatching marks the overlap regions.</figcaption>
+</figure>
 
 ## The framework
 
@@ -27,6 +36,13 @@ CARTA (Chat Archive Reconstruction & Temporal Access) formalizes what you can an
 - Report both to the user with transparency about what was lost and why
 
 The CHAMP-Pipeline is a zero-dependency reference implementation of this contract.
+
+<figure>
+
+![A pipeline. The fragment exports F1 to Fn, with n at least 2, pass through Ingestion to structured records R, then Normalization to canonical records R prime; both stages run per fragment, with no cross-fragment reconciliation. Normalization also sends what it cannot interpret to the quarantine set Q, the union of each fragment's set. Synthesis, where the fragments meet, produces the unified archive U and writes the Report, Omega; the quarantine set is carried into it, not reconciled.](./img/carta-fig-2.png)
+
+<figcaption>Fig. 2. The CARTA reconstruction contract.</figcaption>
+</figure>
 
 ## Current status
 

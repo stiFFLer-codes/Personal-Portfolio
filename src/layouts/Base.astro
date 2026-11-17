@@ -5,18 +5,21 @@ import { SITE } from '../site.config';
 
 // Self-hosted so no render-blocking request leaves for a third-party CDN.
 //
-// Two families only. Newsreader does display and body; the mono does
-// everything mechanical. Both are the weight-axis-only builds — the
-// multi-axis files carry an optical-size axis this site does not use and
-// cost roughly twice the bytes.
+// Three families. Fraunces is the display voice (the weight and SOFT axes;
+// the full four-axis build is twice the bytes). Newsreader is the body.
+// JetBrains Mono is the system's voice: states, dates, evidence.
 //
-// The italic import is separate and deliberate: Newsreader's normal build
-// ships no italic faces at all, and `.prose blockquote` is italic. Do not
-// tidy it away.
+// Fraunces is declared by hand below, Latin subset only, and preloaded: it
+// sets the largest text on every page. Fontsource's own stylesheet would
+// also fetch a Latin Extended file for a single rupee sign.
+//
+// The Newsreader italic import is separate and deliberate: its normal build
+// ships no italic faces at all, and quotes are italic.
 import '@fontsource-variable/newsreader';
 import '@fontsource-variable/newsreader/wght-italic.css';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
+import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-soft-normal.woff2?url';
 import portrait from '../assets/maitreya.jpg';
 
 interface Props {
@@ -73,16 +76,49 @@ const person = {
     />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <meta name="color-scheme" content="light dark" />
+    <link rel="preload" as="font" type="font/woff2" href={frauncesUrl} crossorigin />
+    <style set:html={`@font-face{font-family:'Fraunces Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(${frauncesUrl}) format('woff2-variations');}`} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {/* Before first paint: mark that scripts run, and apply a saved theme.
+        Without it the page follows the system setting, which is the default. */}
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    </script>
     <link rel="sitemap" href="/sitemap.xml" />
     {isHome && <script type="application/ld+json" set:html={JSON.stringify(person)} />}
   </head>
   <body>
     <a class="sr-only-focusable" href="#main">Skip to content</a>
+    {/* Shown only when the browser reports no connection: the page saying
+        what it couldn't reach. drafted by Fable */}
+    <p class="offline" data-offline role="status" hidden>
+      Couldn’t reach the network. You’re reading the copy your browser saved, so anything
+      marked submitted or awaiting may have moved since.
+    </p>
     <Nav />
     <main id="main">
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      // Offline: register the worker that keeps saved pages readable, and
+      // say so on the page when the connection is gone.
+      (function () {
+        if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+          navigator.serviceWorker.register('/sw.js').catch(function () {});
+        }
+        var note = document.querySelector('[data-offline]');
+        if (!note) return;
+        var show = function () { note.hidden = navigator.onLine; };
+        window.addEventListener('online', show);
+        window.addEventListener('offline', show);
+        show();
+      })();
+    </script>
   </body>
 </html>

@@ -1,34 +1,20 @@
 ---
-// One row in any list on the site: papers, projects, jobs, posts,
-// education. Two columns: a mono margin on the left that says what state the
-// thing is in, in a word that fits the thing ("accepted", "archived") or
-// simply when it happened ("Jan 2026 – now"); the content on the right.
+// One row in any list on the site: papers, systems, jobs, study. Two
+// columns: a mono margin on the left that says what stage the thing is at
+// ("published", "archived") or when it happened ("Jan 2026 – now"); the
+// content on the right. The row ends with its links, if it has any.
 //
 // This is the only place list rows are described. Change the shape of a
 // listing here and every page that lists anything follows.
-import StatusDot from './StatusDot.astro';
-
-type Status = 'shipped' | 'in-progress' | 'planned' | 'archived';
-
-const LINK_LABELS: Record<string, string> = {
-  repo: 'repository',
-  live: 'live site',
-  preprint: 'preprint',
-  arxiv: 'arXiv',
-  code: 'code',
-  doi: 'doi',
-  zenodo: 'zenodo',
-  certificate: 'certificate',
-};
+import Todo from './Todo.astro';
+import { SHOW_TODOS } from '../todo';
+import { LINK_LABELS, presentLinks } from '../links';
 
 interface Props {
   title: string;
-  /** The margin word or date. Always a word: colour never carries meaning alone. */
+  /** The margin word or date. */
   label: string;
-  /** Picks the dot beside the label. Omit for rows labelled by a date. */
-  status?: Status;
-  /** Set when `label` is a date, so it is machine-readable. A string is used
-      as-is, for a date known only to the year ("2026"). */
+  /** Set when `label` is a date, so it is machine-readable. */
   datetime?: Date | string;
   href?: string;
   /** Muted text after the title: an employer, an institution. */
@@ -39,19 +25,16 @@ interface Props {
   note?: string;
   summary?: string;
   tags?: string[];
-  /** External, checkable artifacts (doi, code, repository). */
+  /** External artifacts: doi, code, repository, certificate. */
   links?: Record<string, string | undefined>;
-  /** h2 directly under a page title, h3 under a section heading, p for rows
-      that are not worth a heading (certifications, education). */
-  as?: 'h2' | 'h3' | 'p';
-  /** Tighter rows for narrow columns and one-line items. */
+  todo?: string;
+  as?: 'h2' | 'h3' | 'h4' | 'p';
   dense?: boolean;
 }
 
 const {
   title,
   label,
-  status,
   datetime,
   href,
   where,
@@ -60,23 +43,19 @@ const {
   summary,
   tags = [],
   links = {},
+  todo,
   as: Heading = 'h3',
   dense = false,
 } = Astro.props;
 
-const linkEntries = Object.entries(links).filter(([, url]) => Boolean(url)) as [
-  string,
-  string,
-][];
+const linkEntries = presentLinks(links);
 const hasByline = Astro.slots.has('byline');
-// A note that only repeats the margin word ("Complete" beside "complete")
-// says nothing twice; drop it.
 const showNote = note && note.trim().toLowerCase() !== label.trim().toLowerCase();
+
 ---
 
 <article class:list={['entry', { 'entry-dense': dense, 'entry-linked': href }]}>
   <div class="entry-label">
-    {status && <StatusDot status={status} />}
     {datetime ? (
       <time datetime={typeof datetime === 'string' ? datetime : datetime.toISOString().slice(0, 10)}>{label}</time>
     ) : (
@@ -84,9 +63,7 @@ const showNote = note && note.trim().toLowerCase() !== label.trim().toLowerCase(
     )}
   </div>
   <div class="entry-main">
-    {/* Only the title is the link. Wrapping the whole row in an <a> would make
-        the link's accessible name the label, the byline and the summary read
-        out as one string. CSS stretches the hit area back over the row. */}
+    {/* Only the title is the link. CSS stretches the hit area over the row. */}
     <Heading class="entry-title">
       {href ? <a href={href}>{title}</a> : title}
       {where && <span class="entry-where"> · {where}</span>}
@@ -109,5 +86,6 @@ const showNote = note && note.trim().toLowerCase() !== label.trim().toLowerCase(
         ))}
       </ul>
     )}
+    {todo && SHOW_TODOS && <p class="entry-note"><Todo text={todo} /></p>}
   </div>
 </article>

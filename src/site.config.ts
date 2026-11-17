@@ -50,6 +50,8 @@ export interface Credential {
   note?: string;
   href?: string;
   proof?: string;
+  /** A fact only Maitreya can supply. Renders as a visible TODO(markie). */
+  todo?: string;
 }
 
 export const EDUCATION: Credential[] = [
@@ -57,6 +59,7 @@ export const EDUCATION: Credential[] = [
     date: '2026',
     title: 'Bachelor of Technology, Artificial Intelligence (AI) and Data Science',
     where: 'A. D. Patel Institute of Technology, CVM University, Anand',
+    todo: 'a redacted degree certificate or a university verification link, if you want this line checkable.',
   },
   // Both Jyväskylä lines lead with the school's official name, as printed on
   // its certificates; the course follows as the note.
@@ -86,6 +89,14 @@ export const CERTIFICATIONS: Credential[] = [
     // The university's own validation page, so no copy is hosted here.
     proof: 'https://certificates.mooc.fi/validate/i1o2gbgn5',
   },
-  { date: 'Jun 2026', title: 'AWS Certified Machine Learning Engineer – Associate' },
-  { date: 'Apr 2026', title: 'AWS Certified AI Practitioner' },
+  {
+    date: 'Jun 2026',
+    title: 'AWS Certified Machine Learning Engineer – Associate',
+    todo: 'the AWS / Credly verification link.',
+  },
+  {
+    date: 'Apr 2026',
+    title: 'AWS Certified AI Practitioner',
+    todo: 'the AWS / Credly verification link.',
+  },
 ];
