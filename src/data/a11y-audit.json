@@ -7,21 +7,12 @@
       "passes": 44,
       "violations": [],
       "keyboard": {
-        "reached": 66,
-        "total": 66
+        "reached": 62,
+        "total": 62
       }
     },
     {
       "path": "/research/",
-      "passes": 36,
-      "violations": [],
-      "keyboard": {
-        "reached": 26,
-        "total": 26
-      }
-    },
-    {
-      "path": "/projects/",
       "passes": 36,
       "violations": [],
       "keyboard": {
@@ -30,12 +21,21 @@
       }
     },
     {
+      "path": "/projects/",
+      "passes": 36,
+      "violations": [],
+      "keyboard": {
+        "reached": 20,
+        "total": 20
+      }
+    },
+    {
       "path": "/writing/",
       "passes": 36,
       "violations": [],
       "keyboard": {
-        "reached": 19,
-        "total": 19
+        "reached": 16,
+        "total": 16
       }
     },
     {
@@ -43,35 +43,26 @@
       "passes": 45,
       "violations": [],
       "keyboard": {
-        "reached": 34,
-        "total": 34
-      }
-    },
-    {
-      "path": "/unresolved/",
-      "passes": 48,
-      "violations": [],
-      "keyboard": {
-        "reached": 82,
-        "total": 82
+        "reached": 31,
+        "total": 31
       }
     },
     {
       "path": "/research/carta-when-chats-split-apart/",
-      "passes": 38,
+      "passes": 37,
       "violations": [],
       "keyboard": {
-        "reached": 20,
-        "total": 20
+        "reached": 16,
+        "total": 16
       }
     },
     {
       "path": "/research/prediction-is-not-selection/",
-      "passes": 38,
+      "passes": 37,
       "violations": [],
       "keyboard": {
-        "reached": 28,
-        "total": 28
+        "reached": 24,
+        "total": 24
       }
     },
     {
@@ -79,8 +70,8 @@
       "passes": 38,
       "violations": [],
       "keyboard": {
-        "reached": 25,
-        "total": 25
+        "reached": 21,
+        "total": 21
       }
     },
     {
@@ -88,8 +79,8 @@
       "passes": 38,
       "violations": [],
       "keyboard": {
-        "reached": 19,
-        "total": 19
+        "reached": 15,
+        "total": 15
       }
     },
     {
@@ -97,8 +88,8 @@
       "passes": 38,
       "violations": [],
       "keyboard": {
-        "reached": 18,
-        "total": 18
+        "reached": 14,
+        "total": 14
       }
     },
     {
@@ -106,8 +97,8 @@
       "passes": 38,
       "violations": [],
       "keyboard": {
-        "reached": 18,
-        "total": 18
+        "reached": 14,
+        "total": 14
       }
     },
     {
@@ -115,8 +106,8 @@
       "passes": 38,
       "violations": [],
       "keyboard": {
-        "reached": 20,
-        "total": 20
+        "reached": 16,
+        "total": 16
       }
     },
     {
@@ -124,8 +115,8 @@
       "passes": 42,
       "violations": [],
       "keyboard": {
-        "reached": 17,
-        "total": 17
+        "reached": 13,
+        "total": 13
       }
     },
     {
@@ -133,8 +124,8 @@
       "passes": 37,
       "violations": [],
       "keyboard": {
-        "reached": 22,
-        "total": 22
+        "reached": 19,
+        "total": 19
       }
     },
     {
@@ -142,8 +133,8 @@
       "passes": 39,
       "violations": [],
       "keyboard": {
-        "reached": 19,
-        "total": 19
+        "reached": 16,
+        "total": 16
       }
     },
     {
@@ -151,8 +142,8 @@
       "passes": 37,
       "violations": [],
       "keyboard": {
-        "reached": 20,
-        "total": 20
+        "reached": 17,
+        "total": 17
       }
     },
     {
@@ -160,8 +151,8 @@
       "passes": 36,
       "violations": [],
       "keyboard": {
-        "reached": 17,
-        "total": 17
+        "reached": 14,
+        "total": 14
       }
     }
   ]
