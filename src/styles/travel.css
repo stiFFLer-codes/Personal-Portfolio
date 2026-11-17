@@ -8,7 +8,7 @@
    ============================================================ */
 
 /* The plate is a paper mat; the SVG neat-line inside is the map's frame. A
-   subtle lift — the one sanctioned box-shadow on the site (CLAUDE.md). */
+   subtle lift: one of the two sanctioned box-shadows (CLAUDE.md). */
 .plate {
   position: relative;
   margin: 0;
@@ -625,6 +625,17 @@
 
 .field-source:hover {
   color: var(--signal-green);
+}
+
+/* `a.` lifts this above the shared arrow rule in global.css, which can
+   land later in the page than this file. */
+a.field-source::after {
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 0.35em;
+  vertical-align: -0.04em;
+  -webkit-mask-image: var(--arrow-out);
+  mask-image: var(--arrow-out);
 }
 
 .specimen-row {

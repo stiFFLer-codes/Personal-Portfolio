@@ -58,6 +58,15 @@
 
   --brand-orcid: #a6ce39;
 
+  /* Arrow shapes, drawn rather than typed: none of the three web fonts
+     carries the right, left or out arrow in its Latin file, so a typed one
+     fell back to a system font. Used as masks, so only their alpha matters;
+     they paint in the current text colour (see "Drawn arrows" below). */
+  --arrow-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.5 8h11M9.5 4l4 4-4 4' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --arrow-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.5 8h-11M6.5 4l-4 4 4 4' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --arrow-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 2.5v11M4 9.5l4 4 4-4' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --arrow-out: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 11.5l7-7M5.5 4.5h6v6' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
   /* ---- type ---- */
   --font-display: 'Fraunces Variable', Fraunces, 'Newsreader Variable', Georgia, serif;
   --font-body: 'Newsreader Variable', Newsreader, Georgia, 'Times New Roman', serif;
@@ -576,8 +585,9 @@ pre {
 }
 
 .go::after {
-  content: '→';
-  display: inline-block;
+  /* Sits on the text baseline; nudged to the middle of the lowercase. */
+  position: relative;
+  top: 0.12em;
   transition: transform 0.2s var(--ease);
 }
 
@@ -586,12 +596,33 @@ pre {
   transform: translateX(3px);
 }
 
+/* Drawn arrows: one shape, masked, in the current text colour. Screen
+   readers announce nothing for them, which is right: each sits beside
+   words that already say where the link goes. */
+.go::after,
+.back::before,
+.entry-links a::after,
+.ledger-links a[target]::after,
+.field-source::after {
+  content: '';
+  display: inline-block;
+  flex: none;
+  width: 0.8em;
+  height: 0.8em;
+  background: currentColor;
+  -webkit-mask: var(--arrow-right) center / contain no-repeat;
+  mask: var(--arrow-right) center / contain no-repeat;
+}
+
 .back {
   text-decoration: none;
 }
 
 .back::before {
-  content: '← ';
+  margin-right: 0.45em;
+  vertical-align: -0.06em;
+  -webkit-mask-image: var(--arrow-left);
+  mask-image: var(--arrow-left);
 }
 
 .bio {
@@ -1521,8 +1552,11 @@ pre {
 }
 
 .entry-links a::after {
-  content: ' ↗';
-  white-space: pre;
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 0.35em;
+  -webkit-mask-image: var(--arrow-out);
+  mask-image: var(--arrow-out);
 }
 
 .entry-links .state {
@@ -1772,8 +1806,11 @@ p.entry-title {
 }
 
 .ledger-links a[target]::after {
-  content: ' ↗';
-  white-space: pre;
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 0.35em;
+  -webkit-mask-image: var(--arrow-out);
+  mask-image: var(--arrow-out);
 }
 
 .ledger-item .todo {
@@ -2250,6 +2287,15 @@ p.entry-title {
     background: none;
     text-decoration: underline;
   }
+
+  .go::after,
+  .back::before,
+  .entry-links a::after,
+  .ledger-links a[target]::after,
+  .field-source::after {
+    forced-color-adjust: none;
+    background: LinkText;
+  }
 }
 
 @media print {
@@ -2374,7 +2420,8 @@ html:not(.js) .demo-control {
 }
 
 .go-down::after {
-  content: '↓';
+  -webkit-mask-image: var(--arrow-down);
+  mask-image: var(--arrow-down);
 }
 
 .go-down:hover::after,

@@ -1,6 +1,6 @@
 ---
 name: Baltic Sea
-country: Helsinki → Stockholm
+country: Helsinki to Stockholm
 dateLabel: "August '25"
 order: 3
 x: 63.5

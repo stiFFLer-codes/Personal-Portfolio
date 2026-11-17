@@ -279,15 +279,21 @@ Wide      74rem  (--measure-wide)   page container
   never gradient text.
 - **Box-shadow:** two, both sanctioned: the glow ring on a lit lamp in the
   demo, and the `/travel` plate's lift. Nothing else.
-- **Marks and icons:** the three state marks; the profile links' official
+- **Marks and icons:** the three state marks; the drawn arrows (below); the
+  profile links' official
   Email, GitHub, LinkedIn and ORCID marks (`ProfileLinks.astro`, inline SVG,
   each beside its name, `aria-hidden`, never an `<img>` from the brand's
   server; the ORCID iD keeps its green). No other icons. No emoji in chrome.
 - **Glyphs:** only those the self-hosted font files carry. Check a new glyph
-  against the `.woff2` before using it. Checked 17 Nov 2026: the Latin files
-  carry `↓` and `↑` but not `→`, `←` or `↗`, which today render from a system
-  font (see *Known gaps*). `⧗` and `↻` were removed in phase 10 for the same
-  reason.
+  against the `.woff2` before using it. The Latin files carry `↓` and `↑`
+  but not `→`, `←` or `↗`, so **arrows are drawn, never typed**: the
+  `--arrow-right`, `--arrow-left`, `--arrow-down` and `--arrow-out` shapes in
+  the token block, used as masks in the current text colour (the "Drawn
+  arrows" rule in `global.css`; a new arrowed element joins its selector
+  list, including the `forced-colors` copy). Screen readers announce
+  nothing for them, which is right: each sits beside words that say where
+  the link goes. In content, say it in words ("Helsinki to Stockholm").
+  `⧗` and `↻` were removed in phase 10 for the same reason.
 
 ### Motion
 
@@ -467,8 +473,6 @@ was retired before it ever deployed, so it needs no redirect.
 
 Each of these breaks a rule above. None is precedent.
 
-- `→`, `←` and `↗` (the `.go` arrow glide, back links, external-link marks)
-  are not in any self-hosted font file and render from a system font.
 - Two literal colours outside the token block in `global.css`: the unlit
   lamp border (`rgba(245, 242, 233, 0.28)`) and the closing band's button
   hover text (`#15201c`).
