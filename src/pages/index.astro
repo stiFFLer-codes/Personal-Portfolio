@@ -54,13 +54,24 @@ const places = await getCollection('places');
         </div>
       </dl>
 
-      {/* Maitreya's line. */}
-      <p class="thesis reveal reveal-2">
-        I build software systems that report what they <mark>couldn’t resolve.</mark>
-      </p>
+      {/* The thesis and the bio on the left, the portrait beside them; on a
+          phone the portrait sits between the two (grid areas in CSS). */}
+      <div class="hero-grid">
+        {/* Maitreya's line. */}
+        <p class="thesis reveal reveal-2">
+          I build software systems that report what they <mark>couldn’t resolve.</mark>
+        </p>
 
-      <div class="bio reveal reveal-3">
-          <div>
+        <Image
+          class="portrait reveal reveal-2"
+          src={portrait}
+          alt="Maitreya Sapariya standing outdoors in a black blazer and glasses, smiling"
+          widths={[360, 540, 720, 1080]}
+          sizes="(max-width: 52rem) calc(100vw - 2.5rem), 21rem"
+          loading="eager"
+        />
+
+        <div class="bio reveal reveal-3">
             {/* Maitreya's words. Agents fix typos only. */}
             <p>
               I’m a software engineer with a degree in AI and data science, so I work
@@ -76,15 +87,7 @@ const places = await getCollection('places');
             <p class="masthead-skip">
               <a class="go go-down" href="#record">Short on time? Skip to the record</a>
             </p>
-          </div>
-          <Image
-            class="portrait"
-            src={portrait}
-            alt="Maitreya Sapariya standing outdoors in a black blazer and glasses, smiling"
-            width={120}
-            densities={[1, 2, 3]}
-            loading="eager"
-          />
+        </div>
       </div>
     </section>
 

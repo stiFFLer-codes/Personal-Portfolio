@@ -539,13 +539,34 @@ pre {
   mask-image: var(--arrow-left);
 }
 
-.bio {
+/* The hero: the thesis and the bio in one column, the portrait in its own
+   column beside them, spanning both. On a phone, one column: thesis,
+   portrait, bio. */
+.hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--s-5) var(--s-6);
+  grid-template-columns: minmax(0, 1fr) clamp(15rem, 22vw, 21rem);
+  grid-template-areas:
+    'thesis portrait'
+    'bio    portrait';
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(2rem, 5vw, 5rem);
   align-items: start;
-  /* The bio paragraph keeps a reading measure beside the portrait. */
-  max-width: calc(var(--measure) + 10rem);
+}
+
+.hero-grid .thesis {
+  grid-area: thesis;
+}
+
+.hero-grid .portrait {
+  grid-area: portrait;
+}
+
+.hero-grid .bio {
+  grid-area: bio;
+}
+
+.bio {
+  max-width: var(--measure);
 }
 
 .bio p {
@@ -553,10 +574,15 @@ pre {
   margin-bottom: var(--s-4);
 }
 
+/* Cropped to 4:5 from a square original; the face sits in the upper
+   third. On a phone the crop turns landscape (4:3). */
 .portrait {
   display: block;
-  width: 6.5rem;
+  width: 100%;
   height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 30%;
   border-radius: var(--radius-lg);
   background: var(--paper-2);
 }
@@ -2037,6 +2063,21 @@ p.entry-title {
 }
 
 @media (max-width: 52rem) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'thesis'
+      'portrait'
+      'bio';
+    grid-template-rows: auto;
+  }
+
+  .hero-grid .portrait {
+    aspect-ratio: 4 / 3;
+    object-position: 50% 28%;
+    margin-bottom: var(--s-6);
+  }
+
   .demo-intro,
   .record-pair,
   .north,
@@ -2100,14 +2141,6 @@ p.entry-title {
     padding-top: 0;
   }
 
-  .bio {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .portrait {
-    width: 6rem;
-    order: -1;
-  }
 
   .site-nav .links {
     width: 100%;
