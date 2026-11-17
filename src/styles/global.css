@@ -7,7 +7,9 @@
    margin that says how far each claim can be verified.
 
    Three voices in type:
-     Fraunces        display. Warm, a little odd. The person.
+     Fraunces        display. Warm, sturdy, soft at the corners. The person.
+                     (The weight and SOFT axes only: half the bytes of the
+                     full build, and the text-size cut is the friendlier one.)
      Newsreader      body. For reading.
      JetBrains Mono  the system: states, dates, labels, evidence.
 
@@ -201,7 +203,7 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-variation-settings: 'SOFT' 60;
   font-weight: 420;
   line-height: var(--lh-tight);
   letter-spacing: var(--track-tight);
@@ -420,7 +422,7 @@ pre {
   margin: 0;
   line-height: var(--lh-body);
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-variation-settings: 'SOFT' 60;
   font-weight: 600;
   font-size: var(--t-row);
   letter-spacing: -0.01em;
@@ -489,7 +491,7 @@ pre {
 
 .thesis {
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  font-variation-settings: 'SOFT' 70;
   font-size: var(--t-hero);
   font-weight: 360;
   line-height: 1.02;
@@ -523,7 +525,7 @@ pre {
 
 .selfreport-lead {
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-variation-settings: 'SOFT' 60;
   font-size: var(--t-md);
   line-height: 1.3;
   margin-bottom: var(--s-4);
@@ -555,7 +557,7 @@ pre {
 
 .tally b {
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-variation-settings: 'SOFT' 60;
   font-size: var(--t-md);
   font-weight: 560;
   font-variant-numeric: tabular-nums lining-nums;
@@ -767,7 +769,7 @@ pre {
   gap: 0;
   margin: 0 0 var(--s-5);
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 80, 'WONK' 0;
+  font-variation-settings: 'SOFT' 80;
   font-variant-numeric: lining-nums;
   line-height: 1;
   letter-spacing: -0.035em;
@@ -963,7 +965,7 @@ pre {
 
 .demo-intro h2 {
   font-size: var(--t-xl);
-  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  font-variation-settings: 'SOFT' 70;
   margin: 0;
 }
 
@@ -1018,7 +1020,7 @@ pre {
 
 .demo-readout {
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 80, 'WONK' 0;
+  font-variation-settings: 'SOFT' 80;
   font-size: var(--t-lg);
   font-weight: 500;
   font-variant-numeric: tabular-nums lining-nums;
@@ -1271,7 +1273,7 @@ pre {
 .card-risk {
   display: inline-block;
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 80, 'WONK' 0;
+  font-variation-settings: 'SOFT' 80;
   font-size: var(--t-lg);
   font-weight: 560;
   line-height: 1.1;
@@ -1316,7 +1318,7 @@ pre {
 .lamp.is-lit b {
   display: block;
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 80, 'WONK' 0;
+  font-variation-settings: 'SOFT' 80;
   font-size: var(--t-md);
   font-weight: 560;
   letter-spacing: -0.01em;
@@ -1617,7 +1619,7 @@ p.entry-title {
 .limits li strong {
   display: block;
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-variation-settings: 'SOFT' 60;
   font-size: var(--t-md);
   font-weight: 520;
   line-height: 1.25;
@@ -1802,7 +1804,7 @@ p.entry-title {
 .band-count {
   display: block;
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 80, 'WONK' 0;
+  font-variation-settings: 'SOFT' 80;
   font-size: var(--t-hero);
   font-weight: 420;
   line-height: 0.95;
@@ -1839,7 +1841,7 @@ p.entry-title {
 
 .band-open .ledger-claim {
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-variation-settings: 'SOFT' 60;
   font-size: var(--t-md);
   font-weight: 500;
   line-height: 1.25;
@@ -1903,7 +1905,7 @@ p.entry-title {
 .post-card h3 {
   font-size: var(--t-lg);
   font-weight: 420;
-  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  font-variation-settings: 'SOFT' 70;
   letter-spacing: var(--track-tight);
   margin: 0 0 var(--s-3);
 }
@@ -1946,7 +1948,7 @@ p.entry-title {
   align-items: baseline;
   gap: var(--s-4);
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 80, 'WONK' 0;
+  font-variation-settings: 'SOFT' 80;
   line-height: 0.9;
   letter-spacing: -0.045em;
   margin: 0 0 var(--s-4);
@@ -2393,7 +2395,7 @@ p.entry-title {
 
 .post-card h2 {
   font-size: var(--t-lg);
-  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  font-variation-settings: 'SOFT' 70;
   margin: 0 0 var(--s-3);
 }
 
@@ -2412,7 +2414,7 @@ p.entry-title {
 }
 
 .post-title {
-  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  font-variation-settings: 'SOFT' 70;
   font-size: var(--t-hero);
   font-weight: 360;
   line-height: 1.02;
@@ -2425,7 +2427,7 @@ p.entry-title {
 
 .next-title {
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  font-variation-settings: 'SOFT' 70;
   font-size: var(--t-xl);
   line-height: var(--lh-tight);
   letter-spacing: var(--track-tight);
@@ -2444,7 +2446,7 @@ p.entry-title {
 /* The section titles that carry the argument. */
 h2.display {
   font-size: var(--t-xl);
-  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  font-variation-settings: 'SOFT' 70;
   max-width: 18ch;
 }
 
@@ -2460,11 +2462,15 @@ html:not(.js) .demo-control {
   margin: var(--s-2) 0 var(--s-3);
 }
 
-/* The rupee sign is set in the body face, smaller and raised: Fraunces
-   carries it only in a second font file that nothing else here needs. */
+/* The rupee sign comes from a system face. Both web faces carry it only in
+   a second, Latin Extended file that nothing else on the home page needs. */
+.rs,
+.cur {
+  font-family: Georgia, 'Times New Roman', 'Noto Serif', serif;
+}
+
 .cur {
   display: inline-block;
-  font-family: var(--font-body);
   font-size: 0.62em;
   font-weight: 400;
   letter-spacing: 0;

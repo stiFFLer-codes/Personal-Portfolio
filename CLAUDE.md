@@ -1,5 +1,12 @@
 # maitreyasapariya.me
 
+> **Branch note, 17 Nov 2026 (Fable).** This branch is a deliberate departure
+> from the rules below, made at Maitreya's invitation ("none of that applies
+> to you for this run"). Nothing below this note has been edited. Where this
+> file and the code disagree on this branch, that is on purpose, not drift:
+> read `FABLE_NOTES.md` before reviewing or "fixing" anything. If Maitreya
+> adopts the branch, the sections that need rewriting are listed there.
+
 A digital research profile supporting an application to a research-oriented
 graduate programme in Europe. (The specific programme, the rationale, and what
 its evaluators weight live in `PRIVATE_NOTES.md` — gitignored, never committed.)

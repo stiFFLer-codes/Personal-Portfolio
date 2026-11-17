@@ -23,7 +23,7 @@ import { getCollection } from 'astro:content';
 // The Latin files of the three faces, by the same hashed URLs the pages use.
 // On a first visit they load before the worker is in control, so they are
 // saved here by name (the browser's own cache already holds them).
-import fraunces from '@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2?url';
+import fraunces from '@fontsource-variable/fraunces/files/fraunces-latin-soft-normal.woff2?url';
 import newsreader from '@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2?url';
 import newsreaderItalic from '@fontsource-variable/newsreader/files/newsreader-latin-wght-italic.woff2?url';
 import mono from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url';

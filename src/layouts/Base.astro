@@ -5,13 +5,13 @@ import { SITE } from '../site.config';
 
 // Self-hosted so no render-blocking request leaves for a third-party CDN.
 //
-// Three families. Fraunces is the display voice (the full build: optical
-// size, weight, SOFT and WONK axes, all used). Newsreader is the body.
+// Three families. Fraunces is the display voice (the weight and SOFT axes;
+// the full four-axis build is twice the bytes). Newsreader is the body.
 // JetBrains Mono is the system's voice: states, dates, evidence.
 //
 // Fraunces is declared by hand below, Latin subset only, and preloaded: it
 // sets the largest text on every page. Fontsource's own stylesheet would
-// also fetch the 103 KB Latin Extended file for a single rupee sign.
+// also fetch a Latin Extended file for a single rupee sign.
 //
 // The Newsreader italic import is separate and deliberate: its normal build
 // ships no italic faces at all, and quotes are italic.
@@ -19,7 +19,7 @@ import '@fontsource-variable/newsreader';
 import '@fontsource-variable/newsreader/wght-italic.css';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
-import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2?url';
+import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-soft-normal.woff2?url';
 import portrait from '../assets/maitreya.jpg';
 
 interface Props {
