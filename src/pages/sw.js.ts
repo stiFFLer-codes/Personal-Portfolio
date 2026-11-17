@@ -36,7 +36,6 @@ export const GET: APIRoute = async () => {
   ]);
   const pages = [
     '/',
-    '/unresolved/',
     '/research/',
     '/projects/',
     '/writing/',

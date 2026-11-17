@@ -1,4 +1,4 @@
-// The accessibility run the footer and /unresolved report on.
+// The accessibility run the footer reports on.
 //
 //   npm run audit
 //

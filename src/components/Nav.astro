@@ -26,8 +26,5 @@ const current = (href: string) =>
     {links.map((l) => (
       <a href={l.href} aria-current={current(l.href)}>{l.label}</a>
     ))}
-    <a class="nav-open" href="/unresolved" aria-current={current('/unresolved')}>
-      <span class="mark mark-open" aria-hidden="true"></span>unresolved
-    </a>
   </nav>
 </header>

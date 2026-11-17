@@ -15,16 +15,14 @@ const { pages, violations, reached, stops } = auditTotals;
     <div class="footer-report">
       {/* drafted by Fable */}
       <p>
-        Built {day(built)}. Anything marked submitted or awaiting may have moved since;{' '}
-        <a href="/unresolved">the unresolved page</a> says which.
+        Built {day(built)}. Anything marked submitted or awaiting may have moved since.
       </p>
       {pages > 0 ? (
         <p>
           Accessibility: axe-core ran on {pages} pages in light and dark on {audit.date} and found
           {violations === 0 ? ' no violations' : ` ${violations} violations`}. A scripted Tab pass
           reached {reached} of {stops} links and controls.
-          Not yet tested by someone who relies on a screen reader.{' '}
-          <a href="/unresolved#audit">See the run.</a>
+          Not yet tested by someone who relies on a screen reader.
         </p>
       ) : (
         <p>{SITE.accessibilityNote}</p>

@@ -1,13 +1,12 @@
 // The site-wide ledger: every claim the site makes about Maitreya, with how
 // far a reader can check it. Papers and projects carry their own `ledger` in
-// frontmatter; study, work and the site itself are gathered here.
+// frontmatter; study and work are gathered here from site.config.
 //
 // The counts on the home page are the lengths of these lists, nothing else.
 // To move a claim from "on my word" to "checkable", give it a link.
 import { getCollection } from 'astro:content';
 import { CERTIFICATIONS, EDUCATION, type Credential } from './site.config';
 import { span } from './format';
-import { audit, auditTotals } from './data/audit';
 
 export type State = 'checkable' | 'word' | 'open';
 
@@ -19,7 +18,7 @@ export interface LedgerItem {
   links: { label: string; href: string }[];
   /** The page the claim lives on. */
   source: { label: string; href: string };
-  group: 'papers' | 'systems' | 'study' | 'work' | 'site';
+  group: 'papers' | 'systems' | 'study' | 'work';
 }
 
 export const STATE_WORD: Record<State, string> = {
@@ -49,43 +48,6 @@ const credential = (c: Credential): LedgerItem => ({
   source: { label: 'Study', href: '/#study' },
   group: 'study',
 });
-
-// What the site can and can't say about itself. Drafted by Fable; each line
-// is a statement of fact about this repository on the day it was written.
-const siteItems = (): LedgerItem[] => {
-  const source = { label: 'This site', href: '/unresolved#site' };
-  const { pages, violations } = auditTotals;
-  return [
-    {
-      claim:
-        pages > 0
-          ? `axe-core ran on ${pages} pages, in light and dark, on ${audit.date}, and found ${violations === 0 ? 'no violations' : `${violations} violations, listed below`}.`
-          : 'An automated accessibility check of every page.',
-      state: pages > 0 ? 'checkable' : 'open',
-      note: pages > 0 ? undefined : 'The audit has not been run yet: npm run audit.',
-      links: pages > 0 ? [{ label: 'the run', href: '/unresolved#audit' }] : [],
-      source,
-      group: 'site',
-    },
-    {
-      claim: 'Whether the site works with a screen reader, for someone who relies on one.',
-      state: 'open',
-      note: 'Automated checks are not an audit. Nobody who uses a screen reader every day has tested these pages yet.',
-      source,
-      links: [],
-      group: 'site',
-    },
-    {
-      claim: 'The margin the coin-flip demo uses.',
-      state: 'open',
-      note: 'The 0.487 against 0.499 case is real. The margin drawn in the demo is a stand-in so the slider has somewhere to go; the paper fixes its own.',
-      todo: 'the margin from the Three Voices paper, and the spoken Hindi sentence.',
-      source: { label: 'The demo', href: '/#coin-flip' },
-      links: [],
-      group: 'site',
-    },
-  ];
-};
 
 export async function getLedger(): Promise<LedgerItem[]> {
   const [research, projects, experience] = await Promise.all([
@@ -120,7 +82,7 @@ export async function getLedger(): Promise<LedgerItem[]> {
   }));
   const study = [...EDUCATION, ...CERTIFICATIONS].map(credential);
 
-  return [...papers, ...systems, ...study, ...work, ...siteItems()];
+  return [...papers, ...systems, ...study, ...work];
 }
 
 export const tally = (items: LedgerItem[]) => ({

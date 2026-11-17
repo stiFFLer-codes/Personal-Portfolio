@@ -472,15 +472,6 @@ pre {
   text-decoration-color: var(--amber-fill);
 }
 
-.site-nav .nav-open {
-  color: var(--amber);
-}
-
-.site-nav .nav-open:hover,
-.site-nav .nav-open[aria-current] {
-  color: var(--amber);
-}
-
 /* ============================================================
    Masthead: the home page opening
    ============================================================ */
@@ -1785,112 +1776,9 @@ p.entry-title {
   white-space: pre;
 }
 
-.ledger-source {
-  color: var(--ink-faint);
-}
-
 .ledger-item .todo {
   display: inline-block;
   margin-top: var(--s-2);
-}
-
-/* /unresolved: the full ledger in three bands */
-.band {
-  display: grid;
-  grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
-  gap: var(--s-5) clamp(2rem, 6vw, 5rem);
-  padding: var(--section-y) 0;
-  border-top: 1px solid var(--line);
-}
-
-.band-head {
-  position: sticky;
-  top: var(--s-5);
-  align-self: start;
-}
-
-.band-count {
-  display: block;
-  font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 80;
-  font-size: var(--t-hero);
-  font-weight: 420;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  font-variant-numeric: lining-nums;
-}
-
-.band-open .band-count {
-  color: var(--amber);
-}
-
-.band-head h2 {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5em;
-  font-size: var(--t-lg);
-  margin: var(--s-3) 0 var(--s-3);
-}
-
-.band-head h2 .mark {
-  font-size: 0.7em;
-}
-
-.band-head p {
-  font-size: 1rem;
-  line-height: 1.5;
-  color: var(--ink-soft);
-  margin: 0;
-}
-
-.band .ledger-item:first-child {
-  border-top: 2px solid var(--ink);
-}
-
-.band-open .ledger-claim {
-  font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 60;
-  font-size: var(--t-md);
-  font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-}
-
-.audit-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--font-mono);
-  font-size: var(--t-xs);
-  letter-spacing: var(--track-mono);
-}
-
-.audit-table caption {
-  text-align: left;
-  padding-bottom: var(--s-3);
-  color: var(--ink-faint);
-}
-
-.audit-table th,
-.audit-table td {
-  text-align: left;
-  padding: var(--s-2) var(--s-3) var(--s-2) 0;
-  border-bottom: 1px solid var(--line);
-  vertical-align: baseline;
-  font-weight: 400;
-}
-
-.audit-table thead th {
-  color: var(--ink-faint);
-  border-bottom-color: var(--line-strong);
-}
-
-.audit-table .num {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-.table-scroll {
-  overflow-x: auto;
 }
 
 /* ---- writing list ---- */
@@ -2196,13 +2084,6 @@ p.entry-title {
     max-width: var(--measure);
   }
 
-  .band {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .band-head {
-    position: static;
-  }
 }
 
 @media (max-width: 52rem) {
@@ -2499,53 +2380,6 @@ html:not(.js) .demo-control {
 .go-down:hover::after,
 .go-down:focus-visible::after {
   transform: translateY(3px);
-}
-
-/* /unresolved: the whole ledger as one bar, each state in its own texture
-   so the proportions read without colour. */
-.ledger-bar {
-  display: flex;
-  height: 1.25rem;
-  max-width: 46rem;
-  margin: var(--s-6) 0 var(--s-3);
-  border: 2px solid var(--ink);
-  border-radius: 2rem;
-  overflow: hidden;
-}
-
-.ledger-bar i {
-  display: block;
-  flex: var(--n) 0 0;
-}
-
-.ledger-bar .bar-open {
-  background: repeating-linear-gradient(90deg, var(--amber-fill) 0 6px, transparent 6px 12px);
-}
-
-.ledger-bar .bar-word {
-  background: repeating-linear-gradient(135deg, var(--slate) 0 3px, transparent 3px 8px);
-  border-left: 2px solid var(--ink);
-  border-right: 2px solid var(--ink);
-}
-
-.ledger-bar .bar-checkable {
-  background: var(--green);
-}
-
-.ledger-key {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-1) var(--s-5);
-}
-
-.ledger-key a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.25rem;
-  text-decoration: none;
 }
 
 /* The page saying it couldn't reach the network. */

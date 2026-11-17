@@ -69,9 +69,6 @@ const rest = ledger.filter((l) => l.state !== 'open');
           <section aria-labelledby="ledger-title">
             <h2 id="ledger-title">How far you can check this</h2>
             <LedgerList items={rest} />
-            <p class="ledger-links" style="margin-top: var(--s-4)">
-              <a class="go" href="/unresolved">the whole ledger</a>
-            </p>
           </section>
         )}
         {related.length > 0 && (

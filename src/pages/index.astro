@@ -79,9 +79,10 @@ const t = tally(await getLedger());
               <span>are unresolved</span>
             </li>
           </ul>
+          {/* Every row in the record shows its own count, so the totals above
+              can be checked line by line without a separate page. */}
           <p class="selfreport-links">
-            <a class="go" href="/unresolved">Start with the unresolved ones</a>
-            <a class="go go-down" href="#record">Short on time? Skip to the record</a>
+            <a class="go go-down" href="#record">See each one in the record</a>
           </p>
         </div>
 
@@ -408,13 +409,15 @@ const t = tally(await getLedger());
     <div class="container">
       <p class="eyebrow">before you go</p>
       <h2 id="closing-title"><b>{t.open}</b> things on this site are still unresolved.</h2>
+      {/* edited after Fable's run: the aggregate page this pointed to was
+          retired, so the sentence now says where the items actually are. */}
       <p>
-        They are listed first, on purpose. If one of them is the thing you needed to know,
-        ask me and I’ll tell you what I have.
+        Each paper and system lists its own first, on purpose. If one of them is the thing
+        you needed to know, ask me and I’ll tell you what I have.
       </p>
       <div class="cta-row">
-        <a class="cta primary" href="/unresolved">read the unresolved ones</a>
-        <a class="cta" href={`mailto:${SITE.email}`}>ask me</a>
+        <a class="cta primary" href={`mailto:${SITE.email}`}>ask me</a>
+        <a class="cta" href="#record">back to the record</a>
       </div>
     </div>
   </section>

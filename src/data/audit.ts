@@ -1,5 +1,5 @@
 // The accessibility run, typed. scripts/audit.mjs writes a11y-audit.json;
-// the footer, the ledger and /unresolved read it through here.
+// the footer reads it through here.
 import raw from './a11y-audit.json';
 
 export interface AuditViolation {
