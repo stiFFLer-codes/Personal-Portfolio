@@ -1608,6 +1608,30 @@ p.entry-title {
   font-weight: 600;
 }
 
+/* A figure from a paper: the image, framed, with the paper's caption. */
+.prose figure {
+  margin: var(--s-6) 0;
+}
+
+.prose figure p {
+  margin: 0;
+}
+
+.prose figure img {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.prose figcaption {
+  margin-top: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  line-height: 1.6;
+  letter-spacing: var(--track-mono);
+  color: var(--ink-faint);
+}
+
 /* A post opens big: the first paragraph is the hook. */
 .post .prose > p:first-of-type {
   font-size: var(--t-md);
