@@ -4,8 +4,8 @@ A digital research profile supporting an application to research-oriented
 graduate programmes in Europe. (The specific programme, the rationale, and what
 its evaluators weight live in `PRIVATE_NOTES.md`, gitignored, never committed.)
 
-Not a portfolio. Not a landing page. A proof sheet: the work, the claims the
-site makes about it, and how far a reader can check each one.
+A portfolio, not a court hearing: the work, said plainly and linked where it
+can be. (Maitreya, 17 Nov 2026.)
 
 ## Thesis
 
@@ -17,10 +17,10 @@ Every element on this site serves one sentence:
 that turn messy, real-world data into decisions people can act on", which
 described a job rather than a research identity.)
 
-Since phase 13 the site applies the sentence to itself. It counts its own
-claims by how far a reader can check them, shows the better-sounding answer
-struck through beside the one the work reported, and opens every paper and
-system page with what that work couldn't resolve.
+Since phase 13 the home page shows it through the work itself: the
+better-sounding answer struck through beside the one each piece of work
+reported, a playable version of the Three Voices idea, and CARTA's own
+figure.
 
 If a section does not serve that sentence, it does not ship.
 
@@ -37,7 +37,7 @@ The home page serves two speeds:
   the coin-flip demo. For a reader with a minute of curiosity.
 - **The record**, further down: the academic-homepage genre (papers, systems,
   work, study) compressed into one section. For the reader in a hurry, one
-  link from the top ("See each one in the record").
+  link from the top ("Short on time? Skip to the record").
 
 Content is scannable, credible and specific everywhere. Since phase 13,
 deliberate visual ambition is allowed site-wide, inside the design system
@@ -85,15 +85,16 @@ reasons. No hedging. No "this is great, but...".
 
 1. **No unverifiable claims.** Every factual statement must survive a
    professor checking it.
-2. **Every claim's state is true.** `checkable` only with a public link that
-   works; `on my word` when stated with nothing to link; `unresolved` when
-   not done, not known, not tested, or still pending. Moving a claim to
-   `checkable` means adding the link, nothing else.
+2. **A portfolio, not a court hearing.** Say what the work is and link what
+   can be linked. Never label, count, sort or flag a claim by how provable it
+   is: no "checkable", "on my word" or "unresolved", no tally of claims, no
+   box of what a piece of work couldn't settle. Honest limits belong in the
+   work's own write-up, in Maitreya's words, not in site furniture.
 3. **No future tense as achievement.** Banned: "2 papers (soon)", "coming
    soon", "in the works" as a stat. Allowed: "In progress" as honest prose.
 4. **No inflatable counters.** No "5+", no "10+". State the number or state
-   nothing. Every count on the site (the tally, the closing band, the
-   accessibility sentence) is computed from content at build, never typed.
+   nothing. A count on the site (the accessibility sentence in the footer)
+   is computed from content at build, never typed.
 5. **No superlatives.** Banned words: passionate, cutting-edge, innovative,
    leverage, seamless, robust (unless technically precise), journey,
    transform.
@@ -126,7 +127,7 @@ Violating rule 1, 2 or 6 is grounds for immediate REJECT.
   by that page).
 - Content collections in `src/content.config.ts`. Site-wide facts (name,
   links, role, education, certifications) in `src/site.config.ts`, nowhere
-  else. Claims gathered and counted in `src/ledger.ts`.
+  else. Link labels in `src/links.ts`.
 - Fonts self-hosted. No third-party font CDN, ever: an EU reviewer should not
   hit a US ad-tech domain to read this page.
 - **No third-party requests and no trackers.** The footer says so; keep it
@@ -137,25 +138,12 @@ Violating rule 1, 2 or 6 is grounds for immediate REJECT.
 
 ## Design system: law, not suggestion
 
-Concept: **a proof sheet.** The page looks like something checked in public:
-the flattering number struck through in red beside the reported one, an amber
-mark on whatever is still unresolved, and a margin that says how far each
-claim can be verified. (Phase 13, Fable. It replaced the phase 9 to 12
-"fieldbook": one pine-green hue and two typefaces.)
-
-### The three states
-
-Every claim is in one of three states. Each is a shape, a word and a colour,
-in that order of importance: **colour never carries the meaning alone.**
-
-| State | Mark (`.mark-*`) | Word (`STATE_WORD`) | Colour | Means |
-| --- | --- | --- | --- | --- |
-| `checkable` | filled disc | checkable | green | there is a public artifact; the claim links to it |
-| `word` | half disc | on my word | slate | stated, with nothing public to link |
-| `open` | dashed open ring | unresolved | amber | not done, not known, not tested, or pending |
-
-Render a state with `State.astro`. Use these three words exactly; do not
-invent a fourth state or a synonym.
+Concept: **the work, shown plainly.** The better-sounding number struck
+through in red beside the one each piece of work reported, an amber
+highlighter on the words that carry the argument, and a mono margin that says
+what stage each thing is at. (Phase 13, Fable. It replaced the phase 9 to 12
+"fieldbook": one pine-green hue and two typefaces. The claim ledger Fable
+began with was retired the same day; see *Settled decisions*.)
 
 ### Colour
 
@@ -177,15 +165,14 @@ Ink faint       #5D6761   #929C95    5.24 /  6.52   meta text
 Line            ink at 14% alpha                    hairlines
 Line strong     ink at 30 to 32% alpha              borders, underlines
 
-Green           #1D6747   #77CF9F    6.08 /  9.86   checkable, link hover
-Amber           #925600   #F0B04C    5.28 /  9.69   unresolved; the lead accent
+Green           #1D6747   #77CF9F    6.08 /  9.86   link hover
+Amber           #925600   #F0B04C    5.28 /  9.69   the lead accent
 Red             #A52A1F   #FF9A8B    6.36 /  9.01   text beside a strike ("first draft")
-Slate           #48596A   #A9BCCB    6.44 /  9.45   on my word
+Slate           #48596A   #A9BCCB    6.44 /  9.45   travel stop dots
 
 Fills, never text: --amber-fill (lamps; also the focus ring), --green-fill,
 --red-fill (the strike, the red lamp), --marker (the highlighter),
 --lamp-off, --housing, --housing-edge, --housing-off, --housing-ring
-On a fill       #15201C   (both)     8.30 on --amber-fill   --on-amber
 Brand ORCID     #A6CE39   the ORCID iD disc only (--brand-orcid)
 ```
 
@@ -195,9 +182,9 @@ Brand ORCID     #A6CE39   the ORCID iD disc only (--brand-orcid)
   4.82). Run `npm run contrast` whenever a colour changes; it checks every
   pair above, and exits non-zero if any fails. A new text-on-fill pair joins
   its list.
-- **Amber is the lead accent:** the colour of "not sure, go and check", which
-  is the subject. Red is only for the strike and the red lamp. Green means
-  checkable, and link hover.
+- **Amber is the lead accent:** the highlighter, the focus ring, and the
+  near-tie lamp in the demo. Red is only for the strike and the red lamp.
+  Green is link hover.
 - **Both themes are first-class.** The site follows the system setting; the
   footer switch (auto, light, dark) stores a choice in `localStorage`. Check
   every new component in both.
@@ -232,18 +219,12 @@ Wide      74rem  (--measure-wide)   page container
 
 1. **The strike** (`.finding`, `.was`, `.is` on the home page). The
    better-sounding answer, struck through with one off-level red stroke,
-   above the answer the work reported, set large. A number the work
-   deliberately does not claim gets the empty dashed box (`.blank`, "no
-   figure claimed"). Every finding must be backed by the page it links to;
+   above the answer the work reported, set large. CARTA's card shows the
+   paper's Fig. 1, redrawn in the site's tokens (`.finding-figure`), in
+   place of numbers. Every finding must be backed by the page it links to;
    never strike something the work did not actually report.
-2. **The ledger.** Every paper and project carries `ledger:` in its
-   frontmatter; study and work come from `site.config.ts`; `src/ledger.ts`
-   gathers and counts them. The home tally prints the counts, every row in
-   the record ends with its own tally, and every paper and system page
-   (`WorkPage.astro`) leads with "What this couldn't resolve" before the
-   write-up, with "How far you can check this" beside it.
-3. **The margin** (`Entry.astro`, the only list-row shape). A mono margin on
-   the left, then the content; the row ends with its tally and its links.
+2. **The margin** (`Entry.astro`, the only list-row shape). A mono margin on
+   the left, then the content; the row ends with its links.
    The margin says what stage the thing is at, in a word chosen for the kind
    of thing, or when it happened:
 
@@ -260,16 +241,19 @@ Wide      74rem  (--measure-wide)   page container
    "shipped" reads like cargo. Change the row shape in `Entry.astro`, not
    per page. The `/travel` field log is the one list that keeps a spine,
    because it is a route.
-4. **The coin flip** (`CoinFlip.astro`). One prediction, three readers.
+3. **The coin flip** (`CoinFlip.astro`). One prediction, three readers.
    Rendered on the server at the one real case (0.487 against 0.499), so it
    is complete with scripts off; the script only moves the gap. Below the
    margin the mother's lamp is amber, never red and never green. The demo
    says, inside itself, which numbers are real and which are stand-ins
    (`MARGIN` until Maitreya supplies the paper's; `HINDI_SENTENCE` empty
    until he supplies it). Keep it that way.
-5. **The highlighter** (`mark`, `.marked`): an amber marker stroke on the
+4. **The highlighter** (`mark`, `.marked`): an amber marker stroke on the
    words that carry the argument. Sparingly: the thesis and the titles that
    restate it.
+5. **A paper's own figures** go on its page as images cropped from the
+   published PDF, with the paper's caption word for word and alt text that
+   describes the whole diagram (`.prose figure`; CARTA's Fig. 1 and 2).
 
 ### Shape
 
@@ -277,13 +261,13 @@ Wide      74rem  (--measure-wide)   page container
   containers and photos, a full pill for controls (buttons, chips, the
   toggle, the theme switch, the lamp housing), `50%` for circles. Nothing
   else.
-- **Gradients:** hard-edged fills only: the highlighter, the half-disc "on
-  my word" mark, and the demo slider's amber-to-red track. Never a soft fade,
+- **Gradients:** hard-edged fills only: the highlighter and the demo
+  slider's amber-to-red track. Never a soft fade,
   never gradient text.
 - **Box-shadow:** two, both sanctioned: the glow ring on a lit lamp in the
   demo, and the `/travel` plate's lift. Nothing else.
-- **Marks and icons:** the three state marks; the drawn arrows (below); the
-  profile links' official
+- **Marks and icons:** the drawn arrows (below); the profile links'
+  official
   Email, GitHub, LinkedIn and ORCID marks (`ProfileLinks.astro`, inline SVG,
   each beside its name, `aria-hidden`, never an `<img>` from the brand's
   server; the ORCID iD keeps its green). No other icons. No emoji in chrome.
@@ -371,27 +355,29 @@ wins and this file is the bug.
 
 | Collection | Renders on | Notes |
 | --- | --- | --- |
-| `research` | `/`, `/research`, `/research/[slug]` | `kind`, `ledger`, `related`; `authors` in published order, never guessed |
-| `projects` | `/`, `/projects`, `/projects/[slug]` | `kind`, `ledger` |
+| `research` | `/`, `/research`, `/research/[slug]` | `kind`, `related`; `authors` in published order, never guessed |
+| `projects` | `/`, `/projects`, `/projects/[slug]` | `kind`, `sourcesNote` |
 | `writing` | `/`, `/writing`, `/writing/[slug]` | `related`: the work a post is the plain-language version of |
 | `experience` | `/` (the record) | dates, no status |
 | `places` | `/travel` | one marker and one field-log row per stop |
 | `changelog` | nothing | kept as a record since the News list retired |
 
-**A ledger item** is `claim`, `state` (`checkable`, `word`, `open`), an
-optional `note` (Maitreya's own sentence wherever one exists), optional
-`links`, and an optional `todo`. Education and certifications in
-`site.config.ts` are `checkable` when they carry a `proof`, `on my word`
-otherwise.
+**Links.** A paper's or project's `links` render under its row and as Sources
+on its page (`src/links.ts` names them). With no links, a project's
+`sourcesNote` shows instead ("Client work. The source code is private.").
+Education and certifications in `site.config.ts` carry a `proof` link when
+there is one.
 
-**TODOs.** A `todo:` on a claim or credential, or a `<Todo>` in a component,
-is a fact only Maitreya can supply. It renders as an amber `TODO(markie)` in
+**TODOs.** A `todo:` on a credential, or a `<Todo>` in a component, is a
+fact only Maitreya can supply. It renders as an amber `TODO(markie)` in
 `npm run dev` and is left out of every production build (`src/todo.ts`);
 build with `PUBLIC_SHOW_TODOS=true` to see them in one. List them:
 
 ```sh
-grep -rn "todo:\|Todo text=" src
+grep -rn "todo:\|Todo text=\|TODO(markie)" src
 ```
+
+(Reminders inside content files are YAML comments, `# TODO(markie): ...`.)
 
 **Who wrote what.** Maitreya's: the thesis, the bio, every post, every stop
 note, the paper and project bodies, the page ledes, and every quoted line.
@@ -420,11 +406,11 @@ was retired before it ever deployed, so it needs no redirect.
 - [ ] Serves the thesis sentence
 - [ ] Zero content-rule violations; every new fact has a source in the repo
       or is a `todo:`
-- [ ] Every ledger state is true; every `checkable` link works
+- [ ] Every link works; nothing labels a claim by how provable it is
 - [ ] Maitreya's words untouched beyond typos; drafted copy marked
 - [ ] Only design tokens: no literal colour outside the token block
 - [ ] `npm run contrast` passes after any colour change
-- [ ] State carried by shape and word, never colour alone
+- [ ] Meaning never carried by colour alone (the demo's lamps say it in words)
 - [ ] Checked in light and dark
 - [ ] `npm run build` and `npx astro check`: 0 errors
 - [ ] `npm run audit`: 0 violations, every link and control reached by Tab;
@@ -456,16 +442,17 @@ was retired before it ever deployed, so it needs no redirect.
 - Maatritwa AI (the archived prototype) and Three Voices (the paper, on a
   public dataset) are related but separate, and the pages say so.
 - ADS-Cascade is superseded by "Prediction is not selection".
-- `/unresolved`, the single page listing every claim, is retired (Maitreya,
-  17 Nov 2026). Do not bring back an aggregate page of claims unasked. The
-  per-page "What this couldn't resolve" boxes and the home tally stay.
+- The claim ledger is retired (Maitreya, 17 Nov 2026: "This is portfolio
+  website, not a court hearing where you need to prove every word you write
+  or speak."). No `checkable` / `on my word` / `unresolved` labels, no tally
+  of claims, no "What this couldn't resolve" boxes, no page listing claims
+  (`/unresolved` went first), anywhere. Do not bring any of it back.
 - `TODO(markie)` notes never render in production.
 - Writing posts show the year only.
 
 ## Pending Maitreya's call: do not decide for him
 
 - The crossed-out first draft of the thesis above the thesis on `/`
-- "on my word" beside his degree and his job
 - The drafted copy (search `drafted by`)
 - The facts behind the open `todo:` notes
 - Whether the AI-assistance disclosure, the accessibility-run table and the
@@ -499,12 +486,13 @@ The detail is in `git log`, `docs/superpowers/specs/` and `FABLE_NOTES.md`.
     thing; author lists; Claude builds as well as reviews
 12. Refinements: the News list retired; the counted tally under headings
     added and reverted the same day
-13. **The proof sheet** (Fable, 17 Nov 2026, at Maitreya's invitation to
-    reimagine the site): the three states and the ledger; the struck-through
-    findings; the playable coin flip; work pages that lead with their limits;
-    Fraunces, light and dark; the audit script and the computed footer; the
-    offline worker. The same day, at Maitreya's request: `/unresolved`
-    retired and TODO notes made development-only. On branch
+13. **The reimagining** (Fable, 17 Nov 2026, at Maitreya's invitation): the
+    struck-through findings; the playable coin flip; Fraunces, light and
+    dark; the audit script and the computed footer; the offline worker; and
+    a claim ledger. The same day, at Maitreya's request: `/unresolved`
+    retired, TODO notes made development-only, then the whole claim ledger
+    retired ("a portfolio website, not a court hearing"), and CARTA's
+    figures added from the paper. On branch
     `claude/charming-hopper-ogbbt8`, pending merge.
 
 ## Git

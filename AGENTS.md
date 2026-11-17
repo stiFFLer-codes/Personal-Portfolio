@@ -1,7 +1,9 @@
 # Context for fresh sessions
 
-This site is a maintained system, not a brochure. Every claim is true; every
-state honest.
+This site is a maintained system, not a brochure. Every claim is true. It is
+also a portfolio, not a court hearing: say what the work is and link what can
+be linked; never label a claim by how provable it is (`CLAUDE.md`, content
+rule 2).
 
 ## What this site is
 
@@ -12,9 +14,10 @@ graduate programmes in Europe".
 
 The thesis, in Maitreya's words: **"I build software systems that report what
 they couldn't resolve."** Every section serves that sentence or it doesn't
-ship. Since phase 13 the site applies it to itself: every claim it makes is
-`checkable`, `on my word` or `unresolved`, the home page counts them, and
-every paper and system page leads with what that work couldn't resolve.
+ship. Since phase 13 the home page shows it through the work itself: the
+better-sounding answer struck through beside the one each piece of work
+reported, a playable version of the Three Voices idea, and CARTA's own
+figure.
 
 The reader: someone who looks Maitreya up from his CV or LinkedIn, most often
 a professor late at night after two hundred applications. The top of the home
@@ -29,9 +32,9 @@ reasoning behind phase 13. This file is the working context.
 
 | Route | Status | Purpose |
 | --- | --- | --- |
-| `/` | Live | The thesis and the tally; six findings, struck through as found; the coin-flip demo; the record (papers, systems, work, study); writing; the north; a closing band |
-| `/research` | Live | All papers ("papers" in the nav), with stage, citation, tally and links |
-| `/research/[slug]` | Live | A paper: what it couldn't resolve, then the write-up beside its ledger and related work |
+| `/` | Live | The thesis, bio and links; six findings, five struck through as found and CARTA's figure; the coin-flip demo; the record (papers, systems, work, study); writing; the north |
+| `/research` | Live | All papers ("papers" in the nav), with stage, citation and links |
+| `/research/[slug]` | Live | A paper: the write-up, with its Sources and related work beside it |
 | `/projects` | Live | All systems and analyses ("systems" in the nav) |
 | `/projects/[slug]` | Live | A system: the same shape as a paper page |
 | `/writing` | Live | The four posts |
@@ -61,8 +64,7 @@ Optional: `authors` (full list in published order, exactly as on the paper;
 `SITE.name` renders in bold; leave unset until confirmed, never guess),
 `venue` (italic in the citation), `citation` (volume, issue, year and pages
 once published), `kind` (what sort of thing it is: "journal paper",
-"pre-registered study"), `ledger` (below), `related` (other ways into the
-same work: `{ label, href }`, e.g. the plain-language post), `order`,
+"pre-registered study"), `related` (other ways into the same work: `{ label, href }`, e.g. the plain-language post), `order`,
 `links` (`doi` for the paper's own DOI, `arxiv`, `zenodo`, `code`: full URLs).
 
 ### Adding a system or analysis
@@ -74,45 +76,30 @@ margin word: `in production`, `complete`, `archived`, `live`), `statusLabel`,
 `summary`.
 
 Optional: `context` (whose work it was: "independent", "client work · Crest
-Infosystems"), `kind` ("production system", "prototype"), `ledger`, `stack`,
-`order`, `links` (`repo`, `live`, `preprint`: full URLs).
+Infosystems"), `kind` ("production system", "prototype"), `stack`,
+`order`, `links` (`repo`, `live`, `preprint`: full URLs), `sourcesNote`
+(shown under Sources when there is nothing to link, e.g. private code).
 
 The body is Markdown; each `##` gets a rule above it.
 
-### The ledger
+### A paper's figures
 
-Every paper and system carries a `ledger:`, a list of what its page claims:
-
-```yaml
-ledger:
-  - claim: 'The manuscript is archived on Zenodo.'
-    state: checkable            # checkable | word | open
-    links:
-      - { label: 'zenodo', href: 'https://doi.org/...' }
-  - claim: 'How CARTA does on a real chat archive.'
-    state: open
-    note: 'Maitreya''s own sentence from the page, wherever one exists.'
-    todo: 'a fact only Maitreya can supply'
-```
-
-- `checkable` needs a link that works. `word` is stated with nothing public
-  to link. `open` is not done, not known, not tested, or pending.
-- To move a claim from `word` to `checkable`, add the link. Nothing else.
-- `open` claims appear first on the page, in "What this couldn't resolve".
-- `src/ledger.ts` gathers every ledger, with study and work from
-  `site.config.ts`, into the counts on the home page. Counts are computed;
-  never type one.
+A paper's own figures go in its write-up as images cropped from the published
+PDF (`src/content/research/img/`), inside a `<figure>` with the paper's
+caption word for word in a `<figcaption>` and alt text that describes the
+whole diagram. See CARTA's page.
 
 ### TODOs
 
-A `todo:` on a claim or a credential, or a `<Todo text="..." />` in a
-component, is a fact only Maitreya can supply. Never guess one; add a `todo`.
+A `todo:` on a credential, or a `<Todo text="..." />` in a component, is a
+fact only Maitreya can supply. Never guess one; add a `todo`. In a content
+file, the reminder is a YAML comment: `# TODO(markie): ...`.
 It renders as an amber `TODO(markie)` in `npm run dev` and is left out of
 every production build (`src/todo.ts`); build with `PUBLIC_SHOW_TODOS=true`
 to see them in one. List them:
 
 ```sh
-grep -rn "todo:\|Todo text=" src
+grep -rn "todo:\|Todo text=\|TODO(markie)" src
 ```
 
 ### Adding a post
@@ -129,7 +116,7 @@ editorial call, not a sort by date).
 
 Create `src/content/experience/[slug].md`. It renders in the record on `/`.
 No detail page, since a job isn't a case study. A job is labelled by its
-dates ("Jan 2026 – now"), never by a status word, and counts as `on my word`.
+dates ("Jan 2026 – now"), never by a status word.
 
 Required: `company`, `role`, `start` (date), `summary`.
 Optional: `end` (unset means current), `location`, `note` (one line the
@@ -138,10 +125,10 @@ page the role produced; the title links to it), `order`.
 
 ### Education and certifications
 
-`EDUCATION` and `CERTIFICATIONS` in `src/site.config.ts`. A line with a
+`EDUCATION` and `CERTIFICATIONS` in `src/site.config.ts`. A line can carry a
 `proof` (a redacted certificate under `public/`, or the issuer's own
-validation page) counts as `checkable`; without one it is `on my word`, and
-a `todo` can say what proof would change that. Lines can also carry an
+validation page), which renders as a "certificate" link; a `todo` can note a
+proof still to find (development builds only). Lines can also carry an
 internal `href` and a mono `note`.
 
 ### Adding a changelog entry
@@ -162,7 +149,7 @@ percentage of the map viewBox), `blurb` (one honest line, Maitreya's).
 
 Optional: `anchor` (the single summer-school stop, drawn green), `photos`
 (`{ src, alt }`, `src` resolved by Astro `image()`), `source` (`{ label,
-href }`: a checkable artifact under `public/`).
+href }`: an artifact under `public/`, such as the certificate).
 
 Geometry is not hand-authored: country shapes, labels, lakes, graticule and
 each city's projected `x`/`y` are regenerated by `scripts/build-travel-geo.py`
@@ -171,8 +158,8 @@ it is not a runtime dependency and adds no runtime request.
 
 ### Links are not optional decoration
 
-A paper with a public repo and no link to it is a bug: on a site whose
-argument is "check my claims", the link is what makes a claim `checkable`.
+A paper with a public repo and no link to it is a bug: the link is how a
+reader who wants more goes further.
 
 ## Checks before every push
 

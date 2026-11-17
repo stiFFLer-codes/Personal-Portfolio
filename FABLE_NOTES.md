@@ -506,3 +506,23 @@ against the font files found the three gaps it then listed, all fixed:
 - Two literal colours in component rules are tokens (`--housing-ring`,
   `--on-amber`), and `npm run contrast` now checks text set on a fill.
 - The unused `--shadow` token is gone.
+
+**Later still: the claim ledger is retired.** Seeing the preview, Maitreya
+decided it did not belong: "This is portfolio website, not a court hearing
+where you need to prove every word you write or speak. And it is well
+understood that you just cannot put proof claim of everything. And marking
+them unresolved is ridiculous." So nothing on the site labels a claim by how
+provable it is any more: the home tally, the closing band, the per-row
+counts, the "What this couldn't resolve" boxes, the state marks (in the demo,
+the 404, the offline notice) and the dashed-ring favicon are all gone, and
+`CLAUDE.md` now makes that a content rule. The struck-through findings, the
+coin flip and the record stay. Paper and system pages list their links under
+a plain Sources heading.
+
+The "no figure claimed" box on CARTA's card became the paper's Fig. 1,
+redrawn in the site's colours, beside a line from the paper's introduction.
+The paper's page now carries its Fig. 1 and Fig. 2, cropped from the
+published PDF Maitreya shared, with the paper's own captions. The favicon is
+an M over the amber highlighter.
+
+The screenshots in `docs/fable/` still show the site as Fable left it.

@@ -34,21 +34,17 @@ a Chromium it can launch; that is deliberately not a dependency of the site.
 
 Projects, research, writing, experience, changelog, and travel stops (`places`, rendered on `/travel`) are each single-file content collections. To add work to the site, add one file. Schema lives in `src/content.config.ts`.
 
-Papers and projects carry a `ledger`: what the page claims, and whether each
-claim is `checkable` (there is a public link), `word` (stated, nothing public
-to link) or `open` (unresolved). `src/ledger.ts` gathers them, with study and
-work from `src/site.config.ts`, into the counts on the home page. Every
-count can be traced: each row in the home page's record shows its own tally,
-and each paper and system page lists its claims. To move a claim from "on my
-word" to "checkable", give it a link.
+Papers and projects list their `links` (doi, code, repository, and so on);
+they render under each row and as Sources on the work's own page.
 
-A `todo:` on a claim (or a `<Todo>` in a component) is a fact only Maitreya
-can supply. It renders as an amber `TODO(markie)` in `npm run dev` and is left
+A `todo:` on a credential (or a `<Todo>` in a component, or a
+`# TODO(markie): ...` comment in a content file) is a fact only Maitreya can
+supply. It renders as an amber `TODO(markie)` in `npm run dev` and is left
 out of production builds; build with `PUBLIC_SHOW_TODOS=true` to see them in
 one. List them all with:
 
 ```sh
-grep -rn "todo:\|Todo text=" src
+grep -rn "todo:\|Todo text=\|TODO(markie)" src
 ```
 
 ## Governance
@@ -57,7 +53,7 @@ Two files hold the rules:
 - `CLAUDE.md`: the law. Content rules, design system, sanctioned scripts,
   review checklist, settled and pending decisions, history.
 - `AGENTS.md`: context for fresh sessions. Site map, content workflow, the
-  ledger and TODOs, the checks to run before every push.
+  links, figures and TODOs, the checks to run before every push.
 
 `FABLE_NOTES.md` is the reasoning behind phase 13, the current design.
 
