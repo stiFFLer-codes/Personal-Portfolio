@@ -251,6 +251,10 @@ Wide      74rem  (--measure-wide)   page container
    labelled fields under one rule, like a journal article's header:
    *currently* the role, *at* the employer, *based in* the city, all read
    from `site.config.ts`. On a phone they stack into label and value rows.
+   Under it, `.hero-grid`: the thesis and the bio in one column and the
+   portrait in its own column beside them, cropped 4:5 from the square
+   original; on a phone the portrait sits between the thesis and the bio,
+   cropped 4:3. Never a thumbnail.
 5. **The highlighter** (`mark`, `.marked`): an amber marker stroke on the
    words that carry the argument. Sparingly: the thesis and the titles that
    restate it.
@@ -496,8 +500,9 @@ The detail is in `git log`, `docs/superpowers/specs/` and `FABLE_NOTES.md`.
     a claim ledger. The same day, at Maitreya's request: `/unresolved`
     retired, TODO notes made development-only, then the whole claim ledger
     retired ("a portfolio website, not a court hearing"), and CARTA's
-    figures added from the paper. On branch
-    `claude/charming-hopper-ogbbt8`, pending merge.
+    figures added from the paper. Merged to `main` through PR #17 on
+    17 Nov 2026; then the crossed-out draft gave way to the labelled
+    masthead, and the portrait moved into its own column.
 
 ## Git
 
