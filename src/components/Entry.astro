@@ -9,6 +9,7 @@
 // listing here and every page that lists anything follows.
 import State from './State.astro';
 import Todo from './Todo.astro';
+import { SHOW_TODOS } from '../todo';
 import type { State as S } from '../ledger';
 
 const LINK_LABELS: Record<string, string> = {
@@ -122,6 +123,6 @@ const tally: [S, string][] = ledger.length
         ))}
       </ul>
     )}
-    {todo && <p class="entry-note"><Todo text={todo} /></p>}
+    {todo && SHOW_TODOS && <p class="entry-note"><Todo text={todo} /></p>}
   </div>
 </article>

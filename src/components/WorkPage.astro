@@ -3,6 +3,7 @@
 // resolve is said first, straight under the summary; then the write-up, with
 // the page's ledger beside it.
 import Todo from './Todo.astro';
+import { SHOW_TODOS } from '../todo';
 import LedgerList from './LedgerList.astro';
 import type { State as S } from '../ledger';
 
@@ -49,7 +50,7 @@ const rest = ledger.filter((l) => l.state !== 'open');
             <li>
               <strong>{l.claim}</strong>
               {l.note && <p>{l.note}</p>}
-              {l.todo && <p><Todo text={l.todo} /></p>}
+              {l.todo && SHOW_TODOS && <p><Todo text={l.todo} /></p>}
             </li>
           ))}
         </ul>
