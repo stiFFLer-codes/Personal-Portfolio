@@ -50,11 +50,14 @@
   --red-fill: #d8452f;
   --marker: rgba(240, 169, 46, 0.5);
   --lamp-off: rgba(21, 32, 28, 0.1);
-  --shadow: 0 1px 1px rgba(21, 32, 28, 0.05), 0 14px 32px -18px rgba(21, 32, 28, 0.28);
   /* The body of the three-lamp signal. Dark in both themes: it is an object. */
   --housing: #15201c;
   --housing-edge: #15201c;
   --housing-off: rgba(245, 242, 233, 0.13);
+  --housing-ring: rgba(245, 242, 233, 0.28);
+  /* Text on an amber fill (the closing band's button on hover). The same in
+     both themes, because --amber-fill is. Checked by npm run contrast. */
+  --on-amber: #15201c;
 
   --brand-orcid: #a6ce39;
 
@@ -148,7 +151,6 @@
     --red-fill: #ee5a43;
     --marker: rgba(240, 169, 46, 0.3);
     --lamp-off: rgba(236, 232, 220, 0.1);
-    --shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 14px 32px -18px rgba(0, 0, 0, 0.7);
     --housing: #060a09;
     --housing-edge: rgba(236, 232, 220, 0.32);
   }
@@ -173,7 +175,6 @@
   --red-fill: #ee5a43;
   --marker: rgba(240, 169, 46, 0.3);
   --lamp-off: rgba(236, 232, 220, 0.1);
-  --shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 14px 32px -18px rgba(0, 0, 0, 0.7);
   --housing: #060a09;
   --housing-edge: rgba(236, 232, 220, 0.32);
 }
@@ -2510,7 +2511,7 @@ html:not(.js) .demo-control {
 
 .lamp i {
   background: var(--housing-off);
-  border-color: rgba(245, 242, 233, 0.28);
+  border-color: var(--housing-ring);
 }
 
 .lamp-red.is-lit i {
@@ -2571,7 +2572,7 @@ html:not(.js) .demo-control {
 .closing .cta:hover {
   background: var(--amber-fill);
   border-color: var(--amber-fill);
-  color: #15201c;
+  color: var(--on-amber);
 }
 
 main:has(.closing) + .site-footer {

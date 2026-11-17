@@ -27,5 +27,11 @@ for (const [name, t] of [['light', light], ['dark', { ...light, ...dark }]]) {
       console.log(`  ${fg.padEnd(10)} on ${bg.padEnd(8)} ${r.toFixed(2)} ${r < 4.5 ? 'FAIL' : ''}`);
     }
   }
+  // Text set on a fill rather than on the paper.
+  for (const [fg, bg] of [['on-amber', 'amber-fill']]) {
+    const r = ratio(t[fg], t[bg]);
+    if (r < 4.5) fail = true;
+    console.log(`  ${fg.padEnd(10)} on ${bg.padEnd(8)} ${r.toFixed(2)} ${r < 4.5 ? 'FAIL' : ''}`);
+  }
 }
 process.exit(fail ? 1 : 0);

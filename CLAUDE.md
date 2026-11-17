@@ -184,14 +184,17 @@ Slate           #48596A   #A9BCCB    6.44 /  9.45   on my word
 
 Fills, never text: --amber-fill (lamps; also the focus ring), --green-fill,
 --red-fill (the strike, the red lamp), --marker (the highlighter),
---lamp-off, --housing, --housing-edge, --housing-off
+--lamp-off, --housing, --housing-edge, --housing-off, --housing-ring
+On a fill       #15201C   (both)     8.30 on --amber-fill   --on-amber
 Brand ORCID     #A6CE39   the ORCID iD disc only (--brand-orcid)
 ```
 
 - **Every text colour clears 4.5:1 on both `--paper` and `--paper-2`, in
-  both themes.** The tightest pairs today are ink-faint and amber on
-  `--paper-2` in light (4.79 and 4.82). Run `npm run contrast` whenever a
-  colour changes; it exits non-zero if any pair fails.
+  both themes**, and text set on a fill clears it on that fill. The tightest
+  pairs today are ink-faint and amber on `--paper-2` in light (4.79 and
+  4.82). Run `npm run contrast` whenever a colour changes; it checks every
+  pair above, and exits non-zero if any fails. A new text-on-fill pair joins
+  its list.
 - **Amber is the lead accent:** the colour of "not sure, go and check", which
   is the subject. Red is only for the strike and the red lamp. Green means
   checkable, and link hover.
@@ -471,12 +474,8 @@ was retired before it ever deployed, so it needs no redirect.
 
 ## Known gaps: fix them, never copy them
 
-Each of these breaks a rule above. None is precedent.
-
-- Two literal colours outside the token block in `global.css`: the unlit
-  lamp border (`rgba(245, 242, 233, 0.28)`) and the closing band's button
-  hover text (`#15201c`).
-- `--shadow` is defined in the token block and used nowhere.
+None open (17 Nov 2026). When a diff knowingly leaves a rule above broken,
+list it here with what breaks it, so no later session reads it as precedent.
 
 ---
 
