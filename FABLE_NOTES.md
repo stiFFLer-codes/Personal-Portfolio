@@ -530,4 +530,6 @@ The screenshots in `docs/fable/` still show the site as Fable left it.
 **And a last pass on the opening.** The crossed-out first draft above the
 thesis is gone ("not needed at all"); the role line became three labelled
 fields under one rule (currently, at, based in); and the record's heading
-is now "Papers, systems, work and study."
+is now "Papers, systems, work and study." After the merge, the portrait
+left its thumbnail beside the bio for its own column beside the thesis (a
+wide crop between the thesis and the bio on a phone).
