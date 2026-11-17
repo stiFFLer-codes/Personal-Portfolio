@@ -1,16 +1,11 @@
 # maitreyasapariya.me
 
-> **Branch note, 17 Nov 2026 (Fable).** This branch is a deliberate departure
-> from the rules below, made at Maitreya's invitation ("none of that applies
-> to you for this run"). Nothing below this note has been edited. Where this
-> file and the code disagree on this branch, that is on purpose, not drift:
-> read `FABLE_NOTES.md` before reviewing or "fixing" anything. If Maitreya
-> adopts the branch, the sections that need rewriting are listed there.
+A digital research profile supporting an application to research-oriented
+graduate programmes in Europe. (The specific programme, the rationale, and what
+its evaluators weight live in `PRIVATE_NOTES.md`, gitignored, never committed.)
 
-A digital research profile supporting an application to a research-oriented
-graduate programme in Europe. (The specific programme, the rationale, and what
-its evaluators weight live in `PRIVATE_NOTES.md` — gitignored, never committed.)
-Not a portfolio. Not a landing page. A lab notebook that happens to be public.
+Not a portfolio. Not a landing page. A proof sheet: the work, the claims the
+site makes about it, and how far a reader can check each one.
 
 ## Thesis
 
@@ -22,34 +17,39 @@ Every element on this site serves one sentence:
 that turn messy, real-world data into decisions people can act on", which
 described a job rather than a research identity.)
 
-<!-- Maitreya: this is the working thesis, carried over from the v2 hero.
-     Confirm or rewrite the exact wording before the site goes public.
-     Direction is settled; the sentence is yours. -->
+Since phase 13 the site applies the sentence to itself. It counts its own
+claims by how far a reader can check them, shows the better-sounding answer
+struck through beside the one the work reported, and opens every paper and
+system page with what that work couldn't resolve.
 
 If a section does not serve that sentence, it does not ship.
 
 ## Reader
 
-A professor, 11 PM, having read 200 applications. They are reading, not
-admiring. Optimize for: scannable, credible, specific. Never for: impressive.
+Someone who looks Maitreya up from his CV or LinkedIn. Most often a professor
+late at night after two hundred applications; also a possible supervisor or
+collaborator, or someone he met on the 2025 trip. No programme asks for this
+site. It is what they find.
 
-**Revised with Maitreya:** this site is not a deliverable for the target
-programme — that programme never asks for a portfolio. It's a supporting digital
-presence someone may look up from the CV / LinkedIn. For a *lookup* (not a scored document), evident craft
-and care read as an asset, not a liability. So: content stays
-scannable/credible/specific, but the `/travel` plate is a sanctioned showcase
-where deliberate visual ambition is allowed. That licence is scoped to `/travel`
-unless extended explicitly — it does not loosen the content rules anywhere.
+The home page serves two speeds:
+
+- **The argument**, top of the page: the thesis, the struck-through findings,
+  the coin-flip demo. For a reader with a minute of curiosity.
+- **The record**, further down: the academic-homepage genre (papers, systems,
+  work, study) compressed into one section. For the reader in a hurry, one
+  link from the top ("See each one in the record").
+
+Content is scannable, credible and specific everywhere. Since phase 13,
+deliberate visual ambition is allowed site-wide, inside the design system
+below. That licence never loosens the content rules.
 
 ---
 
-## CLAUDE'S ROLE — read this carefully
+## CLAUDE'S ROLE: read this carefully
 
-**Revised with Maitreya, 30 Oct 2026 (phase 11):** Claude is the **architect,
-builder and reviewer.** No other agent builds on this site. That makes the
-review step more important, not less: Claude reviews its own diff against the
-checklist below before every push, with the same severity it would apply to
-anyone else's.
+Claude is the **architect, builder and reviewer.** Claude reviews its own diff
+against the checklist below before every push, with the same severity it would
+apply to anyone else's.
 
 You DO:
 
@@ -62,285 +62,451 @@ You DO:
 
 You DO NOT:
 
-- Write prose for the site (Maitreya does that, alone). Cutting a sentence
-  that a change has made false is allowed; flag it with a `TODO(markie)` so
-  he can rewrite it. Rewording it is not.
-- Guess at a fact (an author list, a date, a venue). Leave the field unset
-  and flag it.
+- **Rewrite Maitreya's words.** His thesis, bio, posts, stop notes, paper and
+  project bodies, page ledes, and every line quoted from them. Fix typos only.
+  A sentence a change has made false may be cut; flag it with a `todo:` so he
+  can rewrite it.
+- **Draft copy unasked.** Draft only when Maitreya asks for it in that
+  session, and mark every drafted block with a `drafted by <who>` comment, so
+  he can find the words that are his to rewrite. Drafted copy is never passed
+  off as his.
+- **Guess at a fact** (an author list, a date, a venue, a number, a link).
+  Leave the field unset and add a `todo:`.
 - Add sections, animations, or pages that were not planned
+- Reopen anything under *Settled decisions* unasked
 - Accept work because it "looks fine"
 
 When asked to review, output exactly: `APPROVE` or `REJECT` + numbered
-reasons. No hedging. No "this is great, but..."
+reasons. No hedging. No "this is great, but...".
 
 ---
 
-## CONTENT RULES — non-negotiable, applies to all agents
+## CONTENT RULES: non-negotiable, apply to all agents
 
 1. **No unverifiable claims.** Every factual statement must survive a
    professor checking it.
-2. **No future tense as achievement.** Banned: "2 papers (soon)",
-   "coming soon", "in the works" as a stat. Allowed: "In progress —"
-   as honest prose in a paragraph.
-3. **No inflatable counters.** No "5+", no "10+". State the number or
-   state nothing.
-4. **No superlatives.** Banned words: passionate, cutting-edge,
-   innovative, leverage, seamless, robust (unless technically precise),
-   journey, transform.
-5. **Prose is human-authored.** No agent writes or rewrites body copy,
-   case study text, or the About page. Agents may fix typos only.
-6. **Precision beats volume.** "Admitted as an undergraduate to a
-   programme intended for master's, doctoral, and postdoctoral
-   researchers" > "selected from a global pool".
+2. **Every claim's state is true.** `checkable` only with a public link that
+   works; `on my word` when stated with nothing to link; `unresolved` when
+   not done, not known, not tested, or still pending. Moving a claim to
+   `checkable` means adding the link, nothing else.
+3. **No future tense as achievement.** Banned: "2 papers (soon)", "coming
+   soon", "in the works" as a stat. Allowed: "In progress" as honest prose.
+4. **No inflatable counters.** No "5+", no "10+". State the number or state
+   nothing. Every count on the site (the tally, the closing band, the
+   accessibility sentence) is computed from content at build, never typed.
+5. **No superlatives.** Banned words: passionate, cutting-edge, innovative,
+   leverage, seamless, robust (unless technically precise), journey,
+   transform.
+6. **Maitreya's prose is his.** See *Claude's role*. Agents fix typos only in
+   his words, and mark anything they draft.
+7. **Precision beats volume.** "Admitted as an undergraduate to a programme
+   intended for master's, doctoral, and postdoctoral researchers" beats
+   "selected from a global pool".
+8. **Avoid the em dash.** Use a comma, colon or full stop instead; keep an em
+   dash only where nothing else works. Labels, titles and page titles never
+   carry one (the title separator is ` · `).
+9. **The programme is never named** in any committed file. Publicly it is
+   "research-oriented graduate programmes in Europe".
 
-7. **Avoid the em dash.** Use a comma, colon or full stop instead; keep
-   an em dash only where nothing else works. Labels, titles and page
-   titles never carry one (the title separator is ` · `).
-
-Violating rule 1 or 5 is grounds for immediate REJECT.
+Violating rule 1, 2 or 6 is grounds for immediate REJECT.
 
 ---
 
 ## Stack
 
-- Astro 5+ static output (currently 7.x) — do NOT migrate to Next.js
-- **Zero runtime dependencies.** Hand-written CSS in
-  `src/styles/global.css`. No Tailwind, no CSS framework, no UI library.
-  Adding one requires justification in the PR body and will usually be
-  rejected.
-- Content Collections (`src/content.config.ts`) for projects and changelog
-- Fonts self-hosted via `@fontsource-variable/*`. No third-party font CDN,
-  ever — an EU reviewer should not hit a US ad-tech domain to read this page.
-  **Two families only** (Newsreader, JetBrains Mono), weight-axis builds.
-  Adding a third face needs the same justification as adding a dependency.
-- Site-wide facts live in `src/site.config.ts`, nowhere else
-- Vercel, Hobby plan (non-commercial — never add analytics that monetize)
-- TypeScript, strict
+- Astro 7, static output, `build.inlineStylesheets: 'always'` (the stylesheet
+  was the only render-blocking request). Do NOT migrate to Next.js.
+- **Dependencies:** `astro` and three `@fontsource-variable/*` packages.
+  Dev only: `axe-core`. Playwright drives `scripts/audit.mjs` and
+  `scripts/og-image.mjs` but is deliberately not a dependency. No CSS
+  framework, no UI library. Adding a dependency requires justification in
+  the PR body and will usually be rejected.
+- **Hand-written CSS:** `src/styles/global.css` (tokens and everything
+  site-wide) and `src/styles/travel.css` (the `/travel` plate, imported only
+  by that page).
+- Content collections in `src/content.config.ts`. Site-wide facts (name,
+  links, role, education, certifications) in `src/site.config.ts`, nowhere
+  else. Claims gathered and counted in `src/ledger.ts`.
+- Fonts self-hosted. No third-party font CDN, ever: an EU reviewer should not
+  hit a US ad-tech domain to read this page.
+- **No third-party requests and no trackers.** The footer says so; keep it
+  true.
+- Vercel, Hobby plan (non-commercial: never add analytics that monetize).
+- TypeScript, strict. `npx astro check` reports 0 errors (it needs
+  `@astrojs/check` and `typescript`; install them without saving).
 
-## Design system — law, not suggestion
+## Design system: law, not suggestion
 
-Concept: **a fieldbook.** One hue family — a deep pine green — tinted the
-whole way from paper to ink, so the page reads as a single material rather
-than a neutral sheet with accents dropped on it. Two typefaces. The one dark
-surface is the filled button (ink on paper). The dark "terminal" ledger strip
-was retired in phase 11: it had shrunk to one fact the intro already carries.
+Concept: **a proof sheet.** The page looks like something checked in public:
+the flattering number struck through in red beside the reported one, an amber
+mark on whatever is still unresolved, and a margin that says how far each
+claim can be verified. (Phase 13, Fable. It replaced the phase 9 to 12
+"fieldbook": one pine-green hue and two typefaces.)
+
+### The three states
+
+Every claim is in one of three states. Each is a shape, a word and a colour,
+in that order of importance: **colour never carries the meaning alone.**
+
+| State | Mark (`.mark-*`) | Word (`STATE_WORD`) | Colour | Means |
+| --- | --- | --- | --- | --- |
+| `checkable` | filled disc | checkable | green | there is a public artifact; the claim links to it |
+| `word` | half disc | on my word | slate | stated, with nothing public to link |
+| `open` | dashed open ring | unresolved | amber | not done, not known, not tested, or pending |
+
+Render a state with `State.astro`. Use these three words exactly; do not
+invent a fourth state or a synonym.
+
+### Colour
+
+Every colour is a custom property in the `:root` token block of `global.css`.
+Dark mode repeats the colour tokens twice, under
+`@media (prefers-color-scheme: dark)` and under `:root[data-theme='dark']`;
+**the two copies must stay identical.** A literal colour anywhere else is a
+REJECT. Three known exceptions: the ORCID iD's white knockout, the print
+stylesheet's white page, and the `/travel` plate's lift shadow.
 
 ```
-Paper           #F2F4EF   page background — pale limestone, green cast
-Paper raised    #E6EAE1   inline code
-Ink             #171C1A   primary text — green-black, not neutral black
-Ink soft        #4C5450   secondary text
-Ink faint       #646E69   meta text
-Hairline        rgba(23,28,26,0.13)
-Hairline strong rgba(23,28,26,0.24)   borders, underlines
+                light     dark      contrast on --paper (light / dark)
+Paper           #F5F2E9   #0F1513   page background
+Paper 2         #ECE8DB   #18201D   raised surfaces: the demo, inline code
+Paper 3         #E0DBCA   #222C28
+Ink             #15201C   #ECE8DC   14.95 / 15.08
+Ink soft        #414C47   #BCC2B9    7.98 / 10.16
+Ink faint       #5D6761   #929C95    5.24 /  6.52   meta text
+Line            ink at 14% alpha                    hairlines
+Line strong     ink at 30 to 32% alpha              borders, underlines
 
-Signal green    #2B6B4F   shipped, links on hover, focus ring, live rail
-Signal amber    #8A5A17   in progress
-Signal slate    #4A5D6B   planned / archived
+Green           #1D6747   #77CF9F    6.08 /  9.86   checkable, link hover
+Amber           #925600   #F0B04C    5.28 /  9.69   unresolved; the lead accent
+Red             #A52A1F   #FF9A8B    6.36 /  9.01   text beside a strike ("first draft")
+Slate           #48596A   #A9BCCB    6.44 /  9.45   on my word
 
+Fills, never text: --amber-fill (lamps; also the focus ring), --green-fill,
+--red-fill (the strike, the red lamp), --marker (the highlighter),
+--lamp-off, --housing, --housing-edge, --housing-off
 Brand ORCID     #A6CE39   the ORCID iD disc only (--brand-orcid)
 ```
 
-Every one of these is a CSS custom property in `global.css`. Use the
-variable, never the literal hex. A stray hex in a diff is a REJECT.
+- **Every text colour clears 4.5:1 on both `--paper` and `--paper-2`, in
+  both themes.** The tightest pairs today are ink-faint and amber on
+  `--paper-2` in light (4.79 and 4.82). Run `npm run contrast` whenever a
+  colour changes; it exits non-zero if any pair fails.
+- **Amber is the lead accent:** the colour of "not sure, go and check", which
+  is the subject. Red is only for the strike and the red lamp. Green means
+  checkable, and link hover.
+- **Both themes are first-class.** The site follows the system setting; the
+  footer switch (auto, light, dark) stores a choice in `localStorage`. Check
+  every new component in both.
+- `prefers-contrast: more` folds ink-faint into ink-soft and makes hairlines
+  solid. `forced-colors: active` replaces fills with system colours and
+  leans on borders and words. Keep both working.
 
-**Every text color above clears WCAG AA (4.5:1) on `--paper` at body size.**
-If you introduce a color, compute the ratio before you ship it. Signal
-colors are never the sole carrier of meaning — a text label saying the same
-thing sits beside every status dot on the site.
-
-Type
+### Type
 
 ```
-Display + body  Newsreader (serif)   380 for h1, 500 h2, 600 h3, 400 body
-Mono            JetBrains Mono       meta, labels, nav, margin column, status
-Measure         38rem   (--measure)       prose, ~68 chars, never wider
-Measure wide    64rem   (--measure-wide)  page container (54rem until phase 12)
+Display   Fraunces          thesis, h1 to h3, the big numbers. 'SOFT' axis.
+Body      Newsreader        reading text; italic for quotes
+System    JetBrains Mono    states, dates, labels, nav, evidence links
+Measure   38rem  (--measure)        prose, never wider
+Wide      74rem  (--measure-wide)   page container
 ```
 
-One serif doing display and body is deliberate. Hierarchy comes from size,
-weight and the mono, not from a second family. A grotesque display face is
-what made this read as a portfolio rather than a notebook.
+- **Three families.** A fourth needs the same justification as a dependency.
+- Fraunces is the **soft build** (weight and SOFT axes only), Latin only,
+  declared by hand in `Base.astro` and preloaded. Do not swap in the full
+  build (twice the bytes) or use the WONK or opsz axes (not in the build).
+- The rupee sign comes from a system serif (`.rs`, `.cur`): no web face
+  carries it in its Latin file, and loading Fraunces' Latin Extended file
+  for one glyph added 103 KB to the home page.
+- The scale is set once in the token block (`--t-2xs` to `--t-hero`, and
+  `--t-num` for the struck numbers). Do not introduce a font size in a
+  component; add a token with a reason.
+- Spacing is the `--s-1` to `--s-9` scale, `--gutter`, `--section-y`,
+  `--hero-y`. No magic pixels, no bare `rem` in a component.
 
-Scale is fluid, set once in `global.css` (`--t-2xs` … `--t-xl`) with
-`clamp()`. Do not introduce a new font size in a component file — if one is
-missing, add it to the token block with a reason.
+### Signature elements
 
-Spacing: the `--s-1` … `--s-8` scale (0.25rem step), `--gutter`,
-`--section-y`, `--hero-y`. No magic pixels, no bare `rem` in a component.
+1. **The strike** (`.finding`, `.was`, `.is` on the home page). The
+   better-sounding answer, struck through with one off-level red stroke,
+   above the answer the work reported, set large. A number the work
+   deliberately does not claim gets the empty dashed box (`.blank`, "no
+   figure claimed"). Every finding must be backed by the page it links to;
+   never strike something the work did not actually report.
+2. **The ledger.** Every paper and project carries `ledger:` in its
+   frontmatter; study and work come from `site.config.ts`; `src/ledger.ts`
+   gathers and counts them. The home tally prints the counts, every row in
+   the record ends with its own tally, and every paper and system page
+   (`WorkPage.astro`) leads with "What this couldn't resolve" before the
+   write-up, with "How far you can check this" beside it.
+3. **The margin** (`Entry.astro`, the only list-row shape). A mono margin on
+   the left, then the content; the row ends with its tally and its links.
+   The margin says what stage the thing is at, in a word chosen for the kind
+   of thing, or when it happened:
 
-Signature element: **the margin.** Every list on the site is one shape
-(`Entry.astro`): a mono margin column on the left, then the content. The
-margin says what state the thing is in, in a word chosen for the kind of
-thing, or when it happened:
+   | Kind | Margin shows |
+   | --- | --- |
+   | Papers | `stage`: published · accepted · presented · preprint · submitted · completed |
+   | Systems | `stage`: in production · complete · archived · live |
+   | Jobs | dates: `Jan 2026 – now` |
+   | Education, certifications | a date |
+   | Writing posts | the year only (`2026`): never a day or month the post can't vouch for |
 
-| Kind | Margin shows | Dot |
+   The `status` enum stays in the schema but nothing renders it since phase
+   13; set it truthfully anyway. Never show it as a word: beside a job,
+   "shipped" reads like cargo. Change the row shape in `Entry.astro`, not
+   per page. The `/travel` field log is the one list that keeps a spine,
+   because it is a route.
+4. **The coin flip** (`CoinFlip.astro`). One prediction, three readers.
+   Rendered on the server at the one real case (0.487 against 0.499), so it
+   is complete with scripts off; the script only moves the gap. Below the
+   margin the mother's lamp is amber, never red and never green. The demo
+   says, inside itself, which numbers are real and which are stand-ins
+   (`MARGIN` until Maitreya supplies the paper's; `HINDI_SENTENCE` empty
+   until he supplies it). Keep it that way.
+5. **The highlighter** (`mark`, `.marked`): an amber marker stroke on the
+   words that carry the argument. Sparingly: the thesis and the titles that
+   restate it.
+
+### Shape
+
+- **Radii:** `--radius` (4px) for boxes, `--radius-lg` (14px) for large
+  containers and photos, a full pill for controls (buttons, chips, the
+  toggle, the theme switch, the lamp housing), `50%` for circles. Nothing
+  else.
+- **Gradients:** hard-edged fills only: the highlighter, the half-disc "on
+  my word" mark, and the demo slider's amber-to-red track. Never a soft fade,
+  never gradient text.
+- **Box-shadow:** two, both sanctioned: the glow ring on a lit lamp in the
+  demo, and the `/travel` plate's lift. Nothing else.
+- **Marks and icons:** the three state marks; the profile links' official
+  Email, GitHub, LinkedIn and ORCID marks (`ProfileLinks.astro`, inline SVG,
+  each beside its name, `aria-hidden`, never an `<img>` from the brand's
+  server; the ORCID iD keeps its green). No other icons. No emoji in chrome.
+- **Glyphs:** only those the self-hosted font files carry. Check a new glyph
+  against the `.woff2` before using it. Checked 17 Nov 2026: the Latin files
+  carry `↓` and `↑` but not `→`, `←` or `↗`, which today render from a system
+  font (see *Known gaps*). `⧗` and `↻` were removed in phase 10 for the same
+  reason.
+
+### Motion
+
+All motion lives inside `@media (prefers-reduced-motion: no-preference)`, and
+a `reduce` rule zeroes every transition and animation. Motion that plays for
+a reader who asked for none is a REJECT.
+
+Allowed:
+
+- The load reveal (`.reveal`): opacity and an 8px rise, 0.6s, ease-out
+- The highlighter drawn once across the thesis
+- The strike drawn as a finding scrolls into view, only where the browser
+  supports `animation-timeline`; it is simply there otherwise
+- The arrow glide on `.go` links: 3px in the arrow's direction
+- State changes on direct input: the toggle thumb, the demo's bars and lamps
+
+Banned: scale on hover, spring physics, parallax (outside `/travel`),
+scroll-jacking, spinning, staggered letter reveals, gradient text,
+glassmorphism, anything that plays on its own after load.
+
+**The `/travel` carve-out** (reviewed with Maitreya; the list is unchanged
+since phase 9):
+(1) the route line draws itself once on load via `stroke-dashoffset`; (2) a
+small green token travels the route (CSS `offset-path`); (3) a two-plane
+pointer-parallax, map and pins drifting toward the cursor within a small
+bound, fine pointers only; (4) a staged load: grid and labels fade, route
+inks, token travels, pins appear in order; (5) a static tilt of at most
+1.5° on mounted photos. All reduced-motion gated, and the plate is fully
+static and functional without motion or JS. Do not extend this to other
+sections; do not remove it without an explicit instruction from Maitreya.
+On a phone the map's markers are not tap targets (they sit too close
+together); the stop index under the map is.
+
+### Client-side JavaScript
+
+The pages are static, and **every page works with scripts off.** The
+sanctioned scripts, each pure enhancement:
+
+| Where | What it does | With scripts off |
 | --- | --- | --- |
-| Papers | `stage`: published · accepted · presented · preprint · submitted · completed | yes |
-| Projects | `stage`: complete · archived · live | yes |
-| Jobs | dates: `Jan 2026 – now` | no |
-| Education, certifications | a date | no |
-| Writing posts | the year only (`2026`): never a day or month the post can't vouch for | no |
+| `Base.astro`, head | adds the `js` class; applies a saved theme before first paint | follows the system theme |
+| `Base.astro`, body | registers `/sw.js`; shows the offline notice | no saved copy; no notice |
+| `Footer.astro` | the theme switch | the switch is hidden |
+| `CoinFlip.astro` | moves the gap; speaks the Hindi sentence once supplied | the real case is shown; the slider is hidden |
+| `TravelMap.astro` | pointer-parallax; lights the route leg into a hovered stop | the map renders; every marker links |
+| `/sw.js` (`src/pages/sw.js.ts`) | pages network-first, hashed assets cache-first; one cache per build | nothing is cached |
 
-Never show the raw `status` enum ("shipped", "in progress") as a word: beside
-a job it reads like cargo. `status` only picks a dot colour. The one list that
-keeps a spine is the `/travel` field log, because it is a route. All list
-markup lives in `Entry.astro`; change the shape there, not per page.
+Any other client-side script is a REJECT. The service worker is the one
+piece that outlives a deploy; how to switch it off is in the header of
+`src/pages/sw.js.ts`.
 
-Home page shape (phase 11): the home page is the whole profile, in the
-academic-homepage genre a professor already knows how to read. Name as the
-h1, the thesis line, Maitreya's bio, role, links (email, ORCID, GitHub,
-LinkedIn), portrait; then publications as citations; experience; projects
-(the first two, full-width rows); then education beside certifications.
-Every section is capped (projects: two) so one page stays scannable. There
-is no `/about`, and no News list: it was retired in phase 12 because it
-repeated the publications' stage words and aged badly.
+### Accessibility
 
-Motion
+Accessibility is not a checkbox here. It's the thesis. A site arguing that
+technology should work for real people cannot itself exclude screen-reader
+users. That would be the single most damaging thing on the page.
 
-- Allowed: opacity fade, ≤8px translate, 200–500ms, ease-out (`.reveal`)
-- One sanctioned hover micro-interaction, site-wide: the directional arrow
-  glide on forward/back links (a `→`/`←` pseudo-element that translates ≤3px
-  in its own direction on hover/focus). It obeys the Allowed rule above
-  (≤8px translate, ease-out, reduced-motion gated), so it is a note for
-  honesty, not a carve-out — and it is the only hover-driven motion permitted
-  outside `/travel`.
-- Banned: scale on hover, spring physics, parallax, scroll-jacking,
-  spinning, staggered letter reveals, gradient text, glassmorphism
-- All of it lives inside `@media (prefers-reduced-motion: no-preference)`.
-  Motion that animates for a user who asked for none is a REJECT.
-
-**One sanctioned motion carve-out: the `/travel` plate.** Reviewed and
-accepted with Maitreya as a deliberate showcase exception. It carries a bounded set the list above would
-otherwise forbid: (1) the route line *draws itself* once on load via
-`stroke-dashoffset`; (2) a small green **token that travels the route path**
-on load (CSS `offset-path`); (3) a **multi-layer pointer-parallax** — the map
-and the pins drift on two planes toward the cursor (small bound), gated to fine
-pointers; (4) a **staged load** (grid/labels fade, route inks, token travels,
-pins drop in order); (5) a static ≤1.5° tilt on mounted photos (a tilt, not a
-spin). All of it lives inside `prefers-reduced-motion: no-preference` and
-degrades to a fully static, functional plate without motion or JS. This is the
-*only* place any of it is allowed — the bans above still hold everywhere else.
-Do not extend it to other sections, and do not remove it without an explicit
-instruction from Maitreya.
-
-Banned CSS patterns: box-shadow of any kind (one sanctioned exception: the
-single soft lift on the `/travel` plate, so it reads as a page mounted on the
-desk — reviewed with Maitreya), border-radius above 14px (the favicon) or 4px
-(everything else — circles excepted, the status dots are `50%`), any emoji in
-UI chrome. Symbol glyphs in chrome are a hazard
-too: `⧗` and `↻` were removed from the old ledger because neither is in
-JetBrains Mono and both fell back to a different font. Use words.
-
-**One sanctioned set of marks:** the profile links (`ProfileLinks.astro`,
-intro and footer) carry the official Email/GitHub/LinkedIn/ORCID marks as
-inline SVG, each beside its name and `aria-hidden`. Never an `<img>` from the
-brand's own server: that is a third-party request. GitHub and LinkedIn are
-monochrome (an official form of both); the ORCID iD keeps its brand green,
-the only non-palette colour on the site. No icons anywhere else.
-
-**One sanctioned gradient:** the faint `radial-gradient` dot grid on
-`body`. It is the notebook texture and the only gradient on the site.
-Any other gradient is a REJECT.
+The footer prints the last accessibility run from
+`src/data/a11y-audit.json`, which `npm run audit` writes (axe-core on every
+page in the sitemap, light and dark, at 1280 and 390px, then a scripted Tab
+pass). The claim is the file, not a sentence someone typed: re-run it and
+commit the JSON whenever a page changes, or the footer goes stale. The
+footer also says the site has not been tested by someone who relies on a
+screen reader; keep that sentence until it is no longer true.
 
 ---
 
-## Review checklist — run on every diff
+## Content model
+
+`src/content.config.ts` is the authority; if this file disagrees, the schema
+wins and this file is the bug.
+
+| Collection | Renders on | Notes |
+| --- | --- | --- |
+| `research` | `/`, `/research`, `/research/[slug]` | `kind`, `ledger`, `related`; `authors` in published order, never guessed |
+| `projects` | `/`, `/projects`, `/projects/[slug]` | `kind`, `ledger` |
+| `writing` | `/`, `/writing`, `/writing/[slug]` | `related`: the work a post is the plain-language version of |
+| `experience` | `/` (the record) | dates, no status |
+| `places` | `/travel` | one marker and one field-log row per stop |
+| `changelog` | nothing | kept as a record since the News list retired |
+
+**A ledger item** is `claim`, `state` (`checkable`, `word`, `open`), an
+optional `note` (Maitreya's own sentence wherever one exists), optional
+`links`, and an optional `todo`. Education and certifications in
+`site.config.ts` are `checkable` when they carry a `proof`, `on my word`
+otherwise.
+
+**TODOs.** A `todo:` on a claim or credential, or a `<Todo>` in a component,
+is a fact only Maitreya can supply. It renders as an amber `TODO(markie)` in
+`npm run dev` and is left out of every production build (`src/todo.ts`);
+build with `PUBLIC_SHOW_TODOS=true` to see them in one. List them:
+
+```sh
+grep -rn "todo:\|Todo text=" src
+```
+
+**Who wrote what.** Maitreya's: the thesis, the bio, every post, every stop
+note, the paper and project bodies, the page ledes, and every quoted line.
+Drafted (Fable's and later Claude's): search for `drafted by`.
+
+## Routes
+
+| Route | What |
+| --- | --- |
+| `/` | the whole argument and the record |
+| `/research`, `/research/[slug]` | papers ("papers" in the nav) |
+| `/projects`, `/projects/[slug]` | systems and analyses ("systems") |
+| `/writing`, `/writing/[slug]` | posts |
+| `/travel` | the August 2025 trip ("the north") |
+| `/404` | "This address couldn't be resolved." |
+| `/sitemap.xml`, `/sw.js` | generated from the collections |
+
+Retired: `/log` and `/about` 308 to `/`, `/research/ads-cascade` 308 to
+`/research/prediction-is-not-selection` (all in `vercel.json`). `/unresolved`
+was retired before it ever deployed, so it needs no redirect.
+
+---
+
+## Review checklist: run on every diff
 
 - [ ] Serves the thesis sentence
-- [ ] Zero content-rule violations
-- [ ] Uses only design-system custom properties (grep for stray hex)
-- [ ] Any new text color computed against `--paper` and ≥ 4.5:1
-- [ ] Status is carried by a word, not only by a color
-- [ ] Lighthouse: performance ≥ 95, a11y = 100
-- [ ] Keyboard navigable; visible focus states
-- [ ] Renders correctly at 375px
-- [ ] No client-side JS shipped for a static section (Astro islands only
-      where interactivity is real). **One sanctioned exception:**
-      the small inline script in `TravelMap.astro` (`/travel`), which adds
-      bounded pointer-parallax and lights the route leg into a hovered stop.
-      It is pure enhancement — the map renders, the route draws, hover cards
-      show, and every marker still links to its field-log entry with the
-      script absent. Reviewed and accepted; do not re-flag it.
-      (The StatusLedger countdown script, once a second exception, was
-      removed in phase 10; the ledger itself was retired in phase 11.)
-      Any *other* client-side JS on a static section is still a REJECT.
-- [ ] Semantic HTML — `<article>`, `<time>`, `<nav>`, real heading order
+- [ ] Zero content-rule violations; every new fact has a source in the repo
+      or is a `todo:`
+- [ ] Every ledger state is true; every `checkable` link works
+- [ ] Maitreya's words untouched beyond typos; drafted copy marked
+- [ ] Only design tokens: no literal colour outside the token block
+- [ ] `npm run contrast` passes after any colour change
+- [ ] State carried by shape and word, never colour alone
+- [ ] Checked in light and dark
+- [ ] `npm run build` and `npx astro check`: 0 errors
+- [ ] `npm run audit`: 0 violations, every link and control reached by Tab;
+      the new `a11y-audit.json` committed
+- [ ] No broken internal links or anchors (above all after retiring a page)
+- [ ] Lighthouse on `/`, a paper page and `/travel`: performance ≥ 95,
+      accessibility = 100
+- [ ] Renders correctly at 375px; keyboard navigable; the amber focus ring
+      visible
+- [ ] Works with scripts off; only the sanctioned scripts
+- [ ] With reduced motion, nothing moves
+- [ ] Semantic HTML: `<article>`, `<time>`, `<nav>`, real heading order
 - [ ] Alt text is descriptive, not decorative filler
-- [ ] No third-party network request added
-- [ ] No dependency added without justification in the PR body
-
-The footer says, on every page, "Accessibility checked with axe-core and
-keyboard-only navigation." That sentence is a claim (content rule 1): an axe
-sweep and a keyboard pass run before every push, or the footer is lying.
-
-Accessibility is not a checkbox here. It's the thesis. A site arguing
-that technology should work for real people cannot itself exclude
-screen-reader users. That would be the single most damaging thing on
-the page.
+- [ ] No third-party network request; no dependency without justification
+- [ ] No `TODO(markie)` in `dist/` (`grep -r "TODO(markie)" dist`)
+- [ ] The programme is named in no committed file
 
 ---
 
-## Phase order — do not skip ahead
+## Settled decisions: do not reopen unasked
 
-1. ~~Domain, Vercel, Astro~~ DONE
-2. ~~Home + About + /log + /projects scaffolding~~ DONE
-3. ~~Consolidate the two scaffolds into one repo~~ DONE
-4. ~~Fill `site.config.ts` TODOs; settle the project's spelling~~ DONE
-5. ~~Case study: the maternal-health system~~ DONE — resolved per Maitreya:
-   Maatritwa AI (the prototype, national innovation demo, ASHA/doctor views
-   wired, mother view a documented mock) and Three Voices (the research
-   paper, public UCI dataset, distinct from the prototype) are related but
-   separate. `maatritwa-ai.md` corrected accordingly; Three Voices added
-   to `/research`.
-6. ~~Research (in-progress, honest) + Experience~~ DONE — `/research` (3
-   entries) and an Experience section on `/about` (2 employers)
-7. ~~Case study: DataSaarthi~~ DONE. "Romanian Fiscal AI" is confidential
-   Crest production work, not a public case study — it lives as a one-line
-   mention in the Experience entry, and the research question it raised
-   ships as the ADS-Cascade paper instead.
-8. ~~Writing~~ DONE — shipped ahead of 6/7. Deviation from "do not skip
-   ahead," left as-is rather than unwound; noted here so it reads as a
-   decision, not drift.
-9. ~~Travel map~~ DONE — `/travel`: an inline-SVG survey plate (accurate
-   Natural Earth boundaries + lakes, projected and baked at build time by
-   `scripts/build-travel-geo.py` → `src/components/travel-geo.ts`; no runtime
-   dep or request) of the Aug 2025 Nordic/Baltic trip, anchored on the Jyväskylä Summer
-   School, with a `places` collection, one linked marker per stop, and a
-   "field log" list below that carries every stop without JS. Elevated past
-   the scaffold into an atlas plate: the map breaks out of the text measure
-   with its title/legend/stop-index as marginalia in the side space, labels
-   carry a paper knockout halo, and the graticule shows in the sea only.
-   Maitreya's photos are mounted and his per-stop blurbs + hero copy are in.
-   (The `/writing` h1 and lede, open here, landed in phase 11.)
-   Motion + the one inline script are the documented carve-outs above.
-10. ~~Status refresh, October 2026~~ DONE on branch, pending Maitreya's review.
-    The `/log` route, the ledger's `target:` countdown and `log:` date, and
-    their inline script are retired (`/log` 308s to `/` via `vercel.json`);
-    the ledger shows `now:` only, and home carries a "Recent" list of the
-    newest five changelog entries. Research statuses refreshed (CARTA at
-    IJMADA, the accessibility-workshop position paper, Three Voices on
-    arXiv); ADS-Cascade is superseded by "Prediction is not selection"
-    (`/research/ads-cascade` redirects), so phase 7's research question now
-    ships there. Maatritwa AI is an archived prototype. www is the canonical
-    host; static Open Graph card (`scripts/og-image.html` → `public/og.png`);
-    ORCID in the footer; redacted certificates in `public/` with originals
-    kept in the gitignored `private-docs/`.
-11. ~~Redirection: academic homepage~~ DONE on branch, approved by Maitreya
-    30 Oct 2026. Brief: `docs/superpowers/specs/2026-10-30-phase-11-redirection.md`.
-    Maitreya's new thesis line and bio; the home page is the whole profile
-    and `/about` 308s to `/`; the ledger strip and terminal tokens are gone;
-    every list uses the margin column with words fitted to the kind of
-    thing (no "shipped" beside a job); tighter rhythm; full-name wordmark;
-    new Open Graph card; Person JSON-LD and `/sitemap.xml`. Claude now
-    builds as well as reviews. Follow-ups settled with Maitreya the same day:
-    author lists per paper (`authors`, in published order), the `/projects`
-    lede kept to his last sentence, the `/writing` lede (his words). The CV
-    link was removed outright, with no placeholder: whether a CV belongs on
-    the site is his call, later. Do not re-add it unasked.
+- The thesis sentence (phase 11).
+- There is no `/about` and no `/log`; the home page is the whole profile.
+- The News list is retired (phase 12). The changelog stays unrendered.
+- The CV link was removed outright, with no placeholder. Whether a CV belongs
+  on the site is Maitreya's call, later. Do not re-add it unasked.
+- "Romanian Fiscal AI" is confidential Crest production work, never a public
+  case study.
+- Maatritwa AI (the archived prototype) and Three Voices (the paper, on a
+  public dataset) are related but separate, and the pages say so.
+- ADS-Cascade is superseded by "Prediction is not selection".
+- `/unresolved`, the single page listing every claim, is retired (Maitreya,
+  17 Nov 2026). Do not bring back an aggregate page of claims unasked. The
+  per-page "What this couldn't resolve" boxes and the home tally stay.
+- `TODO(markie)` notes never render in production.
+- Writing posts show the year only.
+
+## Pending Maitreya's call: do not decide for him
+
+- The crossed-out first draft of the thesis above the thesis on `/`
+- "on my word" beside his degree and his job
+- The drafted copy (search `drafted by`)
+- The facts behind the open `todo:` notes
+- Whether the AI-assistance disclosure, the accessibility-run table and the
+  list of what the site does automatically come back, in the footer or
+  elsewhere (all three left with `/unresolved`)
+
+## Known gaps: fix them, never copy them
+
+Each of these breaks a rule above. None is precedent.
+
+- `→`, `←` and `↗` (the `.go` arrow glide, back links, external-link marks)
+  are not in any self-hosted font file and render from a system font.
+- Two literal colours outside the token block in `global.css`: the unlit
+  lamp border (`rgba(245, 242, 233, 0.28)`) and the closing band's button
+  hover text (`#15201c`).
+- `--shadow` is defined in the token block and used nowhere.
+
+---
+
+## History
+
+The detail is in `git log`, `docs/superpowers/specs/` and `FABLE_NOTES.md`.
+
+1. Domain, Vercel, Astro
+2. Home, About, /log and /projects scaffolding
+3. The two scaffolds consolidated into one repo
+4. `site.config.ts` filled; the project's spelling settled
+5. Maternal-health case study: Maatritwa AI and Three Voices separated
+6. Research and experience
+7. DataSaarthi case study; Romanian Fiscal AI kept confidential
+8. Writing (shipped ahead of 6 and 7, left as a decision)
+9. `/travel`: the atlas plate, built from Natural Earth data at build time
+10. Status refresh (Oct 2026): `/log` and the ledger countdown retired; www
+    canonical; Open Graph card; redacted certificates
+11. Redirection to an academic homepage (approved 30 Oct 2026): the new
+    thesis line and bio; `/about` retired; the margin fitted to each kind of
+    thing; author lists; Claude builds as well as reviews
+12. Refinements: the News list retired; the counted tally under headings
+    added and reverted the same day
+13. **The proof sheet** (Fable, 17 Nov 2026, at Maitreya's invitation to
+    reimagine the site): the three states and the ledger; the struck-through
+    findings; the playable coin flip; work pages that lead with their limits;
+    Fraunces, light and dark; the audit script and the computed footer; the
+    offline worker. The same day, at Maitreya's request: `/unresolved`
+    retired and TODO notes made development-only. On branch
+    `claude/charming-hopper-ogbbt8`, pending merge.
 
 ## Git
 
-Conventional commits. One logical change per commit.
-`feat(home): hero section` `fix(a11y): focus ring on nav links`
-Never commit generated prose. Never force-push main.
+Conventional commits, one logical change per commit:
+`feat(home): hero section` `fix(a11y): focus ring on nav links`.
+Work on a branch and merge to `main` through a pull request; Vercel deploys
+`main`. Never commit drafted prose unmarked. Never force-push `main`.
