@@ -1,1 +1,191 @@
-{"date":"","tool":"","pages":[]}
+{
+  "date": "17 Nov 2026",
+  "tool": "axe-core 4.14.1",
+  "pages": [
+    {
+      "path": "/",
+      "passes": 44,
+      "violations": [],
+      "keyboard": {
+        "reached": 61,
+        "total": 61
+      }
+    },
+    {
+      "path": "/research/",
+      "passes": 35,
+      "violations": [],
+      "keyboard": {
+        "reached": 24,
+        "total": 24
+      }
+    },
+    {
+      "path": "/projects/",
+      "passes": 35,
+      "violations": [],
+      "keyboard": {
+        "reached": 21,
+        "total": 21
+      }
+    },
+    {
+      "path": "/writing/",
+      "passes": 35,
+      "violations": [],
+      "keyboard": {
+        "reached": 17,
+        "total": 17
+      }
+    },
+    {
+      "path": "/travel/",
+      "passes": 45,
+      "violations": [
+        {
+          "id": "label-content-name-mismatch",
+          "impact": "serious",
+          "help": "Elements must have their visible text as part of their accessible name",
+          "nodes": 1,
+          "scheme": "light",
+          "width": 1280,
+          "targets": [
+            ".is-anchor"
+          ]
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "impact": "serious",
+          "help": "Elements must have their visible text as part of their accessible name",
+          "nodes": 1,
+          "scheme": "dark",
+          "width": 1280,
+          "targets": [
+            ".is-anchor"
+          ]
+        }
+      ],
+      "keyboard": {
+        "reached": 32,
+        "total": 32
+      }
+    },
+    {
+      "path": "/unresolved/",
+      "passes": 37,
+      "violations": [],
+      "keyboard": {
+        "reached": 74,
+        "total": 74
+      }
+    },
+    {
+      "path": "/research/carta-when-chats-split-apart/",
+      "passes": 37,
+      "violations": [],
+      "keyboard": {
+        "reached": 18,
+        "total": 18
+      }
+    },
+    {
+      "path": "/research/prediction-is-not-selection/",
+      "passes": 37,
+      "violations": [],
+      "keyboard": {
+        "reached": 26,
+        "total": 26
+      }
+    },
+    {
+      "path": "/research/three-voices/",
+      "passes": 37,
+      "violations": [],
+      "keyboard": {
+        "reached": 19,
+        "total": 19
+      }
+    },
+    {
+      "path": "/research/what-ai-should-refuse-to-say/",
+      "passes": 37,
+      "violations": [],
+      "keyboard": {
+        "reached": 15,
+        "total": 15
+      }
+    },
+    {
+      "path": "/projects/amazon-sales-analysis/",
+      "passes": 37,
+      "violations": [],
+      "keyboard": {
+        "reached": 16,
+        "total": 16
+      }
+    },
+    {
+      "path": "/projects/datasaarthi/",
+      "passes": 37,
+      "violations": [],
+      "keyboard": {
+        "reached": 16,
+        "total": 16
+      }
+    },
+    {
+      "path": "/projects/maatritwa-ai/",
+      "passes": 37,
+      "violations": [],
+      "keyboard": {
+        "reached": 18,
+        "total": 18
+      }
+    },
+    {
+      "path": "/projects/mortgage-knowledge-assistant/",
+      "passes": 42,
+      "violations": [],
+      "keyboard": {
+        "reached": 15,
+        "total": 15
+      }
+    },
+    {
+      "path": "/writing/coin-flip-red-light/",
+      "passes": 35,
+      "violations": [],
+      "keyboard": {
+        "reached": 16,
+        "total": 16
+      }
+    },
+    {
+      "path": "/writing/finland-couldnt-define/",
+      "passes": 35,
+      "violations": [],
+      "keyboard": {
+        "reached": 15,
+        "total": 15
+      }
+    },
+    {
+      "path": "/writing/one-line-deleted-accuracy/",
+      "passes": 35,
+      "violations": [],
+      "keyboard": {
+        "reached": 15,
+        "total": 15
+      }
+    },
+    {
+      "path": "/writing/phone-elevator-faraday/",
+      "passes": 35,
+      "violations": [],
+      "keyboard": {
+        "reached": 15,
+        "total": 15
+      }
+    }
+  ]
+}

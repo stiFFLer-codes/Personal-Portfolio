@@ -1,0 +1,75 @@
+---
+// The shape of a paper page and a system page. What the work couldn't
+// resolve is said first, straight under the summary; then the write-up, with
+// the page's ledger beside it.
+import State from './State.astro';
+import Todo from './Todo.astro';
+import LedgerList from './LedgerList.astro';
+import type { State as S } from '../ledger';
+
+interface Item {
+  claim: string;
+  state: S;
+  note?: string;
+  todo?: string;
+  links: { label: string; href: string }[];
+}
+interface Props {
+  back: { href: string; label: string };
+  /** "journal paper · published" */
+  meta: string[];
+  title: string;
+  summary: string;
+  ledger: Item[];
+  hasBody: boolean;
+  longTitle?: boolean;
+}
+const { back, meta, title, summary, ledger, hasBody, longTitle = false } = Astro.props;
+const open = ledger.filter((l) => l.state === 'open');
+const rest = ledger.filter((l) => l.state !== 'open');
+---
+
+<div class="container">
+  <section class:list={['page-head', { 'page-head-long': longTitle }]}>
+    <p class="kicker reveal"><a class="back" href={back.href}>{back.label}</a></p>
+    <p class="meta-line reveal">{meta.filter(Boolean).join(' · ')}</p>
+    <h1 class="reveal">{title}</h1>
+    <p class="lede reveal reveal-2">{summary}</p>
+    <slot name="byline" />
+
+    {open.length > 0 && (
+      <aside class="limits reveal reveal-3" aria-labelledby="limits-title">
+        <h2 id="limits-title">
+          <span class="mark mark-open" aria-hidden="true"></span>
+          What this couldn’t resolve
+        </h2>
+        <ul>
+          {open.map((l) => (
+            <li>
+              <strong>{l.claim}</strong>
+              {l.note && <p>{l.note}</p>}
+              {l.todo && <p><Todo text={l.todo} /></p>}
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+  </section>
+
+  <section class:list={['section', { 'two-col': hasBody }]}>
+    {hasBody && (
+      <article class="prose">
+        <slot />
+      </article>
+    )}
+    {rest.length > 0 && (
+      <aside class:list={['ledger', { 'ledger-wide': !hasBody }]} aria-labelledby="ledger-title">
+        <h2 id="ledger-title">How far you can check this</h2>
+        <LedgerList items={rest} />
+        <p class="ledger-links" style="margin-top: var(--s-4)">
+          <a class="go" href="/unresolved">the whole ledger</a>
+        </p>
+      </aside>
+    )}
+  </section>
+</div>

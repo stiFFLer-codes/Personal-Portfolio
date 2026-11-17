@@ -198,7 +198,7 @@ const scalePx = scaleKm / KM_PER_PX;
             href={`#stop-${s.id}`}
             data-leg={s.order}
             style={`left:${s.x}%;top:${s.y}%;--i:${s.order}`}
-            aria-label={`${s.name}, ${s.country}, ${s.dateLabel}. Jump to details below.`}
+            aria-label={`${s.name}${s.anchor ? ' summer school' : ''}, ${s.country}, ${s.dateLabel}. Jump to details below.`}
           >
             <span class="stop-dot" aria-hidden="true"></span>
             <span class="stop-name mono" aria-hidden="true">

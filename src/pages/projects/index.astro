@@ -8,12 +8,16 @@ const projects = (await getCollection('projects')).sort(
 );
 ---
 
-<Base title="Projects · Maitreya Sapariya" description="What I'm building, and what state it's actually in.">
+<Base
+  title="Systems · Maitreya Sapariya"
+  description="Client work, an internship, and things I built anyway. Each one is labelled for what it is."
+>
   <div class="container">
-    <section class="hero">
-      <p class="kicker reveal">projects</p>
+    <section class="page-head">
+      <p class="kicker reveal">systems</p>
       <h1 class="reveal">What I'm building, and what state it's actually in.</h1>
-      <p class="lede reveal">
+      {/* Maitreya's sentences. */}
+      <p class="lede reveal reveal-2">
         Client work, an internship, and things I built anyway. Each one is
         labelled for what it is.
       </p>
@@ -26,12 +30,13 @@ const projects = (await getCollection('projects')).sort(
             as="h2"
             href={`/projects/${p.id}`}
             title={p.data.title}
-            status={p.data.status}
             label={p.data.stage}
-            context={p.data.context}
+            context={[p.data.kind, p.data.context].filter(Boolean).join(' · ')}
             note={p.data.statusLabel}
             summary={p.data.summary}
             tags={p.data.stack}
+            links={p.data.links}
+            ledger={p.data.ledger}
           />
         ))}
       </div>

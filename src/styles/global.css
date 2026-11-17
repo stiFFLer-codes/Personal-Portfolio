@@ -417,6 +417,8 @@ pre {
 }
 
 .wordmark {
+  margin: 0;
+  line-height: var(--lh-body);
   font-family: var(--font-display);
   font-variation-settings: 'SOFT' 60, 'WONK' 0;
   font-weight: 600;
@@ -424,6 +426,10 @@ pre {
   letter-spacing: -0.01em;
   text-decoration: none;
   padding: var(--s-2) 0;
+}
+
+.wordmark a {
+  text-decoration: none;
 }
 
 .site-nav .links {
@@ -473,23 +479,8 @@ pre {
   padding: var(--hero-y) 0 var(--s-7);
 }
 
-.masthead-id {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--s-1) var(--s-4);
-  margin-bottom: clamp(1.5rem, 4vw, 3rem);
-}
-
-.masthead-id h1 {
-  font-size: var(--t-md);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin: 0;
-}
-
 .masthead-role {
-  margin: 0;
+  margin: 0 0 var(--s-5);
   font-family: var(--font-mono);
   font-size: var(--t-sm);
   letter-spacing: var(--track-mono);
@@ -519,7 +510,7 @@ pre {
 
 .masthead-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
   gap: var(--s-6) clamp(2rem, 6vw, 5rem);
   align-items: start;
 }
@@ -548,7 +539,7 @@ pre {
 
 .tally li {
   display: grid;
-  grid-template-columns: 1.1rem 2.6ch minmax(0, 1fr);
+  grid-template-columns: 1.1rem 2.4rem minmax(0, 1fr);
   align-items: baseline;
   gap: var(--s-2);
   font-family: var(--font-mono);
@@ -616,7 +607,7 @@ pre {
 
 .portrait {
   display: block;
-  width: 7.5rem;
+  width: 6.5rem;
   height: auto;
   border-radius: var(--radius-lg);
   background: var(--paper-2);
@@ -2353,4 +2344,56 @@ p.entry-title {
 .voice-screen .todo {
   display: inline-block;
   margin-top: var(--s-2);
+}
+
+/* ---- posts ---- */
+
+.post-card h2 {
+  font-size: var(--t-lg);
+  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  margin: 0 0 var(--s-3);
+}
+
+.post-card h2 a {
+  text-decoration: none;
+}
+
+.post-card h2 a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.post-card:hover h2 a {
+  color: var(--green);
+}
+
+.post-title {
+  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  font-size: var(--t-hero);
+  font-weight: 360;
+  line-height: 1.02;
+  letter-spacing: -0.032em;
+}
+
+.page-head .post-title {
+  max-width: 16ch;
+}
+
+.next-title {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  font-size: var(--t-xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-tight);
+  margin: 0 0 var(--s-3);
+  max-width: 22ch;
+}
+
+.next-title a {
+  text-decoration: none;
+}
+
+.kicker .mark {
+  margin-right: 0.3em;
 }

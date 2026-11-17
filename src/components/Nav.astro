@@ -1,7 +1,10 @@
 ---
+// The header. On the home page the name is the page's h1; everywhere else
+// it is the way home.
 import { SITE } from '../site.config';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isHome = path === '/';
 const links = [
   { href: '/research', label: 'papers' },
   { href: '/projects', label: 'systems' },
@@ -13,14 +16,18 @@ const current = (href: string) =>
   path === href ? 'page' : path.startsWith(`${href}/`) ? 'true' : undefined;
 ---
 
-<nav class="site-nav" aria-label="Primary">
-  <a class="wordmark" href="/" aria-current={path === '/' ? 'page' : undefined}>{SITE.name}</a>
-  <div class="links">
+<header class="site-nav">
+  {isHome ? (
+    <h1 class="wordmark"><a href="/" aria-current="page">{SITE.name}</a></h1>
+  ) : (
+    <a class="wordmark" href="/">{SITE.name}</a>
+  )}
+  <nav class="links" aria-label="Primary">
     {links.map((l) => (
       <a href={l.href} aria-current={current(l.href)}>{l.label}</a>
     ))}
     <a class="nav-open" href="/unresolved" aria-current={current('/unresolved')}>
       <span class="mark mark-open" aria-hidden="true"></span>unresolved
     </a>
-  </div>
-</nav>
+  </nav>
+</header>

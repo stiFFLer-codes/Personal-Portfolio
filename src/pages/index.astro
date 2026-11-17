@@ -39,10 +39,7 @@ const t = tally(await getLedger());
 <Base title={SITE.title}>
   <div class="container">
     <section class="masthead">
-      <div class="masthead-id reveal">
-        <h1>{SITE.name}</h1>
-        <p class="masthead-role">{SITE.jobTitle}, {SITE.employer} · {SITE.location}</p>
-      </div>
+      <p class="masthead-role reveal">{SITE.jobTitle}, {SITE.employer} · {SITE.location}</p>
 
       {/* Maitreya's line. */}
       <p class="thesis reveal reveal-2">
@@ -128,9 +125,11 @@ const t = tally(await getLedger());
             copies. Same model, same cross-validation, one line of code.</span>
             <span class="flip-off">Switched off, the model is tested on rows it has already memorised. This is the
             number it gets for that.</span>
-            {/* Maitreya's sentence, from the post. */}
-            <span class="finding-quote">“I would take an honest 0.580 over a shiny 0.859 that stops being true the
-            second somebody checks my work.”</span>
+          </p>
+          {/* Maitreya's sentence, from the post. */}
+          <p class="finding-body finding-quote">
+            “I would take an honest 0.580 over a shiny 0.859 that stops being true the second
+            somebody checks my work.”
           </p>
           <p class="finding-foot"><a class="go" href="/writing/one-line-deleted-accuracy">One line of code deleted a third of my accuracy</a></p>
         </li>
@@ -227,7 +226,7 @@ const t = tally(await getLedger());
             extra steps.
           </p>
           <footer>
-            from <a href="/writing/coin-flip-red-light">the post</a>, and
+            from <a href="/writing/coin-flip-red-light">the post</a> and the paper,{' '}
             <a href="/research/three-voices">Three Voices</a>
           </footer>
         </blockquote>
