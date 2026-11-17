@@ -41,6 +41,15 @@ const t = tally(await getLedger());
     <section class="masthead">
       <p class="masthead-role reveal">{SITE.jobTitle}, {SITE.employer} · {SITE.location}</p>
 
+      {/* The sentence this one replaced, crossed out in public: the site's
+          own gesture, applied to its own thesis. The old line is Maitreya's
+          (it is quoted in CLAUDE.md); the note beside it is drafted by Fable. */}
+      <p class="thesis-was reveal">
+        <span class="sr-only">An earlier version of the next sentence, since crossed out: </span>
+        <s>I build software systems that turn messy, real-world data into decisions people can act on.</s>
+        <span class="thesis-was-note">first draft. It described a job.</span>
+      </p>
+
       {/* Maitreya's line. */}
       <p class="thesis reveal reveal-2">
         I build software systems that report what they <mark>couldn’t resolve.</mark>
@@ -392,4 +401,21 @@ const t = tally(await getLedger());
       </div>
     </section>
   </div>
+
+  {/* ---------------- The last word ---------------- */}
+  {/* drafted by Fable. The number is counted from the ledger at build. */}
+  <section class="closing" aria-labelledby="closing-title">
+    <div class="container">
+      <p class="eyebrow">before you go</p>
+      <h2 id="closing-title"><b>{t.open}</b> things on this site are still unresolved.</h2>
+      <p>
+        They are listed first, on purpose. If one of them is the thing you needed to know,
+        ask me and I’ll tell you what I have.
+      </p>
+      <div class="cta-row">
+        <a class="cta primary" href="/unresolved">read the unresolved ones</a>
+        <a class="cta" href={`mailto:${SITE.email}`}>ask me</a>
+      </div>
+    </div>
+  </section>
 </Base>

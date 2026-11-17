@@ -51,6 +51,10 @@
   --marker: rgba(240, 169, 46, 0.5);
   --lamp-off: rgba(21, 32, 28, 0.1);
   --shadow: 0 1px 1px rgba(21, 32, 28, 0.05), 0 14px 32px -18px rgba(21, 32, 28, 0.28);
+  /* The body of the three-lamp signal. Dark in both themes: it is an object. */
+  --housing: #15201c;
+  --housing-edge: #15201c;
+  --housing-off: rgba(245, 242, 233, 0.13);
 
   --brand-orcid: #a6ce39;
 
@@ -136,6 +140,8 @@
     --marker: rgba(240, 169, 46, 0.3);
     --lamp-off: rgba(236, 232, 220, 0.1);
     --shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 14px 32px -18px rgba(0, 0, 0, 0.7);
+    --housing: #060a09;
+    --housing-edge: rgba(236, 232, 220, 0.32);
   }
 }
 
@@ -159,6 +165,8 @@
   --marker: rgba(240, 169, 46, 0.3);
   --lamp-off: rgba(236, 232, 220, 0.1);
   --shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 14px 32px -18px rgba(0, 0, 0, 0.7);
+  --housing: #060a09;
+  --housing-edge: rgba(236, 232, 220, 0.32);
 }
 
 /* A reader who asks for more contrast gets the faint tier folded into the
@@ -2563,4 +2571,134 @@ html:not(.js) .demo-control {
 
 .offline .mark {
   transform: translateY(0.05em);
+}
+
+/* ============================================================
+   Improvised, last pass
+   ============================================================ */
+
+/* The first draft of the thesis, crossed out in public. */
+.masthead {
+  padding-top: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+.thesis-was {
+  max-width: 36rem;
+  margin: 0 0 var(--s-5);
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 70;
+  font-size: var(--t-md);
+  line-height: 1.32;
+  color: var(--ink-faint);
+}
+
+.thesis-was s {
+  text-decoration-line: line-through;
+  text-decoration-color: var(--red-fill);
+  text-decoration-thickness: 0.1em;
+}
+
+.thesis-was-note {
+  display: block;
+  margin-top: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+  color: var(--red);
+}
+
+/* The three lamps sit in a housing, like the object they are. */
+.lamps {
+  position: relative;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  isolation: isolate;
+}
+
+.lamps::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4.25rem;
+  border-radius: 2.2rem;
+  background: var(--housing);
+  border: 1px solid var(--housing-edge);
+}
+
+.lamp i {
+  background: var(--housing-off);
+  border-color: rgba(245, 242, 233, 0.28);
+}
+
+.lamp-red.is-lit i {
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--red-fill) 35%, transparent), 0 0 22px 2px color-mix(in srgb, var(--red-fill) 55%, transparent);
+}
+
+.lamp-amber.is-lit i {
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--amber-fill) 35%, transparent), 0 0 22px 2px color-mix(in srgb, var(--amber-fill) 55%, transparent);
+}
+
+/* The last word: an inverted band, the one place the page changes colour. */
+.closing {
+  margin-top: var(--section-y);
+  padding: clamp(3.5rem, 9vw, 7rem) 0;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.closing .eyebrow {
+  color: color-mix(in srgb, var(--paper) 74%, var(--ink));
+}
+
+.closing h2 {
+  font-size: var(--t-hero);
+  font-weight: 360;
+  line-height: 1.02;
+  letter-spacing: -0.032em;
+  max-width: 13em;
+  margin-bottom: var(--s-5);
+}
+
+.closing h2 b {
+  font-weight: inherit;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-color: var(--amber-fill);
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.14em;
+}
+
+.closing p:not(.eyebrow) {
+  max-width: var(--measure);
+  font-size: var(--t-md);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--paper) 86%, var(--ink));
+}
+
+.closing .cta {
+  border-color: var(--paper);
+  color: var(--paper);
+}
+
+.closing .cta.primary {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.closing .cta:hover {
+  background: var(--amber-fill);
+  border-color: var(--amber-fill);
+  color: #15201c;
+}
+
+main:has(.closing) + .site-footer {
+  margin-top: 0;
+}
+
+@media (forced-colors: active) {
+  .lamps::before {
+    display: none;
+  }
 }

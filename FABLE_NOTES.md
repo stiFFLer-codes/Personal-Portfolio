@@ -32,6 +32,23 @@ The old site said that about you. This one does it.
 
 ![Home, desktop](docs/fable/01-home-hero.jpg)
 
+### Added in the last few minutes
+
+You said to improvise, so three design moves went in at the end:
+
+- **Your first draft of the thesis, crossed out above the new one**, with a
+  red note: "first draft. It described a job." It is the site's own gesture
+  turned on its own headline. The old sentence is yours (it is quoted in
+  `CLAUDE.md`); the note is mine. If showing the discarded line feels like
+  too much, delete the `thesis-was` paragraph in `src/pages/index.astro`.
+- **The three lamps sit in a housing**, so the mother's screen reads as a
+  signal and not three circles.
+- **A closing band**, the one place the page inverts: "13 things on this
+  site are still unresolved." The number is counted, not typed.
+
+![Home, with the first draft crossed out](docs/fable/14-home-first-draft.jpg)
+![The closing band](docs/fable/15-closing-band.jpg)
+
 ---
 
 ## What I saw
@@ -235,7 +252,9 @@ your sentences from the paper page or case study.
 
 | Where | What |
 | --- | --- |
+| Home, above the thesis | The note "first draft. It described a job." |
 | Home, under the thesis | "This site tries to do the same. It makes N claims…" and the three tally lines |
+| Home, the closing band | "N things on this site are still unresolved…" and the line under it |
 | Home, "reported as found" | The heading, the lede, and the body text of the six cards |
 | Home, the record | "The same work, as a CV would list it." |
 | Home, writing | "Where I sound like myself." |
