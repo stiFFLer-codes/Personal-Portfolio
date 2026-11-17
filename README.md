@@ -54,9 +54,11 @@ grep -rn "todo:\|Todo text=" src
 ## Governance
 
 Two files hold the rules:
-- `CLAUDE.md` — design system, content rules, phase order, review checklist
-- `AGENTS.md` — context for fresh sessions; what to build next
+- `CLAUDE.md`: the law. Content rules, design system, sanctioned scripts,
+  review checklist, settled and pending decisions, history.
+- `AGENTS.md`: context for fresh sessions. Site map, content workflow, the
+  ledger and TODOs, the checks to run before every push.
 
-On this branch both are out of date on purpose; see the note at the top of `CLAUDE.md`.
+`FABLE_NOTES.md` is the reasoning behind phase 13, the current design.
 
 All factual claims on the site must survive verification. Accessibility is not optional.

@@ -492,3 +492,17 @@ axe; local Lighthouse on `/` scores 97 for performance and 100 for
 accessibility, best practices and SEO.
 
 The screenshots in `docs/fable/` show the site as Fable left it.
+
+**Later the same day: the rules caught up.** Maitreya approved a new
+`CLAUDE.md` describing the site as it now is (Fable's branch note is gone
+with the old one), and `AGENTS.md` was brought in line. Checking that draft
+against the font files found the three gaps it then listed, all fixed:
+
+- `→`, `←` and `↗` were in none of the self-hosted font files, so every
+  typed arrow (the link glide, back links, external-link marks) rendered
+  from a system font; this was true on `main` too. They are now drawn
+  shapes, masked in the current text colour. The Baltic Sea stop's
+  "Helsinki → Stockholm" now reads "Helsinki to Stockholm".
+- Two literal colours in component rules are tokens (`--housing-ring`,
+  `--on-amber`), and `npm run contrast` now checks text set on a fill.
+- The unused `--shadow` token is gone.
