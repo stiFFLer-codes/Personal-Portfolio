@@ -7,8 +7,9 @@
 // sentence, lifted from the paper page, the case study or the post.
 import Base from '../layouts/Base.astro';
 import LedgerList from '../components/LedgerList.astro';
+import State from '../components/State.astro';
 import { getLedger, tally } from '../ledger';
-import audit from '../data/a11y-audit.json';
+import { audit } from '../data/audit';
 
 const ledger = await getLedger();
 const t = tally(ledger);
@@ -28,6 +29,17 @@ const violations = audit.pages.flatMap((p) => p.violations.map((v) => ({ ...v, p
         Everything here is a claim about me. This page sorts all {t.total} of them by how far you
         can check them, and starts with the ones you can’t.
       </p>
+      <div class="ledger-bar reveal reveal-3" aria-hidden="true">
+        <i class="bar-open" style={`--n:${t.open}`}></i>
+        <i class="bar-word" style={`--n:${t.word}`}></i>
+        <i class="bar-checkable" style={`--n:${t.checkable}`}></i>
+      </div>
+      <ul class="ledger-key reveal reveal-3">
+        <li><a href="#band-open"><State state="open" label={`${t.open} unresolved`} /></a></li>
+        <li><a href="#band-word"><State state="word" label={`${t.word} on my word`} /></a></li>
+        <li><a href="#band-checkable"><State state="checkable" label={`${t.checkable} checkable`} /></a></li>
+        <li><a href="#site"><span class="state">this site, checked</span></a></li>
+      </ul>
     </section>
 
     <section class="band band-open" aria-labelledby="band-open">

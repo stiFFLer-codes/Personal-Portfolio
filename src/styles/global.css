@@ -774,13 +774,28 @@ pre {
 }
 
 .was {
+  position: relative;
+  align-self: flex-start;
   font-size: calc(var(--t-num) * 0.5);
   font-weight: 380;
   color: var(--ink-faint);
-  text-decoration: line-through;
-  text-decoration-color: var(--red-fill);
-  text-decoration-thickness: 0.09em;
   min-height: 1.25em;
+}
+
+/* The strike: one stroke of red, a little off level, the way a person
+   crosses something out. Drawn as the card scrolls into view where the
+   browser can do that; simply there otherwise. */
+.was:not(:empty)::after {
+  content: '';
+  position: absolute;
+  left: -0.12em;
+  right: -0.12em;
+  top: 0.52em;
+  height: 0.085em;
+  border-radius: 1em;
+  background: var(--red-fill);
+  transform: rotate(-2.5deg);
+  transform-origin: left center;
 }
 
 .is {
@@ -906,8 +921,11 @@ pre {
   font-size: 1em;
 }
 
+.finding:has(.flip input:not(:checked)) .was::after {
+  display: none;
+}
+
 .finding:has(.flip input:not(:checked)) .was {
-  text-decoration: none;
   color: var(--ink);
   font-size: var(--t-num);
   font-weight: 480;
@@ -2274,6 +2292,23 @@ p.entry-title {
     }
   }
 
+  @supports (animation-timeline: view()) {
+    .was:not(:empty)::after {
+      animation: strike linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 38%;
+    }
+
+    @keyframes strike {
+      from {
+        transform: rotate(-2.5deg) scaleX(0);
+      }
+      to {
+        transform: rotate(-2.5deg) scaleX(1);
+      }
+    }
+  }
+
   /* The marker is drawn across the thesis once, like a highlighter. */
   .thesis mark {
     background-size: 0% 100%;
@@ -2450,4 +2485,51 @@ html:not(.js) .demo-control {
 .go-down:hover::after,
 .go-down:focus-visible::after {
   transform: translateY(3px);
+}
+
+/* /unresolved: the whole ledger as one bar, each state in its own texture
+   so the proportions read without colour. */
+.ledger-bar {
+  display: flex;
+  height: 1.25rem;
+  max-width: 46rem;
+  margin: var(--s-6) 0 var(--s-3);
+  border: 2px solid var(--ink);
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+.ledger-bar i {
+  display: block;
+  flex: var(--n) 0 0;
+}
+
+.ledger-bar .bar-open {
+  background: repeating-linear-gradient(90deg, var(--amber-fill) 0 6px, transparent 6px 12px);
+}
+
+.ledger-bar .bar-word {
+  background: repeating-linear-gradient(135deg, var(--slate) 0 3px, transparent 3px 8px);
+  border-left: 2px solid var(--ink);
+  border-right: 2px solid var(--ink);
+}
+
+.ledger-bar .bar-checkable {
+  background: var(--green);
+}
+
+.ledger-key {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-5);
+}
+
+.ledger-key a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  text-decoration: none;
 }

@@ -7,7 +7,7 @@
 import { getCollection } from 'astro:content';
 import { CERTIFICATIONS, EDUCATION, type Credential } from './site.config';
 import { span } from './format';
-import audit from './data/a11y-audit.json';
+import { audit, auditTotals } from './data/audit';
 
 export type State = 'checkable' | 'word' | 'open';
 
@@ -54,8 +54,7 @@ const credential = (c: Credential): LedgerItem => ({
 // is a statement of fact about this repository on the day it was written.
 const siteItems = (): LedgerItem[] => {
   const source = { label: 'This site', href: '/unresolved#site' };
-  const pages = audit.pages.length;
-  const violations = audit.pages.reduce((n, p) => n + p.violations.length, 0);
+  const { pages, violations } = auditTotals;
   return [
     {
       claim:

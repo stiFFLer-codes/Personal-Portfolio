@@ -219,36 +219,36 @@ const scalePx = scaleKm / KM_PER_PX;
 </figure>
 
 <script>
-  // Documented carve-out (see CLAUDE.md): multi-layer pointer-parallax + route
-  // leg glow. Pure enhancement — everything works without it.
-  var plate = document.querySelector('[data-plate]');
-  if (plate && window.matchMedia) {
-    var layers = plate.querySelectorAll('[data-depth]');
-    var fine = matchMedia('(hover: hover) and (pointer: fine)');
-    var motionOK = matchMedia('(prefers-reduced-motion: no-preference)');
+  // Multi-layer pointer-parallax and route-leg glow. Pure enhancement:
+  // everything works without it.
+  const plate = document.querySelector<HTMLElement>('[data-plate]');
+  if (plate) {
+    const layers = plate.querySelectorAll<HTMLElement>('[data-depth]');
+    const fine = matchMedia('(hover: hover) and (pointer: fine)');
+    const motionOK = matchMedia('(prefers-reduced-motion: no-preference)');
 
     if (layers.length && fine.matches && motionOK.matches) {
-      plate.addEventListener('pointermove', function (e) {
-        var r = plate.getBoundingClientRect();
-        var dx = (e.clientX - r.left) / r.width - 0.5;
-        var dy = (e.clientY - r.top) / r.height - 0.5;
-        layers.forEach(function (el) {
-          var f = parseFloat(el.getAttribute('data-depth')) || 0;
-          el.style.transform =
-            'translate(' + (dx * -f).toFixed(2) + 'px,' + (dy * -f).toFixed(2) + 'px)';
+      plate.addEventListener('pointermove', (e) => {
+        const r = plate.getBoundingClientRect();
+        const dx = (e.clientX - r.left) / r.width - 0.5;
+        const dy = (e.clientY - r.top) / r.height - 0.5;
+        layers.forEach((el) => {
+          const f = parseFloat(el.dataset.depth ?? '0') || 0;
+          el.style.transform = `translate(${(dx * -f).toFixed(2)}px,${(dy * -f).toFixed(2)}px)`;
         });
       });
-      plate.addEventListener('pointerleave', function () {
-        layers.forEach(function (el) { el.style.transform = ''; });
+      plate.addEventListener('pointerleave', () => {
+        layers.forEach((el) => {
+          el.style.transform = '';
+        });
       });
     }
 
-    var markers = plate.querySelectorAll('[data-leg]');
-    markers.forEach(function (m) {
-      var leg = plate.querySelector('#leg-' + m.getAttribute('data-leg'));
+    plate.querySelectorAll<HTMLElement>('[data-leg]').forEach((m) => {
+      const leg = plate.querySelector(`#leg-${m.dataset.leg}`);
       if (!leg) return;
-      var on = function () { leg.classList.add('is-lit'); };
-      var off = function () { leg.classList.remove('is-lit'); };
+      const on = () => leg.classList.add('is-lit');
+      const off = () => leg.classList.remove('is-lit');
       m.addEventListener('pointerenter', on);
       m.addEventListener('pointerleave', off);
       m.addEventListener('focus', on);

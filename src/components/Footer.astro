@@ -3,14 +3,11 @@
 // and what was not. Every sentence is computed or is a plain fact.
 import { SITE } from '../site.config';
 import ProfileLinks from './ProfileLinks.astro';
-import audit from '../data/a11y-audit.json';
+import { audit, auditTotals } from '../data/audit';
 import { day } from '../format';
 
 const built = new Date();
-const pages = audit.pages.length;
-const violations = audit.pages.reduce((n, p) => n + p.violations.length, 0);
-const reached = audit.pages.reduce((n, p) => n + p.keyboard.reached, 0);
-const stops = audit.pages.reduce((n, p) => n + p.keyboard.total, 0);
+const { pages, violations, reached, stops } = auditTotals;
 ---
 
 <footer class="site-footer">
