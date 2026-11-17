@@ -2230,7 +2230,15 @@ p.entry-title {
   }
 
   .site-nav .links {
-    gap: 0 var(--s-4);
+    width: 100%;
+    justify-content: space-between;
+    gap: 0 var(--s-2);
+    font-size: var(--t-xs);
+    letter-spacing: 0;
+  }
+
+  .site-nav {
+    padding-bottom: 0;
   }
 
   .limits {

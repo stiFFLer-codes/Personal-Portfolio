@@ -4,15 +4,22 @@ summary: "A summer course, forty percent comprehension, a notebook full of thing
 date: 2026-09-06
 tags: ["travel", "learning", "finland"]
 order: 3
+related:
+  - { label: 'The map and the field log', href: '/travel' }
+  - { label: 'Certificate of attendance (PDF)', href: '/jyvaskyla-summer-school-2025.pdf' }
 ---
 
 When I signed up for a summer course in Finland called Machine Learning and Stochastic Control, I could confidently define exactly one of those four words. Machine learning, fine. Stochastic control? No idea what it meant. I applied anyway and hoped I would work it out on the way.
 
 <!-- image slot: classroom photo (lecture hall, coffee cup, notebook) -->
 
+![A summer-school lecture in progress: a laptop and notebook in the foreground, 'Machine learning and stochastic control' on the projector screen.](../places/img/jyvaskyla-lecture.jpg)
+
 The first few days, I understood maybe forty percent of each lecture in the room. The other sixty percent I copied down word for word so I could decode it that night in my room. That copying-and-decoding turned out to be the real skill of the trip. Not the maths. The ability to sit in a lecture hall as the least-prepared person there and stay in the chair anyway.
 
 <!-- image slot: cohort selfie (group of summer-school students) -->
+
+![Maitreya taking a selfie with a group of international summer-school students outside a brick campus building.](../places/img/jyvaskyla-cohort.jpg)
 
 There were students from all over, people I had met that same week, and by the end of it strangers had turned into the group you eat every meal with. I had a paper coffee cup from the student restaurant that said "Better food. Better thinking." I drank a lot from it.
 

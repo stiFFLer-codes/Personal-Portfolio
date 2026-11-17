@@ -30,10 +30,22 @@ const { Content } = await render(post);
       </p>
     </section>
 
-    <section class="section">
+    <section class:list={['section', { 'two-col': post.data.related.length > 0 }]}>
       <article class="prose">
         <Content />
       </article>
+      {post.data.related.length > 0 && (
+        <aside class="ledger" aria-labelledby="related-title">
+          <h2 id="related-title">The work behind this post</h2>
+          <ul>
+            {post.data.related.map((r) => (
+              <li class="ledger-item">
+                <a class="go" href={r.href}>{r.label}</a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )}
     </section>
 
     <nav class="section next-post" aria-label="More writing">

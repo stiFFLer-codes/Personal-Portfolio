@@ -127,6 +127,8 @@ const writing = defineCollection({
     date: z.coerce.date(),
     summary: z.string(),
     tags: z.array(z.string()).default([]),
+    // The work a post is the plain-language version of. Shown beside it.
+    related: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
     order: z.number().default(99),
   }),
 });

@@ -4,6 +4,10 @@ summary: "A public dataset, 561 duplicate rows, and the boring reason a model lo
 date: 2026-09-06
 tags: ["machine-learning", "data", "honesty"]
 order: 2
+related:
+  - { label: 'The paper that reports the 0.580: Three Voices', href: '/research/three-voices' }
+  - { label: 'Flip the line yourself', href: '/#found' }
+  - { label: 'Another set of duplicates I wrote up: the Amazon India analysis', href: '/projects/amazon-sales-analysis' }
 ---
 
 There is a public dataset that shows up in a lot of maternal-health machine-learning papers. I used it too. It has just over a thousand rows. When I actually opened it and looked, 561 of them were exact duplicates. Same six numbers, same label, copied again and again.
