@@ -76,14 +76,6 @@ const siteItems = (): LedgerItem[] => {
       group: 'site',
     },
     {
-      claim: 'Tap targets on the map, on a phone.',
-      state: 'open',
-      note: 'At phone width some stops on the map sit closer together than a 24 pixel tap target allows (Oslo and Sandefjord, Helsinki and Tallinn). The stop index beside the map and the field log under it reach every stop.',
-      source: { label: 'The north', href: '/travel' },
-      links: [],
-      group: 'site',
-    },
-    {
       claim: 'The margin the coin-flip demo uses.',
       state: 'open',
       note: 'The 0.487 against 0.499 case is real. The margin drawn in the demo is a stand-in so the slider has somewhere to go; the paper fixes its own.',

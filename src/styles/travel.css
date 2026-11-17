@@ -769,3 +769,25 @@
     to { opacity: 1; }
   }
 }
+
+/* On a phone the stops sit closer together than a fingertip: Oslo and
+   Sandefjord, Helsinki and Tallinn. The markers stop being tap targets
+   there. The stop index under the map, one full-width row per stop, links
+   to the same places, and the keyboard still reaches every marker. */
+.atlas-hint-touch {
+  display: none;
+}
+
+@media (max-width: 40rem) {
+  .plate-stops .stop {
+    pointer-events: none;
+  }
+
+  .atlas-hint-pointer {
+    display: none;
+  }
+
+  .atlas-hint-touch {
+    display: block;
+  }
+}

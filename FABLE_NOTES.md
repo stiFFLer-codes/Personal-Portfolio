@@ -300,9 +300,11 @@ Two things I assumed, which you should check:
 - **Ten type errors on `main`**, all in the travel map's inline script.
   `astro check` now reports none.
 - **Tap targets on the map at phone width.** Oslo and Sandefjord, and
-  Helsinki and Tallinn, sit closer than 24 px. This is on `main` too. I did
-  not fix it. It is listed on `/unresolved`, and Lighthouse scores `/travel`
-  96 for accessibility because of it.
+  Helsinki and Tallinn, sit closer than a fingertip. This is on `main` too,
+  and Lighthouse scored `/travel` 96 for accessibility because of it. On a
+  phone the markers are no longer tap targets; the stop index under the map
+  (one full-width row per stop) links to the same places. `/travel` now
+  scores 100.
 
 ---
 
@@ -313,7 +315,7 @@ Two things I assumed, which you should check:
 | `npm run build` | 19 pages |
 | `npx astro check` | 0 errors (needs `@astrojs/check` and `typescript`, which I installed without saving) |
 | `npm run audit` (axe-core 4.14.1) | 18 pages × light and dark × 1280 px and 390 px: **0 violations** |
-| Scripted Tab pass | reached 492 of 492 links and controls |
+| Scripted Tab pass | reached 491 of 491 links and controls |
 | `npm run contrast` | every text colour ≥ 4.5:1 on both papers, both themes |
 | Demo, by keyboard | amber up to 0.098, red from 0.100; Home, End and the three buttons work |
 | Scripts off | slider hidden, real case shown, theme switch hidden |
@@ -326,7 +328,7 @@ the same way to compare:
 | --- | --- | --- | --- | --- |
 | `/` | 98 → 97 | 100 | 100 | 100 |
 | `/research/three-voices` | 100 → 99 | 100 | 100 | 100 |
-| `/travel` | 97 → 97 | 96 (same as main) | 100 | 100 |
+| `/travel` | 97 → 96 | 96 → 100 | 100 | 100 |
 | `/unresolved` | new: 100 | 100 | 100 | 100 |
 
 My first pass scored 82 on the home page. A single rupee sign was pulling in
@@ -357,8 +359,8 @@ a second 103 KB font file, and the stylesheet was a blocking request.
    It is careful (pages are always fetched fresh when you are online), but a
    service worker is the one piece that outlives a deploy. The comment at
    the top of `src/pages/sw.js.ts` says how to switch it off.
-4. **The count on the home page.** "14 are unresolved" is the hook. Three of
-   the fourteen are about the site itself, not about you. If that feels like
+4. **The count on the home page.** "13 are unresolved" is the hook. Two of
+   the thirteen are about the site itself, not about you. If that feels like
    padding, move them out of `siteItems()` in `src/ledger.ts`.
 5. **`CLAUDE.md`.** I added a six-line note at the top and changed nothing
    else. If you keep this branch, the design law, the checklist and the
@@ -382,8 +384,6 @@ a second 103 KB font file, and the stylesheet was a blocking request.
   kind of thing a professor checks.
 - **Give each claim a date.** "As of 12 November" beside every status, from
   git history, so staleness is visible per line.
-- **Fix the map's tap targets** at phone width, probably by turning close
-  pairs into one target that opens a short list.
 - **Test in Firefox and Safari** and on a slow phone.
 - **A second plain-language post**, for *Prediction is not selection*. It is
   the paper with the best story (the nine-hour rule, the cold re-run on a

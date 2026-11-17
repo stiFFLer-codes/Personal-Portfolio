@@ -64,9 +64,14 @@ const places = (await getCollection('places')).sort(
         </ol>
       </nav>
 
-      <p class="atlas-hint mono">
+      <p class="atlas-hint atlas-hint-pointer mono">
         Hover or focus a stop to read its note; select one to jump to its
         photos below.
+      </p>
+      {/* On a phone the markers are not tap targets (they sit too close
+          together), so the instruction there points at this list instead. */}
+      <p class="atlas-hint atlas-hint-touch mono">
+        Select a stop in the list to jump to its note and photos below.
       </p>
     </aside>
   </div>
