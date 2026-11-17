@@ -9,13 +9,17 @@ import { SITE } from '../site.config';
 // size, weight, SOFT and WONK axes, all used). Newsreader is the body.
 // JetBrains Mono is the system's voice: states, dates, evidence.
 //
+// Fraunces is declared by hand below, Latin subset only, and preloaded: it
+// sets the largest text on every page. Fontsource's own stylesheet would
+// also fetch the 103 KB Latin Extended file for a single rupee sign.
+//
 // The Newsreader italic import is separate and deliberate: its normal build
 // ships no italic faces at all, and quotes are italic.
-import '@fontsource-variable/fraunces/full.css';
 import '@fontsource-variable/newsreader';
 import '@fontsource-variable/newsreader/wght-italic.css';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
+import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2?url';
 import portrait from '../assets/maitreya.jpg';
 
 interface Props {
@@ -73,6 +77,8 @@ const person = {
     <meta name="twitter:card" content="summary_large_image" />
 
     <meta name="color-scheme" content="light dark" />
+    <link rel="preload" as="font" type="font/woff2" href={frauncesUrl} crossorigin />
+    <style set:html={`@font-face{font-family:'Fraunces Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(${frauncesUrl}) format('woff2-variations');}`} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {/* Before first paint: mark that scripts run, and apply a saved theme.
         Without it the page follows the system setting, which is the default. */}

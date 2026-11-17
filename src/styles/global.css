@@ -2424,3 +2424,30 @@ html:not(.js) .demo-control {
   line-height: 1.5;
   margin: var(--s-2) 0 var(--s-3);
 }
+
+/* The rupee sign is set in the body face, smaller and raised: Fraunces
+   carries it only in a second font file that nothing else here needs. */
+.cur {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.62em;
+  font-weight: 400;
+  letter-spacing: 0;
+  vertical-align: 0.42em;
+  margin-right: 0.06em;
+}
+
+.selfreport-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-6);
+}
+
+.go-down::after {
+  content: '↓';
+}
+
+.go-down:hover::after,
+.go-down:focus-visible::after {
+  transform: translateY(3px);
+}

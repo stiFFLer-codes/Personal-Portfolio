@@ -145,7 +145,7 @@ const f = (n: number) => n.toFixed(3);
             <p class="voice-note" data-speak-note hidden></p>
           </>
         ) : (
-          <Todo text="the sentence, from the paper. Set HINDI_SENTENCE in CoinFlip.astro and a button will speak it." />
+          <Todo text="the sentence, from the paper." />
         )}
       </div>
       {/* Maitreya's sentence, from the post. */}
@@ -162,7 +162,7 @@ const f = (n: number) => n.toFixed(3);
     <ul class="fine">
       <li>
         <span class="mark mark-checkable" aria-hidden="true"></span>
-        <span><span class="sr-only">Checkable: </span>{f(mid)} against {f(hi)} is the real case from the paper. The model was wrong on it: the true answer was the middle level.</span>
+        <span><span class="sr-only">Checkable: </span>{f(mid)} against {f(hi)} is a real case, the one the post describes. The model was wrong on it: the true answer was the middle level. The low figure is what is left over.</span>
       </li>
       <li>
         <span class="mark mark-open" aria-hidden="true"></span>

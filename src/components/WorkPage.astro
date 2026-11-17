@@ -23,8 +23,10 @@ interface Props {
   ledger: Item[];
   hasBody: boolean;
   longTitle?: boolean;
+  /** Other ways into the same work: the plain-language post, the demo. */
+  related?: { label: string; href: string }[];
 }
-const { back, meta, title, summary, ledger, hasBody, longTitle = false } = Astro.props;
+const { back, meta, title, summary, ledger, hasBody, longTitle = false, related = [] } = Astro.props;
 const open = ledger.filter((l) => l.state === 'open');
 const rest = ledger.filter((l) => l.state !== 'open');
 ---
@@ -62,13 +64,29 @@ const rest = ledger.filter((l) => l.state !== 'open');
         <slot />
       </article>
     )}
-    {rest.length > 0 && (
-      <aside class:list={['ledger', { 'ledger-wide': !hasBody }]} aria-labelledby="ledger-title">
-        <h2 id="ledger-title">How far you can check this</h2>
-        <LedgerList items={rest} />
-        <p class="ledger-links" style="margin-top: var(--s-4)">
-          <a class="go" href="/unresolved">the whole ledger</a>
-        </p>
+    {(rest.length > 0 || related.length > 0) && (
+      <aside class:list={['ledger', { 'ledger-wide': !hasBody }]}>
+        {rest.length > 0 && (
+          <section aria-labelledby="ledger-title">
+            <h2 id="ledger-title">How far you can check this</h2>
+            <LedgerList items={rest} />
+            <p class="ledger-links" style="margin-top: var(--s-4)">
+              <a class="go" href="/unresolved">the whole ledger</a>
+            </p>
+          </section>
+        )}
+        {related.length > 0 && (
+          <section aria-labelledby="related-title" style="margin-top: var(--s-7)">
+            <h2 id="related-title">Other ways into this work</h2>
+            <ul>
+              {related.map((r) => (
+                <li class="ledger-item">
+                  <a class="go" href={r.href}>{r.label}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </aside>
     )}
   </section>

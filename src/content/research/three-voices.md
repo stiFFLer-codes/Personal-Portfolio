@@ -29,6 +29,11 @@ ledger:
   - claim: 'Whether it works for the people it is for.'
     state: open
     note: 'Evaluation to date is a formative single-evaluator heuristic critique of the artifact, not a user study or clinical-validity claim.'
+related:
+  - { label: 'In plain words: A coin flip should not look like a red light', href: '/writing/coin-flip-red-light' }
+  - { label: 'Hands on: move the gap yourself', href: '/#coin-flip' }
+  - { label: 'The dataset audit, in plain words: One line of code deleted a third of my accuracy', href: '/writing/one-line-deleted-accuracy' }
+  - { label: 'Where the question came from: Maatritwa AI', href: '/projects/maatritwa-ai' }
 ---
 
 When the model's top two risk classes are separated by less than a fixed margin, the

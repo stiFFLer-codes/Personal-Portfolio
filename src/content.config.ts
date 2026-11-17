@@ -99,6 +99,8 @@ const research = defineCollection({
     // What sort of thing it is: "journal paper", "pre-registered study".
     kind: z.string().optional(),
     ledger,
+    // Other ways into the same work: the plain-language post, the demo.
+    related: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
     order: z.number().default(99),
     links: z
       .object({

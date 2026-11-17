@@ -19,4 +19,7 @@ ledger:
     state: open
     note: 'No PDF or preprint is linked here yet.'
     todo: 'add links.preprint (or a hosted PDF) if you choose to publish one.'
+related:
+  - { label: 'The same question on one concrete system: Three Voices', href: '/research/three-voices' }
+  - { label: 'In plain words: A coin flip should not look like a red light', href: '/writing/coin-flip-red-light' }
 ---

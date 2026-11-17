@@ -70,7 +70,10 @@ const t = tally(await getLedger());
               <span>are unresolved</span>
             </li>
           </ul>
-          <a class="go" href="/unresolved">Start with the unresolved ones</a>
+          <p class="selfreport-links">
+            <a class="go" href="/unresolved">Start with the unresolved ones</a>
+            <a class="go go-down" href="#record">Short on time? Skip to the record</a>
+          </p>
         </div>
 
         <div class="bio">
@@ -198,8 +201,8 @@ const t = tally(await getLedger());
           <p class="finding-kind">Amazon India sales analysis · internship</p>
           <p class="finding-metric">revenue, March to June 2022</p>
           <p class="finding-values">
-            <span class="was"><span class="sr-only">Gross order value: </span>₹78.59M</span>
-            <span class="is"><span class="sr-only">Realised revenue: </span>₹70.28M</span>
+            <span class="was"><span class="sr-only">Gross order value: </span><span class="cur">₹</span>78.59M</span>
+            <span class="is"><span class="sr-only">Realised revenue: </span><span class="cur">₹</span>70.28M</span>
           </p>
           <p class="finding-body">
             Gross order value counts cancelled, returned and failed lines. Take them out and
@@ -352,7 +355,7 @@ const t = tally(await getLedger());
           <p class="eyebrow">the north · august 2025</p>
           <p class="north-figure">
             <b>40%</b>
-            <span>of each lecture, understood in the room</span>
+            <span>of each lecture, maybe, understood in the room</span>
           </p>
           {/* The title of Maitreya's post. */}
           <h2 id="north">I flew to Finland to study something I couldn’t define.</h2>
@@ -366,9 +369,9 @@ const t = tally(await getLedger());
           </blockquote>
           {/* drafted by Fable */}
           <p class="section-lede" style="font-size: var(--t-base)">
-            The 34th Jyväskylä Summer School, then {places.length} stops across five countries, alone.
-            It is the same habit as the rest of this page, turned on myself: say what you
-            don’t know yet, and stay in the chair.
+            The 34th Jyväskylä Summer School and the solo trip around it: {places.length} stops on the
+            map, five countries. It is the same habit as the rest of this page, turned on
+            myself: say what you don’t know yet, and stay in the chair.
           </p>
           <p><a class="go" href="/travel">The map and the field log</a></p>
         </div>

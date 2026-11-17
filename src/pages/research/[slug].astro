@@ -27,6 +27,7 @@ const { Content } = await render(research);
     summary={research.data.summary}
     ledger={research.data.ledger}
     hasBody={Boolean(research.body?.trim())}
+    related={research.data.related}
     longTitle
   >
     <p slot="byline" class="status-line reveal reveal-2">
