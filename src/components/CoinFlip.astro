@@ -19,6 +19,11 @@ const REAL_GAP = 0.012;
 const MARGIN = 0.1;
 const MAX_GAP = 0.6;
 const STEP = 0.002;
+// The one sentence the mother hears. Empty until Maitreya supplies it from
+// the paper. Fill it in and the demo grows a button that speaks it, using
+// the browser's own Hindi voice (no audio file, no request). Until then the
+// gap is shown on the page as a TODO.
+const HINDI_SENTENCE = '';
 
 const hi = (TOTAL + REAL_GAP) / 2;
 const mid = (TOTAL - REAL_GAP) / 2;
@@ -133,7 +138,15 @@ const f = (n: number) => n.toFixed(3);
           </li>
         </ul>
         <span class="skeleton-label">and one spoken sentence in Hindi</span>
-        <Todo text="the sentence, from the paper." />
+        {HINDI_SENTENCE ? (
+          <>
+            <p class="spoken" lang="hi">{HINDI_SENTENCE}</p>
+            <button class="chip" type="button" data-speak={HINDI_SENTENCE} hidden>hear it</button>
+            <p class="voice-note" data-speak-note hidden></p>
+          </>
+        ) : (
+          <Todo text="the sentence, from the paper. Set HINDI_SENTENCE in CoinFlip.astro and a button will speak it." />
+        )}
       </div>
       {/* Maitreya's sentence, from the post. */}
       <p class="voice-note">“No percentage, no chart, no reading required.”</p>
@@ -210,6 +223,27 @@ const f = (n: number) => n.toFixed(3);
           `<strong>${near ? 'amber, not red' : 'red'}</strong>.`;
       }, 350);
     };
+
+    // The spoken sentence, if one has been supplied. The browser's own voice
+    // speaks it; if there is no Hindi voice, the page says so.
+    const speak = root.querySelector<HTMLButtonElement>('[data-speak]');
+    const speakNote = root.querySelector<HTMLElement>('[data-speak-note]');
+    if (speak && 'speechSynthesis' in window) {
+      speak.hidden = false;
+      speak.addEventListener('click', () => {
+        const hindi = speechSynthesis.getVoices().find((v) => v.lang.toLowerCase().startsWith('hi'));
+        const u = new SpeechSynthesisUtterance(speak.dataset.speak);
+        u.lang = 'hi-IN';
+        if (hindi) u.voice = hindi;
+        else if (speakNote) {
+          speakNote.hidden = false;
+          speakNote.textContent =
+            'Couldn’t resolve: this browser has no Hindi voice installed, so the sentence may be read with the wrong one.';
+        }
+        speechSynthesis.cancel();
+        speechSynthesis.speak(u);
+      });
+    }
 
     slider.addEventListener('input', render);
     chips.forEach((c) =>

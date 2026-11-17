@@ -91,7 +91,7 @@ const violations = audit.pages.flatMap((p) => p.violations.map((v) => ({ ...v, p
               {' '}A scripted keyboard pass then pressed Tab through every page and counted how many
               links and controls it reached.
             </p>
-            <div class="table-scroll">
+            <div class="table-scroll" role="region" aria-label="Accessibility run, per page" tabindex="0">
               <table class="audit-table">
                 <caption>Per page: axe-core rules passed and violated, and keyboard stops reached.</caption>
                 <thead>

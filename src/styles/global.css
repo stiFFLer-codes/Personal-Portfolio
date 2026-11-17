@@ -2405,3 +2405,22 @@ p.entry-title {
 .kicker .mark {
   margin-right: 0.3em;
 }
+
+/* The section titles that carry the argument. */
+h2.display {
+  font-size: var(--t-xl);
+  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+  max-width: 18ch;
+}
+
+/* With scripts off the slider can't move anything, so it isn't offered. The
+   three readers below still show the one real case. */
+html:not(.js) .demo-control {
+  display: none;
+}
+
+.spoken {
+  font-size: var(--t-md);
+  line-height: 1.5;
+  margin: var(--s-2) 0 var(--s-3);
+}

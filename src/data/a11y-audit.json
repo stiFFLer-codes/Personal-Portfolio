@@ -7,8 +7,8 @@
       "passes": 44,
       "violations": [],
       "keyboard": {
-        "reached": 61,
-        "total": 61
+        "reached": 62,
+        "total": 62
       }
     },
     {
@@ -16,8 +16,8 @@
       "passes": 35,
       "violations": [],
       "keyboard": {
-        "reached": 24,
-        "total": 24
+        "reached": 25,
+        "total": 25
       }
     },
     {
@@ -25,8 +25,8 @@
       "passes": 35,
       "violations": [],
       "keyboard": {
-        "reached": 21,
-        "total": 21
+        "reached": 22,
+        "total": 22
       }
     },
     {
@@ -34,71 +34,30 @@
       "passes": 35,
       "violations": [],
       "keyboard": {
-        "reached": 17,
-        "total": 17
-      }
-    },
-    {
-      "path": "/travel/",
-      "passes": 45,
-      "violations": [
-        {
-          "id": "label-content-name-mismatch",
-          "impact": "serious",
-          "help": "Elements must have their visible text as part of their accessible name",
-          "nodes": 1,
-          "scheme": "light",
-          "width": 1280,
-          "targets": [
-            ".is-anchor"
-          ]
-        },
-        {
-          "id": "label-content-name-mismatch",
-          "impact": "serious",
-          "help": "Elements must have their visible text as part of their accessible name",
-          "nodes": 1,
-          "scheme": "dark",
-          "width": 1280,
-          "targets": [
-            ".is-anchor"
-          ]
-        }
-      ],
-      "keyboard": {
-        "reached": 32,
-        "total": 32
-      }
-    },
-    {
-      "path": "/unresolved/",
-      "passes": 37,
-      "violations": [],
-      "keyboard": {
-        "reached": 74,
-        "total": 74
-      }
-    },
-    {
-      "path": "/research/carta-when-chats-split-apart/",
-      "passes": 37,
-      "violations": [],
-      "keyboard": {
         "reached": 18,
         "total": 18
       }
     },
     {
-      "path": "/research/prediction-is-not-selection/",
-      "passes": 37,
+      "path": "/travel/",
+      "passes": 45,
       "violations": [],
       "keyboard": {
-        "reached": 26,
-        "total": 26
+        "reached": 33,
+        "total": 33
       }
     },
     {
-      "path": "/research/three-voices/",
+      "path": "/unresolved/",
+      "passes": 48,
+      "violations": [],
+      "keyboard": {
+        "reached": 77,
+        "total": 77
+      }
+    },
+    {
+      "path": "/research/carta-when-chats-split-apart/",
       "passes": 37,
       "violations": [],
       "keyboard": {
@@ -107,12 +66,30 @@
       }
     },
     {
+      "path": "/research/prediction-is-not-selection/",
+      "passes": 37,
+      "violations": [],
+      "keyboard": {
+        "reached": 27,
+        "total": 27
+      }
+    },
+    {
+      "path": "/research/three-voices/",
+      "passes": 37,
+      "violations": [],
+      "keyboard": {
+        "reached": 20,
+        "total": 20
+      }
+    },
+    {
       "path": "/research/what-ai-should-refuse-to-say/",
       "passes": 37,
       "violations": [],
       "keyboard": {
-        "reached": 15,
-        "total": 15
+        "reached": 16,
+        "total": 16
       }
     },
     {
@@ -120,8 +97,8 @@
       "passes": 37,
       "violations": [],
       "keyboard": {
-        "reached": 16,
-        "total": 16
+        "reached": 17,
+        "total": 17
       }
     },
     {
@@ -129,8 +106,8 @@
       "passes": 37,
       "violations": [],
       "keyboard": {
-        "reached": 16,
-        "total": 16
+        "reached": 17,
+        "total": 17
       }
     },
     {
@@ -138,8 +115,8 @@
       "passes": 37,
       "violations": [],
       "keyboard": {
-        "reached": 18,
-        "total": 18
+        "reached": 19,
+        "total": 19
       }
     },
     {
@@ -147,35 +124,35 @@
       "passes": 42,
       "violations": [],
       "keyboard": {
-        "reached": 15,
-        "total": 15
-      }
-    },
-    {
-      "path": "/writing/coin-flip-red-light/",
-      "passes": 35,
-      "violations": [],
-      "keyboard": {
         "reached": 16,
         "total": 16
       }
     },
     {
-      "path": "/writing/finland-couldnt-define/",
-      "passes": 35,
+      "path": "/writing/coin-flip-red-light/",
+      "passes": 36,
       "violations": [],
       "keyboard": {
-        "reached": 15,
-        "total": 15
+        "reached": 21,
+        "total": 21
+      }
+    },
+    {
+      "path": "/writing/finland-couldnt-define/",
+      "passes": 38,
+      "violations": [],
+      "keyboard": {
+        "reached": 18,
+        "total": 18
       }
     },
     {
       "path": "/writing/one-line-deleted-accuracy/",
-      "passes": 35,
+      "passes": 36,
       "violations": [],
       "keyboard": {
-        "reached": 15,
-        "total": 15
+        "reached": 19,
+        "total": 19
       }
     },
     {
@@ -183,8 +160,8 @@
       "passes": 35,
       "violations": [],
       "keyboard": {
-        "reached": 15,
-        "total": 15
+        "reached": 16,
+        "total": 16
       }
     }
   ]

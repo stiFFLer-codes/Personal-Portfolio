@@ -50,8 +50,8 @@ const t = tally(await getLedger());
         {/* drafted by Fable. The numbers are counted from the ledger at build. */}
         <div class="selfreport">
           <p class="selfreport-lead">
-            This site tries to do the same. It makes {t.total} claims about me and sorts them by
-            how far you can check them.
+            This site tries to do the same. It makes {t.total} claims about me and my work, and
+            sorts them by how far you can check them.
           </p>
           <ul class="tally">
             <li>
@@ -103,7 +103,7 @@ const t = tally(await getLedger());
     <section class="section" aria-labelledby="found">
       {/* drafted by Fable */}
       <p class="eyebrow">reported as found</p>
-      <h2 id="found">Each of these had a better-sounding answer available.</h2>
+      <h2 id="found" class="display">Each of these had a better-sounding answer available.</h2>
       <p class="section-lede">
         Struck through: the answer that sounds better. Under it: the one the work supports.
       </p>
