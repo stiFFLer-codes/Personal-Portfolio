@@ -4,7 +4,7 @@
   "pages": [
     {
       "path": "/",
-      "passes": 45,
+      "passes": 47,
       "violations": [],
       "keyboard": {
         "reached": 60,
