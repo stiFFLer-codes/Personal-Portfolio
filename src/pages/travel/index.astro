@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import TravelMap from '../../components/TravelMap.astro';
 import Specimen from '../../components/Specimen.astro';
+import '../../styles/travel.css';
 
 const places = (await getCollection('places')).sort(
   (a, b) => a.data.order - b.data.order

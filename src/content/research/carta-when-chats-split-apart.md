@@ -12,6 +12,25 @@ links:
   doi: 'https://doi.org/10.68485/ijmada.20266168'
   zenodo: 'https://doi.org/10.5281/zenodo.23526491'
   code: 'https://github.com/stiFFLer-codes/champ-pipeline'
+kind: 'journal paper'
+# The ledger below was drafted by Fable from sentences already in this repo.
+# Notes in double quotes that read like Maitreya are his, verbatim. Rewrite freely.
+ledger:
+  - claim: 'Published in the International Journal of Management and Data Analytics, Vol. 6, Issue 1, 2026, pp. 449–470.'
+    state: checkable
+    links:
+      - { label: 'doi', href: 'https://doi.org/10.68485/ijmada.20266168' }
+  - claim: 'The manuscript is archived on Zenodo.'
+    state: checkable
+    links:
+      - { label: 'zenodo', href: 'https://doi.org/10.5281/zenodo.23526491' }
+  - claim: 'CHAMP-Pipeline, the reference implementation, has zero dependencies.'
+    state: checkable
+    links:
+      - { label: 'code', href: 'https://github.com/stiFFLer-codes/champ-pipeline' }
+  - claim: 'How CARTA does on a real chat archive.'
+    state: open
+    note: 'Evaluation is against a synthetic corpus with known ground truth, not a real archive. No real WhatsApp export has been reconstructed, and no accuracy figure is claimed.'
 ---
 
 ## The problem

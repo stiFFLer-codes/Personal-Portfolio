@@ -1,0 +1,771 @@
+/* ============================================================
+   Travel plate — the hand-drawn survey map (/travel).
+
+   A framed figure holding an inline-SVG map with one linked marker
+   per stop on top of it. The route draw and the pointer-parallax
+   are a documented carve-out (see CLAUDE.md); the animated parts
+   all live in the reduced-motion guard at the very end.
+   ============================================================ */
+
+/* The plate is a paper mat; the SVG neat-line inside is the map's frame. A
+   subtle lift — the one sanctioned box-shadow on the site (CLAUDE.md). */
+.plate {
+  position: relative;
+  margin: 0;
+  padding: var(--s-4);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: 0 1px 1px rgba(23, 28, 26, 0.05), 0 12px 30px -16px rgba(23, 28, 26, 0.22);
+  /* Clip the parallax drift at the frame. Hover cards flip inward, so they
+     stay inside the frame rather than needing to spill past it. */
+  overflow: hidden;
+}
+
+.plate-inner {
+  position: relative;
+}
+
+/* Two parallax planes: the map drifts less (further), the pins more (nearer). */
+.plate-map,
+.plate-stops {
+  transition: transform 0.4s var(--ease);
+  will-change: transform;
+}
+
+.plate-map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   Travel atlas — the map breaks out of the text column into a
+   wide plate, with the cartographic furniture set as marginalia
+   in the reclaimed side space (title, legend, stop index).
+   ============================================================ */
+
+.travel-atlas {
+  max-width: min(96vw, 82rem);
+  margin: var(--section-y) auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17rem;
+  gap: var(--s-7);
+  align-items: start;
+}
+
+.atlas-margin {
+  position: sticky;
+  top: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  color: var(--ink-soft);
+}
+
+.atlas-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--hairline-strong);
+}
+
+.atlas-title-main {
+  font-size: var(--t-md);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--ink);
+}
+
+.atlas-title-sub {
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}
+
+.atlas-summary {
+  margin: 0;
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+}
+
+.atlas-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  font-size: var(--t-2xs);
+  color: var(--ink-soft);
+}
+
+.atlas-legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.atlas-legend .dot {
+  border-width: 2px;
+}
+
+.atlas-legend-line {
+  display: inline-block;
+  width: 16px;
+  height: 0;
+  border-top: 1.5px solid var(--ink-faint);
+  flex: none;
+}
+
+.atlas-index ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.atlas-index li {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.atlas-index a {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-2) 0;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.16s var(--ease);
+}
+
+.atlas-index a:hover {
+  color: var(--signal-green);
+}
+
+.atlas-index-num {
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+}
+
+.atlas-index-name {
+  flex: 1;
+  font-size: var(--t-sm);
+}
+
+.atlas-index a:hover .atlas-index-name {
+  color: var(--signal-green);
+}
+
+.atlas-index .dot {
+  border-width: 2px;
+}
+
+.atlas-hint {
+  margin: 0;
+  font-size: var(--t-2xs);
+  color: var(--ink-faint);
+  line-height: 1.5;
+}
+
+/* Stack on narrower screens: map first, marginalia below. */
+@media (max-width: 52rem) {
+  .travel-atlas {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-5);
+  }
+
+  .atlas-margin {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-4) var(--s-6);
+    align-items: start;
+  }
+
+  .atlas-index {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 30rem) {
+  .atlas-margin {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- graticule + engraved land hatch ---- */
+
+.graticule path {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 0.6;
+  opacity: 0.7;
+}
+
+.hatch-line {
+  stroke: var(--ink-faint);
+  stroke-width: 0.4;
+}
+
+.map-hatch {
+  fill: url(#land-hatch);
+  stroke: none;
+  opacity: 0.12;
+}
+
+/* Lakes — water cut back into the land (Finland reads as lake country). */
+.map-lake {
+  fill: var(--paper);
+  stroke: var(--ink-faint);
+  stroke-width: 0.7;
+  stroke-linejoin: round;
+}
+
+/* Neat-line — an inner ruled border with corner ticks, the map's frame. */
+.neatline rect {
+  fill: none;
+  stroke: var(--hairline-strong);
+  stroke-width: 1;
+}
+
+.neatline-ticks {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 1.2;
+}
+
+/* ---- the traveling route token ---- */
+
+.route-token {
+  fill: var(--signal-green);
+  opacity: 0;
+  offset-rotate: 0deg;
+}
+
+/* ---- the drawn map ---- */
+
+.map-land {
+  fill: var(--paper-raised);
+  stroke: var(--ink-faint);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+/* Engraved water-lines: the coastline echoed twice behind the land, so the
+   sea reads as an old hand-drawn survey rather than a flat cut-out. */
+.map-halo {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 7;
+  stroke-linejoin: round;
+  opacity: 0.35;
+}
+
+.map-halo2 {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+  opacity: 0.5;
+}
+
+/* Labels carry a paper knockout halo (paint-order: stroke) so they read
+   clearly over the terrain instead of camouflaging into it. */
+.map-water,
+.map-country,
+.doodle-n {
+  font-family: var(--font-mono);
+  fill: var(--ink-faint);
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+}
+
+.map-water {
+  font-size: 16px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-anchor: middle;
+}
+
+.map-water-sm {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  stroke-width: 3;
+}
+
+.map-country {
+  font-size: 19px;
+  letter-spacing: 2px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+
+.map-country-sm {
+  font-size: 14px;
+}
+
+/* Scale bar — a small fieldbook measuring detail. */
+.scalebar {
+  fill: none;
+  stroke: var(--ink-faint);
+  opacity: 0.6;
+}
+
+.scalebar-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--ink-faint);
+  stroke: none;
+  text-anchor: middle;
+  opacity: 0.9;
+}
+
+.map-note {
+  font-size: 13px;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+.doodle {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.5;
+}
+
+.doodle-thin {
+  stroke-width: 1;
+}
+
+.doodle-fill {
+  fill: var(--ink-faint);
+  stroke: none;
+}
+
+.doodle-n {
+  font-size: 14px;
+  text-anchor: middle;
+  opacity: 0.75;
+}
+
+/* ---- the route ---- */
+
+.route-leg {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.5;
+}
+
+.route-leg.anchor-leg {
+  stroke: var(--signal-green);
+  stroke-width: 2.2;
+  opacity: 1;
+}
+
+.route-leg.is-lit {
+  stroke: var(--signal-green);
+  opacity: 1;
+}
+
+/* ---- markers ---- */
+
+.plate-stops {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plate-stops li {
+  margin: 0;
+}
+
+/* A zero-origin anchor: the 24px box is the tap target, centered on the
+   point; the dot, name, and card are positioned out from its center. */
+.stop {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.stop-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid var(--paper);
+  background: var(--signal-slate);
+  box-sizing: content-box;
+  transition: background 0.16s var(--ease);
+}
+
+.stop.is-anchor .stop-dot {
+  width: 14px;
+  height: 14px;
+  background: var(--signal-green);
+}
+
+/* The anchor gets a second ring — a border, never a shadow. */
+.stop.is-anchor .stop-dot::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 1px solid var(--signal-green);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.stop:hover .stop-dot,
+.stop:focus-visible .stop-dot {
+  background: var(--signal-green);
+}
+
+.stop-name {
+  position: absolute;
+  left: calc(50% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  padding: 0 var(--s-1);
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: var(--t-2xs);
+  line-height: 1.35;
+}
+
+.stop.to-left .stop-name {
+  left: auto;
+  right: calc(50% + 12px);
+  text-align: right;
+}
+
+.stop-tag {
+  display: block;
+  color: var(--signal-green);
+  font-size: var(--t-2xs);
+}
+
+.specimen-card {
+  position: absolute;
+  left: calc(50% + 16px);
+  top: calc(50% + 16px);
+  z-index: 5;
+  width: 12.5rem;
+  padding: var(--s-3);
+  background: var(--paper);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease),
+    visibility 0.2s;
+  pointer-events: none;
+}
+
+.stop.to-left .specimen-card {
+  left: auto;
+  right: calc(50% + 16px);
+}
+
+.stop.to-up .specimen-card {
+  top: auto;
+  bottom: calc(50% + 16px);
+}
+
+.stop:hover .specimen-card,
+.stop:focus .specimen-card {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.specimen-card-name {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.specimen-card-meta {
+  display: block;
+  margin: var(--s-1) 0 var(--s-2);
+  color: var(--ink-faint);
+  font-size: var(--t-2xs);
+}
+
+/* A coordinate readout — the field-note detail, in the live-rail green. */
+.specimen-card-coord {
+  display: block;
+  margin: 0 0 var(--s-2);
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--hairline);
+  color: var(--signal-green);
+  font-size: var(--t-2xs);
+  letter-spacing: var(--track-mono);
+}
+
+/* The field log shows the full blurb; in the small map hover-card a long one
+   is clamped so the card stays compact. */
+.specimen-card-blurb {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--ink-soft);
+  font-size: var(--t-sm);
+  line-height: 1.5;
+}
+
+.travel-hint {
+  margin: var(--s-4) 0 0;
+  color: var(--ink-faint);
+  font-size: var(--t-xs);
+}
+
+/* ============================================================
+   Field log — the same stops as text and photos, below the map.
+   The no-JS, mobile, and screen-reader path to everything the
+   map shows. A spine with a dot per stop: the route, drawn as a list.
+   ============================================================ */
+
+.field-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.field-entry {
+  position: relative;
+  padding: var(--s-5) 0 var(--s-6) var(--rail);
+  border-left: 1px solid var(--hairline);
+  scroll-margin-top: var(--s-6);
+  transition: border-color 0.18s var(--ease);
+}
+
+.field-entry:last-child {
+  padding-bottom: var(--s-4);
+}
+
+.field-entry > .dot {
+  position: absolute;
+  left: -0.5px;
+  top: calc(var(--s-5) + var(--dot-offset));
+  transform: translate(-50%, -50%);
+}
+
+/* Jumping to a stop from the map lights its entry in signal green. */
+.field-entry:target {
+  border-left-color: var(--signal-green);
+}
+
+.field-entry:target .field-name {
+  color: var(--signal-green);
+}
+
+.field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+
+.field-name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  margin: 0;
+}
+
+.field-order {
+  color: var(--ink-faint);
+  font-size: var(--t-xs);
+}
+
+.field-meta {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: var(--t-xs);
+  white-space: nowrap;
+}
+
+.field-blurb {
+  max-width: var(--measure);
+  margin: var(--s-3) 0 var(--s-4);
+  color: var(--ink-soft);
+}
+
+/* A checkable artifact for a stop (currently the Jyväskylä certificate),
+   in the same mono, quiet-until-hover key as .see-all and .sources. */
+.field-source {
+  display: inline-block;
+  margin: calc(-1 * var(--s-2)) 0 var(--s-4);
+  color: var(--ink-faint);
+  text-decoration: none;
+}
+
+.field-source:hover {
+  color: var(--signal-green);
+}
+
+.specimen-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-5) var(--s-4);
+  align-items: flex-start;
+}
+
+/* ---- one mounted photo ---- */
+
+/* Every mounted photo shares one height and takes its width from its own
+   aspect ratio — so a portrait and a landscape sit on the same baseline
+   like prints laid in a row, rather than one towering over the other. */
+.specimen {
+  margin: 0;
+  max-width: 100%;
+}
+
+.specimen.tilt-a {
+  transform: rotate(calc(-1 * var(--specimen-tilt)));
+}
+
+.specimen.tilt-b {
+  transform: rotate(var(--specimen-tilt));
+}
+
+.specimen-mat {
+  display: inline-block;
+  padding: var(--s-2);
+  background: var(--paper-raised);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+}
+
+.specimen-photo {
+  display: block;
+  height: clamp(7.5rem, 17vw, 10.5rem);
+  width: auto;
+  max-width: 100%;
+  border-radius: 1px;
+}
+
+.specimen-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
+  max-width: 100%;
+  height: clamp(7.5rem, 17vw, 10.5rem);
+  border: 1px dashed var(--hairline-strong);
+  border-radius: 1px;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+.specimen-empty .mono {
+  font-size: var(--t-2xs);
+}
+
+.specimen-caption {
+  margin-top: var(--s-2);
+  color: var(--ink-faint);
+  font-size: var(--t-2xs);
+  text-align: center;
+}
+
+@media (max-width: 34rem) {
+  /* Names would collide at 9 stops on a phone-width map; the dots stay
+     tappable and the field log carries the labels. */
+  .stop-name {
+    display: none;
+  }
+
+  .map-water-sm,
+  .map-note {
+    display: none;
+  }
+
+  .field-head {
+    gap: var(--s-1);
+  }
+
+  .field-meta {
+    white-space: normal;
+  }
+}
+
+/* ============================================================
+   Travel plate motion — the documented carve-out. All opt-in via
+   prefers-reduced-motion: the route draws once, pins fade in in
+   travel order. Without motion (or without JS) the route is solid
+   and the pins are simply present.
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Staged load: the plate settles, the grid and labels fade in, the route
+     inks across, a token travels it, and the pins drop in travel order. (The
+     title/legend/index live in the page marginalia now, not on the plate, so
+     they ride the normal page reveal — not this carve-out.) */
+  .graticule,
+  .map-labels {
+    animation: fade-in 0.6s var(--ease) both;
+  }
+  .graticule { animation-delay: 0.15s; }
+  .map-labels { animation-delay: 0.45s; }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .route-leg {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: route-draw 0.55s var(--ease) forwards;
+    animation-delay: calc(var(--leg-i, 0) * 0.12s + 0.5s);
+  }
+
+  @keyframes route-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .route-token {
+    animation: token 3.3s var(--ease) 0.7s both;
+  }
+
+  @keyframes token {
+    0% { offset-distance: 0%; opacity: 0; }
+    8% { opacity: 0.9; }
+    92% { opacity: 0.9; }
+    100% { offset-distance: 100%; opacity: 0; }
+  }
+
+  .stop {
+    animation: stop-in 0.5s var(--ease) both;
+    animation-delay: calc(var(--i, 1) * 0.14s + 0.8s);
+  }
+
+  @keyframes stop-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}

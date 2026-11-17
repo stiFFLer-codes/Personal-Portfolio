@@ -7,6 +7,29 @@ import { glob } from 'astro/loaders';
 // paper, "archived" for a project. A job has neither; it has dates.
 const status = z.enum(['shipped', 'in-progress', 'planned', 'archived']);
 
+// The ledger: what a page claims, and how far a reader can check each claim.
+// This is the site doing what the work argues for. Three states, and each is
+// shown as a word and a shape as well as a colour:
+//   checkable  there is a public artifact; `links` points at it
+//   word       stated, with nothing public to link. Ask and I'll send it.
+//   open       unresolved: not done, not known, not tested, or still pending
+// `note` is the detail (Maitreya's own sentence wherever one exists).
+// `todo` is a fact only Maitreya can supply; it renders as a visible
+// TODO(markie) so a gap is reported instead of papered over.
+const ledger = z
+  .array(
+    z.object({
+      claim: z.string(),
+      state: z.enum(['checkable', 'word', 'open']),
+      note: z.string().optional(),
+      todo: z.string().optional(),
+      links: z
+        .array(z.object({ label: z.string(), href: z.string() }))
+        .default([]),
+    })
+  )
+  .default([]);
+
 // Each project is one markdown file. To add a new project, drop a new file
 // into src/content/projects/ — nothing else needs to change.
 const projects = defineCollection({
@@ -21,6 +44,9 @@ const projects = defineCollection({
     // Whose work it was, as a mono line on cards and atop the detail page:
     // "independent", "client work · Crest Infosystems".
     context: z.string().optional(),
+    // What sort of thing it is, in two or three words: "production system".
+    kind: z.string().optional(),
+    ledger,
     // Shown in the sources block when there are no links, e.g. private code.
     sourcesNote: z.string().optional(),
     stack: z.array(z.string()).default([]),
@@ -70,6 +96,9 @@ const research = defineCollection({
     // Where in the venue, once published: "Vol. 6, Issue 1, 2026, pp. 449–470".
     // Printed after the venue in the citation. Copy it from the article itself.
     citation: z.string().optional(),
+    // What sort of thing it is: "journal paper", "pre-registered study".
+    kind: z.string().optional(),
+    ledger,
     order: z.number().default(99),
     links: z
       .object({

@@ -3,12 +3,12 @@ import { SITE } from '../site.config';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const links = [
-  { href: '/research', label: 'research' },
-  { href: '/projects', label: 'projects' },
+  { href: '/research', label: 'papers' },
+  { href: '/projects', label: 'systems' },
   { href: '/writing', label: 'writing' },
-  { href: '/travel', label: 'travel' },
+  { href: '/travel', label: 'the north' },
 ];
-// A detail page marks its section, so /research/three-voices lights "research".
+// A detail page marks its section, so /research/three-voices lights "papers".
 const current = (href: string) =>
   path === href ? 'page' : path.startsWith(`${href}/`) ? 'true' : undefined;
 ---
@@ -19,5 +19,8 @@ const current = (href: string) =>
     {links.map((l) => (
       <a href={l.href} aria-current={current(l.href)}>{l.label}</a>
     ))}
+    <a class="nav-open" href="/unresolved" aria-current={current('/unresolved')}>
+      <span class="mark mark-open" aria-hidden="true"></span>unresolved
+    </a>
   </div>
 </nav>

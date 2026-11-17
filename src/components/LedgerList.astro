@@ -1,0 +1,48 @@
+---
+// A list of claims with their state, evidence and (for site-wide lists) the
+// page each one lives on.
+import State from './State.astro';
+import Todo from './Todo.astro';
+import type { State as S } from '../ledger';
+
+interface Item {
+  claim: string;
+  state: S;
+  note?: string;
+  todo?: string;
+  links: { label: string; href: string }[];
+  source?: { label: string; href: string };
+}
+interface Props {
+  items: Item[];
+  /** Show which page each claim belongs to. */
+  showSource?: boolean;
+  /** Hide the state word when the whole list shares one state. */
+  hideState?: boolean;
+}
+const { items, showSource = false, hideState = false } = Astro.props;
+const external = (href: string) => /^https?:/.test(href) || href.endsWith('.pdf');
+---
+
+<ul>
+  {items.map((i) => (
+    <li class="ledger-item">
+      {!hideState && <State state={i.state} />}
+      <p class="ledger-claim">{i.claim}</p>
+      {i.note && <p class="ledger-note">{i.note}</p>}
+      {i.todo && <Todo text={i.todo} />}
+      {(i.links.length > 0 || (showSource && i.source)) && (
+        <p class="ledger-links">
+          {i.links.map((l) => (
+            <a href={l.href} target={external(l.href) ? '_blank' : undefined} rel={external(l.href) ? 'noopener' : undefined}>
+              {l.label}
+            </a>
+          ))}
+          {showSource && i.source && (
+            <a class="ledger-source" href={i.source.href}>from: {i.source.label}</a>
+          )}
+        </p>
+      )}
+    </li>
+  ))}
+</ul>

@@ -9,6 +9,18 @@ stack: ['React', 'TypeScript', 'Vite', 'FastAPI', 'Python', 'Supabase', 'Groq']
 order: 3
 links:
   repo: 'https://github.com/stiFFLer-codes/DataSaarthi'
+kind: 'platform'
+# The ledger below was drafted by Fable from sentences already in this repo.
+# Notes in double quotes that read like Maitreya are his, verbatim. Rewrite freely.
+ledger:
+  - claim: 'The code is public.'
+    state: checkable
+    links:
+      - { label: 'repository', href: 'https://github.com/stiFFLer-codes/DataSaarthi' }
+  - claim: 'Where DataSaarthi falls short.'
+    state: open
+    note: 'Every other page here says what the work couldn’t settle. This one doesn’t yet.'
+    todo: 'one or two honest lines on what DataSaarthi gets wrong or leaves undone.'
 ---
 
 ## Stack and history

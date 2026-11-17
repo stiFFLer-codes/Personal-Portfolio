@@ -1,0 +1,10 @@
+---
+// A fact only Maitreya can supply. It renders on the page, in the unresolved
+// colour, so a gap is reported rather than guessed at or hidden.
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<span class="todo">TODO(markie): {text}</span>

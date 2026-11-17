@@ -5,14 +5,13 @@ import { SITE } from '../site.config';
 
 // Self-hosted so no render-blocking request leaves for a third-party CDN.
 //
-// Two families only. Newsreader does display and body; the mono does
-// everything mechanical. Both are the weight-axis-only builds — the
-// multi-axis files carry an optical-size axis this site does not use and
-// cost roughly twice the bytes.
+// Three families. Fraunces is the display voice (the full build: optical
+// size, weight, SOFT and WONK axes, all used). Newsreader is the body.
+// JetBrains Mono is the system's voice: states, dates, evidence.
 //
-// The italic import is separate and deliberate: Newsreader's normal build
-// ships no italic faces at all, and `.prose blockquote` is italic. Do not
-// tidy it away.
+// The Newsreader italic import is separate and deliberate: its normal build
+// ships no italic faces at all, and quotes are italic.
+import '@fontsource-variable/fraunces/full.css';
 import '@fontsource-variable/newsreader';
 import '@fontsource-variable/newsreader/wght-italic.css';
 import '@fontsource-variable/jetbrains-mono';
@@ -73,7 +72,17 @@ const person = {
     />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {/* Before first paint: mark that scripts run, and apply a saved theme.
+        Without it the page follows the system setting, which is the default. */}
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    </script>
     <link rel="sitemap" href="/sitemap.xml" />
     {isHome && <script type="application/ld+json" set:html={JSON.stringify(person)} />}
   </head>

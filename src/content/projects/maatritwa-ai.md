@@ -10,6 +10,20 @@ order: 2
 links:
   repo: 'https://github.com/stiFFLer-codes/Maatritwa-AI'
   live: 'https://stiffler-codes.github.io/Maatritwa-AI/'
+kind: 'prototype'
+# The ledger below was drafted by Fable from sentences already in this repo.
+# Notes in double quotes that read like Maitreya are his, verbatim. Rewrite freely.
+ledger:
+  - claim: 'The prototype’s code and a live demo are public.'
+    state: checkable
+    links:
+      - { label: 'repository', href: 'https://github.com/stiFFLer-codes/Maatritwa-AI' }
+      - { label: 'live site', href: 'https://stiffler-codes.github.io/Maatritwa-AI/' }
+  - claim: 'Built for the India Innovates 2026 demo, 28 March 2026.'
+    state: word
+  - claim: 'The mother-facing view.'
+    state: open
+    note: 'Two of three interfaces, ASHA and doctor, are fully wired end-to-end; the mother-facing view remains a UI mock, documented as such.'
 ---
 
 ## The design problem

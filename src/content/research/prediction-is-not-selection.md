@@ -13,6 +13,37 @@ links:
   code: 'https://github.com/stiFFLer-codes/prediction-is-not-selection'
 # Body: two sections of Maitreya's repository README, verbatim; links point at
 # the v2.0.0 release, the version of the PDF.
+kind: 'pre-registered study'
+# The ledger below was drafted by Fable from sentences already in this repo.
+# Notes in double quotes that read like Maitreya are his, verbatim. Rewrite freely.
+ledger:
+  - claim: 'Preprint v2.0.0, archived on Zenodo.'
+    state: checkable
+    links:
+      - { label: 'doi', href: 'https://doi.org/10.5281/zenodo.24184394' }
+  - claim: 'Hypotheses, margins and analysis were frozen at commit 8869b82, before any accuracy existed.'
+    state: checkable
+    links:
+      - { label: 'PREREG.md', href: 'https://github.com/stiFFLer-codes/prediction-is-not-selection/blob/v2.0.0/phase2/PREREG.md' }
+  - claim: 'A fresh clone on a two-core laptop regenerated all 108 output files with identical content in 19 minutes.'
+    state: checkable
+    links:
+      - { label: 'cold-run report', href: 'https://github.com/stiFFLer-codes/prediction-is-not-selection/blob/v2.0.0/phase2/reports/phase2_9c_cold_run.md' }
+  - claim: 'An independent pass traced the 829 numbers in the PDF to committed tables, or to arithmetic on them.'
+    state: checkable
+    links:
+      - { label: 'number ledger', href: 'https://github.com/stiFFLer-codes/prediction-is-not-selection/blob/v2.0.0/phase2/reports/tables/phase2_9d_number_ledger.csv' }
+      - { label: 'verifier report', href: 'https://github.com/stiFFLer-codes/prediction-is-not-selection/blob/v2.0.0/phase2/reports/phase2_9d_verifier.md' }
+  - claim: 'The work was done with an AI assistant (Claude, Anthropic) under the author’s direction, and the paper says so.'
+    state: checkable
+    links:
+      - { label: 'pass log', href: 'https://github.com/stiFFLer-codes/prediction-is-not-selection/blob/v2.0.0/phase2/PASSLOG.md' }
+  - claim: 'Whether measuring your data first tells you which mechanism to build.'
+    state: open
+    note: 'No consistency band and no variability band clears the margin fixed in advance, so both selection hypotheses return Inconclusive.'
+  - claim: 'A clean pre-registration.'
+    state: open
+    note: 'Section 6.4 of the paper lists each point where the record falls short of a clean pre-registration, including two rules inserted nine hours after the freeze.'
 ---
 
 ## What the study found

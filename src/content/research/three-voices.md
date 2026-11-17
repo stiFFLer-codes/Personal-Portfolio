@@ -9,6 +9,26 @@ order: 4
 links:
   code: 'https://github.com/stiFFLer-codes/three-voices'
   doi: 'https://doi.org/10.5281/zenodo.22252076'
+kind: 'paper, with Aditi Patil'
+# The ledger below was drafted by Fable from sentences already in this repo.
+# Notes in double quotes that read like Maitreya are his, verbatim. Rewrite freely.
+ledger:
+  - claim: 'Code and artifacts are archived on Zenodo.'
+    state: checkable
+    links:
+      - { label: 'doi', href: 'https://doi.org/10.5281/zenodo.22252076' }
+      - { label: 'code', href: 'https://github.com/stiFFLer-codes/three-voices' }
+  - claim: '561 duplicate rows inflate macro-recall from 0.580 to 0.859 under identical cross-validation.'
+    state: checkable
+    links:
+      - { label: 'code', href: 'https://github.com/stiFFLer-codes/three-voices' }
+  - claim: 'An arXiv identifier.'
+    state: open
+    note: 'Submitted to arXiv, awaiting announcement.'
+    todo: 'add links.arxiv once it is announced.'
+  - claim: 'Whether it works for the people it is for.'
+    state: open
+    note: 'Evaluation to date is a formative single-evaluator heuristic critique of the artifact, not a user study or clinical-validity claim.'
 ---
 
 When the model's top two risk classes are separated by less than a fixed margin, the
