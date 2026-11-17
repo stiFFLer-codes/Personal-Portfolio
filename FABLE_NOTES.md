@@ -4,6 +4,13 @@ Branch `claude/charming-hopper-ogbbt8`, 17 November 2026. Nothing here touches `
 
 Run it: `npm install`, then `npm run dev`. Start at `/`, then `/unresolved`.
 
+> **Read this first: changes after Fable's run.** Later on 17 November,
+> Maitreya asked for the `/unresolved` page to be removed, and the
+> `TODO(markie)` notes no longer show on the live site. Fable's text below
+> is left exactly as written, so where it mentions `/unresolved` it describes
+> the site as Fable left it. What changed, and why, is in
+> [the section at the end](#after-fables-run).
+
 ---
 
 ## The short version
@@ -434,3 +441,54 @@ whole mechanism.
 The work was already saying this. I only moved it to where people can see it.
 
 Fable
+
+---
+
+## After Fable's run
+
+*Added 17 November 2026 by Claude, at Maitreya's request. Fable's notes above
+are unchanged.*
+
+**`/unresolved` is retired.** It gathered every claim on the site into one
+list, unresolved first, with the accessibility run and a note on how the site
+is made. Maitreya decided it should not be there. Everything that led to it
+now points somewhere that exists:
+
+| Where | Before | Now |
+| --- | --- | --- |
+| Nav | an "unresolved" link | gone |
+| Home, under the tally | "Start with the unresolved ones" and "Short on time? Skip to the record" | one link: "See each one in the record" (every row there shows its own count) |
+| Home, closing band | "They are listed first, on purpose." Buttons: read the unresolved ones, ask me | "Each paper and system lists its own first, on purpose." Buttons: ask me, back to the record |
+| Footer | linked to the page and to the audit table | the computed accessibility sentence stays; no links |
+| 404 | "see what else is unresolved" | "see the papers" |
+| Paper and system pages | "the whole ledger" link under each ledger | gone; the "What this couldn't resolve" box and the ledger stay |
+| Sitemap, offline worker | listed the page | no longer list it |
+
+The tally on the home page now counts the work only. The page's three claims
+about the site itself (the audit run, the untested screen-reader experience,
+the demo's stand-in margin) had nowhere else to be listed, so they left the
+count: **37 claims, 16 checkable, 10 on Maitreya's word, 11 unresolved**, and
+every one can be traced to a row in the record. The audit result and the
+screen-reader caveat are still in the footer; the stand-in margin is still
+stated inside the demo.
+
+Gone with the page, and not moved anywhere: the per-page audit table, the
+list of what the site does without being asked (themes, reduced motion,
+contrast, offline), and the AI-assistance disclosure. Any of them can come
+back into the footer if wanted.
+
+**`TODO(markie)` notes are development-only.** All nine still render in
+`npm run dev`. A production build leaves them out (`src/todo.ts`), so the
+live site never shows one; the claim beside each still shows its honest
+state. Where a note stood in for content (the mother's spoken sentence), the
+demo shows the same "not reproduced here" placeholder the other two readers'
+screens use.
+
+**Checked after these changes:** build and type check clean; a link check
+over the build finds no broken internal links or anchors; axe-core on the 17
+remaining pages in light and dark at two widths finds no violations, the Tab
+pass reaches 351 of 351 links and controls, and the 404 page also passes
+axe; local Lighthouse on `/` scores 97 for performance and 100 for
+accessibility, best practices and SEO.
+
+The screenshots in `docs/fable/` show the site as Fable left it.
