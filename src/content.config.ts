@@ -1,10 +1,10 @@
 import { defineCollection, reference, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// `status` only picks the colour of a dot: green (done), amber (moving),
-// slate (planned or archived). It is never shown as a word. The word a reader
-// sees is `stage`, written for the kind of thing it labels: "accepted" for a
-// paper, "archived" for a project. A job has neither; it has dates.
+// `status` is not rendered since phase 13 (it used to pick a dot colour);
+// keep it truthful. The word a reader sees is `stage`, written for the kind
+// of thing it labels: "accepted" for a paper, "archived" for a project. A job
+// has neither; it has dates.
 const status = z.enum(['shipped', 'in-progress', 'planned', 'archived']);
 
 // The ledger: what a page claims, and how far a reader can check each claim.
@@ -14,8 +14,8 @@ const status = z.enum(['shipped', 'in-progress', 'planned', 'archived']);
 //   word       stated, with nothing public to link. Ask and I'll send it.
 //   open       unresolved: not done, not known, not tested, or still pending
 // `note` is the detail (Maitreya's own sentence wherever one exists).
-// `todo` is a fact only Maitreya can supply; it renders as a visible
-// TODO(markie) so a gap is reported instead of papered over.
+// `todo` is a fact only Maitreya can supply. It renders as an amber
+// TODO(markie) in development and is left out of production (src/todo.ts).
 const ledger = z
   .array(
     z.object({
@@ -37,7 +37,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     status,
-    // One or two words: "complete", "archived", "live".
+    // One or two words: "in production", "complete", "archived", "live".
     stage: z.string(),
     statusLabel: z.string(),
     summary: z.string(),
@@ -47,7 +47,8 @@ const projects = defineCollection({
     // What sort of thing it is, in two or three words: "production system".
     kind: z.string().optional(),
     ledger,
-    // Shown in the sources block when there are no links, e.g. private code.
+    // Not rendered since phase 13: the ledger carries this now (eRESI's
+    // private-code note is the note on a `word` claim).
     sourcesNote: z.string().optional(),
     stack: z.array(z.string()).default([]),
     order: z.number().default(99),
@@ -186,7 +187,7 @@ const places = defineCollection({
         .default([]),
       // Optional checkable artifact for a stop (e.g. the Jyväskylä summer-school
       // certificate). `href` is a path under public/. Same "verify this" idea
-      // as SourceLinks on the project/research pages.
+      // as the ledger links on the paper and system pages.
       source: z.object({ label: z.string(), href: z.string() }).optional(),
     }),
 });
