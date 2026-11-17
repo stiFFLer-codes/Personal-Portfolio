@@ -94,10 +94,32 @@ const person = {
   </head>
   <body>
     <a class="sr-only-focusable" href="#main">Skip to content</a>
+    {/* Shown only when the browser reports no connection: the page saying
+        what it couldn't reach. drafted by Fable */}
+    <p class="offline" data-offline role="status" hidden>
+      <span class="mark mark-open" aria-hidden="true"></span>
+      Couldn’t reach the network. You’re reading the copy your browser saved, so anything
+      marked submitted or awaiting may have moved since.
+    </p>
     <Nav />
     <main id="main">
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      // Offline: register the worker that keeps saved pages readable, and
+      // say so on the page when the connection is gone.
+      (function () {
+        if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+          navigator.serviceWorker.register('/sw.js').catch(function () {});
+        }
+        var note = document.querySelector('[data-offline]');
+        if (!note) return;
+        var show = function () { note.hidden = navigator.onLine; };
+        window.addEventListener('online', show);
+        window.addEventListener('offline', show);
+        show();
+      })();
+    </script>
   </body>
 </html>

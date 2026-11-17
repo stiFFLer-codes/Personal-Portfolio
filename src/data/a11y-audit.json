@@ -7,35 +7,35 @@
       "passes": 44,
       "violations": [],
       "keyboard": {
-        "reached": 63,
-        "total": 63
+        "reached": 64,
+        "total": 64
       }
     },
     {
       "path": "/research/",
-      "passes": 35,
+      "passes": 36,
       "violations": [],
       "keyboard": {
-        "reached": 25,
-        "total": 25
+        "reached": 26,
+        "total": 26
       }
     },
     {
       "path": "/projects/",
-      "passes": 35,
+      "passes": 36,
       "violations": [],
       "keyboard": {
-        "reached": 22,
-        "total": 22
+        "reached": 23,
+        "total": 23
       }
     },
     {
       "path": "/writing/",
-      "passes": 35,
+      "passes": 36,
       "violations": [],
       "keyboard": {
-        "reached": 18,
-        "total": 18
+        "reached": 19,
+        "total": 19
       }
     },
     {
@@ -43,8 +43,8 @@
       "passes": 45,
       "violations": [],
       "keyboard": {
-        "reached": 33,
-        "total": 33
+        "reached": 34,
+        "total": 34
       }
     },
     {
@@ -52,67 +52,40 @@
       "passes": 48,
       "violations": [],
       "keyboard": {
-        "reached": 78,
-        "total": 78
+        "reached": 83,
+        "total": 83
       }
     },
     {
       "path": "/research/carta-when-chats-split-apart/",
-      "passes": 37,
+      "passes": 38,
       "violations": [],
       "keyboard": {
-        "reached": 19,
-        "total": 19
+        "reached": 20,
+        "total": 20
       }
     },
     {
       "path": "/research/prediction-is-not-selection/",
-      "passes": 37,
+      "passes": 38,
       "violations": [],
       "keyboard": {
-        "reached": 27,
-        "total": 27
+        "reached": 28,
+        "total": 28
       }
     },
     {
       "path": "/research/three-voices/",
-      "passes": 37,
+      "passes": 38,
       "violations": [],
       "keyboard": {
-        "reached": 24,
-        "total": 24
+        "reached": 25,
+        "total": 25
       }
     },
     {
       "path": "/research/what-ai-should-refuse-to-say/",
-      "passes": 37,
-      "violations": [],
-      "keyboard": {
-        "reached": 18,
-        "total": 18
-      }
-    },
-    {
-      "path": "/projects/amazon-sales-analysis/",
-      "passes": 37,
-      "violations": [],
-      "keyboard": {
-        "reached": 17,
-        "total": 17
-      }
-    },
-    {
-      "path": "/projects/datasaarthi/",
-      "passes": 37,
-      "violations": [],
-      "keyboard": {
-        "reached": 17,
-        "total": 17
-      }
-    },
-    {
-      "path": "/projects/maatritwa-ai/",
-      "passes": 37,
+      "passes": 38,
       "violations": [],
       "keyboard": {
         "reached": 19,
@@ -120,25 +93,7 @@
       }
     },
     {
-      "path": "/projects/mortgage-knowledge-assistant/",
-      "passes": 42,
-      "violations": [],
-      "keyboard": {
-        "reached": 16,
-        "total": 16
-      }
-    },
-    {
-      "path": "/writing/coin-flip-red-light/",
-      "passes": 36,
-      "violations": [],
-      "keyboard": {
-        "reached": 21,
-        "total": 21
-      }
-    },
-    {
-      "path": "/writing/finland-couldnt-define/",
+      "path": "/projects/amazon-sales-analysis/",
       "passes": 38,
       "violations": [],
       "keyboard": {
@@ -147,8 +102,44 @@
       }
     },
     {
-      "path": "/writing/one-line-deleted-accuracy/",
-      "passes": 36,
+      "path": "/projects/datasaarthi/",
+      "passes": 38,
+      "violations": [],
+      "keyboard": {
+        "reached": 18,
+        "total": 18
+      }
+    },
+    {
+      "path": "/projects/maatritwa-ai/",
+      "passes": 38,
+      "violations": [],
+      "keyboard": {
+        "reached": 20,
+        "total": 20
+      }
+    },
+    {
+      "path": "/projects/mortgage-knowledge-assistant/",
+      "passes": 42,
+      "violations": [],
+      "keyboard": {
+        "reached": 17,
+        "total": 17
+      }
+    },
+    {
+      "path": "/writing/coin-flip-red-light/",
+      "passes": 37,
+      "violations": [],
+      "keyboard": {
+        "reached": 22,
+        "total": 22
+      }
+    },
+    {
+      "path": "/writing/finland-couldnt-define/",
+      "passes": 39,
       "violations": [],
       "keyboard": {
         "reached": 19,
@@ -156,12 +147,21 @@
       }
     },
     {
-      "path": "/writing/phone-elevator-faraday/",
-      "passes": 35,
+      "path": "/writing/one-line-deleted-accuracy/",
+      "passes": 37,
       "violations": [],
       "keyboard": {
-        "reached": 16,
-        "total": 16
+        "reached": 20,
+        "total": 20
+      }
+    },
+    {
+      "path": "/writing/phone-elevator-faraday/",
+      "passes": 36,
+      "violations": [],
+      "keyboard": {
+        "reached": 17,
+        "total": 17
       }
     }
   ]

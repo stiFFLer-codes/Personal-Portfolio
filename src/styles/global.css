@@ -2533,3 +2533,28 @@ html:not(.js) .demo-control {
   min-height: 2.25rem;
   text-decoration: none;
 }
+
+/* The page saying it couldn't reach the network. */
+.offline {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--s-3);
+  margin: 0;
+  padding: var(--s-3) var(--gutter);
+  background: var(--paper-2);
+  border-bottom: 2px dashed var(--amber);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--track-mono);
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.offline[hidden] {
+  display: none;
+}
+
+.offline .mark {
+  transform: translateY(0.05em);
+}
