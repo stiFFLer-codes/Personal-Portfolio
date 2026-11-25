@@ -21,37 +21,47 @@ import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-soft-normal.woff2?url';
 import portrait from '../assets/maitreya.jpg';
+import { homeGraph } from '../seo';
+import { getImage } from 'astro:assets';
 
 interface Props {
   title?: string;
   description?: string;
+  /** Open Graph type: the home page is a profile, papers and posts are
+      articles, everything else a website. */
+  ogType?: 'website' | 'article' | 'profile';
+  /** Extra schema.org nodes for this page (a paper, a post). */
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+  /** Keep the page out of search results (the 404). */
+  noindex?: boolean;
 }
 
 const {
   title = SITE.title,
   description = SITE.description,
+  schema,
+  noindex = false,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const site = Astro.site!;
+const canonicalURL = new URL(Astro.url.pathname, site);
 // Static card, regenerated from scripts/og-image.html.
-const ogImage = new URL('/og.png', Astro.site);
+const ogImage = new URL('/og.png', site);
 
-// schema.org Person, home page only. A data block, not a script: browsers
-// never execute application/ld+json, so this ships no client-side JS.
+// Structured data (src/seo.ts): the home page carries the site, the profile
+// page and the Person; a paper or a post adds its own node, authored by the
+// same Person.
 const isHome = Astro.url.pathname === '/';
-const person = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: SITE.name,
-  url: new URL('/', Astro.site).href,
-  description: SITE.description,
-  image: new URL(portrait.src, Astro.site).href,
-  jobTitle: SITE.jobTitle,
-  worksFor: { '@type': 'Organization', name: SITE.employer },
-  alumniOf: { '@type': 'CollegeOrUniversity', name: SITE.alumniOf },
-  knowsAbout: SITE.knowsAbout,
-  sameAs: [SITE.orcid, SITE.github, SITE.linkedin],
-};
+const ogType = Astro.props.ogType ?? (isHome ? 'profile' : 'website');
+// The Person's image: a 720px JPEG, not the 2 MB original.
+const ldImage = isHome ? await getImage({ src: portrait, width: 720, format: 'jpeg' }) : null;
+const graph = [
+  ...(isHome && ldImage ? homeGraph(site, new URL(ldImage.src, site).href, title) : []),
+  ...(Array.isArray(schema) ? schema : schema ? [schema] : []),
+];
+const jsonLd = graph.length
+  ? JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })
+  : null;
 ---
 
 <!doctype html>
@@ -61,11 +71,20 @@ const person = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={SITE.name} />
+    <meta name="robots" content={noindex ? 'noindex' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={canonicalURL} />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:type" content={ogType} />
+    {ogType === 'profile' && (
+      <>
+        <meta property="profile:first_name" content={SITE.givenName} />
+        <meta property="profile:last_name" content={SITE.familyName} />
+      </>
+    )}
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
@@ -90,7 +109,7 @@ const person = {
       } catch (e) {}
     </script>
     <link rel="sitemap" href="/sitemap.xml" />
-    {isHome && <script type="application/ld+json" set:html={JSON.stringify(person)} />}
+    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </head>
   <body>
     <a class="sr-only-focusable" href="#main">Skip to content</a>

@@ -4,6 +4,9 @@
 
 export const SITE = {
   name: 'Maitreya Sapariya',
+  // The two parts of the name, for search engines' Person record.
+  givenName: 'Maitreya',
+  familyName: 'Sapariya',
   title: 'Maitreya Sapariya · software engineer and researcher',
   // Maitreya's line. Shown under the name on the home page and on the Open
   // Graph card. The description below is his own first two sentences, verbatim.

@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { year } from '../../format';
+import { personRef } from '../../seo';
 
 export async function getStaticPaths() {
   const posts = (await getCollection('writing')).sort((a, b) => a.data.order - b.data.order);
@@ -13,11 +14,31 @@ export async function getStaticPaths() {
 
 const { post, next } = Astro.props;
 const { Content } = await render(post);
+
+// For search engines: the post, written by the site's Person. The date is
+// the year only, as on the page.
+const site = Astro.site!;
+const url = new URL(Astro.url.pathname, site).href;
+const posting = {
+  '@type': 'BlogPosting',
+  '@id': `${url}#post`,
+  headline: post.data.title,
+  description: post.data.summary,
+  url,
+  mainEntityOfPage: url,
+  inLanguage: 'en',
+  datePublished: year(post.data.date),
+  author: personRef(site),
+  image: new URL('/og.png', site).href,
+  keywords: post.data.tags.join(', '),
+};
 ---
 
 <Base
   title={`${post.data.title} · Maitreya Sapariya`}
   description={post.data.summary}
+  ogType="article"
+  schema={posting}
 >
   <div class="container post">
     <section class="page-head">
