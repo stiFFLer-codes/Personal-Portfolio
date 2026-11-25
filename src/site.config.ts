@@ -4,6 +4,9 @@
 
 export const SITE = {
   name: 'Maitreya Sapariya',
+  // The two parts of the name, for search engines' Person record.
+  givenName: 'Maitreya',
+  familyName: 'Sapariya',
   title: 'Maitreya Sapariya · software engineer and researcher',
   // Maitreya's line. Shown under the name on the home page and on the Open
   // Graph card. The description below is his own first two sentences, verbatim.
@@ -16,6 +19,7 @@ export const SITE = {
   github: 'https://github.com/stiFFLer-codes',
   linkedin: 'https://www.linkedin.com/in/maitreya-sapariya/',
   orcid: 'https://orcid.org/0009-0003-9346-3775',
+  researchgate: 'https://www.researchgate.net/profile/Maitreya-Sapariya',
 
   // The role line under the bio, and the schema.org Person block.
   jobTitle: 'Software Engineer',
@@ -40,7 +44,8 @@ export const SITE = {
   accessibilityNote: 'Accessibility checked with axe-core and keyboard-only navigation.',
 } as const;
 
-// Education and certifications on the home page, newest first. `proof` is a
+// Education, summer schools and certifications on the home page, newest
+// first, each its own list in the record. `proof` is a
 // redacted certificate under public/, so every line can be checked.
 export interface Credential {
   date: string;
@@ -61,8 +66,11 @@ export const EDUCATION: Credential[] = [
     where: 'A. D. Patel Institute of Technology, CVM University, Anand',
     todo: 'a redacted degree certificate or a university verification link, if you want this line checkable.',
   },
-  // Both Jyväskylä lines lead with the school's official name, as printed on
-  // its certificates; the course follows as the note.
+];
+
+// International summer schools. Both lines lead with the school's official
+// name, as printed on its certificates; the course follows as the note.
+export const SUMMER_SCHOOLS: Credential[] = [
   {
     date: '2026',
     title: '35th Jyväskylä Summer School',

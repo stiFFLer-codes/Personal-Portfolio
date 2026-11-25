@@ -35,8 +35,9 @@ The home page serves two speeds:
 
 - **The argument**, top of the page: the thesis, the struck-through findings,
   the coin-flip demo. For a reader with a minute of curiosity.
-- **The record**, further down: the academic-homepage genre (papers, systems,
-  work, study) compressed into one section. For the reader in a hurry, one
+- **The record**, further down: the academic-homepage genre (papers,
+  systems, then work, education, international summer schools and
+  certifications as four short lists) compressed into one section. For the reader in a hurry, one
   link from the top ("Short on time? Skip to the record").
 
 Content is scannable, credible and specific everywhere. Since phase 13,
@@ -128,6 +129,14 @@ Violating rule 1, 2 or 6 is grounds for immediate REJECT.
 - Content collections in `src/content.config.ts`. Site-wide facts (name,
   links, role, education, certifications) in `src/site.config.ts`, nowhere
   else. Link labels in `src/links.ts`.
+- **Search:** structured data (schema.org JSON-LD) lives in `src/seo.ts`. One
+  Person with one stable `@id` (`/#person`) is the subject of the site: the
+  home page publishes it inside a WebSite and a ProfilePage; every paper
+  (ScholarlyArticle) and post (BlogPosting) names it as author. Its `sameAs`
+  lists the profiles in `ProfileLinks.astro`; a new profile joins both, and
+  each profile should link back to the site. No dates the content can't
+  vouch for (posts carry the year only). Every page has a canonical URL, a
+  description, `og:site_name` and an author meta; the 404 is `noindex`.
 - Fonts self-hosted. No third-party font CDN, ever: an EU reviewer should not
   hit a US ad-tech domain to read this page.
 - **No third-party requests and no trackers.** The footer says so; keep it
@@ -273,11 +282,12 @@ Wide      74rem  (--measure-wide)   page container
   never gradient text.
 - **Box-shadow:** two, both sanctioned: the glow ring on a lit lamp in the
   demo, and the `/travel` plate's lift. Nothing else.
-- **Marks and icons:** the drawn arrows (below); the profile links'
-  official
-  Email, GitHub, LinkedIn and ORCID marks (`ProfileLinks.astro`, inline SVG,
-  each beside its name, `aria-hidden`, never an `<img>` from the brand's
-  server; the ORCID iD keeps its green). No other icons. No emoji in chrome.
+- **Marks and icons:** the drawn arrows (below); the profile links' official
+  Email, GitHub, LinkedIn, ResearchGate and ORCID marks (`ProfileLinks.astro`,
+  inline SVG, each beside its name, `aria-hidden`, never an `<img>` from the
+  brand's server; ResearchGate's path is from Simple Icons, CC0). GitHub,
+  LinkedIn and ResearchGate take the text colour; the ORCID iD keeps its
+  green. No other icons. No emoji in chrome.
 - **Glyphs:** only those the self-hosted font files carry. Check a new glyph
   against the `.woff2` before using it. The Latin files carry `↓` and `↑`
   but not `→`, `←` or `↗`, so **arrows are drawn, never typed**: the
@@ -372,8 +382,9 @@ wins and this file is the bug.
 **Links.** A paper's or project's `links` render under its row and as Sources
 on its page (`src/links.ts` names them). With no links, a project's
 `sourcesNote` shows instead ("Client work. The source code is private.").
-Education and certifications in `site.config.ts` carry a `proof` link when
-there is one.
+Education (`EDUCATION`), international summer schools (`SUMMER_SCHOOLS`) and
+certifications (`CERTIFICATIONS`) in `site.config.ts` each render as their
+own list in the record, and carry a `proof` link when there is one.
 
 **TODOs.** A `todo:` on a credential, or a `<Todo>` in a component, is a
 fact only Maitreya can supply. It renders as an amber `TODO(markie)` in
@@ -432,6 +443,8 @@ was retired before it ever deployed, so it needs no redirect.
 - [ ] Semantic HTML: `<article>`, `<time>`, `<nav>`, real heading order
 - [ ] Alt text is descriptive, not decorative filler
 - [ ] No third-party network request; no dependency without justification
+- [ ] Structured data parses (every `application/ld+json` block in `dist/`
+      is valid JSON) and names the one Person `@id`
 - [ ] No `TODO(markie)` in `dist/` (`grep -r "TODO(markie)" dist`)
 - [ ] The programme is named in no committed file
 

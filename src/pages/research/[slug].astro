@@ -3,6 +3,8 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import WorkPage from '../../components/WorkPage.astro';
 import PaperByline from '../../components/PaperByline.astro';
+import { SITE } from '../../site.config';
+import { personRef } from '../../seo';
 
 export async function getStaticPaths() {
   const research = await getCollection('research');
@@ -14,11 +16,35 @@ export async function getStaticPaths() {
 
 const { research } = Astro.props;
 const { Content } = await render(research);
+
+// For search engines: the paper, its authors in published order (Maitreya
+// as the site's Person), its journal when it has one, and its DOI and
+// archive. No date: the records here don't carry one to the day.
+const site = Astro.site!;
+const url = new URL(Astro.url.pathname, site).href;
+const { title, summary, authors = [], venue, kind, links } = research.data;
+const article = {
+  '@type': 'ScholarlyArticle',
+  '@id': `${url}#article`,
+  name: title,
+  ...(title.length <= 110 ? { headline: title } : {}),
+  description: summary,
+  url,
+  mainEntityOfPage: url,
+  inLanguage: 'en',
+  ...(authors.length > 0
+    ? { author: authors.map((a) => (a === SITE.name ? personRef(site) : { '@type': 'Person', name: a })) }
+    : {}),
+  ...(venue && kind === 'journal paper' ? { isPartOf: { '@type': 'Periodical', name: venue } } : {}),
+  sameAs: [links.doi, links.zenodo, links.arxiv].filter(Boolean),
+};
 ---
 
 <Base
   title={`${research.data.title} · Maitreya Sapariya`}
   description={research.data.summary}
+  ogType="article"
+  schema={article}
 >
   <WorkPage
     back={{ href: '/research', label: 'papers' }}
