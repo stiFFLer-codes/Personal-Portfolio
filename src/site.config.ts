@@ -16,6 +16,7 @@ export const SITE = {
   github: 'https://github.com/stiFFLer-codes',
   linkedin: 'https://www.linkedin.com/in/maitreya-sapariya/',
   orcid: 'https://orcid.org/0009-0003-9346-3775',
+  researchgate: 'https://www.researchgate.net/profile/Maitreya-Sapariya',
 
   // The role line under the bio, and the schema.org Person block.
   jobTitle: 'Software Engineer',
