@@ -123,9 +123,10 @@ Optional: `end` (unset means current), `location`, `note` (one line the
 dates can't carry, e.g. a conversion to full-time), `project` (the project
 page the role produced; the title links to it), `order`.
 
-### Education and certifications
+### Education, summer schools and certifications
 
-`EDUCATION` and `CERTIFICATIONS` in `src/site.config.ts`. A line can carry a
+`EDUCATION`, `SUMMER_SCHOOLS` and `CERTIFICATIONS` in `src/site.config.ts`,
+each rendered as its own list in the home page's record. A line can carry a
 `proof` (a redacted certificate under `public/`, or the issuer's own
 validation page), which renders as a "certificate" link; a `todo` can note a
 proof still to find (development builds only). Lines can also carry an
@@ -160,6 +161,13 @@ it is not a runtime dependency and adds no runtime request.
 
 A paper with a public repo and no link to it is a bug: the link is how a
 reader who wants more goes further.
+
+### Search
+
+Structured data is in `src/seo.ts` (see *Search* under *Stack* in
+`CLAUDE.md`). Adding a profile link? Add it to `ProfileLinks.astro` and to
+`SAME_AS` together. Adding a page type? Give its `<Base>` an `ogType` and,
+if it is a paper or a post, a schema node authored by `personRef(site)`.
 
 ## Checks before every push
 
