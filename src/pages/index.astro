@@ -22,7 +22,7 @@ import CoinFlip from '../components/CoinFlip.astro';
 import portrait from '../assets/maitreya.jpg';
 import lecture from '../content/places/img/jyvaskyla-lecture.jpg';
 import dawn from '../content/places/img/sandefjord-dawn.jpg';
-import { SITE, EDUCATION, CERTIFICATIONS } from '../site.config';
+import { SITE, EDUCATION, SUMMER_SCHOOLS, CERTIFICATIONS } from '../site.config';
 import { span, year } from '../format';
 
 const byOrder = <T extends { data: { order: number } }>(a: T, b: T) => a.data.order - b.data.order;
@@ -303,6 +303,8 @@ const places = await getCollection('places');
           </div>
         </div>
 
+        {/* Four lists in a two-column grid: work beside education, then the
+            summer schools beside the certifications. */}
         <div class="record-pair">
           <div>
             <h3 id="work">Work</h3>
@@ -322,9 +324,47 @@ const places = await getCollection('places');
           </div>
 
           <div>
-            <h3 id="study">Study</h3>
+            <h3 id="education">Education</h3>
             <div class="rows">
-              {[...EDUCATION, ...CERTIFICATIONS].map((c) => (
+              {EDUCATION.map((c) => (
+                <Entry
+                  dense
+                  as="h4"
+                  href={c.href}
+                  title={c.title}
+                  where={c.where}
+                  note={c.note}
+                  label={c.date}
+                  links={{ certificate: c.proof }}
+                  todo={c.proof ? undefined : c.todo}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 id="summer-schools">International summer schools</h3>
+            <div class="rows">
+              {SUMMER_SCHOOLS.map((c) => (
+                <Entry
+                  dense
+                  as="h4"
+                  href={c.href}
+                  title={c.title}
+                  where={c.where}
+                  note={c.note}
+                  label={c.date}
+                  links={{ certificate: c.proof }}
+                  todo={c.proof ? undefined : c.todo}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 id="certifications">Certifications</h3>
+            <div class="rows">
+              {CERTIFICATIONS.map((c) => (
                 <Entry
                   dense
                   as="h4"
